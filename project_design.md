@@ -10,8 +10,8 @@ Even though there are no fixed groups, people will work on three main different 
 
 ## Key Roles:
 - **Project Leader**: Lorenzo Tarricone
-- **Git Leader**: 
-- **Board Leader**:
+- **Git Leader**: Nina Peuker
+- **Trello Leader**: Clémence Mottez
 
 ## Description:
 The pipeline follows more or less described in the README.md file 
