@@ -1,0 +1,5 @@
+The xtensor C++ library has an API very close to numpy.
++ it handles missing values.
++ you can use it to edit numpy arrays inplace.
+
+site : http://xtensor.readthedocs.io/en/latest/
