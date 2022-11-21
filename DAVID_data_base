@@ -1,0 +1,35 @@
+# DAVID data base #
+
+= The Database for Annotation, Visualization and Integrated Discovery 
+It provides a set of functional annotation tools to understand the biological meaning behind large lists of genes. 
+DAVID tools are able to:
+
+1/Should be important for us:
+- Identify enriched biological themes, particularly GO terms
+- Discover enriched functional-related gene groups
+- Cluster redundant annotation terms
+- Visualize genes on BioCarta & KEGG pathway maps
+- Display related many-genes-to-many-terms on 2-D view.
+- Search for other functionally related genes not in the list
+- Explore gene names in batch
+ 
+ 2/ Might be useful too 
+- List interacting proteins
+- Link gene-disease associations
+- Highlight protein functional domains and motifs
+- Convert gene identifiers from one type to another.
+
+
+How does it work?
+
+
+https://david.ncifcrf.gov/api.jsp?type=xxxxx&ids=XXXXX,XXXXX,XXXXXX,&tool=xxxx&annot=xxxxx,xxxxxx,xxxxx,
+
+type  =  one of DAVID recognized gene types
+annot  = a list of desired annotation  categories separated by ","
+ids  = a list of user's gene IDs separated by ","
+tool  = one of DAVID tool names
+
+Examples of types, annot, ids, tool on
+https://david.ncifcrf.gov/content.jsp?file=DAVID_API.html#input_list 
+website 
