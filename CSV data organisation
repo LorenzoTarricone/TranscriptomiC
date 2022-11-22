@@ -1,0 +1,16 @@
+1 CSV: name Matrix
+Column: beans/cells 
+Rows: genes 
+Only numbers in the matrix 
+The majority is 0 since 99,18% of sparcity, but we can have mistakes
+
+Size: around 23500 genes and 15000 cells
+
+2nd CSV: name loction
+Column: beans/cells 
+Rows: x and y (only 2 rows) 
+
+Normally cells from both CSV tables are in the same order (need to check)
+
+We can have several cells on one beans, since the size of the cell is smaller than the size of a bean 
+But for the majority of beans, it is not the case (1 bean = 1 cell)
