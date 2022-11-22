@@ -13,7 +13,7 @@ You can install git through their official website : `https://git-scm.com/book/e
 
 Since the repository is private, it will prompt for passwords whenever you are trying to make any changes. SSH keys are a very convinient way to get around that. The way it works is basically:
 - you create a key on your private laptop using `ssh-keygen`
-- you (or we) copy that key into the list of ssh-keys on the repository
+- add the key to the ssh-keys on your GitHub account
 - then you can clone the repository using the ssh link and you will not be prompted for a password
 
 ### Generating ssh-keys
