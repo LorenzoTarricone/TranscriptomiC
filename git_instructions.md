@@ -23,7 +23,7 @@ This is just a rough guide (for macOS, might differ for Windows or LinuX), I wil
 - go into the `.ssh` directory in your machine with  and `cd .ssh`
 - access the file `id_rsa.pub` using `cat` or `vi`
 - copy the key that starts with 'ssh-rsa' and ends with your email address (if you never generated a key before or only with that email address, that might be the entire file)
-- add that key to the github (ask Lorenzo or me where to put it, we'll label it too)
+- add that key to the github under https://github.com/settings/keys (you can label it too)
 
 This link helps for macOS users: https://gist.github.com/ddeveloperr/9574740628637bc2a127
 
