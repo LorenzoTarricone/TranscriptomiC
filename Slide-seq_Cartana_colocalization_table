@@ -1,0 +1,29 @@
+Colocalization of the genes:
+Probability to have this particular gene near this gene
+
+Given a n times k matrix, n nb of genes, k nb of beads 
+Matrix, nb of genes times nb of genes 
+
+1/ Build the distance matrix (sqrt((x1-x2)^2+(y1-y2)^2))
+
+2/ Build linkage score Lij= (max(0,m-Bij)/m)^p *100
+   Lij : linkage between bead i and j
+   Bij : the distance
+   m : maximum interprete distance (50microm or ask the researcher)
+   p : parameter (determines decay of linkage)
+   put 0 if distance greater than m
+   
+3/ Apply linkage to gene by bread matrix 
+Do vectors: 
+Nj (for each columns) : sum (r=1,...k) without j of: (Ar (original table n x k) times Ljr 
+output: n times k matrix indication average gene expression in neihboring beans 
+
+4/ Combine original table with gene expression table 
+3D matrix
+Di= Aj . Nj(transpose)
+result : nb of genes times nb of genes times nb of beads 
+
+5/log normalization of D
+Dr,i,j=log(Drij/mean(Dri)+0.1)
+
+6/ Average over k to have a n times n table 
