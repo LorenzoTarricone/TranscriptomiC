@@ -24,7 +24,17 @@
      </rect>
     </property>
     <property name="text">
-     <string>Click me to print &quot;Hello&quot; on the console</string>
+     <string>Enter the name of the file to open below and then click me</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>120</y>
+      <width>104</width>
+      <height>64</height>
+     </rect>
     </property>
    </widget>
   </widget>
