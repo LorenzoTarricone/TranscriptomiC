@@ -1,8 +1,15 @@
-#include <QCoreApplication>
+#include "test_txt.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include<string.h>
+#include <bits/stdc++.h>
 
-int main(int argc, char *argv[])
+using namespace std;
+int main()
 {
-    QCoreApplication a(argc, argv);
-
-    return a.exec();
+  test_txt t;
+  t.log2_nk ();
+  return 0;
 }
+
