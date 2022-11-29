@@ -1,0 +1,4 @@
+#ifndef READ_VISUALIZE_TXT_H
+#define READ_VISUALIZE_TXT_H
+
+#endif // READ_VISUALIZE_TXT_H
