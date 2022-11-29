@@ -1,4 +1,0 @@
-#ifndef READ_VISUALIZE_CSV_H
-#define READ_VISUALIZE_CSV_H
-
-#endif // READ_VISUALIZE_CSV_H
