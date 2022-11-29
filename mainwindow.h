@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QTextEdit>
+#include <QString>
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,8 +24,12 @@ private slots:
 
 
 private:
-    Ui::MainWindow *ui;
-    QString userText;
-    std::string filename;
+    Ui::MainWindow *ui;//UI window
+
+    QString userText;//User text input
+    string filename;//std::string of user input
+    vector<QString> left;
+    vector<QString> right;
+
 };
 #endif // MAINWINDOW_H
