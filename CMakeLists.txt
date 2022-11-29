@@ -19,6 +19,7 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        mainwindow.ui
         my_example.cc
 )
 
