@@ -11,7 +11,7 @@ public:
 };
 class TXT{
 public:
-    void read_csv_file(string myFilePath);
-    void visualize_csv();
+    void read_txt_file(string myFilePath);
+    void visualize_txt();
 };
 #endif // VISUALIZE_H
