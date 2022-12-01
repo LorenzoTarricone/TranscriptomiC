@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "secondwindow.h"
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QString>
+#include <QDialog>
+
 
 using namespace std;
 
@@ -25,6 +28,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;//UI window
+
+    SecondWindow *Pointersecondwindow;
 
     QString userText;//User text input
     string filename;//std::string of user input

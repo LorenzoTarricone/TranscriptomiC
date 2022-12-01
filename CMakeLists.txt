@@ -16,9 +16,14 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
+        #Main Window (Upload File)
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        #Second Window
+        secondwindow.h
+        secondwindow.cpp
+        secondwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
