@@ -1,7 +1,10 @@
-QT -= gui
+QT += core gui
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
+TEMPLATE = app
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -9,7 +12,9 @@ CONFIG -= app_bundle
 
 SOURCES += \
         Visualize.cpp \
-        main.cpp
+        main.cpp \
+        mainwindow.cpp \
+        qcustomplot.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -17,4 +22,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Visualize.hpp
+    Visualize.hpp \
+    mainwindow.h \
+    qcustomplot.h
+
+FORMS += \
+    mainwindow.ui
