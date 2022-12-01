@@ -1,16 +1,17 @@
+/*****************************************************************************************************************
+ ** The goal is to read different files (txt or csv) and to visulize the data                                   **
+ *****************************************************************************************************************
+ ** Sources:                                                                                                    **
+ ** 1. https://www.youtube.com/watch?v=TSRdO0AH9Gc                                                              **
+ ** 2. https://www.geeksforgeeks.org/csv-file-management-using-c/                                               **
+ ** 3. https://towardsdatascience.com/data-preprocessing-and-visualization-in-c-6d97ed236f3b                    **
+ ****************************************************************************************************************/
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "Visualize.hpp"
-
 using namespace std;
 
-//Sources:
-//1. https://www.youtube.com/watch?v=TSRdO0AH9Gc
-//2. https://www.geeksforgeeks.org/csv-file-management-using-c/
-//3. https://towardsdatascience.com/data-preprocessing-and-visualization-in-c-6d97ed236f3b
-
-//Goal: Read a csv file and visualize the data
 //Right know we can only read data from the file fake_coordinates. The data is not really visualized. Its just printed.
 void CSV :: read_csv_file(string myFilePath){
     ifstream coordinates;
@@ -27,11 +28,11 @@ void CSV :: read_csv_file(string myFilePath){
 
     coordinates.close(); // Here we close the file
 }
-//Goal: Visualize csv file data
+
 void CSV :: visualize_csv(){
 
 }
-//Goal: Read a txt file and visualize the data
+
 //Right know we can only read data from the file fake_coordinates.
 void TXT :: read_txt_file(string myFilePath){
     ifstream coordinates;
@@ -47,7 +48,7 @@ void TXT :: read_txt_file(string myFilePath){
     }
     coordinates.close(); //close the file object.
 }
-//Goal: Visualize csv file data
+
 void TXT :: visualize_txt(){
 
 }

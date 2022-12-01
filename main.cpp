@@ -2,6 +2,7 @@
 #include "Visualize.hpp"
 
 
+
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     CSV b;
     b.read_csv_file(myFilePath); // read data
     //end*/
+
 
     return a.exec();
 }
