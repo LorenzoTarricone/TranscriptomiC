@@ -5,6 +5,8 @@
  ** 1. https://www.youtube.com/watch?v=TSRdO0AH9Gc                                                              **
  ** 2. https://www.geeksforgeeks.org/csv-file-management-using-c/                                               **
  ** 3. https://towardsdatascience.com/data-preprocessing-and-visualization-in-c-6d97ed236f3b                    **
+ ** 4. https://stackoverflow.com/questions/5449407/calculating-sums-of-columns-in-csv-file-using-c              **
+ ** 5. https://stackoverflow.com/questions/34218040/how-to-read-a-csv-file-data-into-an-array                   **
  ****************************************************************************************************************/
 #include <iostream>
 #include <fstream>
