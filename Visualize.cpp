@@ -55,3 +55,22 @@ void TXT :: visualize_txt(){
 
 }
 
+void CSV :: read_corr_file(){
+    std::ifstream data("fake-corr-chart");
+    std::string line;
+    std::vector<std::vector<std::string> > read_corr_file;
+    while(std::getline(data,line))
+    {
+        std::stringstream lineStream(line);
+        std::string cell;
+        std::vector<std::string> corrRow;
+        while(std::getline(lineStream,cell,','))
+        {
+            corrRow.push_back(cell);
+        }
+
+        read_corr_file.push_back(corrRow);
+    }
+};
+
+
