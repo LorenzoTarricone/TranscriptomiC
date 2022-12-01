@@ -9,18 +9,24 @@
  ** /637b8085ba208500dc550438/download/sparse.pdf                                                               **
  ****************************************************************************************************************/
 
+#include "Visualize.hpp" // We could also create a new header
+
 // COO Representation
+void SparseMatrix :: sparse_Matrix_to_COO(){
 
-typedef struct coo {
-size_t shape[2]; // number of row and columns
-size_t nnz; // number of nonzeros
-size_t capacity; // array capacity
-size_t *rowidx; // pointer to array of row indices
-size_t *colidx; // pointer to array of column indices
-double *val; // pointer to array of values
-} coo_t;
-
-void sparse_Matrix_to_COO(){
+    //To allocate coo
+    coo_t *coo_alloc(const size_t shape[2], const size_t capacity) {
+    coo_t *sp = malloc(sizeof(*sp));
+    if (sp == NULL) { return NULL; }
+    sp->shape[0] = shape[0]; sp->shape[1] = shape[1];
+    sp->nnz = 0; sp->capacity = capacity;
+    sp->rowidx = malloc(capacity * sizeof(*sp->rowidx));
+    sp->colidx = malloc(capacity * sizeof(*sp->colidx));
+    sp->val = malloc(capacity * sizeof(*sp->val));
+    if (sp->rowidx == NULL || sp->colidx == NULL || sp->val == NULL)
+    { coo_dealloc(sp); return NULL; }
+    return sp;
+    }
 
 
 }
