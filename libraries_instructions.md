@@ -1,0 +1,4 @@
+In our C++ project we will make use of several libraries in order to achieve our goals. Some of these libraries are included in QT Creator, which makes them quite easy to include in the project, but others are not. For example, we make use of Eigen, a library which gives us access to sparse matrix representations of data (very useful for our project) as well as various linear algebra computations, all while maintaining the computational efficiency of C++. On top of this, it also produces very readable code.
+
+##Installing and importing Eigen
+Eigen is purely a header library, which means that we don't have to compile it, we just have to include the header files we need in our project. The "Eigen" folder includes all the header files and, used together with the CMakeLists.txt file, should allow you to import the header files without issues (it works for me at least).
