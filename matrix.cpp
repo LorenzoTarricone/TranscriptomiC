@@ -76,18 +76,21 @@ void Matrix::csv_file_to_matrix(unsigned int n, unsigned int m, string file_name
 
 }
 
-void Matrix::file_to_matrix(unsigned int n, unsigned int m, string file_name, string file_type){
+void Matrix::file_to_matrix(unsigned int n, unsigned int m, string file_name){
     mat = new int*[n];
     this->n = n;
     this->m = m;
     for(unsigned int i = 0; i < n; i++){
         mat[i] = new int[m];
     }
-    if(file_type == "csv"){
-        Matrix::csv_file_to_matrix(n,m,file_name);
-    }
-    else if(file_type == "txt"){
+    string str_txt ("txt");
+    string str_csv("csv");
+    if (file_name.find(str_txt) != string::npos) {
         Matrix::txt_file_to_matrix(n,m,file_name);
+    }
+
+    else if(file_name.find(str_csv) != string::npos){
+        Matrix::csv_file_to_matrix(n,m,file_name);
     }
     else return;
 }
