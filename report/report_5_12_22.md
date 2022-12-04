@@ -15,6 +15,7 @@ Members:
 - Nina Peuker
 - Iris Brun
 - Nicolás López Corral
+- Alan Picucci
 
 
 Jingai Si; Samuel Tillier; Adrian Düsselberg: Testing out the QCustomPlots library, which allows the generation of plots (including heat maps) within the Qt interface using widgets. We are currently working on the implementation of QCustomPlots into our main project, but the project may have to be reconfigured differently for this to work. Determined the calculation of the matrix column sum for gene expression, which will give a value corresponding to the intensity on the heat map. We are currently optimising this calculation based on its complexity. Conducted research on sparse matrices and their representations as arrays with zero entries excluded.
@@ -24,6 +25,8 @@ Clémence Mottez and Nina Peuker: Last week, we wrote a program that takes a mat
 Iris Brun: wrote a program that can take a matrix or coordinates file in csv form, and convert the values inside the file into a matrix object (of size nb of cells times nb of genes for the matrix one and 2 times nb of genes for the coordinate one.) 
 
 Nicolás: Again worked on the project structure with Cmake, implementing xtensor. No commits.
+
+Alan: Implemented the Eigen library into the project built with CMake. This library will allow us to store input data into matrices which are very easy to manipulate. Began using this library in conjunction with the files which parse through txt and csv files to store our data in Eigen matrices. Currently studying how to implement sparse Eigen matrices to store the data from the gene expression dataset, since it has a sparsity of 99%.  
 
 ### Frontend 
 Members:
