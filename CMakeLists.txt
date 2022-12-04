@@ -4,7 +4,7 @@ project(Transcriptomics VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(EIGEN_INCL_DIR "${${PROJECT_NAME}_SOURCE_DIR}")
+set(EIGEN_INCL_DIR "${${PROJECT_NAME}_SOURCE_DIR}/eigen")
 MESSAGE(STATUS "Using directory: ${EIGEN_INCL_DIR}/Eigen")
 include_directories(${EIGEN_INCL_DIR})
 

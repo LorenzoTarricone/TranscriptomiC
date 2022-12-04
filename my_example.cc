@@ -24,4 +24,4 @@ M load_csv (const std::string & path) {
     return Map<const Matrix<typename M::Scalar, M::RowsAtCompileTime, M::ColsAtCompileTime, RowMajor>>(values.data(), rows, values.size()/rows);
 }
 
-MatrixXd A = load_csv<MatrixXd>("/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/fake_coordinates.csv");
+//MatrixXf A = load_csv<MatrixXd>("/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/fake_coordinates.csv");
