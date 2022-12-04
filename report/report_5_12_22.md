@@ -1,11 +1,11 @@
 ## Group project report due to 5th December 2022
 
 ### R&D
-Components: 
+Members: 
 
 
 ### Algorithms/Backend 
-Components:
+Members:
 - Jingai Si
 - Samuel Tillier 
 - Adrian Düsselberg
@@ -15,4 +15,10 @@ Jingai Si; Samuel Tillier; Adrian Düsselberg: Testing out the QCustomPlots libr
 
 
 ### Frontend 
-Components:
+Members:
+- Rita Saraiva
+- Leonard Theisler
+
+Leonard Theisler: Wrote a script that takes user input and opens the file. User writes the file location in a text editor in the GUI, a window pops up if the file is not found and if it is found it reads it. Also managed to print the data in a popup window, how ever it prints data point by datapoint. Investigated QCustomPlots library and attempted to add it to the project, came to the same conclusion as the backend team.
+
+Rita Saraiva: Researched and implemented how to make new windows open. Wrote a script where the main window closes upon successful file upload and a new main window appears.
