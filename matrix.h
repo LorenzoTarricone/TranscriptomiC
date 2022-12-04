@@ -17,7 +17,7 @@ private:
     void csv_file_to_matrix(unsigned int n, unsigned int m, string file_name);
 public:
     Matrix();
-    void file_to_matrix(unsigned int n, unsigned int m, string file_name, string file_type);
+    void file_to_matrix(unsigned int n, unsigned int m, string file_name);
     void print_matrix();
 };
 
