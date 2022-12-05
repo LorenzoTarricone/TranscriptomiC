@@ -5,7 +5,8 @@ Members:
 - Clémence Mottez
 - Lorenzo Tarricone 
 
-Clémence Mottez: working on a python program to check the implementation of the algorithm we will use for the colocalization table (to be sure it works before implementing it in C++) 
+Clémence Mottez: working on a python program to check the implementation of the algorithm we will use for the colocalization table (to be sure it works before implementing it in C++).
+
 Lorenzo Tarricone: Working on the python code to build the colocalization table. The structure of the code is finished and working. We just need to find a good kernel function that will help us analyzing the data retriving all the biological meaning. Collected the last data that was missing and now working on the sharing agreement to give the possibility to the whole group to access the data. 
 
 ### Algorithms/Backend 
