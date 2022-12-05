@@ -23,7 +23,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        my_example.cc
+        sparse_matrix.cc
 )
 
 

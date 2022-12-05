@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <QMainWindow>
+#include <Eigen/Dense>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+Eigen::MatrixXd openData(std::string fileToOpen);
 
 class MainWindow : public QMainWindow
 {

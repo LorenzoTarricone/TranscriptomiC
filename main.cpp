@@ -2,16 +2,16 @@
 #include <QApplication>
 #include <Eigen/Dense>
 
-using Eigen::MatrixXd;
+using namespace Eigen;
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-    MatrixXd m(2,2);
-    m(0,0) = 3;
-    m(1,0) = 2.5;
-    m(0,1) = -1;
-    m(1,1) = m(1,0) + m(0,1);
-    std::cout << m << std::endl;
+    MatrixXd A = openData("/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/dummyData.csv");
+    cout << A;
+
+    cout << "\nRow 35, column 2 of matrix A: \n" <<A(34,1);
+
 
     //QApplication a(argc, argv);
     //MainWindow w;
