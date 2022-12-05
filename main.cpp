@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
     cout << "\nRow 35, column 2 of matrix A: \n" <<A(34,1);
 
+    cout << "Transpose: " << A.transpose();
 
     //QApplication a(argc, argv);
     //MainWindow w;
