@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 SOURCES += \
         SparseMatrix.cpp \
+        colocalization_matrix.cpp \
         main.cpp \
         mainwindow.cpp \
         qcustomplot.cpp

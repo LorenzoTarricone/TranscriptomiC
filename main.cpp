@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include <Eigen/Dense>
 #include <SparseMatrix.h>
+#include <math.h>
 
 
 using namespace Eigen;
@@ -13,12 +14,17 @@ int main(int argc, char *argv[])
     MatrixXd A = openData("/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/fake_coordinates.csv");
     cout << A;
 
-    cout << "\nRow 35, column 2 of matrix A: \n" <<A(34,1);
+    MatrixXd A_linkage = matrix_linkage(A, 5000, 2);
 
-    cout << "Transpose: " << A.transpose();
+    cout << "\n Linkage matrix: " << A_linkage;
+
+    cout << "\n DIAGONAL value: " << A_linkage(2,2);
 
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
 }
+
+
+
