@@ -19,8 +19,7 @@ MatrixXd matrix_distance(MatrixXd A){
     MatrixXd A_distance(A.rows(),A.rows());
     for (int i = 0; i < A.rows() ; i++){
         for (int j = 0; j < A.rows(); j++){
-            A_distance(i,j) = distance(A(i,1), A(j,1), A(i, 2), A(j,2)
-                                       ); //distance between coordinate i and j
+            A_distance(i,j) = distance(A(i,1), A(j,1), A(i, 2), A(j,2)); //distance between coordinate i and j
         }
     }
     return A_distance;
@@ -47,3 +46,5 @@ MatrixXd matrix_linkage(MatrixXd A, double m, double p){
     }
     return A_linkage;
 }
+
+
