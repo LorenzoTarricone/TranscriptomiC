@@ -57,7 +57,15 @@ Usage: `git push -u origin master:main`, this pushes the changes on your local b
 
 
 ### Branches
-We will probably be working with branches, such that each of you can work on their on branch to minimize conflicts and errors in the main branch. The idea here is to merge the branches to the mai branch as often as possible. (TO BE COMPLETED)
+We will probably be working with branches, such that each of you can work on their on branch to minimize conflicts and errors in the main branch. The idea here is to merge the branches to the main branch as often as possible. To create a branch from your terminal make sure you are in the correct folder (the one that was created when you cloned the repository) and that your local repository is up to date with the remote one (using `git fetch` and `git pull` as described above).
+
+
+- If you already have more than one branch, make sure you are on the master branch. You can check that with `git branch`.
+- Create your branch with `git checkout -b your_branch`, you are immediately on the new branch.
+- add and commit your code as described before
+- Push your code to the remote repository using `git push -u origin your_branch`. The argument `-u` is short for `--set-upstream` and means that from now on, your new local branch will always push the code to the remote branch of the same name
+- If you want to switch branches, simply type `git checkout -b branch_to_switch_to`. 
+
 
 ### Pull requests
 Whenever there is a merge to the main branch, you can create a pull request to properly integrate your code with the code in the main branch and to ensure the correctness of the main branch code. (TO BE COMPLETED)
