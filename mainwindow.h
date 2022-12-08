@@ -23,7 +23,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_SelectButton_clicked();
+    void on_UploadButton_clicked();
 
 
 private:

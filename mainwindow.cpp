@@ -5,6 +5,7 @@
 //#include <QDebug>
 #include <QMessageBox>
 #include <QDialog>
+#include <QFileDialog>
 #include <fstream>
 using namespace std;
 
@@ -13,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->plainTextEdit->setPlainText("Please select a file and then upload it.");
 }
 
 MainWindow::~MainWindow()
@@ -21,7 +23,13 @@ MainWindow::~MainWindow()
     delete Pointersecondwindow;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_SelectButton_clicked()
+{
+    QString try_file_name = QFileDialog::getOpenFileName(this, "Rita: Open a File", "C:\\Users\\");
+    ui->plainTextEdit->setPlainText(try_file_name);
+}
+
+void MainWindow::on_UploadButton_clicked()
 {
     userText= ui->plainTextEdit->toPlainText();
     filename = userText.toStdString();
