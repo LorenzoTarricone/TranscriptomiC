@@ -12,7 +12,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 SOURCES += \
         SparseMatrix.cpp \
-        Visualize.cpp \
         main.cpp \
         mainwindow.cpp \
         qcustomplot.cpp
@@ -23,9 +22,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Visualize.hpp \
+    SparseMatrix.h \
     mainwindow.h \
     qcustomplot.h
+
+INCLUDEPATH += "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/eigen-3.4.0"
 
 FORMS += \
     mainwindow.ui

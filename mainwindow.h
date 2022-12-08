@@ -15,8 +15,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void makePlot();
 private:
     Ui::MainWindow *ui;
 };

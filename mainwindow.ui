@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>untitled</class>
- <widget class="QMainWindow" name="untitled">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,13 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCustomPlot" name="customPlot" native="true">
+   <widget class="QCustomPlot" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>29</x>
-      <y>29</y>
-      <width>411</width>
-      <height>321</height>
+      <x>220</x>
+      <y>170</y>
+      <width>281</width>
+      <height>171</height>
      </rect>
     </property>
    </widget>

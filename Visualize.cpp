@@ -14,23 +14,6 @@
 #include "Visualize.hpp"
 using namespace std;
 
-//Right know we can only read data from the file fake_coordinates. The data is not really visualized. Its just printed.
-void CSV :: read_csv_file(string myFilePath){
-    ifstream coordinates;
-    coordinates.open(myFilePath); // open a file to perform read operation
-
-    if(coordinates.fail()){
-        cerr << "Unable to open file" << myFilePath << endl; //checking whether the file is open
-    }
-    while(coordinates.peek() != EOF){ //loop over the coordinates and print them BUT WE WANT TO STORE THEM OR VISUALIZE THEM DIRECTLY
-        string coordinate;
-        getline(coordinates,coordinate,',');
-        cout <<coordinate<< endl;
-    }
-
-    coordinates.close(); // Here we close the file
-}
-
 void CSV :: visualize_csv(){
 
 }
