@@ -1,3 +1,34 @@
+/*What to put in the main:
+#include "genename.h"
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <iterator>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+using std::cout; using std::cin;
+using std::endl; using std::string;
+using std::vector; using std::istringstream;
+using std::stringstream;
+
+
+int main(){
+    string l="[136,[\"HGNC:35077\",\"HGNC:35019\",\"HGNC:77\",\"HGNC:35013\",\"HGNC:35114\",\"HGNC:24098\",\"HGNC:16638\"],null,[[\"TRR-CCT8-1\",\"tRNA-Arg-CCT-8-1\",\"TRNAR32P\"],[\"TRR-CCT6-2\",\"tRNA-Arg-CCT-6-2\",\"TRNAR31P\"],[\"ABL2\",\"ARG\",\"ABLL\"],[\"TRR-CCT7-1\",\"tRNA-Arg-CCT-7-1\",\"TRNAR30P\"],[\"TRR-CCT9-1\",\"tRNA-Arg-CCT-9-1\",\"TRNAR34P\"],[\"SORBS2\",\"ARGBP2|KIAA0777\",\"\"],[\"SRRM1\",\"SRM160|POP101|MGC39488\",\"\"]]]";
+    string search="\"ARG\"";
+
+    Genename test;
+
+    test.listgene(l, search);
+
+    return 0;
+}
+*/
+
+
+
 #include "genename.h"
 
 #include <iostream>
