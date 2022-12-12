@@ -34,6 +34,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#INCLUDEPATH += "C:\Users\leona\OneDrive\Bureau\TranscriptomiC\eigen-3.4.0"
-INCLUDEPATH += "eigen-3.4.0\eigen-3.4.0"
-#C:\Users\leona\OneDrive\Bureau\TranscriptomiC\
+win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+macx:INCLUDEPATH += "$$PWD/eigen_mac"
+
+#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
+
+
