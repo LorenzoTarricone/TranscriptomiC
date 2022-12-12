@@ -11,8 +11,10 @@ CONFIG += c++17
 
 SOURCES += \
     filedata.cpp \
+    genename.cpp \
     main.cpp \
     mainwindow.cpp \
+    matrixeigen.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
@@ -20,7 +22,9 @@ SOURCES += \
 
 HEADERS += \
     filedata.h \
+    genename.h \
     mainwindow.h \
+    matrixeigen.h \
     qcustomplot.h \
     SparseMatrix.h \
     SecondWindow.h
