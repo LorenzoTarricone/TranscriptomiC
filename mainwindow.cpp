@@ -53,13 +53,13 @@ void MainWindow::on_UploadButton_clicked()
 
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
+        close();
     }
     else{
         QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
 
     }
 
-    close();
 
 
 }
