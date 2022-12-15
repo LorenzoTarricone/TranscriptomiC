@@ -25,12 +25,12 @@ void colocalizationwindow::makeHeatMap(){
            int nx = 6;
            int ny = 4;
            colorMap->data()->setSize(nx, ny); // we want the color map to have nx * ny data points
-           colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 6)); // and span the coordinate range -4..4 in both key (x) and value (y) dimensions
+           colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 4)); // and span the coordinate range -4..4 in both key (x) and value (y) dimensions
 
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-           double x, y, z;
+           double x, y, z;/*
            // Questions: Can we plot specific coordinates or do we have to plot in a specific range?
            for(int xIndex = 0; xIndex<=nx; xIndex++){
                for(int yIndex = 0; yIndex<=nx; yIndex++){
@@ -39,6 +39,19 @@ void colocalizationwindow::makeHeatMap(){
                     z = sin(x) + sin(y);
                     colorMap->data()->setCell(xIndex, yIndex, getP()[xIndex]);
                }
+           }*/
+
+           qDebug() << "X vector" <<getX();
+           qDebug() << "Y vector" <<getY();
+           qDebug() << "P vector" <<getP();
+
+
+           for(int xIndex = 0; xIndex<=nx; xIndex++){
+               //colorMap->data()->cellToCoord(getX()[xIndex],getY()[xIndex], &x, &y);
+                    // random function for third coordinate
+                    //z = sin(x) + sin(y);
+               colorMap->data()->setCell(getX()[xIndex], getY()[xIndex], getP()[xIndex]);
+
            }
 
            // set the color gradient of the color map to one of the presets:
