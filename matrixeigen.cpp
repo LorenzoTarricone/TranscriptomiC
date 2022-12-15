@@ -77,10 +77,10 @@ void MatrixEigen::generateRandomCSV(int n, int m, int start, int end, string fil
     for(int i = 0; i < m; i++){ //for each row i
 
         for(int j = 0; j < n-1; j++){ // add n-1 random floating point values, separated by a comma
-            fout << setprecision(3) << start + (double)(rand()) / ((double)(RAND_MAX/(end - start))) << ",";
+            fout << std::setprecision(3) << start + (double)(rand()) / ((double)(RAND_MAX/(end - start))) << ",";
         }
         // end each line with a last random value followed by a new line character \n
-        fout << setprecision(3) << start + (double)(rand()) / ((double)(RAND_MAX/(end - start))) << "\n";
+        fout << std::setprecision(3) << start + (double)(rand()) / ((double)(RAND_MAX/(end - start))) << "\n";
     }
     // close the file (stream)
     fout.close();
