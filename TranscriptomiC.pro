@@ -10,6 +10,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bioprocesswindow.cpp \
+    colocalizationwindow.cpp \
     filedata.cpp \
     genename.cpp \
     main.cpp \
@@ -21,6 +23,8 @@ SOURCES += \
     colocalization_matrix.cpp
 
 HEADERS += \
+    bioprocesswindow.h \
+    colocalizationwindow.h \
     filedata.h \
     genename.h \
     mainwindow.h \
@@ -31,6 +35,8 @@ HEADERS += \
 
 FORMS += \
     SecondWindow.ui \
+    bioprocesswindow.ui \
+    colocalizationwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
