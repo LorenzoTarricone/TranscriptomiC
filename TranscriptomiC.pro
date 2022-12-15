@@ -16,6 +16,7 @@ SOURCES += \
     mainwindow.cpp \
     matrixeigen.cpp \
     parsemtx.cpp \
+    parsetxtbeams.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     mainwindow.h \
     matrixeigen.h \
     parsemtx.h \
+    parsetxtbeams.h \
     qcustomplot.h \
     SparseMatrix.h \
     SecondWindow.h
