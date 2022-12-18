@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "qdebug.h"
 #include <QMainWindow>
 #include "SecondWindow.h"
 #include "filedata.h"
@@ -18,6 +19,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //MainWindow* get_Pointer() {return PointerMainWindow;};
+
+
 private slots:
     void on_SelectButton_clicked();
     void on_UploadButton_clicked();
@@ -28,7 +32,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    SecondWindow *Pointersecondwindow;
+    SecondWindow *PointerSecondWindow;
 
     QString userText;
     std::string input;
