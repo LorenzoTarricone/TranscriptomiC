@@ -1,0 +1,7 @@
+Given an n by k matrix where n is the number of genes and k is the number of cell. And another 2 by k matrix giving x and y coordinates for each cell.
+Steps:
+1. Build distance matrix using simple distance formlua sqrt_root(pow(x1 -x2,2) +pow(y1 - y2, 2)) and using the distance as entries to build a k by k 
+distance matrix B.
+2. Build linkage score between cells using function: L_ij = ((max(o_1m -B_ij)/m)^p)*100, where L_ij is the linkage between cell i and j; B_ij is distance
+between cell i and j; m is the maximum distance; p is the hyper peremeter.
+hyper peremeter -determine 

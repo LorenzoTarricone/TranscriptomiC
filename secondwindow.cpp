@@ -80,4 +80,24 @@ void SecondWindow::makePlot() {
     //************************************************************************************************************************************************
 }
 
-//C:\Users\leona\OneDrive\Bureau\ScatterTest5\recData.csv
+void SecondWindow::on_ColocalizationButton_clicked()
+{
+    coWindow = new colocalizationwindow(this);
+    coWindow->setX(this->getX());
+    coWindow->setY(this->getY());
+    coWindow->setP(this->getP());
+
+    this->hide();
+    coWindow->show();
+    coWindow->makeHeatMap();
+
+}
+
+
+void SecondWindow::on_BiologicalButton_clicked()
+{
+    bioWindow = new bioprocesswindow(this);
+    this->hide();
+    bioWindow->show();
+}
+
