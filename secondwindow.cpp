@@ -80,6 +80,7 @@ void SecondWindow::makePlot() {
     //************************************************************************************************************************************************
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 void SecondWindow::on_ColocalizationButton_clicked()
 {
@@ -115,3 +116,6 @@ void SecondWindow::on_NewFileButton_clicked()
 
 //C:\Users\leona\OneDrive\Bureau\ScatterTest5\recData.csv
 >>>>>>> Stashed changes
+=======
+//C:\Users\leona\OneDrive\Bureau\ScatterTest5\recData.csv
+>>>>>>> parent of 63260a0 (Merge branch 'main' into QMake-Revamp-Second-GUIdirected)

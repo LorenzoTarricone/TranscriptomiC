@@ -29,6 +29,7 @@ void MainWindow::close(){
     Pointersecondwindow = new SecondWindow(this);
     Pointersecondwindow->setX(inputData.getX());
     Pointersecondwindow->setY(inputData.getY());
+<<<<<<< HEAD
     Pointersecondwindow->setP(inputData.getP());
 
 =======
@@ -36,6 +37,8 @@ void MainWindow::close(){
     PointerSecondWindow->setX(inputData.getX());
     PointerSecondWindow->setY(inputData.getY());
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 63260a0 (Merge branch 'main' into QMake-Revamp-Second-GUIdirected)
 
     PointerSecondWindow->makePlot();
     PointerSecondWindow->show();
@@ -45,7 +48,7 @@ void MainWindow::close(){
 
 void MainWindow::on_SelectButton_clicked()
 {
-    QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
+    QString FileFilter = "Text File (*.txt) ;; CSV File (*.csv) ;; MTX File (*.mtx)"; //All File (*.*) ;;
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     ui->plainTextEdit->setPlainText(userText);
 
@@ -62,17 +65,20 @@ void MainWindow::on_UploadButton_clicked()
 
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
-        close();
     }
     else{
         QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
 
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
 >>>>>>> Stashed changes
+=======
+    close();
+>>>>>>> parent of 63260a0 (Merge branch 'main' into QMake-Revamp-Second-GUIdirected)
 
 
 }
