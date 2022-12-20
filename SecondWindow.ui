@@ -23,19 +23,6 @@
       <height>191</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="NewFileButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>80</width>
-       <height>18</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>New File</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QPushButton" name="ColocalizationButton">
     <property name="geometry">

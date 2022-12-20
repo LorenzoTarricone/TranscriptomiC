@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "SecondWindow.h"
 #include "ui_mainwindow.h"
 #include <fstream>
 #include <QMessageBox>
@@ -20,25 +19,19 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete PointerSecondWindow;
+    delete Pointersecondwindow;
 }
 
 void MainWindow::close(){
 
-<<<<<<< Updated upstream
     Pointersecondwindow = new SecondWindow(this);
     Pointersecondwindow->setX(inputData.getX());
     Pointersecondwindow->setY(inputData.getY());
     Pointersecondwindow->setP(inputData.getP());
 
-=======
-    PointerSecondWindow = new SecondWindow(this);
-    PointerSecondWindow->setX(inputData.getX());
-    PointerSecondWindow->setY(inputData.getY());
->>>>>>> Stashed changes
 
-    PointerSecondWindow->makePlot();
-    PointerSecondWindow->show();
+    Pointersecondwindow->makePlot();
+    Pointersecondwindow->show();
 
     this->hide();
 }
@@ -69,10 +62,6 @@ void MainWindow::on_UploadButton_clicked()
 
     }
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 
 }

@@ -1,4 +1,4 @@
-#include "SecondWindow.h"
+#include "secondwindow.h"
 #include "ui_SecondWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
@@ -80,7 +80,6 @@ void SecondWindow::makePlot() {
     //************************************************************************************************************************************************
 }
 
-<<<<<<< Updated upstream
 void SecondWindow::on_ColocalizationButton_clicked()
 {
     coWindow = new colocalizationwindow(this);
@@ -102,16 +101,3 @@ void SecondWindow::on_BiologicalButton_clicked()
     bioWindow->show();
 }
 
-=======
-
-
-void SecondWindow::on_NewFileButton_clicked()
-{
-    PointerMainWindow->show();
-    this->hide();
-
-}
-
-
-//C:\Users\leona\OneDrive\Bureau\ScatterTest5\recData.csv
->>>>>>> Stashed changes

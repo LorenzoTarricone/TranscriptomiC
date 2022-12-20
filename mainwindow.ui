@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(224,224,224);</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
@@ -27,8 +24,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border: 1px solid black ;
+     <string notr="true">border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
 </string>
