@@ -13,8 +13,6 @@ public:
 
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
-    const QVector<double>& getP() {return pValues;};
-
 
     bool readData(std::string fileName);
 
@@ -22,11 +20,9 @@ public:
 private:
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
-    QVector<double> pValues;
 
     std::string x;
     std::string y;
-    std::string p;
     std::string row;
 
 

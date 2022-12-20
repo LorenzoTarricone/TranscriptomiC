@@ -1,8 +1,6 @@
 #ifndef SECONDWINDOW_H
 #define SECONDWINDOW_H
 
-#include "colocalizationwindow.h"
-#include "bioprocesswindow.h"
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
@@ -23,32 +21,29 @@ public:
     void makePlot();
 
 
-    void setX(const QVector<double>& givenX) {x = givenX;};
+    void setX(const QVector<double>& givenX) {
+
+        //qDebug() << "setX()" << QString::number(givenX.size());//
+        x = givenX;
+        //qDebug() << "size of x" << QString::number(x.size());//
+
+
+    };
     void setY(const QVector<double>& givenY) {y = givenY;};
-    void setP(const QVector<double>& givenP) {p = givenP;};
 
-
-    const QVector<double>& getX() {return x;};
+    const QVector<double>& getX() {
+        //qDebug() << "size of x in the getX() fucntion" << QString::number(x.size());
+        return x;};
     const QVector<double>& getY() {return y;};
-    const QVector<double>& getP() {return p;};
 
 
 
-
-private slots:
-    void on_ColocalizationButton_clicked();
-
-    void on_BiologicalButton_clicked();
 
 private:
     Ui::SecondWindow *ui;
-    colocalizationwindow *coWindow;
-    bioprocesswindow *bioWindow;
-
 
     QVector<double> x;
     QVector<double> y;
-    QVector<double> p;
 
 
 };
