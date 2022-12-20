@@ -1,5 +1,9 @@
 #include "colocalizationwindow.h"
 #include "ui_colocalizationwindow.h"
+#include "filedata.h"
+#include <iostream>
+#include "qdebug.h"
+
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
     QDialog(parent),
@@ -64,3 +68,45 @@ void colocalizationwindow::makeHeatMap(){
            ui->customPlot->rescaleAxes();
 
 }
+
+void colocalizationwindow::on_SaveHeatmapButton_clicked()
+{
+    QPixmap heatmap;
+    heatmap = ui->customPlot->grab();
+    QString filename;
+
+    filename = QFileDialog::getSaveFileName(this,"Save file");
+    //qDebug() << filename;
+    //filename = filename +
+    //QFile file("HeatMap.png");
+    //file.open(QIODevice::WriteOnly);
+    //heatmap.save(&file, "PNG");
+
+    heatmap.save(filename + ".png"); //QDir::currentPath() + "/HeatMap.png"
+    //qDebug() << QDir::currentPath();
+}
+
+
+void colocalizationwindow::on_UploadGenesButton_clicked()
+{
+    QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
+    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
+    std::string filename;
+    FileData geneNames;
+    bool uploadChecker;
+
+    filename = userText.toStdString();
+
+
+    uploadChecker = geneNames.readData(filename);
+
+    if(uploadChecker){
+        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
+        close();
+    }
+    else{
+        QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
+
+    }
+}
+
