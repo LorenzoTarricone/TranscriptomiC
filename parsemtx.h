@@ -12,6 +12,7 @@ public:
     parsemtx();
     void readFile(std::string filename);
     void print();
+    void filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes = true, double min_expr_perc = 0.1,std::string type_of_transcriptome = NULL);
 
 private:
     Eigen::MatrixXd matrix;
