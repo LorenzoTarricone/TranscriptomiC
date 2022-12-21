@@ -92,6 +92,25 @@ void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
     matrix.conservativeResize(numRows,numCols);
 }
 
+// function to read a txt file with gene names (row names) - use until parse_file branch is merged into main
+// from https://github.com/LorenzoTarricone/TranscriptomiC/blob/parse_file/readgenetxt.cpp
+std::vector<std::string> listgene(std::string txt_file){
+    std::vector<std::string> list;
+    std::ifstream file;
+    std::string value;
+
+    file.open(txt_file); //open file
+    if ( file.is_open() ) {
+        while (!file.eof()){ //check if there is still a line
+        file>>value;
+        list.push_back(value);
+        value.clear();
+    }}
+    file.close();
+    return list;
+}
+
+
 // filter function for the expression matrix, at the moment in sparse representation
 // given a sparse matrix, filters it according to given arguments, converts it to dense and assigns to private member matrix
 
@@ -151,5 +170,19 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
     this->matrix = dense_matrix;
 }
 
+// this method will read the genenames from a file and create a map that stores the indicies as values and
+// the genenames as key to a map
+// TODO: determine whether a map of the opposite key-value relation or a list would be more beneficial
 
+void parsemtx::getRowNamesFromFile(std::string filename){
+    std::vector<std::string> string_list = listgene(filename);
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = string_list.begin(); i != string_list.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // incremeent index
+        index++;
+    }
+}
 
