@@ -2,8 +2,6 @@
 #include "parsemtx.h"
 #include "parsetxtbeams.h"
 #include "matrixeigen.h"
-
-
 #include <QApplication>
 
 int main(int argc, char *argv[])

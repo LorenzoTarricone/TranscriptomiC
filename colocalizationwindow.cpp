@@ -1,5 +1,9 @@
 #include "colocalizationwindow.h"
 #include "ui_colocalizationwindow.h"
+#include "filedata.h"
+#include <iostream>
+#include "qdebug.h"
+
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
     QDialog(parent),
@@ -30,21 +34,6 @@ void colocalizationwindow::makeHeatMap(){
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-           double x, y, z;/*
-           // Questions: Can we plot specific coordinates or do we have to plot in a specific range?
-           for(int xIndex = 0; xIndex<=nx; xIndex++){
-               for(int yIndex = 0; yIndex<=nx; yIndex++){
-                    colorMap->data()->cellToCoord(getX()[xIndex],getY()[yIndex], &x, &y);
-                    // random function for third coordinate
-                    z = sin(x) + sin(y);
-                    colorMap->data()->setCell(xIndex, yIndex, getP()[xIndex]);
-               }
-           }*/
-
-           qDebug() << "X vector" <<getX();
-           qDebug() << "Y vector" <<getY();
-           qDebug() << "P vector" <<getP();
-
 
            for(int xIndex = 0; xIndex<=nx; xIndex++){
                //colorMap->data()->cellToCoord(getX()[xIndex],getY()[xIndex], &x, &y);
@@ -64,3 +53,50 @@ void colocalizationwindow::makeHeatMap(){
            ui->customPlot->rescaleAxes();
 
 }
+
+void colocalizationwindow::on_SaveHeatmapButton_clicked()
+{
+    QPixmap heatmap;
+    QString filename;
+
+    //grabs the heatmap widget as a QPixmap
+    heatmap = ui->customPlot->grab();
+
+    //opens the file explorer and get file name (with full location)
+    filename = QFileDialog::getSaveFileName(this,"Save file");
+
+
+    heatmap.save(filename + ".png"); //saves as .png
+
+    //qDebug() << filename;
+    //filename = filename +
+    //QFile file("HeatMap.png");
+    //file.open(QIODevice::WriteOnly);
+    //heatmap.save(&file, "PNG");
+    //qDebug() << QDir::currentPath();
+}
+
+
+void colocalizationwindow::on_UploadGenesButton_clicked()
+{
+    QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
+    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
+    std::string filename;
+    FileData geneNames;
+    bool uploadChecker;
+
+    filename = userText.toStdString();
+
+
+    uploadChecker = geneNames.readData(filename);
+
+    if(uploadChecker){
+        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
+        close();
+    }
+    else{
+        QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
+
+    }
+}
+
