@@ -22,6 +22,7 @@ SOURCES += \
     secondwindow.cpp \
     #SparseMatrix.cpp \
     #colocalization_matrix.cpp
+    readgenetxt.cpp \
 
 HEADERS += \
     bioprocesswindow.h \
@@ -34,6 +35,7 @@ HEADERS += \
     qcustomplot.h \
     #SparseMatrix.h \
     SecondWindow.h
+    readgenetxt.h \
 
 FORMS += \
     SecondWindow.ui \
