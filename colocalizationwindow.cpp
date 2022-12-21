@@ -34,21 +34,6 @@ void colocalizationwindow::makeHeatMap(){
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-           double x, y, z;/*
-           // Questions: Can we plot specific coordinates or do we have to plot in a specific range?
-           for(int xIndex = 0; xIndex<=nx; xIndex++){
-               for(int yIndex = 0; yIndex<=nx; yIndex++){
-                    colorMap->data()->cellToCoord(getX()[xIndex],getY()[yIndex], &x, &y);
-                    // random function for third coordinate
-                    z = sin(x) + sin(y);
-                    colorMap->data()->setCell(xIndex, yIndex, getP()[xIndex]);
-               }
-           }*/
-
-           qDebug() << "X vector" <<getX();
-           qDebug() << "Y vector" <<getY();
-           qDebug() << "P vector" <<getP();
-
 
            for(int xIndex = 0; xIndex<=nx; xIndex++){
                //colorMap->data()->cellToCoord(getX()[xIndex],getY()[xIndex], &x, &y);
@@ -72,17 +57,22 @@ void colocalizationwindow::makeHeatMap(){
 void colocalizationwindow::on_SaveHeatmapButton_clicked()
 {
     QPixmap heatmap;
-    heatmap = ui->customPlot->grab();
     QString filename;
 
+    //grabs the heatmap widget as a QPixmap
+    heatmap = ui->customPlot->grab();
+
+    //opens the file explorer and get file name (with full location)
     filename = QFileDialog::getSaveFileName(this,"Save file");
+
+
+    heatmap.save(filename + ".png"); //saves as .png
+
     //qDebug() << filename;
     //filename = filename +
     //QFile file("HeatMap.png");
     //file.open(QIODevice::WriteOnly);
     //heatmap.save(&file, "PNG");
-
-    heatmap.save(filename + ".png"); //QDir::currentPath() + "/HeatMap.png"
     //qDebug() << QDir::currentPath();
 }
 

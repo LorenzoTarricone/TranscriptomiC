@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1px solid cyan ;
+     <string notr="true">border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
 </string>
@@ -81,7 +81,7 @@ padding: 0 8px;
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(220,220,220);
-border: 1px solid rgb(0,220,255) ;
+border: 1px solid rgb(0,200,255) ;
 border-radius: 5px;
 padding: 0 8px;
 </string>
@@ -106,7 +106,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(220,220,220);
-border: 1px solid cyan ;
+border: 1px solid rgb(0,180,255) ;
 border-radius: 5px;
 padding: 0 8px;
 </string>

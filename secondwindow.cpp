@@ -51,7 +51,14 @@ void SecondWindow::on_ColocalizationButton_clicked()
 void SecondWindow::on_BiologicalButton_clicked()
 {
     bioWindow = new bioprocesswindow(this);
+    bioWindow->setX(this->getX());
+    bioWindow->setY(this->getY());
+    bioWindow->setP(this->getP());
+
     this->hide();
     bioWindow->show();
+    bioWindow->makeHeatMap();
+    bioWindow->setProcessesToAnalyze();
+
 }
 
