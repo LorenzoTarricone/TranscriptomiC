@@ -13,26 +13,26 @@ SOURCES += \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
-    genename.cpp \
+    #genename.cpp \
     main.cpp \
     mainwindow.cpp \
-    matrixeigen.cpp \
-    parsemtx.cpp \
+    #matrixeigen.cpp \
+    #parsemtx.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
-    SparseMatrix.cpp \
-    colocalization_matrix.cpp
+    #SparseMatrix.cpp \
+    #colocalization_matrix.cpp
 
 HEADERS += \
     bioprocesswindow.h \
     colocalizationwindow.h \
     filedata.h \
-    genename.h \
+    #genename.h \
     mainwindow.h \
-    matrixeigen.h \
-    parsemtx.h \
+    #matrixeigen.h \
+    #parsemtx.h \
     qcustomplot.h \
-    SparseMatrix.h \
+    #SparseMatrix.h \
     SecondWindow.h
 
 FORMS += \
@@ -46,8 +46,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-macx:INCLUDEPATH += "$$PWD/eigen_mac"
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#macx:INCLUDEPATH += "$$PWD/eigen_mac"
+
 
 #INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
 

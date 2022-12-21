@@ -25,6 +25,11 @@ public:
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
 
+private slots:
+    void on_SaveHeatmapButton_clicked();
+
+    void on_UploadGenesButton_clicked();
+
 private:
     Ui::colocalizationwindow *ui;
     QVector<double> xCoordinates;

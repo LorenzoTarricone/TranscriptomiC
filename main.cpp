@@ -1,7 +1,4 @@
 #include "mainwindow.h"
-#include "parsemtx.h"
-
-
 #include <QApplication>
 
 int main(int argc, char *argv[])

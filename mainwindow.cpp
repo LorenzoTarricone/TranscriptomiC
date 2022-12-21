@@ -47,7 +47,7 @@ void MainWindow::on_SelectButton_clicked()
 
 void MainWindow::on_UploadButton_clicked()
 {
-    userText= ui->plainTextEdit->toPlainText();
+    userText = ui->plainTextEdit->toPlainText();
     filename = userText.toStdString();
 
 
