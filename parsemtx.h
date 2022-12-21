@@ -23,6 +23,7 @@ private:
     // map containing the gene names and respective row index
     // TODO: check if this is the ideal data type for this
     std::map<std::string, int> geneIndex;
+    std::vector<std::string> all_names;
 };
 
 #endif // PARSEMTX_H
