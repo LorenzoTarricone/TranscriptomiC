@@ -47,28 +47,3 @@ MatrixXd matrix_linkage(MatrixXd A, double m, double p){
 }
 
 
-// given an eigen matrix containing the linkage values (kxk) and a eigen matrix containing the gene - beams values (nxn)
-// returns an nxk matrix indicating average gene expression in neighbouring beams
-
-MatrixXd combine_linkage(MatrixXd A_linkage, MatrixXd A_expression){
-    int k = A_linkage.rows();
-    int n = A_expression.rows();
-    MatrixXd A_combine(n,k);
-    // iterate through columns of A_combine
-    for(int j = 0; j < k; j++){
-        // since we're considering A_combine and A_expression column-wise, iterate through rows per column
-        for(int i = 0; i < n; i++){
-            // initialize each entry to simplify the sum
-            A_combine(i,j) = 0;
-            // compute the sum along row j of the linkage matrix, excluding entry
-            for(int r = 0; r < k; r++){
-                if(r != j){
-                    A_combine(i,j) += A_linkage(j,r)*A_expression(i,r);
-                }// end if
-            }// end for r
-         }// end for i
-    }// end for j
-    return A_combine;
-} // end method
-
-

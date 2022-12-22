@@ -15,8 +15,6 @@ double max (double a, double b);
 double linkage(double d, double m, double p);
 MatrixXd matrix_linkage(MatrixXd A, double m, double p);
 
-MatrixXd combine_linkage(MatrixXd A_linkage, MatrixXd A_expression);
-
 //function to read/save data
 void saveData(string fileName, MatrixXd  matrix);
 Eigen::MatrixXd openData(std::string fileToOpen);
