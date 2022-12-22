@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "changewindow.h"
 #include <fstream>
 #include <QMessageBox>
 #include <iostream>
@@ -19,18 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete Pointersecondwindow;
 }
 
 void MainWindow::close(){
-
-    Pointersecondwindow = new SecondWindow(this);
-    Pointersecondwindow->setX(inputData.getX());
-    Pointersecondwindow->setY(inputData.getY());
-
-    Pointersecondwindow->makePlot();
-    Pointersecondwindow->show();
-
+    ChangeWindow change;
+    change.ChangeToSecondWindow();
     this->hide();
 }
 
@@ -43,8 +37,8 @@ void MainWindow::on_SelectButton_clicked()
 }
 
 
-void MainWindow::on_UploadButton_clicked()
-{
+void MainWindow::on_UploadButton_clicked(){
+
     userText= ui->plainTextEdit->toPlainText();
     filename = userText.toStdString();
 
@@ -63,5 +57,10 @@ void MainWindow::on_UploadButton_clicked()
 
 
 }
+
+
+// -> works on a pointer
+// :: works one namespace
+// .  works on a object
 
 

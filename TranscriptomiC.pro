@@ -14,13 +14,16 @@ SOURCES += \
     mainwindow.cpp \
     qcustomplot.cpp \
     secondwindow.cpp\
+    changewindow.cpp\
     \
 
 HEADERS += \
     filedata.h \
     mainwindow.h \
     qcustomplot.h \
-    SecondWindow.h
+    SecondWindow.h\
+    changewindow.h\
+
 
 FORMS += \
     SecondWindow.ui \

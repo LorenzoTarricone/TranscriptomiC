@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "SecondWindow.h"
 #include "filedata.h"
 
 
@@ -27,8 +26,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
-    SecondWindow *Pointersecondwindow;
 
     QString userText;
     std::string input;
