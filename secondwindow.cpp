@@ -32,8 +32,33 @@ void SecondWindow::makePlot() {
     ui->customPlot->yAxis->setRange(0,10);
 
     ui->customPlot->replot();
+}
 
+void SecondWindow::on_ColocalizationButton_clicked()
+{
+    coWindow = new colocalizationwindow(this);
+    coWindow->setX(this->getX());
+    coWindow->setY(this->getY());
+    coWindow->setP(this->getP());
+
+    this->hide();
+    coWindow->show();
+    coWindow->makeHeatMap();
 
 }
 
-//C:\Users\leona\OneDrive\Bureau\ScatterTest5\recData.csv
+
+void SecondWindow::on_BiologicalButton_clicked()
+{
+    bioWindow = new bioprocesswindow(this);
+    bioWindow->setX(this->getX());
+    bioWindow->setY(this->getY());
+    bioWindow->setP(this->getP());
+
+    this->hide();
+    bioWindow->show();
+    bioWindow->makeHeatMap();
+    bioWindow->setProcessesToAnalyze();
+
+}
+

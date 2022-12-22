@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "changewindow.h"
 #include <fstream>
 #include <QMessageBox>
 #include <iostream>
@@ -20,26 +19,35 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete Pointersecondwindow;
 }
 
 void MainWindow::close(){
-    ChangeWindow change;
-    change.ChangeToSecondWindow();
+
+    Pointersecondwindow = new SecondWindow(this);
+    Pointersecondwindow->setX(inputData.getX());
+    Pointersecondwindow->setY(inputData.getY());
+    Pointersecondwindow->setP(inputData.getP());
+
+
+    Pointersecondwindow->makePlot();
+    Pointersecondwindow->show();
+
     this->hide();
 }
 
 void MainWindow::on_SelectButton_clicked()
 {
-    QString FileFilter = "Text File (*.txt) ;; CSV File (*.csv) ;; MTX File (*.mtx)"; //All File (*.*) ;;
+    QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     ui->plainTextEdit->setPlainText(userText);
 
 }
 
 
-void MainWindow::on_UploadButton_clicked(){
-
-    userText= ui->plainTextEdit->toPlainText();
+void MainWindow::on_UploadButton_clicked()
+{
+    userText = ui->plainTextEdit->toPlainText();
     filename = userText.toStdString();
 
 
@@ -47,20 +55,15 @@ void MainWindow::on_UploadButton_clicked(){
 
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
+        close();
     }
     else{
         QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
 
     }
 
-    close();
 
 
 }
-
-
-// -> works on a pointer
-// :: works one namespace
-// .  works on a object
 
 

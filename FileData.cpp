@@ -1,6 +1,5 @@
 #include "filedata.h"
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 FileData::FileData()
@@ -55,6 +54,32 @@ bool FileData::readData(std::string fileName){
 
     }*/
     coordinates.close();
+
+    return true;
+}
+
+bool FileData::readGenes(std::string fileName){
+    std::ifstream genes;
+    genes.open(fileName);
+
+    if(genes.fail()){return false;};
+
+    std::string line = "";
+
+    while(getline(genes, line)){
+        std::stringstream s(line);
+
+        getline(s, g, ',');
+
+        genesToAnalyze.push_back(g);
+
+        g="";
+
+
+        line="";
+    }
+
+    genes.close();
 
     return true;
 }
