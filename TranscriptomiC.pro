@@ -22,6 +22,10 @@ SOURCES += \
     secondwindow.cpp \
     SparseMatrix.cpp \
     colocalization_matrix.cpp
+    parsetxtbeams.cpp \
+    qcustomplot.cpp \
+    secondwindow.cpp \
+    readgenetxt.cpp \
 
 HEADERS += \
     bioprocesswindow.h \
@@ -31,9 +35,11 @@ HEADERS += \
     mainwindow.h \
     matrixeigen.h \
     parsemtx.h \
+    parsetxtbeams.h \
     qcustomplot.h \
     SparseMatrix.h \
     SecondWindow.h
+    readgenetxt.h \
 
 FORMS += \
     SecondWindow.ui \
