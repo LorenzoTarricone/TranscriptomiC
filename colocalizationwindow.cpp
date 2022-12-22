@@ -3,6 +3,8 @@
 #include "filedata.h"
 #include <iostream>
 #include "qdebug.h"
+#include <fstream>
+#include <sstream>
 
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
@@ -68,31 +70,30 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
 
     heatmap.save(filename + ".png"); //saves as .png
 
-    //qDebug() << filename;
-    //filename = filename +
-    //QFile file("HeatMap.png");
-    //file.open(QIODevice::WriteOnly);
-    //heatmap.save(&file, "PNG");
-    //qDebug() << QDir::currentPath();
 }
 
 
 void colocalizationwindow::on_UploadGenesButton_clicked()
 {
-    QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
+    /* This method allows the user to uplaod a csv file with
+     * the names of the genes that they want to analyze. It
+     * opens the file explorer, then reads the file into
+     * a new instance of FileData. Data is stored in
+     * genesToAnalyze vector of the instance of FileData.
+     * (can be accessed with getter)
+     */
+
+    QString FileFilter = "CSV File (*.csv);;";
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     std::string filename;
     FileData geneNames;
     bool uploadChecker;
 
     filename = userText.toStdString();
-
-
-    uploadChecker = geneNames.readData(filename);
+    uploadChecker = geneNames.readGenes(filename); //checks for successful upload
 
     if(uploadChecker){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
-        close();
     }
     else{
         QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);

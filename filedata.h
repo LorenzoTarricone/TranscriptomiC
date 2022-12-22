@@ -14,9 +14,11 @@ public:
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
+    const std::vector<std::string>& getGenes() {return genesToAnalyze;};
 
 
     bool readData(std::string fileName);
+    bool readGenes(std::string fileName);
 
 
 private:
@@ -28,6 +30,9 @@ private:
     std::string y;
     std::string p;
     std::string row;
+
+    std::vector<std::string> genesToAnalyze;
+    std::string g;
 
 
 };

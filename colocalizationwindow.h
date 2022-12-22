@@ -32,9 +32,12 @@ private slots:
 
 private:
     Ui::colocalizationwindow *ui;
+
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
     QVector<double> pValues;
+
+
 
 };
 
