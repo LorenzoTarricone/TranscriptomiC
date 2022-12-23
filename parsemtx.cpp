@@ -8,6 +8,7 @@
 parsemtx::parsemtx()
 {
 //    Eigen::MatrixXd matrix;
+
 }
 void parsemtx::readFile(std::string filename){
     // from https://cplusplus.com/forum/general/65804/
@@ -112,6 +113,24 @@ std::vector<std::string> listgene(std::string txt_file){
     return list;
 }
 
+// this function updates the geneIndex map (dictonary) when a row is removed from the matrix
+void parsemtx::shiftGeneIndex(int row, int removed){
+    // TODO: decide how to deal with row deletion and mapping
+    // deal with element of the row to remove
+    std::string toRemove = all_names[row+removed];
+    geneIndex[toRemove] = -1;
+
+    // TODO: add error handeling
+    // for each element after the removed row, decrement index by 1
+    for(int i = row+removed+1; i < all_names.size(); i++){
+        geneIndex[all_names[i]] -= 1;
+    }
+
+    // since the all_names array is not changed by removing rows in the matrix,
+    // the argument removed is necessary
+
+
+}
 
 // filter function for the expression matrix, at the moment in sparse representation
 // given a sparse matrix, filters it according to given arguments, converts it to dense and assigns to private member matrix
@@ -166,7 +185,7 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
         if((zeroes && count[i] == 0) || count[i]/M <= min_expr_perc){
             removeRow(dense_matrix, i-removed);
             // take care of gene name index when row is removed
-            // shiftGeneIndex(i,removed);
+             shiftGeneIndex(i,removed);
             removed ++;
         }
     }

@@ -24,6 +24,7 @@ private:
     // TODO: check if this is the ideal data type for this
     std::map<std::string, int> geneIndex;
     std::vector<std::string> all_names;
+    void shiftGeneIndex(int row, int removed);
 };
 
 #endif // PARSEMTX_H
