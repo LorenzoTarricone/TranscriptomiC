@@ -33,6 +33,7 @@ void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
 
 // filter function for the expression matrix, at the moment in sparse representation
 // given a sparse matrix, filters it according to given arguments, converts it to dense and assigns to private member matrix
+// initiates dense matrix representation of the expression matrix (call necessary before other action, e.g. normalisation)
 
 // TODO: clear up use of argument type_of_transcriptom
 // TODO: decide whether object should directly filter private member sparse
@@ -52,8 +53,8 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
 
     // get rows and columns
     // https://stackoverflow.com/questions/68877737/how-to-get-shape-dimensions-of-an-eigen-matrix
-    int N = sparse.rows();
-    int M = sparse.cols();
+    N = sparse.rows();
+    M = sparse.cols();
 
     // declare and initialize count array (not a vector, because we will index directly
     int count[N];

@@ -17,12 +17,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     matrixeigen.cpp \
+    normalisation.cpp \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
-    colocalization_matrix.cpp
+    colocalization_matrix.cpp \
+    filtering.cpp
 
 HEADERS += \
     bioprocesswindow.h \

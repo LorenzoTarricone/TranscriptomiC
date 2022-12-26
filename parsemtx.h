@@ -15,6 +15,8 @@ public:
     void print();
     void filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes = true, double min_expr_perc = 0.1,std::string type_of_transcriptome = NULL);
     void getRowNamesFromFile(std::string filename);
+    void normalisation(std::string type_of_normal = "col_mean");
+
 
 private:
     Eigen::MatrixXd matrix;
@@ -25,6 +27,7 @@ private:
     std::map<std::string, int> geneIndex;
     std::vector<std::string> all_names;
     void shiftGeneIndex(int row, int removed);
+    int N,M;
 };
 
 #endif // PARSEMTX_H
