@@ -16,12 +16,8 @@ SOURCES += \
     genename.cpp \
     main.cpp \
     mainwindow.cpp \
-    matrixeigen.cpp \
-    parsemtx.cpp \
     qcustomplot.cpp \
-    secondwindow.cpp \
-    SparseMatrix.cpp \
-    colocalization_matrix.cpp
+    secondwindow.cpp
 
 HEADERS += \
     bioprocesswindow.h \
@@ -29,10 +25,7 @@ HEADERS += \
     filedata.h \
     genename.h \
     mainwindow.h \
-    matrixeigen.h \
-    parsemtx.h \
     qcustomplot.h \
-    SparseMatrix.h \
     SecondWindow.h
 
 FORMS += \
