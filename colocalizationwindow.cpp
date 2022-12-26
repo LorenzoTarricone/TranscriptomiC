@@ -28,19 +28,15 @@ void colocalizationwindow::makeHeatMap(){
            ui->customPlot->yAxis->setLabel("y");
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
-           int nx = 6;
-           int ny = 4;
+           int nx = 6; // We have 48 data points in recData
+           int ny = 6;
            colorMap->data()->setSize(nx, ny); // we want the color map to have nx * ny data points
-           colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 4)); // and span the coordinate range -4..4 in both key (x) and value (y) dimensions
+           colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 6)); // and span the coordinate range [] in both key (x) and value (y) dimensions
 
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-
-           for(int xIndex = 0; xIndex<=nx; xIndex++){
-               //colorMap->data()->cellToCoord(getX()[xIndex],getY()[xIndex], &x, &y);
-                    // random function for third coordinate
-                    //z = sin(x) + sin(y);
+           for(int xIndex = 0; xIndex<=48; xIndex++){
                colorMap->data()->setCell(getX()[xIndex], getY()[xIndex], getP()[xIndex]);
 
            }
