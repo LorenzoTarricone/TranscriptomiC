@@ -50,7 +50,16 @@ int main(int argc, char *argv[])
     QJsonDocument doc = searchGenes(params);
     QString strJson(doc.toJson(QJsonDocument::Indented));
     // print the string to the console
+
+    //try debug
     qDebug() << strJson;
+    qDebug("%strJson", qUtf8Printable(strJson));
+
+    //try print
+    std::cout<<strJson.toStdString().c_str()<<std::endl;
+    fprintf(stderr, "strJson: %s\n", qPrintable(strJson));
+    fprintf(stderr, "strJson: %s\n",strJson.toLocal8Bit().constData());
+    printf("%s\n", strJson.toStdString().c_str());
 
     MainWindow w;
     w.show();
