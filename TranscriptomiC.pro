@@ -17,14 +17,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     matrixeigen.cpp \
-    normalisation.cpp \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
-    colocalization_matrix.cpp \
-    filtering.cpp
+    colocalization_matrix.cpp
 
 HEADERS += \
     bioprocesswindow.h \
@@ -36,7 +34,7 @@ HEADERS += \
     parsemtx.h \
     parsetxtbeams.h \
     qcustomplot.h \
-    SparseMatrix.h \
+    colocalization_matrix.h \
     SecondWindow.h
 
 FORMS += \
@@ -50,9 +48,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-macx:INCLUDEPATH += "$$PWD/eigen_mac"
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
-#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
+INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 

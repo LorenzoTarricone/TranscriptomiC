@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include <Eigen/Dense>
-#include <SparseMatrix.h>
+#include <colocalization_matrix.h>
 #include <math.h>
 
 

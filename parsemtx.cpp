@@ -70,31 +70,6 @@ void parsemtx::print(){
           }
 }
 
-// declarations of functions to remove certain row or column from eigen dense matrix
-void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
-{
-    unsigned int numRows = matrix.rows()-1;
-    unsigned int numCols = matrix.cols();
-
-    if( rowToRemove < numRows )
-        matrix.block(rowToRemove,0,numRows-rowToRemove,numCols) = matrix.block(rowToRemove+1,0,numRows-rowToRemove,numCols);
-
-    matrix.conservativeResize(numRows,numCols);
-}
-
-void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
-{
-    unsigned int numRows = matrix.rows();
-    unsigned int numCols = matrix.cols()-1;
-
-    if( colToRemove < numCols )
-        matrix.block(0,colToRemove,numRows,numCols-colToRemove) = matrix.block(0,colToRemove+1,numRows,numCols-colToRemove);
-
-    matrix.conservativeResize(numRows,numCols);
-}
-
-
-
 // function to read a txt file with gene names (row names) - use until parse_file branch is merged into main
 // from https://github.com/LorenzoTarricone/TranscriptomiC/blob/parse_file/readgenetxt.cpp
 std::vector<std::string> listgene(std::string txt_file){
@@ -132,8 +107,27 @@ void parsemtx::shiftGeneIndex(int row, int removed){
 
 }
 
+
+// this method will read the genenames from a file and create a map that stores the indicies as values and
+// the genenames as key to a map
+// TODO: determine whether a map of the opposite key-value relation or a list would be more beneficial
+
+void parsemtx::getRowNamesFromFile(std::string filename){
+    all_names = listgene(filename);
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // incremeent index
+        index++;
+    }
+}
+
+
 // filter function for the expression matrix, at the moment in sparse representation
 // given a sparse matrix, filters it according to given arguments, converts it to dense and assigns to private member matrix
+// initiates dense matrix representation of the expression matrix (call necessary before other action, e.g. normalisation)
 
 // TODO: clear up use of argument type_of_transcriptom
 // TODO: decide whether object should directly filter private member sparse
@@ -153,8 +147,8 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
 
     // get rows and columns
     // https://stackoverflow.com/questions/68877737/how-to-get-shape-dimensions-of-an-eigen-matrix
-    int N = sparse.rows();
-    int M = sparse.cols();
+    N = sparse.rows();
+    M = sparse.cols();
 
     // declare and initialize count array (not a vector, because we will index directly
     int count[N];
@@ -182,7 +176,7 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
     // keep count of rows that have been removed
     int removed = 0;
     for(int i = 0;i<N;i++){
-        if((zeroes && count[i] == 0) || count[i]/M <= min_expr_perc){
+        if((zeroes && (count[i] == 0)) || count[i]/M <= min_expr_perc){
             removeRow(dense_matrix, i-removed);
             // take care of gene name index when row is removed
              shiftGeneIndex(i,removed);
@@ -193,19 +187,63 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
     this->matrix = dense_matrix;
 }
 
-// this method will read the genenames from a file and create a map that stores the indicies as values and
-// the genenames as key to a map
-// TODO: determine whether a map of the opposite key-value relation or a list would be more beneficial
+// this function applies different types of normalisation to the dense expression matrix
+// the sparse representation of the same inital matrix remains the same
 
-void parsemtx::getRowNamesFromFile(std::string filename){
-    all_names = listgene(filename);
-    int index = 0;
-    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
-    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
-        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-        this->geneIndex[*i] = index;
-        // incremeent index
-        index++;
+void parsemtx::normalisation(std::string type_of_normal){
+    // extendable for different types of normalisation
+    if(type_of_normal != "col_mean"){
+        return;
     }
+
+    // initiate array that will store the column sums
+    int col_sum[M];
+    for(int i = 0;i<M;i++){
+        col_sum[i] = 0;
+    }
+
+
+    // iterate through expression matrix in sparse representation to compute column sums
+    for (int k=0; k<sparse.outerSize(); ++k){
+        for (Eigen::SparseMatrix<double>::InnerIterator it(sparse,k); it; ++it)
+        {
+                col_sum[it.col()] += it.value();
+        }
+    }
+
+    // divide each entry in the dense matrix
+    // iterate through the dense matrix in storage order, default for Eigen --> col Major
+    // reference: https://stackoverflow.com/questions/16283000/most-efficient-way-to-loop-through-an-eigen-matrix
+    for (size_t j = 0, nRows = matrix.rows(), nCols = matrix.cols(); j < nCols; ++j){
+        for (size_t i = 0; i < nRows; ++i){
+            // this works since we are not eliminating columns, only rows
+            matrix(i,j) /= col_sum[j];
+        }
+    }
+
 }
+
+void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
+{
+    unsigned int numRows = matrix.rows()-1;
+    unsigned int numCols = matrix.cols();
+
+    if( rowToRemove < numRows )
+        matrix.block(rowToRemove,0,numRows-rowToRemove,numCols) = matrix.block(rowToRemove+1,0,numRows-rowToRemove,numCols);
+
+    matrix.conservativeResize(numRows,numCols);
+}
+
+void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
+{
+    unsigned int numRows = matrix.rows();
+    unsigned int numCols = matrix.cols()-1;
+
+    if( colToRemove < numCols )
+        matrix.block(0,colToRemove,numRows,numCols-colToRemove) = matrix.block(0,colToRemove+1,numRows,numCols-colToRemove);
+
+    matrix.conservativeResize(numRows,numCols);
+}
+
+
 
