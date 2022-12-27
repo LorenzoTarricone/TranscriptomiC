@@ -27,16 +27,17 @@ void bioprocesswindow::makeHeatMap(){
            ui->customPlot->yAxis->setLabel("y");
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
-           int nx = 6; // This is just for rec_Data: We need to find nx and ny for each individual file
-           int ny = 6;
+           int nx = 7; // This is just for rec_Data but we need to find nx and ny for each individual file
+           int ny = 7;
            colorMap->data()->setSize(nx, ny);
            colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 6)); //set the range of the HeatMap;
-           //This is just for rec_Data: We need to find the Range for each individual file
+           //This is just for rec_Data but we need to find the Range for each individual file
 
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
+           // Is it possible to do it more efficient?
 
-           for(int Index = 0; Index<49; Index++){ // We have 49 data points
+           for(int Index = 0; Index<nx * ny; Index++){ // We have 49 data points
                colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
            }
 
@@ -48,7 +49,7 @@ void bioprocesswindow::makeHeatMap(){
            colorScale->axis()->setLabel("Third coordinate");
 
            // set the color gradient of the color map to one of the presets:
-           //colorMap->setGradient(QCPColorGradient::gpPolar);
+           colorMap->setGradient(QCPColorGradient::gpPolar);
            // we could have also created a QCPColorGradient instance and added own colors to
            // the gradient, see the documentation of QCPColorGradient for what's possible.
            // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:

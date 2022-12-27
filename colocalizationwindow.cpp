@@ -29,8 +29,8 @@ void colocalizationwindow::makeHeatMap(){
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-           int nx = 6; // This is just for rec_Data: We need to find nx and ny for each individual file
-           int ny = 6;
+           int nx = 7; // This is just for rec_Data: We need to find nx and ny for each individual file
+           int ny = 7;
            colorMap->data()->setSize(nx, ny);
            colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 6)); //set the range of the HeatMap;
            //This is just for rec_Data: We need to find the Range for each individual file
@@ -38,8 +38,8 @@ void colocalizationwindow::makeHeatMap(){
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-           for(int xIndex = 0; xIndex<49; xIndex++){ // We have 49 data points
-               colorMap->data()->setCell(getX()[xIndex], getY()[xIndex], getP()[xIndex]);
+           for(int Index = 0; Index< nx * ny; Index++){ // We have 49 data points
+               colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
            }
            // add a color scale
            QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
