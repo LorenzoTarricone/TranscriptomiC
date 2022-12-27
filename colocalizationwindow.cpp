@@ -52,6 +52,10 @@ void colocalizationwindow::makeHeatMap(){
            colorMap->setGradient(QCPColorGradient::gpPolar);
            // we could have also created a QCPColorGradient instance and added own colors to
            // the gradient, see the documentation of QCPColorGradient for what's possible.
+
+           //Uncomment for ColourMap without interpolation
+           //colorMap->setInterpolate(false);
+
            // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
            colorMap->rescaleDataRange();
            // rescale the key (x) and value (y) axes so the whole color map is visible:
