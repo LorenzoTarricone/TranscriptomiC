@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->plainTextEdit->setPlainText("Please select a file and then upload it.");
 
+    Pointersecondwindow = new SecondWindow(this);
+    connect(Pointersecondwindow, &SecondWindow::uploadWindow, this, &MainWindow::show);
+
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +27,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::close(){
 
-    Pointersecondwindow = new SecondWindow(this);
+
+
     Pointersecondwindow->setX(inputData.getX());
     Pointersecondwindow->setY(inputData.getY());
     Pointersecondwindow->setP(inputData.getP());
@@ -47,6 +51,7 @@ void MainWindow::on_SelectButton_clicked()
 
 void MainWindow::on_UploadButton_clicked()
 {
+
     userText = ui->plainTextEdit->toPlainText();
     filename = userText.toStdString();
 

@@ -32,13 +32,16 @@ public:
     const QVector<double>& getY() {return y;};
     const QVector<double>& getP() {return p;};
 
-
+signals:
+    void uploadWindow();
 
 
 private slots:
     void on_ColocalizationButton_clicked();
 
     void on_BiologicalButton_clicked();
+
+    void on_FirstWindow_clicked();
 
 private:
     Ui::SecondWindow *ui;

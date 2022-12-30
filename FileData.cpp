@@ -8,6 +8,9 @@ FileData::FileData()
 }
 
 bool FileData::readData(std::string fileName){
+    xCoordinates.clear();
+    yCoordinates.clear();
+    pValues.clear();
 
     std::ifstream coordinates;
     coordinates.open(fileName);

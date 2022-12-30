@@ -10,7 +10,6 @@ SecondWindow::SecondWindow(QWidget *parent) :
     ui(new Ui::SecondWindow)
 {
     ui->setupUi(this);
-
 }
 
 SecondWindow::~SecondWindow()
@@ -36,7 +35,11 @@ void SecondWindow::makePlot() {
 
 void SecondWindow::on_ColocalizationButton_clicked()
 {
+
     coWindow = new colocalizationwindow(this);
+    connect(coWindow, &colocalizationwindow::secondWindow, this, &SecondWindow::show);
+
+
     coWindow->setX(this->getX());
     coWindow->setY(this->getY());
     coWindow->setP(this->getP());
@@ -50,7 +53,10 @@ void SecondWindow::on_ColocalizationButton_clicked()
 
 void SecondWindow::on_BiologicalButton_clicked()
 {
+
     bioWindow = new bioprocesswindow(this);
+    connect(bioWindow, &bioprocesswindow::secondWindow, this, &SecondWindow::show);
+
     bioWindow->setX(this->getX());
     bioWindow->setY(this->getY());
     bioWindow->setP(this->getP());
@@ -60,5 +66,12 @@ void SecondWindow::on_BiologicalButton_clicked()
     bioWindow->makeHeatMap();
     bioWindow->setProcessesToAnalyze();
 
+}
+
+
+void SecondWindow::on_FirstWindow_clicked()
+{
+    this->close();
+    emit uploadWindow();
 }
 

@@ -1,4 +1,5 @@
 #include "bioprocesswindow.h"
+#include "colocalizationwindow.h"
 #include "qcustomplot.h"
 #include "ui_bioprocesswindow.h"
 #include "qdebug.h"
@@ -10,6 +11,7 @@ bioprocesswindow::bioprocesswindow(QWidget *parent) :
     ui(new Ui::bioprocesswindow)
 {
     ui->setupUi(this);
+
 }
 
 bioprocesswindow::~bioprocesswindow()
@@ -95,5 +97,12 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     else{
         QMessageBox::information(this, "Error", "We cannot analyze that process, please provide another one.", QMessageBox::Ok);
       }
+}
+
+
+void bioprocesswindow::on_SecondWindowButton_clicked()
+{
+    this->close();
+    emit secondWindow();
 }
 

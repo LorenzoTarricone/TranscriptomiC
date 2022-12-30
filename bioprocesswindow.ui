@@ -26,11 +26,18 @@
   <widget class="QPushButton" name="SaveHeatmapButton">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>400</x>
      <y>90</y>
-     <width>80</width>
-     <height>18</height>
+     <width>121</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(243,242,240);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+</string>
    </property>
    <property name="text">
     <string>Save heatmap</string>
@@ -55,8 +62,35 @@
      <height>18</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(243,242,240);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+</string>
+   </property>
    <property name="text">
     <string>Analyze</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="SecondWindowButton">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>10</y>
+     <width>121</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(243,242,240);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+</string>
+   </property>
+   <property name="text">
+    <string>SecondWindow</string>
    </property>
   </widget>
  </widget>

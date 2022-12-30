@@ -1,4 +1,5 @@
 #include "colocalizationwindow.h"
+#include "bioprocesswindow.h"
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
 #include <iostream>
@@ -12,6 +13,8 @@ colocalizationwindow::colocalizationwindow(QWidget *parent) :
     ui(new Ui::colocalizationwindow)
 {
     ui->setupUi(this);
+
+
 }
 
 colocalizationwindow::~colocalizationwindow()
@@ -100,4 +103,13 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
 
     }
 }
+
+
+void colocalizationwindow::on_SecondWindowButton_clicked()
+{
+    this->close();
+    emit secondWindow();
+}
+
+
 

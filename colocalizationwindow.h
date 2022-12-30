@@ -1,6 +1,7 @@
 #ifndef COLOCALIZATIONWINDOW_H
 #define COLOCALIZATIONWINDOW_H
 
+#include "bioprocesswindow.h"
 #include <QDialog>
 
 namespace Ui {
@@ -25,10 +26,18 @@ public:
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
 
+signals:
+    void secondWindow();
+
+
 private slots:
     void on_SaveHeatmapButton_clicked();
 
     void on_UploadGenesButton_clicked();
+
+    void on_SecondWindowButton_clicked();
+
+    void on_BiologicalButton_clicked();
 
 private:
     Ui::colocalizationwindow *ui;
@@ -36,8 +45,6 @@ private:
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
     QVector<double> pValues;
-
-
 
 };
 
