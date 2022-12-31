@@ -7,7 +7,7 @@
 #include <iterator>
 #include <vector>
 #include <algorithm>
-#include <fstream>;
+#include <fstream>
 
 using std::cout; using std::cin;
 using std::endl; using std::string;
@@ -40,7 +40,7 @@ int main(){
 #include <iterator>
 #include <vector>
 #include <algorithm>
-#include <fstream>;
+#include <fstream>
 
 using std::cout; using std::cin;
 using std::endl; using std::string;
@@ -59,17 +59,23 @@ vector<string> readgenetxt::listgene(string txt_file){
     vector<string> list;
     ifstream file;
     string value;
-
+    cout<<"code";
     file.open(txt_file); //open file
     if ( file.is_open() ) {
+        cout<<"open";
         while (!file.eof()){ //check if there is still a line
         file>>value;
         list.push_back(value);
         value.clear();
-    }}
-    file.close();
+    }
+    file.close();}
+
     return list;
 }
+
+
+
+
 
 
 
