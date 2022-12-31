@@ -1,5 +1,4 @@
 QT       += core gui
-QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -48,8 +47,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-#macx:INCLUDEPATH += "$$PWD/eigen_mac"
-INCLUDEPATH += "Eigen"
+macx: INCLUDEPATH += "eigen-3.4.0/Eigen"
+win32: INCLUDEPATH += "eigen-3.4.0"
 
-LIBS += -lcurl
+macx: LIBS += -lcurl
