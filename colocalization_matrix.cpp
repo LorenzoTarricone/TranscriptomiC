@@ -72,3 +72,39 @@ MatrixXd combine_linkage(MatrixXd A_linkage, MatrixXd A_expression){
 } // end method
 
 
+// given a matrix that is built from the expression and the linkage (neighbourig) matrix in step 4
+// normalize with row mean and 2-base logarithm and returns nxn enrichement score matrix
+// ignore zero values to avoid neg infinity
+// TODO: determine whether method should modify given matrix or create new matrix
+
+MatrixXd enrichment(MatrixXd A){
+    int N = A.size();
+    // array to store the row sums (N size of matrix)
+    // TODO: add this function to the object that stores the colocalisation matrix, use private member N
+    double S_A[N];
+    // initialize array
+    for(int i = 0; i < N; i++){
+        S_A[i] = 0;
+     }// end for i
+    // iterate through matrix A columnwise (stored in col major)
+    for(int j = 0; j < N; j++){
+        for(int i = 0; i < N; i++){
+            // add normalized value to row mean array
+            S_A[i] += A(i,j)/N;
+         }// end for i
+    }// end for j
+
+    // initialize enrichment score matrix
+    MatrixXd A_enrichment(N,N);
+    // iterate through matrix A columnwise (stored in col major)
+    for(int j = 0; j < N; j++){
+        for(int i = 0; i < N; i++){
+            // add normalized value to row mean array
+            A_enrichment(i,j) = log(A(i,j)/S_A[i])/log(2);
+         }// end for i
+    }// end for j
+
+    // return matrix containing enrichment score
+    return A_enrichment;
+}
+
