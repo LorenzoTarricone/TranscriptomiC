@@ -12,8 +12,7 @@ ovarian samples that were simulated at the subspot level.
 
 - Data modelling: 
  $$\left( {y_i{\mathrm{|}}z_i = k,w_i} \right) \sim N\left( {y_i;\mu _k,w_i^{ - 1}{\Lambda}^{ - 1}} \right), z_i \in \left\{ {1, \ldots ,q} \right\}$$
-denotes the latent cluster that i belongs to, μk denotes the mean vector for cluster k, Λ denotes the precision matrix, and wi denotes an unknown (observation-spec
-ific) scaling factor.
+denotes the latent cluster that i belongs to, μk denotes the mean vector for cluster k, Λ denotes the precision matrix, and wi denotes an unknown (observation-specific) scaling factor.
 
 - Assume a common (fixed) precision matrix across clusters because the number of unknown parameters in the precision matrix quickly rises with higher numbers of 
 clusters and numbers of PCs modeled.
@@ -26,7 +25,7 @@ uncorrelated.
 - The number of clusters q is determined by prior biological knowledge when available or otherwise by the elbow of the pseudo-log-likelihood plot.
 
 - Place the following priors on μk, Λ and wi, 
- $$\begin{array}{l}\mu _k\mathop{\sim}\limits^{\textrm{i.i.d.}} N\left( {\mu _0,{\Lambda}_0^{ - 1}} \right),\\ {\Lambda}\mathop{\sim}\limits^{{\textrm{i.i.d.}}}\textrm{Wishart}_d\left( {\alpha ,{\textrm{diag}}\left( \beta \right)_d^{ - 1}} \right),\\ w_i\mathop{\sim}\limits^{\textrm{i.i.d.}}\Gamma\left( {\frac{\nu }{2},\frac{\nu }{2}} \right),\end{array}  $$,
+ $$\begin{array}{l}\mu _k\mathop{\sim}\limits^{\textrm{i.i.d.}} N\left( {\mu _0,{\Lambda}_0^{ - 1}} \right),\\ {\Lambda}\mathop{\sim}\limits^{{\textrm{i.i.d.}}}\textrm{Wishart}_d\left( {\alpha ,{\textrm{diag}}\left( \beta \right)_d^{ - 1}} \right),\\ w_i\mathop{\sim}\limits^{\textrm{i.i.d.}}\Gamma\left( {\frac{\nu }{2},\frac{\nu }{2}} \right),\end{array}$$,
 where μ0, Λ0, α and β are fixed hyperparameters. By default, we set μ0 to be the empirical mean vector of the data.
 
 - Iteratively and sequentially, each μk, Λ and wi is updated via Gibbs sampling, and each zi is updated via the Metropolis–Hastings algorithm. Each zi is updated by taking into account both the likelihood and spatial prior information.
