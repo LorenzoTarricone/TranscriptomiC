@@ -11,7 +11,7 @@ of spatial transcriptomic data and for clustering analysis.
 ovarian samples that were simulated at the subspot level.
 
 - Data modelling: 
- $$\left( {y_i{\mathrm{|}}z_i = k,w_i} \right) \sim N\left( {y_i;\mu _k,w_i^{ - 1}{\Lambda}^{ - 1}} \right), z_i \in \left\{ {1, \ldots ,q} \right\}$$
+ $$\left( {y_i{\mathrm{|}}z_i = k,w_i} \right) \sim N\left( {y_i;\mu _k,w_i^{ - 1}{\Lambda}^{ - 1}} \right)$$
 denotes the latent cluster that i belongs to, μk denotes the mean vector for cluster k, Λ denotes the precision matrix, and wi denotes an unknown (observation-specific) scaling factor.
 
 - Assume a common (fixed) precision matrix across clusters because the number of unknown parameters in the precision matrix quickly rises with higher numbers of 
