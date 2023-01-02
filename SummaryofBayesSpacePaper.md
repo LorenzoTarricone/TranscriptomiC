@@ -30,5 +30,5 @@ where μ0, Λ0, α and β are fixed hyperparameters. By default, we set μ0 to b
 
 - Iteratively and sequentially, each μk, Λ and wi is updated via Gibbs sampling, and each zi is updated via the Metropolis–Hastings algorithm. Each zi is updated by taking into account both the likelihood and spatial prior information.
 The Markov random field prior is given by the Potts model:
-$$\pi \left( {z_i} \right) = \exp \left( {\frac{\gamma }{{\left| {\left\langle {ij} \right\rangle } \right|}} \times 2\mathop {\sum }\limits_{\left\langle {ij} \right\rangle } I\left( {z_i = z_j} \right)} \right)$$,
+$$ \pi \left( {z_i} \right) = \exp \left( {\frac{\gamma }{{\left| {\left\langle {ij} \right\rangle } \right|}} \times 2\mathop {\sum }\limits_{\left\langle {ij} \right\rangle } I\left( {z_i = z_j} \right)} \right) $$,
 where $\left\langle {i\,j} \right\rangle$ denotes all spots j that are neighbors of i, I represents the indicator function, and γ is a fixed parameter controlling the strength of the smoothing.
