@@ -1,0 +1,6 @@
+Spatial transcriptomics at subspot resolution with BayesSpace
+
+https://www.nature.com/articles/s41587-021-00935-2
+
+- introduce BayesSpace, a fully Bayesian statistical method that uses the information from spatial neighborhoods for resolution enhancement 
+of spatial transcriptomic data and for clustering analysis
