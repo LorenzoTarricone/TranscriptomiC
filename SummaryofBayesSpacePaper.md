@@ -25,7 +25,7 @@ uncorrelated.
 - The number of clusters q is determined by prior biological knowledge when available or otherwise by the elbow of the pseudo-log-likelihood plot.
 
 - Place the following priors on μk, Λ and wi, 
- $$\begin{array}{l}\mu _k\mathop{\sim}\limits^{\textrm{i.i.d.}} N\left( {\mu _0,{\Lambda}_0^{ - 1}} \right),\\ {\Lambda}\mathop{\sim}\limits^{{\textrm{i.i.d.}}}\textrm{Wishart}_d\left( {\alpha ,{\textrm{diag}}\left( \beta \right)_d^{ - 1}} \right),\\ w_i\mathop{\sim}\limits^{\textrm{i.i.d.}}\Gamma\left( {\frac{\nu }{2},\frac{\nu }{2}} \right),\end{array}$$ ,
+$$\begin{array}{l}\mu _k\mathop{\sim}\limits^{\textrm{i.i.d.}} N\left( {\mu _0,{\Lambda}_0^{ - 1}} \right),\\ {\Lambda}\mathop{\sim}\limits^{{\textrm{i.i.d.}}}\textrm{Wishart}_d\left( {\alpha ,{\textrm{diag}}\left( \beta \right)_d^{ - 1}} \right),\\ w_i\mathop{\sim}\limits^{\textrm{i.i.d.}}\Gamma\left( {\frac{\nu }{2},\frac{\nu }{2}} \right),\end{array}$$
 where μ0, Λ0, α and β are fixed hyperparameters. By default, we set μ0 to be the empirical mean vector of the data.
 
 - Iteratively and sequentially, each μk, Λ and wi is updated via Gibbs sampling, and each zi is updated via the Metropolis–Hastings algorithm. Each zi is updated by taking into account both the likelihood and spatial prior information.
