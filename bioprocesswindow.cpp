@@ -1,7 +1,6 @@
 #include "bioprocesswindow.h"
 #include "qcustomplot.h"
 #include "ui_bioprocesswindow.h"
-#include "qdebug.h"
 #include <iostream>
 
 

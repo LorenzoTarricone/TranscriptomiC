@@ -5,6 +5,7 @@
 #include "qdebug.h"
 #include <fstream>
 #include <sstream>
+#include <Eigen/Core>
 
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
