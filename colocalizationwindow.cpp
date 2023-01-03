@@ -2,10 +2,7 @@
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
 #include <iostream>
-#include "qdebug.h"
-#include <fstream>
-#include <sstream>
-#include <Eigen/Core>
+
 
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :

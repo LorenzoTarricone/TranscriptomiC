@@ -12,7 +12,7 @@ CONFIG += c++17
 SOURCES += \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \
-    create_fake_colocalization_matrix.cpp \
+    fake_colocalization_matrix.cpp \
     filedata.cpp \
     genename.cpp \
     main.cpp \
@@ -23,7 +23,7 @@ SOURCES += \
 HEADERS += \
     bioprocesswindow.h \
     colocalizationwindow.h \
-    create_fake_colocalization_matrix.h \
+    fake_colocalization_matrix.h \
     filedata.h \
     genename.h \
     mainwindow.h \
@@ -34,6 +34,7 @@ FORMS += \
     SecondWindow.ui \
     bioprocesswindow.ui \
     colocalizationwindow.ui \
+    fake_colocalization_matrix.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -41,8 +42,10 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:INCLUDEPATH += "/Users/adrianduesselberg/CSE201Pro/eigen-3.4.0" # on Adrians MAC
-macx:INCLUDEPATH += "/Users/adrianduesselberg/CSE201Pro/eigen-3.4.0" # on Adrians MAC
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#macx:INCLUDEPATH += "$$PWD/eigen_mac"
+
+INCLUDEPATH += "/Users/adrianduesselberg/CSE201Pro/eigen-3.4.0" # on Adrians MAC
 
 
 #INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"

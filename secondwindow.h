@@ -3,6 +3,7 @@
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
+#include "fake_colocalization_matrix.h" // just for the test
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
@@ -40,10 +41,13 @@ private slots:
 
     void on_BiologicalButton_clicked();
 
+    void on_FakeButton_clicked();
+
 private:
     Ui::SecondWindow *ui;
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
+    fake_colocalization_matrix *FakeWindow; // test
 
 
     QVector<double> x;
