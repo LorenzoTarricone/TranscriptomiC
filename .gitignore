@@ -73,3 +73,5 @@ build-Transcriptomics-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/
 *.dll
 *.exe
 
+eigen-3.4.0/eigen-3.4.0/debug/gdb/__init__.py
+eigen-3.4.0/eigen-3.4.0/debug/gdb/printers.py
