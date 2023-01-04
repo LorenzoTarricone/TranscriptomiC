@@ -30,4 +30,9 @@ private:
     int N,M;
 };
 
+// declarations of functions to remove certain row or column from eigen dense matrix
+void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove);
+
+void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove);
+
 #endif // PARSEMTX_H

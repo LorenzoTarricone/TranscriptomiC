@@ -1,7 +1,8 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include <Eigen/Dense>
-#include <SparseMatrix.h>
+#include <unsupported/Eigen/CXX11/Tensor>
+#include <colocalization_matrix.h>
 #include <math.h>
 
 
@@ -13,6 +14,7 @@ double distance(double x1, double x2, double y1, double y2) {
     return sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
 };
 
+//STEP 1
 //given an eigen matrix, returns an eigen matrix with the distance between points
 MatrixXd matrix_distance(MatrixXd A){
     MatrixXd A_distance(A.rows(),A.rows());
@@ -34,6 +36,7 @@ double linkage(double d, double m, double p) {
     return pow((max(0,m-d))/m, p);
 }
 
+//STEP 2
 //given an eigen matrix of the distance between points and the values m and p, returns an eigen matrix with the linkage values
 MatrixXd matrix_linkage(MatrixXd A, double m, double p){
     MatrixXd A_distance = matrix_distance(A);
@@ -46,6 +49,7 @@ MatrixXd matrix_linkage(MatrixXd A, double m, double p){
     return A_linkage;
 }
 
+//STEP 3
 
 // given an eigen matrix containing the linkage values (kxk) and a eigen matrix containing the gene - beams values (nxn)
 // returns an nxk matrix indicating average gene expression in neighbouring beams
@@ -70,6 +74,55 @@ MatrixXd combine_linkage(MatrixXd A_linkage, MatrixXd A_expression){
     }// end for j
     return A_combine;
 } // end method
+
+
+
+//STEP 4
+
+//given two eigen matrices, the expression matrix the neighboring expression matrix from step 3, compare the columns of these matrices
+//by using a special functions with certain desirable characteristics to obtain a tensor. Both matrices have dimension n_genes*n_beams,
+//while the tensor will have dimension n_beams*n_genes*n_genes.
+
+double important_function(double x_i, double Y, double a=2, double b=0.5){
+    return -a*abs(x_i-Y) + b*(x_i+Y);
+}
+
+MatrixXd comparison(MatrixXd expression, MatrixXd neighbors, double a=1, double b=0.5){
+    int n_beams=expression.cols();
+    int n_genes=expression.rows();
+
+    //initialize 3d tensor array
+    Tensor<double, 3> Final_tensor(n_beams, n_genes, n_genes);
+
+
+    //building the tensor
+    for(int beam=0; beam<n_beams; beam++){
+        for(int i=0; i<n_genes; i++){
+            for(int j=0; j<n_genes;j++){
+                Final_tensor(beam, i, j) = important_function(expression(i,beam), neighbors(j,beam), a, b);
+            }
+        }
+    }
+
+    //taking the mean over the beams and returning the matrix
+    //TODO: make it more efficient?
+
+    MatrixXd mat_new(n_genes,n_genes);
+
+    for(int i=0;i<n_genes; i++){
+        for(int j=0;j<n_genes;j++){
+            vector<double> vec_for_average;
+            for (int beam=0;beam<n_beams;beam++){
+                vec_for_average.push_back(Final_tensor(beam,i,j));
+            }
+            mat_new(i,j)=reduce(vec_for_average.begin(), vec_for_average.end()) / n_beams;
+        }
+    }
+
+    return mat_new;
+}
+
+//STEP 5
 
 
 // given a matrix that is built from the expression and the linkage (neighbourig) matrix in step 4
