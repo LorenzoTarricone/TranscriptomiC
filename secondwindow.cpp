@@ -1,5 +1,4 @@
-#include "secondwindow.h"
-#include "fake_colocalization_matrix.h"
+#include "SecondWindow.h"
 #include "ui_SecondWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
@@ -63,16 +62,5 @@ void SecondWindow::on_BiologicalButton_clicked()
 
 }
 
-// Test to make a heatmap with a fake colocalization matrix
-void SecondWindow::on_FakeButton_clicked()
-{
-    FakeWindow = new fake_colocalization_matrix(this);
-    FakeWindow->setX(this->getX_from_matrix());
-    FakeWindow->setY(this->getY_from_matrix());
-    FakeWindow->setP(this->getP());
 
-    this->hide();
-    FakeWindow->show();
-    FakeWindow->makeHeatMap();
 
-}

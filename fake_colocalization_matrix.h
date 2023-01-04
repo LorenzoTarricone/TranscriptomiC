@@ -3,27 +3,25 @@
 
 #include <Eigen/Eigen>
 /*Includes Dense and Sparse header files (the whole Eigen library)*/
+#include <QVector>
+
 using Eigen::MatrixXd;
 
-#include <QDialog>
-
-namespace Ui {
-class fake_colocalization_matrix;
-}
-
-class fake_colocalization_matrix : public QDialog
-{
-    Q_OBJECT
-
+class fake_colocalization_matrix {
 public:
-    explicit fake_colocalization_matrix(QWidget *parent = nullptr);
+    fake_colocalization_matrix(MatrixXd m);
     ~fake_colocalization_matrix();
 
-    void make_heat_plot();
+    void setdata();
     const MatrixXd& getMatrix() {return Fake;};
+    const QVector<double>& getX() {return xCoordinates;};
+    const QVector<double>& getY() {return yCoordinates;};
+    const QVector<double>& getP() {return pValues;};
 
 private:
-    Ui::fake_colocalization_matrix *ui;
+    QVector<double> xCoordinates;
+    QVector<double> yCoordinates;
+    QVector<double> pValues;
     MatrixXd Fake;
 };
 

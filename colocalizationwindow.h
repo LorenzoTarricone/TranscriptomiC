@@ -27,7 +27,6 @@ public:
 
 private slots:
     void on_SaveHeatmapButton_clicked();
-
     void on_UploadGenesButton_clicked();
 
 private:

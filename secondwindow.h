@@ -41,13 +41,10 @@ private slots:
 
     void on_BiologicalButton_clicked();
 
-    void on_FakeButton_clicked();
-
 private:
     Ui::SecondWindow *ui;
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
-    fake_colocalization_matrix *FakeWindow; // test
 
 
     QVector<double> x;
