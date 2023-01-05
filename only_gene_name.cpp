@@ -1,5 +1,5 @@
 
-/* main to test listgene
+/* main to test listgene to test it easily 
  * #include "only_gene_name.h"
 
 #include <iostream>
@@ -40,13 +40,6 @@ int main(){
 #include <set>
 using namespace std;
 
-using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::vector; using std::istringstream;
-using std::stringstream;
-
-
-using namespace std;
 
 
 only_gene_name::only_gene_name()
@@ -81,6 +74,7 @@ set<string> only_gene_name::listgene(string l, string search){
     string name="[";
     string true_list;
     cout<<l<<'\n';
+    //First look for the last list of list (the only part of the string we are interrested in
     for (unsigned int i=0;i<l.length()-2;i++){
         v=l[i];
         if (o!=2){
@@ -96,6 +90,11 @@ set<string> only_gene_name::listgene(string l, string search){
     cout<<'\n';
     cout<<name<<'\n'<<'\n';
 
+    //Then look for each list of this list and check if our "search" parameter is in it
+    string value;
+    set<string> res;
+    string val;
+    string gene;
 
     o=0;
     c=0;
@@ -112,6 +111,7 @@ set<string> only_gene_name::listgene(string l, string search){
 
         else if (c==o) {
             cout<<list<<'\n';
+            cout<<"search= "<<search<<'\n';
             int res = isSubstring(search,list);
             if (res !=-1){
                 cout<<"Found"<<'\n';
@@ -120,24 +120,44 @@ set<string> only_gene_name::listgene(string l, string search){
             list="";
         }
 
-    }
-
-    string value;
-    set<string> res;
-    string val;
-    for (int i=0; i<true_list.length();i++){
-        value=true_list[i];
-        if (value==","){
+        // If the search parameter is in it: list becomes true_list, then we need to add every element of the list in the set
+        for (unsigned int j=0; j<true_list.length();j++){
+            value=true_list[j];
+            if (value==","){
+                res.insert(val);
+                val.clear();
+            }
+            else if (value!="\0" and value!="\""){
+                val+=value;
+                value.clear();
+            }}
             res.insert(val);
             val.clear();
-        }
-        else if (value!="\0" and value!="\""){
-            val+=value;
-            value.clear();
-        }
-    }
-    res.insert(val);
 
+
+    }
+
+    //remove the " " at the beginning and at the end of the string
+    gene=search.substr(1, search.length() - 2);
+
+    //insert the gene name in the set to be sure the original name given by the researcher is in the set
+    res.insert(gene);
+
+    for (const string& str : res) {
+        string lowercase_str = str;
+        transform(lowercase_str.begin(), lowercase_str.end(), lowercase_str.begin(), ::tolower);
+        res.insert(lowercase_str);
+
+        if (str.size()>0){
+        string capitalized_str = str;
+                capitalized_str[0] = toupper(capitalized_str[0]);
+                transform(capitalized_str.begin() + 1, capitalized_str.end(), capitalized_str.begin() + 1, ::tolower);
+                res.insert(capitalized_str);}
+    }
+
+    for (const string& str : res) {
+        cout << str << endl;
+    }
     return res;}
 
 
@@ -149,3 +169,4 @@ void only_gene_name::printset(set<string> result){
       }
     cout<<"}";
 }
+
