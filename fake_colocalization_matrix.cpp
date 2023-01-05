@@ -1,5 +1,7 @@
 #include "fake_colocalization_matrix.h"
 #include <iostream>
+//Questions
+// I dont know if I need a seperate class to do a heatmap for a matrix
 
 fake_colocalization_matrix::fake_colocalization_matrix(MatrixXd m){
     // Test colocalization matrix

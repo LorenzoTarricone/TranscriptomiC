@@ -37,6 +37,7 @@ void SecondWindow::makePlot() {
 void SecondWindow::on_ColocalizationButton_clicked()
 {
     coWindow = new colocalizationwindow(this);
+
     coWindow->setX(this->getX());
     coWindow->setY(this->getY());
     coWindow->setP(this->getP());

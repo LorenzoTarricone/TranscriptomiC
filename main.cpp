@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     w.show();
 
     // Test Eigen library and to plot a heatmap using a fake-colcalization matrix
-    //Fake Colocalization Matrix
+    /*Fake Colocalization Matrix
     MatrixXd m(5,5);
       m(0,0) = 0.3;
       m(0,1) = 0.5;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
       s.setY(fake.getY());
       s.setP(fake.getP());
       s.makePlot();
-      s.show();
+      s.show();*/
 
 
     return a.exec();

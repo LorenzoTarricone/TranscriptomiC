@@ -18,6 +18,7 @@ public:
 
 
     bool readData(std::string fileName);
+    bool readData_Matrix(std::string fileName); // Adrian: I try to read a file as matrix and plot it
     bool readGenes(std::string fileName);
 
 

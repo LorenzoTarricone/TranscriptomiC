@@ -31,7 +31,7 @@ void colocalizationwindow::makeHeatMap(){
            // It only works for quadratic matrices, we want to get the biggest x- and y-coordinate of the coordinate vectors
            int nx = sqrt(getX().size());
            std::cout << "nx: "<< nx;// check if nx is correct: delete this line later
-           int ny = sqrt(getX().size());
+           int ny = sqrt(getY().size());
            std::cout << "ny:"<< ny; // check if ny is correct: delte this line later
 
            colorMap->data()->setSize(nx, ny);
@@ -64,6 +64,20 @@ void colocalizationwindow::makeHeatMap(){
 
            // rescale the key (x) and value (y) axes so the whole color map is visible:
            ui->customPlot->rescaleAxes();
+
+}
+void colocalizationwindow::makeHeatMap(MatrixXd m){
+    int number_rows = m.rows();
+    int number_cols = m.cols();
+
+    for(int i = 0; i < number_rows; i++){
+        for(int j = 0; j< number_cols; j++){
+            xCoordinates.push_back(i);
+            yCoordinates.push_back(j);
+            pValues.push_back(m(i,j));
+        }
+    }
+    makeHeatMap();
 
 }
 
