@@ -10,46 +10,46 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MenuWindow.cpp \
+    UploadWindow.cpp \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
-    genename.cpp \
+#    genename.cpp \
     main.cpp \
-    mainwindow.cpp \
-    matrixeigen.cpp \
-    parsemtx.cpp \
+#    matrixeigen.cpp \
+#    parsemtx.cpp \
     qcustomplot.cpp \
-    secondwindow.cpp \
-    SparseMatrix.cpp \
-    colocalization_matrix.cpp
+#    SparseMatrix.cpp \
+#    colocalization_matrix.cpp
 
 HEADERS += \
+    MenuWindow.h \
+    UploadWindow.h \
     bioprocesswindow.h \
     colocalizationwindow.h \
     filedata.h \
-    genename.h \
-    mainwindow.h \
-    matrixeigen.h \
-    parsemtx.h \
-    qcustomplot.h \
-    SparseMatrix.h \
-    SecondWindow.h
+#    genename.h \
+#    matrixeigen.h \
+#    parsemtx.h \
+    qcustomplot.h
+#    SparseMatrix.h \
 
 FORMS += \
-    SecondWindow.ui \
+    MenuWindow.ui \
+    UploadWindow.ui \
     bioprocesswindow.ui \
-    colocalizationwindow.ui \
-    mainwindow.ui
+    colocalizationwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-macx:INCLUDEPATH += "$$PWD/eigen_mac"
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
-
+#INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
 #INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
 
 

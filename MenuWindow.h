@@ -1,5 +1,5 @@
-#ifndef SECONDWINDOW_H
-#define SECONDWINDOW_H
+#ifndef MENUWINDOW_H
+#define MENUWINDOW_H
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
@@ -9,16 +9,16 @@
 
 
 namespace Ui {
-class SecondWindow;
+class MenuWindow;
 }
 
-class SecondWindow : public QMainWindow
+class MenuWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit SecondWindow(QWidget *parent = nullptr);
-    ~SecondWindow();
+    explicit MenuWindow(QWidget *parent = nullptr);
+    ~MenuWindow();
 
     void makePlot();
 
@@ -33,7 +33,7 @@ public:
     const QVector<double>& getP() {return p;};
 
 signals:
-    void uploadWindow();
+    void UploadWindow();
 
 
 private slots:
@@ -41,10 +41,10 @@ private slots:
 
     void on_BiologicalButton_clicked();
 
-    void on_FirstWindow_clicked();
+    void on_MenuWindowButton_clicked();
 
 private:
-    Ui::SecondWindow *ui;
+    Ui::MenuWindow *ui;
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
 
@@ -56,4 +56,4 @@ private:
 
 };
 
-#endif // SECONDWINDOW_H
+#endif // MENUWINDOW_H

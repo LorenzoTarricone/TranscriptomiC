@@ -1,22 +1,22 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef UPLOADWINDOW_H
+#define UPLOADWINDOW_H
 
 #include <QMainWindow>
-#include "SecondWindow.h"
+#include "MenuWindow.h"
 #include "filedata.h"
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class UploadWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class UploadWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    UploadWindow(QWidget *parent = nullptr);
+    ~UploadWindow();
 
 private slots:
     void on_SelectButton_clicked();
@@ -26,9 +26,9 @@ private slots:
 
 
 private:
-    Ui::MainWindow *ui;
+    Ui::UploadWindow *ui;
 
-    SecondWindow *Pointersecondwindow;
+    MenuWindow *PointerMenuWindow;
 
     QString userText;
     std::string input;
@@ -40,4 +40,4 @@ private:
     FileData inputData;
     bool readBoolean;
 };
-#endif // MAINWINDOW_H
+#endif // UPLOADWINDOW_H

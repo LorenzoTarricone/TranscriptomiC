@@ -27,7 +27,7 @@ public:
     const QVector<double>& getP() {return pValues;};
 
 signals:
-    void secondWindow();
+    void MenuWindow();
 
 
 private slots:
@@ -35,7 +35,7 @@ private slots:
 
     void on_UploadGenesButton_clicked();
 
-    void on_SecondWindowButton_clicked();
+    void on_MenuWindowButton_clicked();
 
     void on_BiologicalButton_clicked();
 

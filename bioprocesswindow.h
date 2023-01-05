@@ -28,14 +28,14 @@ public:
     const QVector<double>& getP() {return pValues;};
 
 signals:
-    void secondWindow();
+    void MenuWindow();
 
 
 private slots:
     void on_SaveHeatmapButton_clicked();
     void on_AnalyzeButton_clicked();
 
-    void on_SecondWindowButton_clicked();
+    void on_MenuWindowButton_clicked();
 
 private:
     Ui::bioprocesswindow *ui;

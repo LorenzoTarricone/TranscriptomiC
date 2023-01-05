@@ -73,7 +73,7 @@ padding: 0 8px;
     <string>Analyze</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="SecondWindowButton">
+  <widget class="QPushButton" name="MenuWindowButton">
    <property name="geometry">
     <rect>
      <x>60</x>
@@ -90,7 +90,7 @@ padding: 0 8px;
 </string>
    </property>
    <property name="text">
-    <string>SecondWindow</string>
+    <string>Menu</string>
    </property>
   </widget>
  </widget>

@@ -1,23 +1,23 @@
-#include "secondwindow.h"
-#include "ui_SecondWindow.h"
+#include "MenuWindow.h"
+#include "ui_MenuWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
 #include <QMessageBox>
 
 
-SecondWindow::SecondWindow(QWidget *parent) :
+MenuWindow::MenuWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::SecondWindow)
+    ui(new Ui::MenuWindow)
 {
     ui->setupUi(this);
 }
 
-SecondWindow::~SecondWindow()
+MenuWindow::~MenuWindow()
 {
     delete ui;
 }
 
-void SecondWindow::makePlot() {
+void MenuWindow::makePlot() {
 
     ui->customPlot->addGraph();
     ui->customPlot->graph(0)->setData(this->getX(),this->getY());
@@ -33,11 +33,11 @@ void SecondWindow::makePlot() {
     ui->customPlot->replot();
 }
 
-void SecondWindow::on_ColocalizationButton_clicked()
+void MenuWindow::on_ColocalizationButton_clicked()
 {
 
     coWindow = new colocalizationwindow(this);
-    connect(coWindow, &colocalizationwindow::secondWindow, this, &SecondWindow::show);
+    connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show);
 
 
     coWindow->setX(this->getX());
@@ -51,11 +51,11 @@ void SecondWindow::on_ColocalizationButton_clicked()
 }
 
 
-void SecondWindow::on_BiologicalButton_clicked()
+void MenuWindow::on_BiologicalButton_clicked()
 {
 
     bioWindow = new bioprocesswindow(this);
-    connect(bioWindow, &bioprocesswindow::secondWindow, this, &SecondWindow::show);
+    connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show);
 
     bioWindow->setX(this->getX());
     bioWindow->setY(this->getY());
@@ -69,9 +69,9 @@ void SecondWindow::on_BiologicalButton_clicked()
 }
 
 
-void SecondWindow::on_FirstWindow_clicked()
+void MenuWindow::on_MenuWindowButton_clicked()
 {
     this->close();
-    emit uploadWindow();
+    emit UploadWindow();
 }
 
