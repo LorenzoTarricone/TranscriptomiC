@@ -21,7 +21,9 @@ SOURCES += \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
-    colocalization_matrix.cpp
+    colocalization_matrix.cpp \
+    readgenetxt.cpp \
+    only_gene_name.cpp
 
 HEADERS += \
     api.hpp \
@@ -34,7 +36,10 @@ HEADERS += \
     parsemtx.h \
     qcustomplot.h \
     SparseMatrix.h \
-    SecondWindow.h
+    SecondWindow.h \
+    readgenetxt.h \
+    only_gene_name.h
+
 
 FORMS += \
     SecondWindow.ui \
@@ -47,7 +52,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-macx: INCLUDEPATH += "eigen-3.4.0/Eigen"
-win32: INCLUDEPATH += "eigen-3.4.0"
+INCLUDEPATH += "eigen-3.4.0"
 
 macx: LIBS += -lcurl

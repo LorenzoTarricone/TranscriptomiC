@@ -23,7 +23,21 @@ QByteArray downloadUrl(const QUrl &url) {
     return data;
 }
 
-QJsonDocument getGeneInfo(QMap<QString, QString> params) {
+QJsonDocument searchHGNC(QMap<QString, QString> params) {
+    QUrl url("https://clinicaltables.nlm.nih.gov/api/genes/v4/search");
+    params["sf"] = "symbol,alias_symbol";
+    params["df"] = "symbol,alias_symbol";QUrlQuery query;
+    for (auto it = params.begin(); it != params.end(); ++it) {
+        query.addQueryItem(it.key(), it.value());
+    }
+    url.setQuery(query);
+    qDebug() << "url:" << url.toString();
+    QByteArray data = downloadUrl(url);
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    return doc;
+}
+
+QJsonDocument searchDavid(QMap<QString, QString> params) {
     QUrl url("https://clinicaltables.nlm.nih.gov/api/genes/v4/search");
     QUrlQuery query;
     for (auto it = params.begin(); it != params.end(); ++it) {
@@ -40,7 +54,7 @@ void printExample() {
     //Example call
     QMap<QString, QString> params;
     params["terms"] = "BRCA1";
-    QJsonDocument doc = getGeneInfo(params);
+    QJsonDocument doc = searchHGNC(params);
     qDebug() << "API Test";
     qDebug() << qPrintable(doc.toJson());
 }

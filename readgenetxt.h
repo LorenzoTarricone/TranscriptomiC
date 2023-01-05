@@ -13,7 +13,7 @@ private:
 
 public:
     readgenetxt();
-    vector<string> listgene(string file_name);
+    vector<string> listgene(string txt_file);
 };
 
 #endif // READGENETXT_H
