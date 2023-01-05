@@ -27,12 +27,12 @@ void colocalizationwindow::makeHeatMap(){
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-           // This is just for rec_Data if nx = ny = 7: We need to find nx and ny for each individual file
-           int nx = sqrt(getX().size());// It only works for quadratic matrices
-
-           std::cout << "nx: "<< nx;
+           // Use nx = ny = 7 for rec_Data: We need to find nx and ny for each individual file.
+           // It only works for quadratic matrices, we want to get the biggest x- and y-coordinate of the coordinate vectors
+           int nx = sqrt(getX().size());
+           std::cout << "nx: "<< nx;// check if nx is correct: delete this line later
            int ny = sqrt(getX().size());
-           std::cout << "ny:"<< ny;
+           std::cout << "ny:"<< ny; // check if ny is correct: delte this line later
 
            colorMap->data()->setSize(nx, ny);
            colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
@@ -57,10 +57,11 @@ void colocalizationwindow::makeHeatMap(){
            // the gradient, see the documentation of QCPColorGradient for what's possible.
 
            //Uncomment for ColourMap without interpolation
-           //colorMap->setInterpolate(false);
+           colorMap->setInterpolate(false);
 
            // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
            colorMap->rescaleDataRange();
+
            // rescale the key (x) and value (y) axes so the whole color map is visible:
            ui->customPlot->rescaleAxes();
 

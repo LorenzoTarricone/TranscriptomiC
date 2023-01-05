@@ -9,7 +9,7 @@ fake_colocalization_matrix::fake_colocalization_matrix(MatrixXd m){
 fake_colocalization_matrix::~fake_colocalization_matrix(){}
 
 void fake_colocalization_matrix::setdata(){
-    // i is the x coordinate and j is the y coordinate
+    // i is the x-coordinate and j is the y-coordinate
 
     int number_rows = Fake.rows();
     int number_cols = Fake.cols();

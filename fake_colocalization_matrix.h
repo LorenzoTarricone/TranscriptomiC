@@ -13,7 +13,7 @@ public:
     ~fake_colocalization_matrix();
 
     void setdata();
-    const MatrixXd& getMatrix() {return Fake;};
+    const MatrixXd& getMatrix() {return Fake;};// I dont think we need this method
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
