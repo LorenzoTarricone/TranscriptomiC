@@ -1,5 +1,5 @@
 
-/* main to test listgene to test it easily 
+/* main to test listgene
  * #include "only_gene_name.h"
 
 #include <iostream>
@@ -67,6 +67,12 @@ int only_gene_name::isSubstring(string s1, string s2)
 }
 
 set<string> only_gene_name::listgene(string l, string search){
+    //if the search parameter is not only in upper case
+    string upper_search = search;
+    transform(upper_search.begin(), upper_search.end(), upper_search.begin(), ::toupper);
+    cout<<"UP"<<upper_search<<'\n';
+
+
     int o=0; //nb of [
     int c=0; //nb of ]
     string v;
@@ -111,8 +117,8 @@ set<string> only_gene_name::listgene(string l, string search){
 
         else if (c==o) {
             cout<<list<<'\n';
-            cout<<"search= "<<search<<'\n';
-            int res = isSubstring(search,list);
+            cout<<"search= "<<upper_search<<'\n';
+            int res = isSubstring(upper_search,list);
             if (res !=-1){
                 cout<<"Found"<<'\n';
                 true_list=list;
@@ -138,7 +144,7 @@ set<string> only_gene_name::listgene(string l, string search){
     }
 
     //remove the " " at the beginning and at the end of the string
-    gene=search.substr(1, search.length() - 2);
+    gene=upper_search.substr(1, upper_search.length() - 2);
 
     //insert the gene name in the set to be sure the original name given by the researcher is in the set
     res.insert(gene);
@@ -169,4 +175,3 @@ void only_gene_name::printset(set<string> result){
       }
     cout<<"}";
 }
-
