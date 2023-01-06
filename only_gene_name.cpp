@@ -38,8 +38,6 @@ int main(){
 #include <vector>
 #include <algorithm>
 #include <set>
-using namespace std;
-
 
 
 only_gene_name::only_gene_name()
@@ -66,20 +64,20 @@ int only_gene_name::isSubstring(string s1, string s2)
     return -1;
 }
 
-set<string> only_gene_name::listgene(string l, string search){
+std::set<std::string> only_gene_name::listgene(std::string l, std::string search){
     //if the search parameter is not only in upper case
-    string upper_search = search;
+    std::string upper_search = search;
     transform(upper_search.begin(), upper_search.end(), upper_search.begin(), ::toupper);
-    cout<<"UP"<<upper_search<<'\n';
+    std::cout<<"UP"<<upper_search<<'\n';
 
 
     int o=0; //nb of [
     int c=0; //nb of ]
-    string v;
-    string list;
-    string name="[";
-    string true_list;
-    cout<<l<<'\n';
+    std::string v;
+    std::string list;
+    std::string name="[";
+    std::string true_list;
+    std::cout<<l<<'\n';
     //First look for the last list of list (the only part of the string we are interrested in
     for (unsigned int i=0;i<l.length()-2;i++){
         v=l[i];
@@ -93,14 +91,14 @@ set<string> only_gene_name::listgene(string l, string search){
             name+=v;
         }}
 
-    cout<<'\n';
-    cout<<name<<'\n'<<'\n';
+    std::cout<<'\n';
+    std::cout<<name<<'\n'<<'\n';
 
     //Then look for each list of this list and check if our "search" parameter is in it
-    string value;
-    set<string> res;
-    string val;
-    string gene;
+    std::string value;
+    std::set<std::string> res;
+    std::string val;
+    std::string gene;
 
     o=0;
     c=0;
@@ -116,11 +114,11 @@ set<string> only_gene_name::listgene(string l, string search){
         }
 
         else if (c==o) {
-            cout<<list<<'\n';
-            cout<<"search= "<<upper_search<<'\n';
+            std::cout<<list<<'\n';
+            std::cout<<"search= "<<upper_search<<'\n';
             int res = isSubstring(upper_search,list);
             if (res !=-1){
-                cout<<"Found"<<'\n';
+                std::cout<<"Found"<<'\n';
                 true_list=list;
             }
             list="";
@@ -149,29 +147,29 @@ set<string> only_gene_name::listgene(string l, string search){
     //insert the gene name in the set to be sure the original name given by the researcher is in the set
     res.insert(gene);
 
-    for (const string& str : res) {
-        string lowercase_str = str;
+    for (const std::string& str : res) {
+        std::string lowercase_str = str;
         transform(lowercase_str.begin(), lowercase_str.end(), lowercase_str.begin(), ::tolower);
         res.insert(lowercase_str);
 
         if (str.size()>0){
-        string capitalized_str = str;
+        std::string capitalized_str = str;
                 capitalized_str[0] = toupper(capitalized_str[0]);
                 transform(capitalized_str.begin() + 1, capitalized_str.end(), capitalized_str.begin() + 1, ::tolower);
                 res.insert(capitalized_str);}
     }
 
-    for (const string& str : res) {
-        cout << str << endl;
+    for (const std::string& str : res) {
+        std::cout << str << std::endl;
     }
     return res;}
 
 
-void only_gene_name::printset(set<string> result){
-    cout<<'\n'<<"Set is: { ";
+void only_gene_name::printset(std::set<std::string> result){
+    std::cout<<'\n'<<"Set is: { ";
     for(auto& str: result)
       {
         std::cout << str << ' ';
       }
-    cout<<"}";
+    std::cout<<"}";
 }

@@ -43,36 +43,30 @@ int main(){
 #include <fstream>
 #include <QDebug>
 
-using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::vector; using std::istringstream;
-using std::stringstream;
-
-using namespace std;
 
 readgenetxt::readgenetxt()
 {
-    vector<string> list;
+    std::vector<std::string> list;
 }
 
 
-vector<string> readgenetxt::listgene(string filename){
-    vector<string> list;
-    ifstream file;
-    string line;
-    cout<<"code";
+std::vector<std::string> readgenetxt::listgene(std::string filename){
+    std::vector<std::string> list;
+    std::ifstream file;
+    std::string line;
+    std::cout<<"code";
     file.open(filename); //open file
     if (file.peek() == std::ifstream::traits_type::eof()) {
         qDebug() << "Empty file!!";
     }
     if (!file.is_open()) {
-        cerr << "Error: Could not open file " << filename << endl;
+        std::cerr << "Error: Could not open file " << filename << std::endl;
     } qDebug() << "reading txt file";
     while (getline(file, line)) {
         qDebug() << "got line!";
         qDebug() << QString::fromStdString(line);
-        stringstream ss(line);
-        string value;
+        std::stringstream ss(line);
+        std::string value;
         while (ss >> value) {
             list.push_back(value);
         }

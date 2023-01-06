@@ -3,17 +3,17 @@
 
 #include <string>
 #include <vector>
-using namespace std;
+
 
 
 class readgenetxt
 {
 private:
-    vector<string> list;
+    std::vector<std::string> list;
 
 public:
     readgenetxt();
-    vector<string> listgene(string txt_file);
+    std::vector<std::string> listgene(std::string txt_file);
 };
 
 #endif // READGENETXT_H
