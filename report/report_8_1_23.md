@@ -34,3 +34,7 @@ Members:
 Members:
 - Rita Saraiva
 - Leonard Theisler
+
+Leonard Theisler: This will cover the hollidays as well as this week. Implemented saving heatmap functionality (saves as png). File explorer pops up and allows the user to choose where the heatmap should be saved. Implemented csv file upload and parsing for genes of interest in the colocalization window (includes error handling). Also uses the file explorer and the user can choose the file to upload. Implemented text box in the biological process window for user input of process to anaylze (includes error handling). Implemented navigation between windows with buttons. Included the correct makeHeatmap function (from Adrian) into the frontend.
+
+Rita Saraiva: Did not work during the hollidays due to familly related constraints. Refactored main and second window as well as their associated funtions and variables. Previous names were unclear. Improved the style and layouts of multiple windows accoridng to GUI principles. 
