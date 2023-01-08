@@ -16,6 +16,7 @@ public:
     void filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes = true, double min_expr_perc = 0.1,std::string type_of_transcriptome = NULL);
     void getRowNamesFromFile(std::string filename);
     void normalisation(std::string type_of_normal = "col_mean");
+    void writeToFile(std::string filename);
 
 
 private:

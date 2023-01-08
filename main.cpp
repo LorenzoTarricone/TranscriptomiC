@@ -21,8 +21,11 @@ int main(int argc, char *argv[])
     //tsv_object.createDummyFile(10,"tsv_test_2.tsv");
     //tsv_object.readFile("tsv_test_2.tsv");
 
-//    parsemtx mtxobject = parsemtx();
-//    mtxobject.readFile("mtx_test.mtx");
+    parsemtx mtxobject = parsemtx();
+    mtxobject.readFile("/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/matrix.mtx");
 //    mtxobject.print();
+
+
+
     return 0;
 }

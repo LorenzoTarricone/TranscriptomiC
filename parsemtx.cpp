@@ -20,6 +20,12 @@ void parsemtx::readFile(std::string filename){
     // Declare variables:
     int M, N, L;
 
+    //check if file is opened
+    if(!fin.is_open()){
+        std::cerr << "[File " << filename << " could not be opened - aborting]" << std::endl;
+        return;
+    }
+
     // Ignore headers and comments:
     while (fin.peek() == '%') fin.ignore(2048, '\n');
 
@@ -32,27 +38,57 @@ void parsemtx::readFile(std::string filename){
     int  estimation_of_entries = (int) ((1-0.98) * M * N);
     tripletList.reserve(estimation_of_entries);
 
+    // initialize max row and colun indices
+    int max_m = 0;
+    int max_n = 0;
+
+
+    // initialize sparse matrix object of the correct size
+    Eigen::SparseMatrix<double> sparseMatrix(M,N+1);
+
     // Read the data
+    std::cout << "reading matrix with " << M << " rows and " << N << " columns" << std::endl;
     for (int l = 0; l < L; l++)
     {
         int m, n;
         double data;
         fin >> m >> n >> data;
-        tripletList.push_back(T(m,n,data));
+//        tripletList.push_back(T(m,n,data));
+        // alternative approach --> directly insert to matrix
+        sparseMatrix.insert(m,n) = data;
+//        std::cout << m << "\t" << n << "\t" << data << std::endl;
+        // get max row and column indices
+        if(max_m < m){max_m = m;}
+        if(max_n < n){max_n = n;}
+
 
     }
+
+    // check sparse matrix object
+    std::cout << "Created sparse object with " << sparseMatrix.rows() << " rows, " << sparseMatrix.cols() << " columns and " << sparseMatrix.nonZeros() << " non-zero values" << std::endl;
+
 
     // close file
     fin.close();
 
-    // initialize sparse matrix object of the correct size
-    Eigen::SparseMatrix<double> sparseMatrix(M,N);
+    std::cout << "the maximum row index is "<< max_m << std::endl;
+    std::cout << "the maximum column index is "<< max_n << std::endl;
 
-    // fill sparse matrix object using the vector of triplets from the file reading
-    sparseMatrix.setFromTriplets(tripletList.begin(), tripletList.end());
+//    // fill sparse matrix object using the vector of triplets from the file reading
+//    sparseMatrix.setFromTriplets(tripletList.begin(), tripletList.end());
+
+//     alternative approach
+    sparseMatrix.makeCompressed();
+
+    // check sparse matrix object
+    std::cout << "Created sparse object with " << sparseMatrix.rows() << " rows, " << sparseMatrix.cols() << " columns and " << sparseMatrix.nonZeros() << " non-zero values" << std::endl;
+
 
     // make the private member sparse of the object point to the sparse matrix we just created
     this->sparse = sparseMatrix;
+
+
+
 }
 
 void parsemtx::print(){
@@ -69,6 +105,38 @@ void parsemtx::print(){
             << it.index() << std::endl; // inner index, here it is equal to it.row()
           }
 }
+
+void parsemtx::writeToFile(std::string filename){
+    // file stream
+    std::ofstream fout(filename);
+
+    // check if file was opened correctly
+    if(!fout){
+        std::cerr << "[ERROR] File " << filename << " could not be opened. Stopping program" << std::endl;
+    }
+    else{
+        std::cout << "[SUCCESS] File " << filename << " opened successfully" << std::endl;
+    }
+
+    // convert sparse representation to dense (check this
+    if (matrix.rows() == NULL){
+        matrix = Eigen::MatrixXd(sparse);
+    }
+
+    // this will be transposed, as the sparse matrix is stored in column major
+    // TODO change to row wise iteration
+    for (int i = 0; i < matrix.rows() ; i++){
+        for (int j = 0; j < matrix.rows(); j++){
+            fout << matrix(i,j) << "\t"; //distance between coordinate i and j
+        }
+        fout << "\n";
+    }
+
+
+    // close the file (stream)
+    fout.close();
+}
+
 
 // function to read a txt file with gene names (row names) - use until parse_file branch is merged into main
 // from https://github.com/LorenzoTarricone/TranscriptomiC/blob/parse_file/readgenetxt.cpp
