@@ -145,9 +145,9 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
 }
 
 
-void bioprocesswindow::on_SecondWindowButton_clicked()
+void bioprocesswindow::on_MenuWindowButton_clicked()
 {
     this->close();
-    emit secondWindow();
+    emit MenuWindow();
 }
 

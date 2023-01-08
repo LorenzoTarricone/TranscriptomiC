@@ -26,8 +26,8 @@
   <widget class="QPushButton" name="ShowMatrixButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>40</y>
+     <x>430</x>
+     <y>110</y>
      <width>91</width>
      <height>18</height>
     </rect>
@@ -46,8 +46,8 @@ padding: 0 8px;
   <widget class="QPushButton" name="SaveMatrixButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>70</y>
+     <x>430</x>
+     <y>140</y>
      <width>91</width>
      <height>18</height>
     </rect>
@@ -66,8 +66,8 @@ padding: 0 8px;
   <widget class="QPushButton" name="SaveHeatmapButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>100</y>
+     <x>430</x>
+     <y>170</y>
      <width>91</width>
      <height>18</height>
     </rect>
@@ -86,7 +86,7 @@ padding: 0 8px;
   <widget class="QPushButton" name="UploadGenesButton">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>240</x>
      <y>20</y>
      <width>151</width>
      <height>20</height>
@@ -103,10 +103,10 @@ padding: 0 8px;
     <string>Upload genes to analyze</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="SecondWindowButton">
+  <widget class="QPushButton" name="MenuWindowButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>60</x>
      <y>20</y>
      <width>121</width>
      <height>18</height>
@@ -120,7 +120,7 @@ padding: 0 8px;
 </string>
    </property>
    <property name="text">
-    <string>SecondWindow</string>
+    <string>Menu</string>
    </property>
   </widget>
  </widget>

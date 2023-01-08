@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "UploadWindow.h"
+#include "ui_UploadWindow.h"
 #include <fstream>
 #include <QMessageBox>
 #include <iostream>
@@ -7,40 +7,40 @@
 #include <QFileDialog>
 
 
-MainWindow::MainWindow(QWidget *parent)
+UploadWindow::UploadWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::UploadWindow)
 {
     ui->setupUi(this);
     ui->plainTextEdit->setPlainText("Please select a file and then upload it.");
 
-    Pointersecondwindow = new SecondWindow(this);
-    connect(Pointersecondwindow, &SecondWindow::uploadWindow, this, &MainWindow::show);
+    PointerMenuWindow = new MenuWindow(this);
+    connect(PointerMenuWindow, &MenuWindow::UploadWindow, this, &UploadWindow::show);
 
 }
 
-MainWindow::~MainWindow()
+UploadWindow::~UploadWindow()
 {
     delete ui;
-    delete Pointersecondwindow;
+    delete PointerMenuWindow;
 }
 
-void MainWindow::close(){
+void UploadWindow::close(){
 
 
 
-    Pointersecondwindow->setX(inputData.getX());
-    Pointersecondwindow->setY(inputData.getY());
-    Pointersecondwindow->setP(inputData.getP());
+    PointerMenuWindow->setX(inputData.getX());
+    PointerMenuWindow->setY(inputData.getY());
+    PointerMenuWindow->setP(inputData.getP());
 
 
-    Pointersecondwindow->makePlot();
-    Pointersecondwindow->show();
+    PointerMenuWindow->makePlot();
+    PointerMenuWindow->show();
 
     this->hide();
 }
 
-void MainWindow::on_SelectButton_clicked()
+void UploadWindow::on_SelectButton_clicked()
 {
     QString FileFilter = "CSV File (*.csv);; Text File (*.txt);;  MTX File (*.mtx)"; //All File (*.*) ;;
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
@@ -49,7 +49,7 @@ void MainWindow::on_SelectButton_clicked()
 }
 
 
-void MainWindow::on_UploadButton_clicked()
+void UploadWindow::on_UploadButton_clicked()
 {
 
     userText = ui->plainTextEdit->toPlainText();

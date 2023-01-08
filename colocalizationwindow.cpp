@@ -155,10 +155,10 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
 }
 
 
-void colocalizationwindow::on_SecondWindowButton_clicked()
+void colocalizationwindow::on_MenuWindowButton_clicked()
 {
     this->close();
-    emit secondWindow();
+    emit MenuWindow();
 }
 
 
