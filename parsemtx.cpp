@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <Eigen/Sparse>
 #include <stdio.h>
+#include "parsetxtbeams.h"
 
 
 parsemtx::parsemtx()
@@ -31,6 +32,7 @@ void parsemtx::readFile(std::string filename){
 
     // Read defining parameters:
     fin >> M >> N >> L;
+
 
     // from https://eigen.tuxfamily.org/dox/group__TutorialSparse.html
     typedef Eigen::Triplet<double> T;
@@ -67,6 +69,9 @@ void parsemtx::readFile(std::string filename){
     // check sparse matrix object
     std::cout << "Created sparse object with " << sparseMatrix.rows() << " rows, " << sparseMatrix.cols() << " columns and " << sparseMatrix.nonZeros() << " non-zero values" << std::endl;
 
+    // store defining parameters in private members
+    this->M = sparseMatrix.rows();
+    this->N = sparseMatrix.cols();
 
     // close file
     fin.close();
@@ -106,7 +111,16 @@ void parsemtx::print(){
           }
 }
 
+// overloaded version of writeToFile to write expression matrix to file
 void parsemtx::writeToFile(std::string filename){
+    // convert sparse representation to dense (check this!!)
+    if (!matrix.rows()){
+        matrix = Eigen::MatrixXd(sparse);
+    }
+    parsemtx::writeToFile(filename,matrix);
+}
+
+void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix){
     // file stream
     std::ofstream fout(filename);
 
@@ -118,18 +132,13 @@ void parsemtx::writeToFile(std::string filename){
         std::cout << "[SUCCESS] File " << filename << " opened successfully" << std::endl;
     }
 
-    // convert sparse representation to dense (check this
-    if (matrix.rows() == NULL){
-        matrix = Eigen::MatrixXd(sparse);
-    }
-
     // this will be transposed, as the sparse matrix is stored in column major
     // TODO change to row wise iteration
     for (int i = 0; i < matrix.rows() ; i++){
-        for (int j = 0; j < matrix.rows(); j++){
-            fout << matrix(i,j) << "\t"; //distance between coordinate i and j
+        for (int j = 0; j < matrix.rows()-1; j++){
+            fout << matrix(i,j) << ","; //distance between coordinate i and j
         }
-        fout << "\n";
+        fout << matrix(i,matrix.rows()-1) << "\n";
     }
 
 
@@ -313,5 +322,57 @@ void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
     matrix.conservativeResize(numRows,numCols);
 }
 
+// this method will use the file containing beam names as well as the dimensions of the expression matrix
+// and generate spatial data until we have actual data to analyse
+// it will write said data to a tsv file that can later be used for filtering etc
+void parsemtx::createBeamFile(std::string file_out, std::string file_in){
+    // if no input filename is given, the file will be created entirely at random
+    if(file_in == ""){
+        parseTxtBeams::createDummyFile(N,file_out);
+        return;
+    }
+
+    std::vector<std::string> list = listgene(file_in);
+    int l = list.size();
+    std::cout << "There are " << l << " beams and " << N << " columns in the expression matrix" << std::endl;
+
+//    for(typename std::vector<std::string>::iterator i = list.begin(); i != list.end(); i++){
+//        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+//        std::cout << *i << "," << std::endl;
+//    }
+
+    // this operation sets the seed for the randomization (generates different values for each iteration)
+    srand(time(nullptr));
+
+    // file stream
+    std::ofstream fout;
+
+    // open file
+    fout.open(file_out);
+
+    // check if file was opened correctly
+    if(!fout){
+        std::cerr << "[ERROR] File " << file_in << " could not be opened. Stopping program" << std::endl;
+    }
+    else{
+        std::cout << "[SUCCESS] File " << file_in << " opened successfully" << std::endl;
+    }
+
+
+    // define maximum range for coordinates
+    int MAX_COORD = 2000;
+
+        for(typename std::vector<std::string>::iterator i = list.begin(); i != list.end(); i++){
+            // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+//            std::cout << *i << "," << std::endl;
+            int x = random()%MAX_COORD;
+            int y = random()%MAX_COORD;
+            fout << *i << "\t" << x << "\t" << y << "\n";
+//            std::cout << *i << "\t" << x << "\t" << y << "\n" << std::endl;
+        }
+
+    // close the file (stream)
+    fout.close();
+}
 
 

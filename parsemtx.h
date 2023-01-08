@@ -17,6 +17,8 @@ public:
     void getRowNamesFromFile(std::string filename);
     void normalisation(std::string type_of_normal = "col_mean");
     void writeToFile(std::string filename);
+    void writeToFile(std::string filename,Eigen::MatrixXd matrix);
+    void createBeamFile(std::string file_out, std::string file_in = "");
 
 
 private:
