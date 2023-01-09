@@ -101,16 +101,6 @@ padding: 0 8px;
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>341</width>
-     <height>17</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

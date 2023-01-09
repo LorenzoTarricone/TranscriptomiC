@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(248,247,245);
+</string>
+  </property>
   <widget class="QCustomPlot" name="customPlot" native="true">
    <property name="geometry">
     <rect>
