@@ -41,6 +41,7 @@
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
    </property>
    <property name="text">
@@ -71,6 +72,8 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
+
 </string>
    </property>
    <property name="text">
@@ -91,6 +94,7 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
    </property>
    <property name="text">

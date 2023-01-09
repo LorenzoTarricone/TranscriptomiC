@@ -27,26 +27,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="ShowMatrixButton">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>110</y>
-     <width>91</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(243,242,240);
-border: 1px solid black ;
-border-radius: 5px;
-padding: 0 8px;
-</string>
-   </property>
-   <property name="text">
-    <string>Show matrix</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="SaveMatrixButton">
    <property name="geometry">
     <rect>
@@ -61,6 +41,7 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
    </property>
    <property name="text">
@@ -81,6 +62,7 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
    </property>
    <property name="text">
@@ -101,6 +83,7 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
    </property>
    <property name="text">
@@ -121,6 +104,8 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
+
 </string>
    </property>
    <property name="text">

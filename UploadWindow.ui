@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>341</width>
-    <height>214</height>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,7 @@
      <string notr="true">border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
     </property>
    </widget>
@@ -45,6 +46,7 @@ padding: 0 8px;
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(243,242,240);
+color: rgb(0, 0, 0);
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
@@ -73,6 +75,8 @@ hr { height: 1px; border-width: 0; }
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
+
 </string>
     </property>
     <property name="text">
@@ -93,6 +97,7 @@ padding: 0 8px;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0, 0, 0);
 </string>
     </property>
     <property name="text">
@@ -100,7 +105,6 @@ padding: 0 8px;
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
