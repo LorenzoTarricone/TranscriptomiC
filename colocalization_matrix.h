@@ -17,11 +17,17 @@ MatrixXd matrix_linkage(MatrixXd A, double m, double p);
 
 MatrixXd combine_linkage(MatrixXd A_linkage, MatrixXd A_expression);
 
+MatrixXd comparison(MatrixXd expression, MatrixXd neighbors, double a=1, double b=0.5);
+
+MatrixXd enrichment(MatrixXd A);
+
 //function to read/save data
 void saveData(string fileName, MatrixXd  matrix);
 Eigen::MatrixXd openData(std::string fileToOpen);
 Eigen::MatrixXd openData_strings(std::string fileToOpen,vector<string>& columnID, vector<string>& rowID);
 
+// method to construct colocalisation matrix
+int construct_colocalisation_matrix();
 
 
 #endif // COLONALIZATION_MATRIX_H

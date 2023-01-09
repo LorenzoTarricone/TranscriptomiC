@@ -4,6 +4,8 @@
 #include <unsupported/Eigen/CXX11/Tensor>
 #include <colocalization_matrix.h>
 #include <math.h>
+#include "parsetxtbeams.h"
+#include "parsemtx.h"
 
 
 using namespace Eigen;
@@ -89,7 +91,7 @@ double important_function(double x_i, double Y, double a=2, double b=0.5){
     return -a*abs(x_i-Y) + b*(x_i+Y);
 }
 
-MatrixXd comparison(MatrixXd expression, MatrixXd neighbors, double a=1, double b=0.5){
+MatrixXd comparison(MatrixXd expression, MatrixXd neighbors, double a, double b){
     int n_beams=expression.cols();
     int n_genes=expression.rows();
 
@@ -163,3 +165,56 @@ MatrixXd enrichment(MatrixXd A){
     return A_enrichment;
 }
 
+// Construct colocalisation matrix
+//
+
+int construct_colocalisation_matrix(){
+    parsemtx mtxobject = parsemtx();
+    std::string expressionFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/matrix.mtx";
+    std::string beamInputFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/barcodes.tsv";
+    std::string beamOutputFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/beams.tsv";
+
+    mtxobject.readFile(expressionFile);
+//    mtxobject.readFile("/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/matrix.mtx");
+//    mtxobject.print();
+//    mtxobject.writeToFile("expression_1.csv");
+    mtxobject.createBeamFile(beamOutputFile,beamInputFile);
+
+//  read beam file
+    parseTxtBeams parsetxt = parseTxtBeams();
+    parsetxt.readFile(beamOutputFile);
+//  convert beam file to eigen matrix for colocalization computation
+    Eigen::MatrixXd beam_matrix = parsetxt.convertToMatrix();
+
+//  step 1 - create distance matrix
+    std::cout << "[Progress] Running step 1 ..." << std::endl;
+    Eigen::MatrixXd A_distance = matrix_distance(beam_matrix);
+
+
+// step 2 - linkage matrix with parameters m and p
+    double m = 0.1;
+    double p = 1;
+    std::cout << "[Progress] Running step 2 ..." << std::endl;
+    Eigen::MatrixXd A_linkage = matrix_linkage(A_distance, m, p);
+
+//  step 3 - apply linkage to expression matrix -> neighbouring matrix
+    Eigen::MatrixXd expression =  mtxobject.getExpressionDense();
+    std::cout << "[Progress] Running step 3 ..." << std::endl;
+    Eigen::MatrixXd A_combine = combine_linkage(A_linkage,expression);
+
+//  step 4 - compare expression and neighbouring matrices (with default parameters
+    std::cout << "[Progress] Running step 4 ..." << std::endl;
+    Eigen::MatrixXd A_compare = comparison(expression, A_combine);
+
+// step 5 and 6 - generate colocalisation matrix containing enrichement scores
+    std::cout << "[Progress] Running step 5 ..." << std::endl;
+    Eigen::MatrixXd A_colocalisation = enrichment(A_compare);
+
+//  save colocalisation matrix
+    std::cout << "[Progress] Saving File ..." << std::endl;
+    std::string colocalisationFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/colocalisation.csv";
+    mtxobject.writeToFile(colocalisationFile,A_colocalisation);
+
+    return 0;
+
+}

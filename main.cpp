@@ -2,6 +2,7 @@
 #include "parsemtx.h"
 #include "parsetxtbeams.h"
 #include "matrixeigen.h"
+#include "colocalization_matrix.h"
 
 
 #include <QApplication>
@@ -21,25 +22,7 @@ int main(int argc, char *argv[])
     //tsv_object.createDummyFile(10,"tsv_test_2.tsv");
     //tsv_object.readFile("tsv_test_2.tsv");
 
-    parsemtx mtxobject = parsemtx();
-    std::string expressionFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/matrix.mtx";
-    std::string beamInputFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/barcodes.tsv";
-    std::string beamOutputFile = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/beams.tsv";
+    return construct_colocalisation_matrix();
 
-    mtxobject.readFile(expressionFile);
-//    mtxobject.readFile("/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/filtered_feature_bc_matrix/matrix.mtx");
-//    mtxobject.print();
-//    mtxobject.writeToFile("expression_1.csv");
-    mtxobject.createBeamFile(beamOutputFile,beamInputFile);
-
-//  read beam file
-    parseTxtBeams parsetxt = parseTxtBeams();
-    parsetxt.readFile(beamOutputFile);
-//  convert beam file to eigen matrix for colocalization computation
-    Eigen::MatrixXd beam_matrix = parsetxt.convertToMatrix();
-
-
-
-
-    return 0;
+//    return 0;
 }

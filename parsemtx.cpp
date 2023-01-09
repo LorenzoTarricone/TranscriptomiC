@@ -8,7 +8,7 @@
 
 parsemtx::parsemtx()
 {
-//    Eigen::MatrixXd matrix;
+    Eigen::MatrixXd matrix;
 
 }
 void parsemtx::readFile(std::string filename){
@@ -375,4 +375,13 @@ void parsemtx::createBeamFile(std::string file_out, std::string file_in){
     fout.close();
 }
 
+
+// method that returns the expression matrix in its current state as an Eigen object
+Eigen::MatrixXd parsemtx::getExpressionDense(){
+    // check if something has been assigned to matrix
+    if(this->matrix == Eigen::MatrixXd{}){
+        this->matrix = Eigen::MatrixXd(sparse);
+    }
+    return matrix;
+}
 
