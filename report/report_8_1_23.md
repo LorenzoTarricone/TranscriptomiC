@@ -9,6 +9,7 @@ Members:
 
 Clémence Mottez: I did lots of research on the David data base. This is useful for the next step of our project: the study of the biological processes. This was important to start to work on it since a lot of work needs to be done on that, and it is not possible without research. I tried to understand how this database works, without much information unfortunately. I tried to figure out how we can do an API call from a list of gene, and have access to the biological processes linked to these genes. Unfortunately again, a key functionality of this data base that we need didn't work. Thus I searched for another way to do it. I finally found another database: the gene onthology (GO) database that could work. 
 
+Lorenzo Tarricone: Fine tuned all the methods needed for the two kinds of analysis that can be implemented. A complete description of the algorithm for the colocalization table and the biological process identifier table are available on the R&D branch. Designed the how the user interface for the final product needs to be and shared it with the frontend team. I also made some literature search and provided everyone with a database from 10X genomics with some open access data. The only problem is that not everything we need is there, in particular the table with the location of the beams is missing
 
 ### Database
 Members:
