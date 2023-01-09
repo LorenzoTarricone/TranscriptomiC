@@ -30,6 +30,7 @@ Members:
 - Nina Peuker
 - Alan Picucci
 
+Alan Picucci: Implemented step 4 in the construction of the colocalisation matrix. This consists in the following: create a new matrix of size n_genes times n_genes times n_cells which, for each cell, compares the column corresponding to that cell from the original expression matrix with the column from the Neighbouring expression matrix. Then we take the mean along the n_cells dimension.
 
 ### Frontend 
 Members:
