@@ -28,27 +28,36 @@ void bioprocesswindow::makeHeatMap(){
            ui->customPlot->yAxis->setLabel("y");
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
-           int nx = 6;
-           int ny = 4;
-           colorMap->data()->setSize(nx, ny); // we want the color map to have nx * ny data points
-           colorMap->data()->setRange(QCPRange(0, 6), QCPRange(0, 4)); // and span the coordinate range -4..4 in both key (x) and value (y) dimensions
+           // This is just for rec_Data but we need to find nx and ny for each individual file
+           int nx = 7;
+           int ny = 7;
+           colorMap->data()->setSize(nx, ny);
+           colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
+           //This is just for rec_Data but we need to find the Range for each individual file
 
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
+           // Is it possible to do it more efficient?
 
-
-           for(int xIndex = 0; xIndex<=nx; xIndex++){
-               //colorMap->data()->cellToCoord(getX()[xIndex],getY()[xIndex], &x, &y);
-                    // random function for third coordinate
-                    //z = sin(x) + sin(y);
-               colorMap->data()->setCell(getX()[xIndex], getY()[xIndex], getP()[xIndex]);
-
+           for(int Index = 0; Index < nx * ny; Index++){ // We have 49 data points
+               colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
            }
+
+           // add a color scale:
+           QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
+           ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
+           colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right (actually atRight is already the default)
+           colorMap->setColorScale(colorScale); // associate the color map with the color scale
+           colorScale->axis()->setLabel("Third coordinate");
 
            // set the color gradient of the color map to one of the presets:
            colorMap->setGradient(QCPColorGradient::gpPolar);
            // we could have also created a QCPColorGradient instance and added own colors to
            // the gradient, see the documentation of QCPColorGradient for what's possible.
+
+           //Uncomment for ColourMap without interpolation
+           //colorMap->setInterpolate(false);
+
            // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
            colorMap->rescaleDataRange();
            // rescale the key (x) and value (y) axes so the whole color map is visible:
@@ -71,7 +80,8 @@ void bioprocesswindow::on_SaveHeatmapButton_clicked()
 }
 
 void bioprocesswindow::setProcessesToAnalyze(){
-    //this function will jsut create a vector with all the processes we can analyze
+    //this function will just create a vector with all the processes we can analyze
+    //TEMPORARY, in the end we will have something a lot more sophisticated
 
     processesToAnalyze.push_back("hypoxia");
 
@@ -88,7 +98,7 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
 
     process = bio.toStdString();
 
-    std::transform(process.begin(), process.end(), process.begin(), ::tolower); //converts to lozercase
+    std::transform(process.begin(), process.end(), process.begin(), ::tolower); //converts to lowercase
 
     //if we can analyze that process assign it to inputProcess, if not send error message
     if (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()){
@@ -103,6 +113,6 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
 void bioprocesswindow::on_MenuWindowButton_clicked()
 {
     this->close();
-    emit MenuWindow();
+    emit MenuWindow(); //returns to menuWindow
 }
 
