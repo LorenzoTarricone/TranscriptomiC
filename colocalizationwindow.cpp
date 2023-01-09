@@ -1,11 +1,13 @@
 #include "colocalizationwindow.h"
-#include "bioprocesswindow.h"
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
 #include <iostream>
-#include "qdebug.h"
 #include <fstream>
 #include <sstream>
+#include <Eigen/Dense>
+
+using namespace std;
+using namespace Eigen;
 
 
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
@@ -13,8 +15,6 @@ colocalizationwindow::colocalizationwindow(QWidget *parent) :
     ui(new Ui::colocalizationwindow)
 {
     ui->setupUi(this);
-
-
 }
 
 colocalizationwindow::~colocalizationwindow()
@@ -70,7 +70,6 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
     //opens the file explorer and get file name (with full location)
     filename = QFileDialog::getSaveFileName(this,"Save file");
 
-
     heatmap.save(filename + ".png"); //saves as .png
 
 }
@@ -78,7 +77,29 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
 
 void colocalizationwindow::on_SaveMatrixButton_clicked(){
 
+    MatrixXd m(5,5); //needs to be changed to the colocalization matrix
+    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
+    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
+    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
+    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
+    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
 
+    //opens the file explorer and get file name (with full location)
+    QString filename;
+    filename = QFileDialog::getSaveFileName(this,"Save file");
+    filename = filename + ".csv";
+
+    // Using std library to create and writes the file
+    std::string stdfilemane;
+    stdfilemane = filename.toStdString();
+    ofstream fout;
+
+    //opens file, parses the data and writes it as a .csv
+    fout.open(stdfilemane, ios::out);
+    const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
+    fout <<m.format(CSVFormat);
+
+    QMessageBox::information(this, "Success", "The colocalization matrix has been saved under" + filename , QMessageBox::Ok);
 
 };
 
@@ -107,7 +128,6 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
     }
     else{
         QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
-
     }
 }
 

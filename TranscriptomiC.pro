@@ -46,7 +46,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
 #macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
 INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
