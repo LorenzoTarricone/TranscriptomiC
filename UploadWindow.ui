@@ -88,7 +88,7 @@ padding: 0 8px;
      <string>Select</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="UploadLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -107,7 +107,10 @@ color: rgb(0,0,0);
 font: 700 14pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="text">
-     <string>  Upload a file: </string>
+     <string>Upload a file: </string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

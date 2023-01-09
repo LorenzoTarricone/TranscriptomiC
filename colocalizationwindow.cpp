@@ -76,6 +76,13 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
 }
 
 
+void colocalizationwindow::on_SaveMatrixButton_clicked(){
+
+
+
+};
+
+
 void colocalizationwindow::on_UploadGenesButton_clicked()
 {
     /* This method allows the user to uplaod a csv file with
