@@ -3,6 +3,7 @@
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
+#include "fake_colocalization_matrix.h" // just for the test
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>

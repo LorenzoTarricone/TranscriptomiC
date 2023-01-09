@@ -6,6 +6,7 @@ FileData::FileData()
 {
 
 }
+// Maybe I have to change the raed data file
 
 bool FileData::readData(std::string fileName){
     xCoordinates.clear();
@@ -46,6 +47,7 @@ bool FileData::readData(std::string fileName){
 
     return true;
 }
+
 
 bool FileData::readGenes(std::string fileName){
     std::ifstream genes;

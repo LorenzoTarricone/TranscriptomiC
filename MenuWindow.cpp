@@ -38,8 +38,7 @@ void MenuWindow::on_ColocalizationButton_clicked()
 
     coWindow = new colocalizationwindow(this);
     connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show);
-
-
+    
     coWindow->setX(this->getX());
     coWindow->setY(this->getY());
     coWindow->setP(this->getP());
