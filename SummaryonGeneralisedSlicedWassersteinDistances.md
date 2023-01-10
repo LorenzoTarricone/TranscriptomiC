@@ -10,7 +10,7 @@ Sliced-Wasserstein distance is calculated via linear slicing of the probability 
 
 - Then, calculate the distance between two input distributions as a functional on the p-Wasserstein distance of their one-dimensional representations (i.e., the one-dimensional marginals). 
 
-- The sliced p-Wasserstein distance between Iμ and I⌫ is then formally defined as:
+- The sliced p-Wasserstein distance between Iμ and Iv is then formally defined as:
 $$\[S W_{p}\left(I_{\mu}, I_{\nu}\right)=\left(\int_{\mathbb{S}^{d-1}} W_{p}^{p}\left(\mathcal{R} I_{\mu}(., \theta), \mathcal{R} I_{\nu}(., \theta)\right) d \theta\right)^{\frac{1}{p}}\]$$
 
 - The computation of the SW distance requires an integration over the unit sphere in Rd. This integration is approximated by using a simple Monte Carlo scheme replaces the integral with a finite-sample average:
