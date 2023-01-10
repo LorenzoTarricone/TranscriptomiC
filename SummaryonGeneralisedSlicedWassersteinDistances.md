@@ -6,4 +6,4 @@ Sliced-Wasserstein distance has significantly lower computational requirements t
 the p-Wasserstein distance has a closed-form solution. More precisely, for one-dimensional probability measures, there exists 
 a unique monotonically increasing transport map that pushes one measure to another.
 
-- $\[W_{p}(\mu, \nu)=\left(\inf _{\gamma \in \Gamma(\mu, \nu)} \int_{X \times Y} d^{p}(x, y) d \gamma(x, y)\right)^{\frac{1}{p}}\]$
+- $$\[W_{p}(\mu, \nu)=\left(\inf _{\gamma \in \Gamma(\mu, \nu)} \int_{X \times Y} d^{p}(x, y) d \gamma(x, y)\right)^{\frac{1}{p}}\]$$
