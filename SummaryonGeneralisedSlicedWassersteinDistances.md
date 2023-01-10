@@ -2,8 +2,15 @@ The Wasserstein distance has its roots in forming a metric between two probabili
 
 Sliced-Wasserstein distance has significantly lower computational requirements than the classical Wasserstein distance.
 
-- One-dimensional distributions: The case of one-dimensional continuous probability measures is specifically interesting as 
-the p-Wasserstein distance has a closed-form solution. More precisely, for one-dimensional probability measures, there exists 
-a unique monotonically increasing transport map that pushes one measure to another.
+GSW(generalized sliced-Wasserstein) distance can be extended to a maximum GSW (max-GSW) distance.
 
-- $$\[W_{p}(\mu, \nu)=\left(\inf _{\gamma \in \Gamma(\mu, \nu)} \int_{X \times Y} d^{p}(x, y) d \gamma(x, y)\right)^{\frac{1}{p}}\]$$
+Sliced-Wasserstein distance is calculated via linear slicing of the probability distributions.
+
+- First, obtain a family of one-dimensional representations for a higher- dimensional probability distribution through linear projections (via the Radon transform).
+
+- Then, calculate the distance between two input distributions as a functional on the p-Wasserstein distance of their one-dimensional representations (i.e., the one-dimensional marginals). 
+
+- The sliced p-Wasserstein distance between Iμ and I⌫ is then formally defined as:
+$$\[S W_{p}\left(I_{\mu}, I_{\nu}\right)=\left(\int_{\mathbb{S}^{d-1}} W_{p}^{p}\left(\mathcal{R} I_{\mu}(., \theta), \mathcal{R} I_{\nu}(., \theta)\right) d \theta\right)^{\frac{1}{p}}\]$$
+
+
