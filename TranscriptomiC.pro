@@ -11,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     bioprocesswindow.cpp \
+    colocalisation.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
     genename.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     bioprocesswindow.h \
+    colocalisation.h \
     colocalizationwindow.h \
     filedata.h \
     genename.h \
