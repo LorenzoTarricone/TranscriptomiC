@@ -11,38 +11,43 @@
 int main(int argc, char *argv[])
 {
     // path to data
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022\:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/filtered_feature_bc_matrix/";
 
     // path to names file
-    std::string geneNamesFile = path+"MBASS_dd99_genes.tsv";
+    //std::string geneNamesFile = path+"MBASS_dd99_genes.tsv";
 
-    std::cout << "[Progress] Reading gene names file ..." << std::endl;
+    //std::cout << "[Progress] Reading gene names file ..." << std::endl;
     // read geneNames file
-    std::vector<std::string> geneNames = listgene(geneNamesFile);
+    //std::vector<std::string> geneNames = listgene(geneNamesFile);
 
-    std::cout << "[Progress] Reading gene names file finished. Contents: " << std::endl;
-    printVector(geneNames);
+    //std::cout << "[Progress] Reading gene names file finished. Contents: " << std::endl;
+    //printVector(geneNames);
 
-    // path to beams file
-    std::string beamFile = path+"MBASS_dd99_spatial.csv";
+    //path to beams file
+    std::string beamFile = path+"beams.tsv";
+    //read beam file
+    parseTxtBeams parsetxt = parseTxtBeams();
+    parsetxt.readFile(beamFile);
+    //convert beam file to eigen matrix for colocalization computation
+    Eigen::MatrixXd beam_matrix = parsetxt.convertToMatrix();
 
     // create parsing object
-    parsing beams = parsing();
+    //parsing beams = parsing();
 
     // read beam file
-    std::cout << "[Progress] Reading beam file ..." << std::endl;
-    beams.readBeamFileCSV(beamFile);
+    //std::cout << "[Progress] Reading beam file ..." << std::endl;
+    //beams.readBeamFileCSV(beamFile);
 
     // convert object to eigen matrix
-    std::cout << "[Progress] Converting beams file to matrix ..." << std::endl;
-    Eigen::MatrixXd beam_matrix = beams.convertToMatrix();
+    //std::cout << "[Progress] Converting beams file to matrix ..." << std::endl;
+    //Eigen::MatrixXd beam_matrix = beams.convertToMatrix();
 
 
 
 
     // paths to expression matrix
     parsemtx mtxobject = parsemtx();
-    std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
+    std::string expressionFile = path+"matrix.mtx";
     std::cout << "[Progress] Reading expression matrix ..." << std::endl;
     mtxobject.readFile(expressionFile);
     std::cout << "[Progress] Finished reading expression matrix" << std::endl;
