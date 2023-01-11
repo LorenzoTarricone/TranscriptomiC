@@ -64,18 +64,18 @@ void parseTxtBeams::readFile(std::string filename){
 
 Eigen::MatrixXd parseTxtBeams::convertToMatrix(){
     int m = y.size();
-    Eigen::MatrixXd beams = Eigen::MatrixXd(m,2);
+    Eigen::MatrixXd coords = Eigen::MatrixXd(m,2);
     int j = 0;
     for(typename std::vector<int>::iterator i = x.begin(); i != x.end(); i++){
-        beams(j,0) = *i;
+        coords(j,0) = *i;
         j++;
     }
     j = 0;
     for(typename std::vector<int>::iterator i = y.begin(); i != y.end(); i++){
-        beams(j,1) = *i;
+        coords(j,1) = *i;
         j++;
     }
-    return beams;
+    return coords;
 }
 
 void parseTxtBeams::createDummyFile(unsigned int rows, std::string filename){

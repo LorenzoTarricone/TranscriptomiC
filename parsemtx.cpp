@@ -32,13 +32,17 @@ void parsemtx::readFile(std::string filename){
 
     // Read defining parameters:
     fin >> M >> N >> L;
+    std::cout<<"M: "<<M<<std::endl;
+    std::cout<<"\nN: "<<N<<std::endl;
+    std::cout<<"\nL: "<<L<<std::endl;
 
 
     // from https://eigen.tuxfamily.org/dox/group__TutorialSparse.html
     typedef Eigen::Triplet<double> T;
     std::vector<T> tripletList;
-    int  estimation_of_entries = (int) ((1-0.98) * M * N);
+    int  estimation_of_entries = (int) ((1-0.97) * M * N);
     tripletList.reserve(estimation_of_entries);
+    std::cout<<"\nEstimation of entries: "<<estimation_of_entries<<std::endl;
 
     // initialize max row and colun indices
     int max_m = 0;
