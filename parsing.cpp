@@ -77,7 +77,7 @@ Eigen::MatrixXd parsing::convertToMatrix(){
 }
 
 
-// this function is a dummy function
+// this function is a dummy function, it can be replaced by listgene method
 std::vector<std::string> parsing::readNamesFileTSV(std::string filename){
     std::vector<std::string> names = std::vector<std::string>();
     std::ifstream fin(filename,std::ios::in);

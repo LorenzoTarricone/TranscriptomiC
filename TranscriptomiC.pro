@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     bioprocesswindow.cpp \
     colocalisation.cpp \
+    colocalisation_steps.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
     genename.cpp \
@@ -52,9 +53,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-#macx:INCLUDEPATH += "$$PWD/eigen_mac"
+win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
-INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
+#INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 

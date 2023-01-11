@@ -1,9 +1,13 @@
-#include "colocalization_matrix.h".h"
+#include "construct_colocalisation.h"
 #include <QApplication>
 #include <Eigen/Dense>
 #include <math.h>
 
 
+construct_colocalisation::construct_colocalisation()
+{
+
+}
 
 //given an eigen matrix, returns an eigen matrix with the distance between points
 double distance(double x1, double x2, double y1, double y2) {

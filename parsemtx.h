@@ -20,6 +20,9 @@ public:
     void writeToFile(std::string filename,Eigen::MatrixXd matrix);
     void createBeamFile(std::string file_out, std::string file_in = "");
 
+    int getRows();
+    int getCols();
+
     Eigen::MatrixXd getExpressionDense();
 
 

@@ -391,10 +391,19 @@ void parsemtx::createBeamFile(std::string file_out, std::string file_in){
 
 // method that returns the expression matrix in its current state as an Eigen object
 Eigen::MatrixXd parsemtx::getExpressionDense(){
-    // check if something has been assigned to matrix
-    if(this->matrix == Eigen::MatrixXd{}){
-        this->matrix = Eigen::MatrixXd(sparse);
-    }
-    return matrix;
+//    // check if something has been assigned to matrix
+//    if(this->matrix == Eigen::MatrixXd{}){
+//        this->matrix = Eigen::MatrixXd(sparse);
+//    }
+//    return matrix;
+    return Eigen::MatrixXd(sparse);
 }
 
+
+// methods ot return dimensions of matrix wrappend in this object
+int parsemtx::getRows(){
+    return sparse.rows();
+}
+int parsemtx::getCols(){
+    return sparse.cols();
+}
