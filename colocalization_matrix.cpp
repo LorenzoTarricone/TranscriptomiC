@@ -64,9 +64,7 @@ MatrixXd combine_linkage(MatrixXd &A_linkage, MatrixXd &A_expression){
     std::cout<<"\n Combine matrix shape: (" << A_combine.rows() << ", " << A_combine.cols() << ")"<<std::endl;
     // iterate through columns of A_combine
     for(int j = 0; j < k; j++){
-        if(j%100==0){
-            std::cout<<"\n Beam n: " << j <<std::endl;
-         }
+        std::cout<<"\n Beam n: " << j <<std::endl;
         double row_total = A_linkage.block(j,0,1,k).sum();
         //std::cout<<"row "<<j<<" total: "<<row_total<<std::endl;
         // since we're considering A_combine and A_expression column-wise, iterate through rows per column
@@ -80,6 +78,13 @@ MatrixXd combine_linkage(MatrixXd &A_linkage, MatrixXd &A_expression){
                 }// end if
             }// end for r
          }// end for i
+//        VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
+//        // Divide the dot product results by the row total
+//        dot_product_results /= row_total;
+ //       // Assign the results to the corresponding row of A_combine
+ //       for(int i = 0; i < n; i++){
+ //           A_combine(i,j) = dot_product_results(i);
+  //      }
     }// end for j
     return A_combine;
 } // end method
@@ -153,9 +158,7 @@ MatrixXd enrichment(MatrixXd &A){
     for(int j = 0; j < N; j++){
         for(int i = 0; i < N; i++){
             // add normalized value to row mean array
-
-            //are we dividing by 0? might need to fix
-            A_enrichment(i,j) = log(A(i,j)/S_A[i] + 1)/log(2);
+            A_enrichment(i,j) = log2(A(i,j)/S_A[i]+1);
          }// end for i
     }// end for j
 
