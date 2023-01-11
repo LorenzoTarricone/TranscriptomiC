@@ -11,6 +11,8 @@ Clémence Mottez: I did lots of research on the David data base. This is useful 
 
 Lorenzo Tarricone: Fine tuned all the methods needed for the two kinds of analysis that can be implemented. A complete description of the algorithm for the colocalization table and the biological process identifier table are available on the R&D branch. Designed the how the user interface for the final product needs to be and shared it with the frontend team. I also made some literature search and provided everyone with a database from 10X genomics with some open access data. The only problem is that not everything we need is there, in particular the table with the location of the beams is missing
 
+Jingai Si: Conducted research on generalised sliced Wasserstein Distances(GSW) for future mathematics application and generated a bullet-pointed summary, including fuction of GSW, companrison between GSW and max-GSW.
+
 ### Database
 Members:
 - Nicolás López Corral
