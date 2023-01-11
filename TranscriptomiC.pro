@@ -37,13 +37,13 @@ HEADERS += \
     genename.h \
     matrixeigen.h \
     parsemtx.h \
-    qcustomplot.h
+    qcustomplot.h \
 #    SparseMatrix.h \
     parsetxtbeams.h \
     parsing.h \
     qcustomplot.h \
     colocalization_matrix.h \
-    SecondWindow.h
+    SecondWindow.h \
 
 FORMS += \
     MenuWindow.ui \

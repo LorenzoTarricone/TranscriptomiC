@@ -1,6 +1,6 @@
 
 #include "UploadWindow.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
 #include "parsemtx.h"
 #include "parsetxtbeams.h"
 #include "matrixeigen.h"
