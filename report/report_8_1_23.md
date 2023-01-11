@@ -32,6 +32,12 @@ Members:
 
 Alan Picucci: Implemented step 4 in the construction of the colocalisation matrix. This consists in the following: create a new matrix of size n_genes times n_genes times n_cells which, for each cell, compares the column corresponding to that cell from the original expression matrix with the column from the Neighbouring expression matrix. Then we take the mean along the n_cells dimension.
 
+Adrian Düsselberg:
+Worked on improving the heatmap. Created a class fake_colocalization_matrix on HeatMap-without-Eigen to optimize the plotting. Wrote a method, which takes  an Eigen:: Matrix M as input and returns a heatmap (i and j are the x,y-coordinates and M(i,j) is z-coordinate). Thereby modified how the data is read.    
+
+Nina Peuker: Implemented filtering and normalisation methods as well as step 5 and 6 of the colocalisation matrix. Organized and took part in project management meetings and assigning of tasks. Created dummy functions to test methods, combined steps to run first iterations of colocalisation computations.
+
+
 ### Frontend 
 Members:
 - Rita Saraiva
