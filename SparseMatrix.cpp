@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <fstream>
 #include <vector>
-#include <SparseMatrix.h>
+#include <colocalization_matrix.h>
 
 using namespace std;
 using namespace Eigen;

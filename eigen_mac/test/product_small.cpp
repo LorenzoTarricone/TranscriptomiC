@@ -7,7 +7,6 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#define EIGEN_NO_STATIC_ASSERT
 #include "product.h"
 #include <Eigen/LU>
 
@@ -41,12 +40,12 @@ const TC& ref_prod(TC &C, const TA &A, const TB &B)
 }
 
 template<typename T, int Rows, int Cols, int Depth, int OC, int OA, int OB>
-typename internal::enable_if<! ( (Rows ==1&&Depth!=1&&OA==ColMajor)
+std::enable_if_t<! ( (Rows ==1&&Depth!=1&&OA==ColMajor)
                               || (Depth==1&&Rows !=1&&OA==RowMajor)
                               || (Cols ==1&&Depth!=1&&OB==RowMajor)
                               || (Depth==1&&Cols !=1&&OB==ColMajor)
                               || (Rows ==1&&Cols !=1&&OC==ColMajor)
-                              || (Cols ==1&&Rows !=1&&OC==RowMajor)),void>::type
+                              || (Cols ==1&&Rows !=1&&OC==RowMajor)),void>
 test_lazy_single(int rows, int cols, int depth)
 {
   Matrix<T,Rows,Depth,OA> A(rows,depth); A.setRandom();
@@ -81,12 +80,12 @@ void test_dynamic_bool()
 }
 
 template<typename T, int Rows, int Cols, int Depth, int OC, int OA, int OB>
-typename internal::enable_if<  ( (Rows ==1&&Depth!=1&&OA==ColMajor)
+std::enable_if_t<  ( (Rows ==1&&Depth!=1&&OA==ColMajor)
                               || (Depth==1&&Rows !=1&&OA==RowMajor)
                               || (Cols ==1&&Depth!=1&&OB==RowMajor)
                               || (Depth==1&&Cols !=1&&OB==ColMajor)
                               || (Rows ==1&&Cols !=1&&OC==ColMajor)
-                              || (Cols ==1&&Rows !=1&&OC==RowMajor)),void>::type
+                              || (Cols ==1&&Rows !=1&&OC==RowMajor)),void>
 test_lazy_single(int, int, int)
 {
 }
@@ -291,6 +290,7 @@ EIGEN_DECLARE_TEST(product_small)
     CALL_SUBTEST_3( product(Matrix3d()) );
     CALL_SUBTEST_4( product(Matrix4d()) );
     CALL_SUBTEST_5( product(Matrix4f()) );
+    CALL_SUBTEST_50( product(Matrix<bfloat16, 3, 2>()) );
     CALL_SUBTEST_6( product1x1<0>() );
 
     CALL_SUBTEST_11( test_lazy_l1<float>() );

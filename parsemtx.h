@@ -14,6 +14,16 @@ public:
     void print();
     void filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes, double min_expr_perc,std::string type_of_transcriptome);
     void getRowNamesFromFile(std::string filename);
+    void normalisation(std::string type_of_normal = "col_mean");
+    void writeToFile(std::string filename);
+    void writeToFile(std::string filename,Eigen::MatrixXd matrix);
+    void createBeamFile(std::string file_out, std::string file_in = "");
+
+    int getRows();
+    int getCols();
+
+    Eigen::MatrixXd getExpressionDense();
+
 
 private:
     Eigen::MatrixXd matrix;
@@ -24,6 +34,16 @@ private:
     std::map<std::string, int> geneIndex;
     std::vector<std::string> all_names;
     void shiftGeneIndex(int row, int removed);
+    int N,M;
 };
+
+// declarations of functions to remove certain row or column from eigen dense matrix
+void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove);
+
+void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove);
+
+std::vector<std::string> listgene(std::string txt_file);
+
+void printVector(std::vector<std::string> vec);
 
 #endif // PARSEMTX_H
