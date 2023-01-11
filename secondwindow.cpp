@@ -38,13 +38,9 @@ void SecondWindow::on_ColocalizationButton_clicked()
 {
     coWindow = new colocalizationwindow(this);
 
-    coWindow->setX(this->getX());
-    coWindow->setY(this->getY());
-    coWindow->setP(this->getP());
-
     this->hide();
     coWindow->show();
-    coWindow->makeHeatMap();
+    coWindow->makeHeatMap(MatrixXd m);
 
 }
 

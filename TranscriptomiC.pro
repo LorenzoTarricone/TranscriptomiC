@@ -12,23 +12,21 @@ CONFIG += c++17
 SOURCES += \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \
-    fake_colocalization_matrix.cpp \
     filedata.cpp \
-    genename.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
-    secondwindow.cpp
+    secondwindow.cpp \
+    upload_matrix.cpp
 
 HEADERS += \
     bioprocesswindow.h \
     colocalizationwindow.h \
-    fake_colocalization_matrix.h \
     filedata.h \
-    genename.h \
     mainwindow.h \
     qcustomplot.h \
-    SecondWindow.h
+    SecondWindow.h \
+    upload_matrix.h
 
 FORMS += \
     SecondWindow.ui \

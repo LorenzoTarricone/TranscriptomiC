@@ -17,7 +17,7 @@ colocalizationwindow::~colocalizationwindow()
     delete ui;
 }
 
-void colocalizationwindow::makeHeatMap(){
+void colocalizationwindow::makeHeatMap(MatrixXd m){
 
     // configure axis rect:
            ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
@@ -27,11 +27,26 @@ void colocalizationwindow::makeHeatMap(){
            // set up the QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
+           int number_rows = m.rows();
+           int number_cols = m.cols();
+
+           QVector<double> xCoordinates;
+           QVector<double> yCoordinates;
+           QVector<double> pValues;
+
+           for(int i = 0; i < number_rows; i++){
+               for(int j = 0; j< number_cols; j++){
+                   xCoordinates.push_back(i);
+                   yCoordinates.push_back(j);
+                   pValues.push_back(m(i,j));
+               }
+           }
+
            // Use nx = ny = 7 for rec_Data: We need to find nx and ny for each individual file.
            // It only works for quadratic matrices, we want to get the biggest x- and y-coordinate of the coordinate vectors
-           int nx = sqrt(getX().size());
+           int nx = sqrt(xCoordinates.size());
            std::cout << "nx: "<< nx;// check if nx is correct: delete this line later
-           int ny = sqrt(getY().size());
+           int ny = sqrt(yCoordinates.size());
            std::cout << "ny:"<< ny; // check if ny is correct: delte this line later
 
            colorMap->data()->setSize(nx, ny);
@@ -42,7 +57,7 @@ void colocalizationwindow::makeHeatMap(){
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
            for(int Index = 0; Index< nx * ny; Index++){ // We have 49 data points for rec_Data file
-               colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
+               colorMap->data()->setCell(xCoordinates[Index], yCoordinates[Index], pValues[Index]);
            }
            // add a color scale
            QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
@@ -65,21 +80,9 @@ void colocalizationwindow::makeHeatMap(){
            // rescale the key (x) and value (y) axes so the whole color map is visible:
            ui->customPlot->rescaleAxes();
 
-}
-void colocalizationwindow::makeHeatMap(MatrixXd m){
-    int number_rows = m.rows();
-    int number_cols = m.cols();
-
-    for(int i = 0; i < number_rows; i++){
-        for(int j = 0; j< number_cols; j++){
-            xCoordinates.push_back(i);
-            yCoordinates.push_back(j);
-            pValues.push_back(m(i,j));
-        }
-    }
-    makeHeatMap();
 
 }
+
 
 void colocalizationwindow::on_SaveHeatmapButton_clicked()
 {
