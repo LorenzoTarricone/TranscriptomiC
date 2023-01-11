@@ -19,6 +19,7 @@ SOURCES += \
     matrixeigen.cpp \
     parsemtx.cpp \
     parsetxtbeams.cpp \
+    parsing.cpp \
     qcustomplot.cpp \
     secondwindow.cpp \
     SparseMatrix.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     matrixeigen.h \
     parsemtx.h \
     parsetxtbeams.h \
+    parsing.h \
     qcustomplot.h \
     colocalization_matrix.h \
     SecondWindow.h
@@ -48,9 +50,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-#macx:INCLUDEPATH += "$$PWD/eigen_mac"
+win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
-INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
+#INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 

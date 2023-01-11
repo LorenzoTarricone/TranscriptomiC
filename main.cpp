@@ -3,26 +3,109 @@
 #include "parsetxtbeams.h"
 #include "matrixeigen.h"
 #include "colocalization_matrix.h"
+#include "parsing.h"
 
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-//    return a.exec();
+    // path to data
+    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022\:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
 
-//    MatrixEigen matrix_eigen =  MatrixEigen();
-//    matrix_eigen.generateRandomCSV(10,10,0,1,"csv_test.csv");
-//    std::cout << "Program path : " << argv[0] << std::endl;
+    // path to names file
+    std::string geneNamesFile = path+"MBASS_dd99_genes.tsv";
 
-    //parseTxtBeams tsv_object = parseTxtBeams();
-    //tsv_object.createDummyFile(10,"tsv_test_2.tsv");
-    //tsv_object.readFile("tsv_test_2.tsv");
+    std::cout << "[Progress] Reading gene names file ..." << std::endl;
+    // read geneNames file
+    std::vector<std::string> geneNames = listgene(geneNamesFile);
 
-    return construct_colocalisation_matrix();
+    std::cout << "[Progress] Reading gene names file finished. Contents: " << std::endl;
+    printVector(geneNames);
 
-//    return 0;
+    // path to beams file
+    std::string beamFile = path+"MBASS_dd99_spatial.csv";
+
+    // create parsing object
+    parsing beams = parsing();
+
+    // read beam file
+    std::cout << "[Progress] Reading beam file ..." << std::endl;
+    beams.readBeamFileCSV(beamFile);
+
+    // convert object to eigen matrix
+    std::cout << "[Progress] Converting beams file to matrix ..." << std::endl;
+    Eigen::MatrixXd beam_matrix = beams.convertToMatrix();
+
+
+
+
+    // paths to expression matrix
+    parsemtx mtxobject = parsemtx();
+    std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
+    std::cout << "[Progress] Reading expression matrix ..." << std::endl;
+    mtxobject.readFile(expressionFile);
+    std::cout << "[Progress] Finished reading expression matrix" << std::endl;
+//    mtxobject.print();
+
+//    return construct_colocalisation_matrix();
+    //  step 1 - create distance matrix
+    std::cout << "[Progress] Running step 1 ..." << std::endl;
+    Eigen::MatrixXd* A_distance = new Eigen::MatrixXd;
+    // now this is 10x10 matrix
+    *A_distance = matrix_distance(beam_matrix.block(0,0,10,2));
+
+
+    // step 2 - linkage matrix with parameters m and p
+    double m = 5000;
+    double p = 2;
+    std::cout << "[Progress] Running step 2 ..." << std::endl;
+    Eigen::MatrixXd* A_linkage = new Eigen::MatrixXd;
+    *A_linkage = matrix_linkage(*A_distance, m, p);
+
+    delete A_distance;
+
+    std::cout<<(*A_linkage).block(0,0,10,10)<<std::endl;
+    std::cout<<"\nLinkage matrix shape: (" << (*A_linkage).rows() << ", " << (*A_linkage).cols() << ")"<<std::endl;
+
+
+    //  step 3 - apply linkage to expression matrix -> neighbouring matrix
+    Eigen::MatrixXd expression =  mtxobject.getExpressionDense().block(0,0,10,10);
+
+    std::cout<<expression.block(0,0,10,10)<<std::endl;
+    std::cout<<"Expression matrix shape: (" << expression.rows() << ", " << expression.cols() << ")\n"<<std::endl;
+
+    std::cout << "[Progress] Running step 3 ..." << std::endl;
+    Eigen::MatrixXd* A_combine = new Eigen::MatrixXd;
+    *A_combine = combine_linkage(*A_linkage,(expression));
+
+    delete A_linkage;
+
+    std::cout<<(*A_combine).block(0,0,10,10)<<std::endl;
+    std::cout<<"\nCombine matrix shape: (" << (*A_combine).rows() << ", " << (*A_combine).cols() << ")"<<std::endl;
+
+    //  step 4 - compare expression and neighbouring matrices (with default parameters
+    std::cout << "[Progress] Running step 4 ..." << std::endl;
+    Eigen::MatrixXd A_compare = comparison(expression, *A_combine);
+
+    delete A_combine;
+
+    std::cout<<A_compare.block(0,0,10,10)<<std::endl;
+    std::cout<<"\n Comparison matrix shape: (" << A_compare.rows() << ", " << A_compare.cols() << ")"<<std::endl;
+
+    // step 5 and 6 - generate colocalisation matrix containing enrichement scores
+    std::cout << "[Progress] Running step 5 ..." << std::endl;
+    Eigen::MatrixXd A_colocalisation = enrichment(A_compare);
+
+    std::cout<<A_colocalisation.block(0,0,10,10)<<std::endl;
+    std::cout<<"\n Colocalisation matrix shape: (" << A_colocalisation.rows() << ", " << A_colocalisation.cols() << ")"<<std::endl;
+
+    //  save colocalisation matrix
+
+    std::cout << "[Progress] Saving File ..." << std::endl;
+    std::string colocalisationFile = path + "colocalisation.csv";
+    mtxobject.writeToFile(colocalisationFile,A_colocalisation);
+
+
+    return 0;
 }

@@ -40,7 +40,7 @@ void parsemtx::readFile(std::string filename){
     // from https://eigen.tuxfamily.org/dox/group__TutorialSparse.html
     typedef Eigen::Triplet<double> T;
     std::vector<T> tripletList;
-    int  estimation_of_entries = (int) ((1-0.97) * M * N);
+    int  estimation_of_entries = (int) (L); //(1-0.97) * M * N
     tripletList.reserve(estimation_of_entries);
     std::cout<<"\nEstimation of entries: "<<estimation_of_entries<<std::endl;
 
@@ -50,7 +50,7 @@ void parsemtx::readFile(std::string filename){
 
 
     // initialize sparse matrix object of the correct size
-    Eigen::SparseMatrix<double> sparseMatrix(M,N+1);
+    Eigen::SparseMatrix<double> sparseMatrix(M+1,N+1);
 
     // Read the data
     std::cout << "reading matrix with " << M << " rows and " << N << " columns" << std::endl;
@@ -59,9 +59,9 @@ void parsemtx::readFile(std::string filename){
         int m, n;
         double data;
         fin >> m >> n >> data;
-//        tripletList.push_back(T(m,n,data));
+        tripletList.push_back(T(m,n,data));
         // alternative approach --> directly insert to matrix
-        sparseMatrix.insert(m,n) = data;
+//        sparseMatrix.insert(m,n) = data;
 //        std::cout << m << "\t" << n << "\t" << data << std::endl;
         // get max row and column indices
         if(max_m < m){max_m = m;}
@@ -83,11 +83,11 @@ void parsemtx::readFile(std::string filename){
     std::cout << "the maximum row index is "<< max_m << std::endl;
     std::cout << "the maximum column index is "<< max_n << std::endl;
 
-//    // fill sparse matrix object using the vector of triplets from the file reading
-//    sparseMatrix.setFromTriplets(tripletList.begin(), tripletList.end());
+    // fill sparse matrix object using the vector of triplets from the file reading
+    sparseMatrix.setFromTriplets(tripletList.begin(), tripletList.end());
 
-//     alternative approach
-    sparseMatrix.makeCompressed();
+////     alternative approach
+//    sparseMatrix.makeCompressed();
 
     // check sparse matrix object
     std::cout << "Created sparse object with " << sparseMatrix.rows() << " rows, " << sparseMatrix.cols() << " columns and " << sparseMatrix.nonZeros() << " non-zero values" << std::endl;
@@ -168,6 +168,15 @@ std::vector<std::string> listgene(std::string txt_file){
     file.close();
     return list;
 }
+
+// function to print a vector (solve with operator overloading?? - extend to generic
+void printVector(std::vector<std::string> vec){
+    for(typename std::vector<std::string>::iterator i = vec.begin(); i != vec.end(); i++){
+        std::cout << *i << std::endl;
+    }
+}
+
+
 
 // this function updates the geneIndex map (dictonary) when a row is removed from the matrix
 void parsemtx::shiftGeneIndex(int row, int removed){

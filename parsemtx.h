@@ -40,4 +40,8 @@ void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove);
 
 void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove);
 
+std::vector<std::string> listgene(std::string txt_file);
+
+void printVector(std::vector<std::string> vec);
+
 #endif // PARSEMTX_H

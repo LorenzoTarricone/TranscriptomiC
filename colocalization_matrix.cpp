@@ -131,7 +131,7 @@ MatrixXd comparison(MatrixXd &expression, MatrixXd &neighbors, double a, double 
 // TODO: determine whether method should modify given matrix or create new matrix
 
 MatrixXd enrichment(MatrixXd &A){
-    int N = A.size();
+    int N = A.rows();
     // array to store the row sums (N size of matrix)
     // TODO: add this function to the object that stores the colocalisation matrix, use private member N
     double S_A[N];
@@ -155,7 +155,7 @@ MatrixXd enrichment(MatrixXd &A){
             // add normalized value to row mean array
 
             //are we dividing by 0? might need to fix
-            A_enrichment(i,j) = log(A(i,j)/S_A[i])/log(2);
+            A_enrichment(i,j) = log(A(i,j)/S_A[i] + 1)/log(2);
          }// end for i
     }// end for j
 
