@@ -9,20 +9,31 @@
 #include <algorithm>
 #include <fstream>
 
-using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::vector; using std::istringstream;
-using std::stringstream;
-
 using namespace std;
 
-
+//read gene txt
 int main(){
     string txt_gene="list_gene.txt";
 
     readgenetxt vec;
     vector<string> res;
     res=vec.listgene(txt_gene);
+    cout<<"[";
+    for (const string& i : res) {
+        cout << i<<" ";
+      }
+    cout<<"]";
+    return 0;}
+
+//read gene of bio process
+
+int main(){
+    string txt_gene="D:\\CLEMENCE\\C++ project\\build-transcriptomics_development-Desktop_Qt_6_2_4_MinGW_64_bit-Debug\\list_gene_bio_process_mitochondrion_inheritance.txt";
+
+    readgenetxt vec;
+    vector<string> res;
+    int nb_gene=100; //normally the right value will be 500
+    res=vec.listgene_bio_pro(txt_gene,nb_gene);
     cout<<"[";
     for (const string& i : res) {
         cout << i<<" ";
@@ -78,6 +89,38 @@ std::vector<std::string> readgenetxt::listgene(std::string filename){
 
 
 
+std::vector<std::string> readgenetxt::listgene_bio_pro(std::string filename, int nb_gene){
+    std::vector<std::string> list;
+    std::ifstream file;
+    std::string line;
+    int i=0;
+    file.open(filename); //open file
+    if (file.peek() == std::ifstream::traits_type::eof()) {
+        qDebug() << "Empty file!!";
+    }
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << filename << std::endl;
+    }
+    while (getline(file, line)) {
+
+        std::stringstream ss(line);
+        std::string value;
+        while (ss >> value) {
+            if (i<nb_gene){
+                list.push_back(value);
+                i+=1;
+            }
+            else{
+                file.close();
+                return list;
+            }
+
+        }
+    }
+
+    file.close();
+    return list;
+}
 
 
 
