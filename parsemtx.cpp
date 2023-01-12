@@ -115,19 +115,7 @@ void parsemtx::print(){
           }
 }
 
-<<<<<<< HEAD
 
-// declarations of functions to remove certain row or column from eigen dense matrix
-void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
-{
-    unsigned int numRows = matrix.rows()-1;
-    unsigned int numCols = matrix.cols();
-
-    if( rowToRemove < numRows )
-        matrix.block(rowToRemove,0,numRows-rowToRemove,numCols) = matrix.block(rowToRemove+1,0,numRows-rowToRemove,numCols);
-
-    matrix.conservativeResize(numRows,numCols);
-=======
 // overloaded version of writeToFile to write expression matrix to file
 void parsemtx::writeToFile(std::string filename){
     // convert sparse representation to dense (check this!!)
@@ -135,7 +123,6 @@ void parsemtx::writeToFile(std::string filename){
         matrix = Eigen::MatrixXd(sparse);
     }
     parsemtx::writeToFile(filename,matrix);
->>>>>>> colocalisation_matrix
 }
 
 void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix){
@@ -326,6 +313,8 @@ void parsemtx::normalisation(std::string type_of_normal){
     }
 
 }
+
+// declarations of functions to remove certain row or column from eigen dense matrix
 
 void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
 {

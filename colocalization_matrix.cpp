@@ -55,38 +55,48 @@ Eigen::MatrixXd matrix_linkage(Eigen::MatrixXd &A_distance, double m, double p){
 // returns an nxk matrix indicating average gene expression in neighbouring beams
 
 Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_expression){
+    std::cout<<"\n Entered function"<<std::endl;
+
     int k = A_linkage.rows();
     int n = A_expression.rows();
     Eigen::MatrixXd A_combine(n,k);
-    std::cout<<"\n Combine matrix shape: (" << A_combine.rows() << ", " << A_combine.cols() << ")"<<std::endl;
+
+    // Create a mutex to protect shared data
+   //std::mutex mutex;
 
     // Create a vector to store the threads
-    std::vector<std::thread> threads;
+   // std::vector<std::thread> threads;
 
     // iterate through columns of A_combine
     for(int j = 0; j < k; j++){
         std::cout<<"\n Beam n: " << j <<std::endl;
         double row_total = A_linkage.row(j).sum();
         // create a lambda function to compute the weighted sum
-        auto compute_weighted_sum = [j, &A_linkage, &A_expression, &A_combine, row_total]() {
+        //auto compute_weighted_sum = [j, &A_linkage, &A_expression, &A_combine, &mutex, row_total]() {
             // compute the weighted sum along row j of the linkage matrix, excluding entry
-            VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
+        //    VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
             //remove entry sum
-            dot_product_results -= A_linkage.row(j)(j)*(A_expression.row(j).transpose());
+            //dot_product_results -= A_linkage.row(j)(j)*(A_expression.row(j).transpose());
             // Divide the dot product results by the row total
-            dot_product_results /= row_total;
+        //    dot_product_results /= row_total;
+            //lock to access the shared data
+        //    std::unique_lock<std::mutex> lock(mutex);
             // Assign the results to the corresponding row of A_combine
-            A_combine.col(j) = dot_product_results;
-        };
+        //    A_combine.col(j) = dot_product_results;
+         //   lock.unlock();
+        //};
         // Add the function to the list of threads
-        threads.emplace_back(compute_weighted_sum);
+        //threads.emplace_back(compute_weighted_sum);
+        VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
+        // Divide the dot product results by the row total
+        dot_product_results /= row_total;
+        // Assign the results to the corresponding row of A_combine
+        A_combine.col(j) = dot_product_results;
      }
-
      // Join all the threads
-     for (auto &thread : threads) {
-        thread.join();
-     }
-    //}// end for j
+     //for (auto &thread : threads) {
+     //   thread.join();
+     //}
     return A_combine;
 } // end method
 

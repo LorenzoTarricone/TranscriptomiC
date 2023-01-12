@@ -7,7 +7,7 @@ void colocalisation::step1(){
     std::cout << "[Progress] Running step 1 ..." << std::endl;
     A_distance = new Eigen::MatrixXd;
     // TODO: wrap methods for steps 1-5 in object and make them static
-    *A_distance = matrix_distance(A_spatial.block(block_rows_start,0,block_rows,2));
+    *A_distance = matrix_distance(A_spatial.block(block_rows_start,0,block_cols,2));
 }
 
 void colocalisation::step2(){
@@ -28,8 +28,11 @@ void colocalisation::step3(){
     std::cout << "[Progress] Running step 3 ..." << std::endl;
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
+    std::cout<<"\n step 1"<<std::endl;
     expression = new Eigen::MatrixXd;
+    std::cout<<"\n step 2"<<std::endl;
     *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+    std::cout<<"\n step 3"<<std::endl;
 
 
     std::cout<<expression->block(0,0,10,10)<<std::endl;
@@ -40,6 +43,9 @@ void colocalisation::step3(){
     *A_combine = combine_linkage(*A_linkage,*expression);
 
     delete A_linkage;
+
+    std::cout<<A_combine->block(0,0,10,10)<<std::endl;
+    std::cout<<"\n Comparison matrix shape: (" << A_combine->rows() << ", " << A_combine->cols() << ")"<<std::endl;
 }
 
 void colocalisation::step4(){
