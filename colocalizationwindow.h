@@ -33,11 +33,11 @@ signals:
 private slots:
     void on_SaveHeatmapButton_clicked();
 
+    void on_SaveMatrixButton_clicked();
+
     void on_UploadGenesButton_clicked();
 
     void on_MenuWindowButton_clicked();
-
-    void on_BiologicalButton_clicked();
 
 private:
     Ui::colocalizationwindow *ui;

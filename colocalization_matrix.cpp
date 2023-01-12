@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "mainwindow.h"
+#include "UploadWindow.h"
 #include <Eigen/Dense>
 #include <SparseMatrix.h>
 #include <math.h>

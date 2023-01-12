@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>688</width>
-    <height>300</height>
+    <width>490</width>
+    <height>270</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Colocalization</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(248,247,245);</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248,247,245);
@@ -20,24 +23,32 @@
   <widget class="QCustomPlot" name="customPlot" native="true">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>20</x>
      <y>60</y>
-     <width>331</width>
-     <height>191</height>
+     <width>330</width>
+     <height>190</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,255,255);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+color: rgb(0,0,0);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="SaveMatrixButton">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>140</y>
-     <width>91</width>
-     <height>18</height>
+     <x>370</x>
+     <y>120</y>
+     <width>100</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(243,242,240);
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
@@ -51,14 +62,15 @@ color: rgb(0, 0, 0);
   <widget class="QPushButton" name="SaveHeatmapButton">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>170</y>
-     <width>91</width>
-     <height>18</height>
+     <x>370</x>
+     <y>160</y>
+     <width>100</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(243,242,240);
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
@@ -72,14 +84,15 @@ color: rgb(0, 0, 0);
   <widget class="QPushButton" name="UploadGenesButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>200</x>
      <y>20</y>
-     <width>151</width>
+     <width>150</width>
      <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(243,242,240);
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
@@ -93,10 +106,10 @@ color: rgb(0, 0, 0);
   <widget class="QPushButton" name="MenuWindowButton">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>20</x>
      <y>20</y>
-     <width>121</width>
-     <height>18</height>
+     <width>80</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -104,8 +117,7 @@ color: rgb(0, 0, 0);
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
-color: rgb(0, 0, 0);
-
+color: rgb(0,0,0);
 </string>
    </property>
    <property name="text">
