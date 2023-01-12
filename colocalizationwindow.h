@@ -18,7 +18,7 @@ public:
     explicit colocalizationwindow(QWidget *parent = nullptr);
     ~colocalizationwindow();
 
-    void makeHeatMap(MatrixXd);
+    void makeHeatMap(MatrixXd m);
 
 private slots:
     void on_SaveHeatmapButton_clicked();

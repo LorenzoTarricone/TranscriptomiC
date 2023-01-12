@@ -15,27 +15,24 @@ bool upload_matrix::setData_Matrix(std::string fileName){
 
     std::string line = "";
 
+    int rows = 0;
+    int col = 0;
+
     while(getline(coordinates, line)){
-        std::stringstream s(line);
+        std::stringstream s(line); // we get the whole line
+        rows = rows + 1;
+        while(getline(s,iterator)){
+            col = col + 1;
+            m.resize(rows,col); // change the dimension of the matrix
+            getline(s, iterator, ',');
+            double p = atof(iterator.c_str());
+            m(rows,col) = p;
 
-        getline(s, x, ',');
-        getline(s, y, ',');
-        getline(s, p);
 
-        double xx = atof(x.c_str());
-        double yy = atof(y.c_str());
-        double pp = atof(p.c_str());
-
-
-        xCoordinates.push_back(xx);
-        yCoordinates.push_back(yy);
-        pValues.push_back(pp);
-
-        x="";
-        y="";
-        p="";
-
+        }
+        iterator="";
         line="";
+
     }
 
     coordinates.close();

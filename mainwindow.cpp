@@ -25,12 +25,8 @@ MainWindow::~MainWindow()
 void MainWindow::close(){
 
     Pointersecondwindow = new SecondWindow(this);
-    Pointersecondwindow->setX(inputData.getX());
-    Pointersecondwindow->setY(inputData.getY());
-    Pointersecondwindow->setP(inputData.getP());
+    Pointersecondwindow->setMatrix(inputData.getMatrix());
 
-
-    Pointersecondwindow->makePlot();
     Pointersecondwindow->show();
 
     this->hide();
@@ -51,7 +47,7 @@ void MainWindow::on_UploadButton_clicked()
     filename = userText.toStdString();
 
 
-    readBoolean = inputData.readData(filename);
+    readBoolean = inputData.setData_Matrix(filename);
 
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);

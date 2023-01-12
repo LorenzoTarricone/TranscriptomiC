@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "SecondWindow.h"
-#include "filedata.h"
+#include "upload_matrix.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -37,7 +37,7 @@ private:
     std::vector<double> x;
     std::vector<double> y;
 
-    FileData inputData;
+    upload_matrix inputData;
     bool readBoolean;
 };
 #endif // MAINWINDOW_H
