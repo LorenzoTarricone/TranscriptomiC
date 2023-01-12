@@ -3,6 +3,11 @@
 
 #include "bioprocesswindow.h"
 #include <QDialog>
+#include <QDialog>
+#include <Eigen/Eigen>
+/*Includes Dense and Sparse header files (the whole Eigen library)*/
+using Eigen::MatrixXd;
+using namespace std;
 
 namespace Ui {
 class colocalizationwindow;
@@ -16,15 +21,7 @@ public:
     explicit colocalizationwindow(QWidget *parent = nullptr);
     ~colocalizationwindow();
 
-    void makeHeatMap();
-    void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
-    void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
-    void setP(const QVector<double>& givenP) {pValues = givenP;};
-
-
-    const QVector<double>& getX() {return xCoordinates;};
-    const QVector<double>& getY() {return yCoordinates;};
-    const QVector<double>& getP() {return pValues;};
+    void makeHeatMap(MatrixXd m);
 
 signals:
     void MenuWindow();
@@ -42,9 +39,6 @@ private slots:
 private:
     Ui::colocalizationwindow *ui;
 
-    QVector<double> xCoordinates;
-    QVector<double> yCoordinates;
-    QVector<double> pValues;
 
 };
 

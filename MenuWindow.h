@@ -20,17 +20,8 @@ public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
 
-    void makePlot();
-
-
-    void setX(const QVector<double>& givenX) {x = givenX;};
-    void setY(const QVector<double>& givenY) {y = givenY;};
-    void setP(const QVector<double>& givenP) {p = givenP;};
-
-
-    const QVector<double>& getX() {return x;};
-    const QVector<double>& getY() {return y;};
-    const QVector<double>& getP() {return p;};
+     MatrixXd getMatrix() {return m;};
+     void setMatrix(MatrixXd& given_m) {m = given_m;};
 
 signals:
     void UploadWindow();
@@ -48,10 +39,8 @@ private:
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
 
+    MatrixXd m;
 
-    QVector<double> x;
-    QVector<double> y;
-    QVector<double> p;
 
 
 };

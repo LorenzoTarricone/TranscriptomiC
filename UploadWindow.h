@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "MenuWindow.h"
-#include "filedata.h"
+#include "upload_matrix.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -34,10 +34,8 @@ private:
     std::string input;
 
     std::string filename;
-    std::vector<double> x;
-    std::vector<double> y;
 
-    FileData inputData;
+    upload_matrix inputData;
     bool readBoolean;
 };
 #endif // UPLOADWINDOW_H

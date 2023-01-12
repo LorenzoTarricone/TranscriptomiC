@@ -31,13 +31,8 @@ void UploadWindow::close(){
      * to generate the scatterplot and shows the menuwindow.
      */
 
-    //sets the data
-    PointerMenuWindow->setX(inputData.getX());
-    PointerMenuWindow->setY(inputData.getY());
-    PointerMenuWindow->setP(inputData.getP());
-
-
-    PointerMenuWindow->makePlot(); //generates the plot
+    PointerMenuWindow = new MenuWindow(this);
+    PointerMenuWindow->setMatrix(inputData.getMatrix());
     PointerMenuWindow->show(); //shows menuwindow
 
     this->hide(); //hides uploadwindow
@@ -67,7 +62,7 @@ void UploadWindow::on_UploadButton_clicked()
     filename = userText.toStdString(); //converts the file location to std::string
 
 
-    readBoolean = inputData.readData(filename); //reads and parses the data, returns a boolean to check for sucessful upload
+    readBoolean = inputData.setData_Matrix(filename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
