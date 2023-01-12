@@ -77,7 +77,7 @@ void MenuWindow::on_BiologicalButton_clicked()
 
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
-    bioWindow->makeHeatMap(); //generates the heatmap
+    //bioWindow->makeHeatMap(); //generates the heatmap
     bioWindow->setProcessesToAnalyze(); //instantiates the vector of processes
 
 }

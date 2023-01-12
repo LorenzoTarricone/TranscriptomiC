@@ -1,28 +1,20 @@
-#include "colocalizationwindow.h"
-#include "ui_colocalizationwindow.h"
-#include "filedata.h"
+#include "heatmapwindow.h"
+#include "ui_heatmapwindow.h"
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <Eigen/Dense>
 
-using namespace std;
-using namespace Eigen;
-
-
-colocalizationwindow::colocalizationwindow(QWidget *parent) :
+HeatMapWindow::HeatMapWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::colocalizationwindow)
+    ui(new Ui::HeatMapWindow)
 {
     ui->setupUi(this);
 }
 
-colocalizationwindow::~colocalizationwindow()
+HeatMapWindow::~HeatMapWindow()
 {
     delete ui;
 }
 
-void colocalizationwindow::makeHeatMap(){
+void HeatMapWindow::makeHeatMap(){
 
     // configure axis rect:
            ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
@@ -72,7 +64,7 @@ void colocalizationwindow::makeHeatMap(){
 
 }
 
-void colocalizationwindow::on_SaveHeatmapButton_clicked()
+void HeatMapWindow::on_SaveHeatmapButton_clicked()
 {
     QPixmap heatmap;
     QString filename;
@@ -87,84 +79,10 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
 
 }
 
-
-void colocalizationwindow::on_SaveMatrixButton_clicked(){
-
-    MatrixXd m(5,5); //needs to be changed to the colocalization matrix
-    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
-    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
-    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
-    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
-    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
-
-    //opens the file explorer and get file name (with full location)
-    QString filename;
-    filename = QFileDialog::getSaveFileName(this,"Save file");
-    filename = filename + ".csv";
-
-    // Using std library to create and writes the file
-    std::string stdfilemane;
-    stdfilemane = filename.toStdString();
-    ofstream fout;
-
-    //opens file, parses the data and writes it as a .csv
-    fout.open(stdfilemane, ios::out);
-    const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
-    fout <<m.format(CSVFormat);
-
-    QMessageBox::information(this, "Success", "The colocalization matrix has been saved under" + filename , QMessageBox::Ok);
-
-};
-
-
-void colocalizationwindow::on_UploadGenesButton_clicked()
-{
-    /* This method allows the user to upload a csv file with
-     * the names of the genes that they want to analyze. It
-     * opens the file explorer, then reads the file into
-     * a new instance of FileData. Data is stored in
-     * genesToAnalyze vector of the instance of FileData.
-     * (can be accessed with getter)
-     */
-
-    QString FileFilter = "CSV File (*.csv);;";
-    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
-    std::string filename;
-    FileData geneNames;
-    bool uploadChecker;
-
-    filename = userText.toStdString();
-    uploadChecker = geneNames.readGenes(filename); //checks for successful upload and reads the genes
-
-    if(uploadChecker){
-        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
-    }
-    else{
-        QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
-    }
-}
-
-
-void colocalizationwindow::on_MenuWindowButton_clicked()
+void HeatMapWindow::on_MenuButton_clicked()
 {
     this->close();
-    emit MenuWindow(); //returns to menuWindow
-}
+    emit PreviousWindow();
 
-
-
-
-void colocalizationwindow::on_GenerateHeatmapButton_clicked()
-{
-
-    heatmapWindow = new ColocalizationHeatmapWindow(this);
-
-    heatmapWindow->setX(this->getX());
-    heatmapWindow->setY(this->getY());
-    heatmapWindow->setP(this->getP());
-
-    this->hide(); //hides menuwindow
-    heatmapWindow->show(); //shows biowindow
-    heatmapWindow->makeHeatMap(); //generates the heatmap
 }
 

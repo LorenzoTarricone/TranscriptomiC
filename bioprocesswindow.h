@@ -1,6 +1,7 @@
 #ifndef BIOPROCESSWINDOW_H
 #define BIOPROCESSWINDOW_H
 
+#include "heatmapwindow.h"
 #include <QDialog>
 
 namespace Ui {
@@ -37,6 +38,8 @@ private slots:
 
     void on_MenuWindowButton_clicked();
 
+    void on_GenerateHeatmapButton_clicked();
+
 private:
     Ui::bioprocesswindow *ui;
 
@@ -46,6 +49,9 @@ private:
 
     std::vector<std::string> processesToAnalyze;
     std::string inputProcess;
+
+    HeatMapWindow *heatmapWindow;
+
 
 
 };

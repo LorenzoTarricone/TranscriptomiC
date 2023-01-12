@@ -13,33 +13,39 @@ SOURCES += \
     MenuWindow.cpp \
     UploadWindow.cpp \
     bioprocesswindow.cpp \
+    colocalizationheatmapwindow.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
-#    genename.cpp \
+    genename.cpp \
+    heatmapwindow.cpp \
     main.cpp \
-#    matrixeigen.cpp \
-#    parsemtx.cpp \
+    matrixeigen.cpp \
+    parsemtx.cpp \
     qcustomplot.cpp \
-#    SparseMatrix.cpp \
-#    colocalization_matrix.cpp
+    SparseMatrix.cpp \
+    colocalization_matrix.cpp
 
 HEADERS += \
     MenuWindow.h \
     UploadWindow.h \
     bioprocesswindow.h \
+    colocalizationheatmapwindow.h \
     colocalizationwindow.h \
     filedata.h \
-#    genename.h \
-#    matrixeigen.h \
-#    parsemtx.h \
+    genename.h \
+    matrixeigen.h \
+    parsemtx.h \
+    heatmapwindow.h \
     qcustomplot.h
-#    SparseMatrix.h \
+    SparseMatrix.h \
 
 FORMS += \
     MenuWindow.ui \
     UploadWindow.ui \
     bioprocesswindow.ui \
-    colocalizationwindow.ui
+    colocalizationheatmapwindow.ui \
+    colocalizationwindow.ui \
+    heatmapwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

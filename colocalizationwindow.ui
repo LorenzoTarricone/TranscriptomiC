@@ -14,9 +14,6 @@
    <string>Colocalization</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(248,247,245);</string>
-  </property>
-  <property name="styleSheet">
    <string notr="true">background-color: rgb(248,247,245);
 </string>
   </property>
@@ -122,6 +119,19 @@ color: rgb(0,0,0);
    </property>
    <property name="text">
     <string>Menu</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="GenerateHeatmapButton">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>60</y>
+     <width>80</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Generate</string>
    </property>
   </widget>
  </widget>
