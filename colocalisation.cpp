@@ -6,7 +6,6 @@
 colocalisation::colocalisation()
 {
     geneNames = std::vector<std::string>();
-
     block_rows_start = 0;
     block_cols_start = 0;
     block_rows = 0;
@@ -15,7 +14,6 @@ colocalisation::colocalisation()
 }
 
 colocalisation::~colocalisation(){
-//    delete A_spatial;
     delete A_distance;
     delete A_linkage;
     delete A_combine;
