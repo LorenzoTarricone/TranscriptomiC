@@ -14,6 +14,7 @@ private:
 public:
     readgenetxt();
     std::vector<std::string> listgene(std::string txt_file);
+    std::vector<std::string> listgene_bio_pro(std::string txt_file, int nb_gene);
 };
 
 #endif // READGENETXT_H
