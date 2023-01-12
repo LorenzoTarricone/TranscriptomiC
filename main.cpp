@@ -141,6 +141,7 @@ int main(int argc, char *argv[])
 //    *A_distance = matrix_distance(beam_matrix.block(0,0,10,2));
 
 
+
 //    // step 2 - linkage matrix with parameters m and p
 //    double m = 5000;
 //    double p = 2;
@@ -156,6 +157,7 @@ int main(int argc, char *argv[])
 
 //    //  step 3 - apply linkage to expression matrix -> neighbouring matrix
 //    Eigen::MatrixXd expression =  mtxobject.getExpressionDense().block(0,0,10,10);
+
 
 //    std::cout<<expression.block(0,0,10,10)<<std::endl;
 //    std::cout<<"Expression matrix shape: (" << expression.rows() << ", " << expression.cols() << ")\n"<<std::endl;

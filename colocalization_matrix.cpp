@@ -3,6 +3,9 @@
 #include "UploadWindow.h"
 #include <Eigen/Dense>
 #include <math.h>
+#include <thread>
+
+
 
 
 
@@ -56,30 +59,34 @@ Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_e
     int n = A_expression.rows();
     Eigen::MatrixXd A_combine(n,k);
     std::cout<<"\n Combine matrix shape: (" << A_combine.rows() << ", " << A_combine.cols() << ")"<<std::endl;
+
+    // Create a vector to store the threads
+    std::vector<std::thread> threads;
+
     // iterate through columns of A_combine
     for(int j = 0; j < k; j++){
         std::cout<<"\n Beam n: " << j <<std::endl;
-        double row_total = A_linkage.block(j,0,1,k).sum();
-        //std::cout<<"row "<<j<<" total: "<<row_total<<std::endl;
-        // since we're considering A_combine and A_expression column-wise, iterate through rows per column
-        for(int i = 0; i < n; i++){
-            // initialize each entry to simplify the sum
-            A_combine(i,j) = 0;
+        double row_total = A_linkage.row(j).sum();
+        // create a lambda function to compute the weighted sum
+        auto compute_weighted_sum = [j, &A_linkage, &A_expression, &A_combine, row_total]() {
             // compute the weighted sum along row j of the linkage matrix, excluding entry
-            for(int r = 0; r < k; r++){
-                if(r != j){
-                    A_combine(i,j) += (A_linkage(j,r)/row_total)*A_expression(i,r);
-                }// end if
-            }// end for r
-         }// end for i
-//        VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
-//        // Divide the dot product results by the row total
-//        dot_product_results /= row_total;
- //       // Assign the results to the corresponding row of A_combine
- //       for(int i = 0; i < n; i++){
- //           A_combine(i,j) = dot_product_results(i);
-  //      }
-    }// end for j
+            VectorXd dot_product_results = (A_linkage.row(j) * A_expression.transpose()).transpose();
+            //remove entry sum
+            dot_product_results -= A_linkage.row(j)(j)*(A_expression.row(j).transpose());
+            // Divide the dot product results by the row total
+            dot_product_results /= row_total;
+            // Assign the results to the corresponding row of A_combine
+            A_combine.col(j) = dot_product_results;
+        };
+        // Add the function to the list of threads
+        threads.emplace_back(compute_weighted_sum);
+     }
+
+     // Join all the threads
+     for (auto &thread : threads) {
+        thread.join();
+     }
+    //}// end for j
     return A_combine;
 } // end method
 
@@ -90,6 +97,7 @@ Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_e
 //given two eigen matrices, the expression matrix the neighboring expression matrix from step 3, compare the columns of these matrices
 //by using a special functions with certain desirable characteristics to obtain a tensor. Both matrices have dimension n_genes*n_beams,
 //while the tensor will have dimension n_beams*n_genes*n_genes.
+
 
 double important_function(double x_i, double Y, double a=2, double b=0.5){
     return -a*abs(x_i-Y) + b*(x_i+Y);
@@ -102,21 +110,35 @@ Eigen::MatrixXd comparison(Eigen::MatrixXd &expression, Eigen::MatrixXd &neighbo
     //taking the mean over the beams and returning the matrix
     //TODO: make it more efficient?
 
-    Eigen::MatrixXd mat_new(n_genes,n_genes);
-
-    for(int i=0;i<n_genes; i++){
-        if(i%100==0){
-            std::cout<<"\n iterating through column " << i <<std::endl;
-         }
-        for(int j=0;j<n_genes;j++){
-            std::vector<double> vec_for_average;
-            for (int beam=0;beam<n_beams;beam++){
-                vec_for_average.push_back(important_function(expression(i,beam), neighbors(j,beam), a, b));
+    Eigen::MatrixXd mat_new = Eigen::MatrixXd::Zero(n_genes, n_genes);
+    // Create a vector to store the threads
+    std::vector<std::thread> threads;
+    int n_threads = std::thread::hardware_concurrency();
+    cout<<"number of threads: "<<n_threads<<endl;
+    // Launch n_threads threads
+    for (int i = 0; i < n_threads; i++) {
+        threads.emplace_back([&, i]() {
+            // Compute the range of rows handled by this thread
+            int start_row = i * n_genes / n_threads;
+            int end_row = (i + 1) * n_genes / n_threads;
+            for (int i = start_row; i < end_row; i++) {
+                if(i%100==0){
+                    std::cout<<"\n iterating through gene " << i <<std::endl;
+                }
+                for (int j = 0; j < n_genes; j++) {
+                    double sum = 0;
+                    for (int beam = 0; beam < n_beams; beam++) {
+                        sum += important_function(expression(i,beam), neighbors(j,beam), a, b);
+                    }
+                    mat_new(i, j) = sum/n_beams;
+                }
             }
-            mat_new(i,j)=std::reduce(vec_for_average.begin(), vec_for_average.end()) / n_beams;
-        }
+        });
     }
-
+    // Wait for all threads to finish
+    for (auto &thread : threads) {
+        thread.join();
+    }
     return mat_new;
 }
 
