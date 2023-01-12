@@ -20,6 +20,8 @@ private:
     parsemtx expression_raw;
     parsing spatial;
     std::vector<std::string> geneNames;
+
+
     Eigen::MatrixXd A_spatial;
     Eigen::MatrixXd* A_distance;
     Eigen::MatrixXd* A_linkage;
