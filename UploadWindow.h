@@ -19,9 +19,12 @@ public:
     ~UploadWindow();
 
 private slots:
-    void on_SelectButton_clicked();
-    void on_UploadButton_clicked();
 
+    void on_GeneSelectButton_clicked();
+    void on_SpatialSelectButton_clicked();
+    void on_ExpressSelectButton_clicked();
+
+    void on_UploadButton_clicked();
     void close();
 
 
@@ -30,14 +33,25 @@ private:
 
     MenuWindow *PointerMenuWindow;
 
-    QString userText;
-    std::string input;
+    std::string GeneFilename;
+    QString GeneUserText;
+    std::string GeneInput;
+    bool GeneBoolean;
 
-    std::string filename;
+    std::string SpatialFilename;
+    QString SpatialUserText;
+    std::string SpatialInput;
+    bool SpatialBoolean;
+
+    std::string ExpressFilename;
+    QString ExpressUserText;
+    std::string ExpressInput;
+    bool ExpressBoolean;
+
+
     std::vector<double> x;
     std::vector<double> y;
 
     FileData inputData;
-    bool readBoolean;
 };
 #endif // UPLOADWINDOW_H

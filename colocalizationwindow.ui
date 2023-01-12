@@ -130,6 +130,15 @@ color: rgb(0,0,0);
      <height>18</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+
+</string>
+   </property>
    <property name="text">
     <string>Generate</string>
    </property>
