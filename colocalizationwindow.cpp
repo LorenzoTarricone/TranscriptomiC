@@ -30,35 +30,20 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
            int number_rows = m.rows();
            int number_cols = m.cols();
 
-           QVector<double> xCoordinates;
-           QVector<double> yCoordinates;
-           QVector<double> pValues;
-
-           for(int i = 0; i < number_rows; i++){
-               for(int j = 0; j< number_cols; j++){
-                   xCoordinates.push_back(i);
-                   yCoordinates.push_back(j);
-                   pValues.push_back(m(i,j));
-               }
-           }
-
-           // Use nx = ny = 7 for rec_Data: We need to find nx and ny for each individual file.
-           // It only works for quadratic matrices, we want to get the biggest x- and y-coordinate of the coordinate vectors
-           int nx = sqrt(xCoordinates.size());
-           std::cout << "nx: "<< nx;// check if nx is correct: delete this line later
-           int ny = sqrt(yCoordinates.size());
-           std::cout << "ny:"<< ny; // check if ny is correct: delte this line later
-
-           colorMap->data()->setSize(nx, ny);
-           colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
+           colorMap->data()->setSize(number_cols, number_rows);
+           colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
            //This is just for rec_Data: We need to find the Range for each individual file
 
            // now we assign some data, by accessing the QCPColorMapData instance of the color map:
            //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
 
-           for(int Index = 0; Index< nx * ny; Index++){ // We have 49 data points for rec_Data file
-               colorMap->data()->setCell(xCoordinates[Index], yCoordinates[Index], pValues[Index]);
+
+           for(int i = 0; i < number_cols; i++){
+               for(int j = 0; j< number_rows; j++){
+                  colorMap->data()->setCell(i, j, m(i,j));
+               }
            }
+
            // add a color scale
            QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
            ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect

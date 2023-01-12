@@ -12,7 +12,7 @@ public:
 
     MatrixXd& getMatrix() {return m;};
 
-    bool setData_Matrix(std::string fileName); // Adrian: I try to read a file as matrix and plot it
+    bool setData_Matrix(std::string fileName);
 
 
 

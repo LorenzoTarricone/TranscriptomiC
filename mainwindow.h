@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "SecondWindow.h"
+#include "secondwindow.h"
 #include "upload_matrix.h"
 
 
@@ -34,8 +34,6 @@ private:
     std::string input;
 
     std::string filename;
-    std::vector<double> x;
-    std::vector<double> y;
 
     upload_matrix inputData;
     bool readBoolean;
