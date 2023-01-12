@@ -6,6 +6,14 @@
 #include <string.h>
 #include <set>
 
+using namespace std;
+
+struct Info {
+    int number_in_list;
+    string id;
+    string label;
+    bool operator<(const Info& other) const { return id < other.id; }
+};
 
 class only_gene_name
 {
@@ -14,9 +22,14 @@ private:
     std::set<std::string> res;
 public:
     only_gene_name();
-    int isSubstring(std::string s1, std::string s2);
-    std::set<std::string> listgene(std::string l, std::string search);
-    void printset(std::set<std::string> result);
+
+    
+
+    int isSubstring(string s1, string s2);
+    set<string> listgene(string l, string search);
+    set<Info> list_bio_process(string l, string search1, string search2, string search3);
+    void printset(set<string> result);
+
 };
 
 #endif // ONLY_GENE_NAME_H
