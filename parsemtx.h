@@ -12,7 +12,8 @@ public:
     parsemtx();
     void readFile(std::string filename);
     void print();
-    void filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes, double min_expr_perc,std::string type_of_transcriptome);
+    void filter(bool zeroes, double min_expr_perc);
+    Eigen::MatrixXd filter_simple(Eigen::MatrixXd expression,bool zeroes, double min_expr_perc);
     void getRowNamesFromFile(std::string filename);
     void normalisation(std::string type_of_normal = "col_mean");
     void writeToFile(std::string filename);

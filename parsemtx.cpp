@@ -223,7 +223,56 @@ void parsemtx::getRowNamesFromFile(std::string filename){
 // TODO: clear up use of argument type_of_transcriptom
 // TODO: decide whether object should directly filter private member sparse
 
-void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes, double min_expr_perc,std::string type_of_transcriptome){
+
+Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, double min_expr_perc){
+    // TODO: take reference as input instead of copy
+    std::cout << "[Progress] Function filter_simple called ..." << std::endl;
+    int s = expression.rows();
+    int c = expression.cols();
+
+
+    int count[s];
+    for(int i = 0;i<s;i++){
+        count[i] = 0;
+    }
+
+    // dense matrix stored in column major
+    for(int j = 0; j < expression.cols();j++){
+        for(int i = 0; i<expression.rows();i++){
+            count[i] += (expression(i,j)>0);
+        }
+    }
+
+    std::cout << "[";
+    for(int i = 0; i < s-1; i++){
+        std::cout << count[i] << ",";
+    }
+    std::cout << count[s-1] << "]" << std::endl;
+
+    //
+    Eigen::MatrixXd dense_matrix = expression;
+
+    int removed = 0;
+    for(int i = 0;i<s;i++){
+        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
+            std::cout << "Remove row " << i << " with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            removeRow(dense_matrix, i-removed);
+//            // take care of gene name index when row is removed
+//             shiftGeneIndex(i,removed);
+            removed ++;
+        }
+    }
+
+    std::cout << "Expression matrix = " << std::endl;
+    std::cout<<expression.block(0,0,s,c)<<std::endl;
+
+    std::cout << "Dense matrix = " << std::endl;
+    std::cout<<dense_matrix.block(0,0,std::min(s,s-removed),c)<<std::endl;
+
+    return dense_matrix;
+}
+
+void parsemtx::filter(bool zeroes, double min_expr_perc){
     // from https://www.geeksforgeeks.org/remove-all-zero-rows-and-all-zero-columns-from-a-matrix/
 
     // idea: count all non-zero entries per row and store them in a vector of size n (number of genes)
@@ -240,6 +289,8 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
     // https://stackoverflow.com/questions/68877737/how-to-get-shape-dimensions-of-an-eigen-matrix
     N = sparse.rows();
     M = sparse.cols();
+
+    std::cout << "Sparse matrix with dimensions rows = "<<N<<" and cols = "<<M<<std::endl;
 
     // declare and initialize count array (not a vector, because we will index directly
     int count[N];
@@ -260,7 +311,7 @@ void parsemtx::filter(Eigen::SparseMatrix<double> expression_matrix, bool zeroes
     // TODO: keep track of old row indicies
 
     // convert to dense matrix
-    Eigen::MatrixXd dense_matrix = Eigen::MatrixXd(expression_matrix);
+    Eigen::MatrixXd dense_matrix = Eigen::MatrixXd(sparse);
 
 
     // remove rows where expression percantage is less or equal to min_expr_per
@@ -394,12 +445,12 @@ void parsemtx::createBeamFile(std::string file_out, std::string file_in){
 
 // method that returns the expression matrix in its current state as an Eigen object
 Eigen::MatrixXd parsemtx::getExpressionDense(){
-//    // check if something has been assigned to matrix
-//    if(this->matrix == Eigen::MatrixXd{}){
-//        this->matrix = Eigen::MatrixXd(sparse);
-//    }
-//    return matrix;
-    return Eigen::MatrixXd(sparse);
+    // check if something has been assigned to matrix
+    if(this->matrix == Eigen::MatrixXd{}){
+        this->matrix = Eigen::MatrixXd(sparse);
+    }
+    return matrix;
+//    return Eigen::MatrixXd(sparse);
 }
 
 

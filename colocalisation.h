@@ -11,7 +11,10 @@ class colocalisation
 public:
     colocalisation();
     ~colocalisation();
-    void compute(std::string expressionFile, std::string spatialFile, std::string geneNameFile);
+    void filter(bool zeroes = true, double min_expr_perc = 0.1);
+    void test(bool def = true);
+    void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile);
+    void compute();
     void saveToFile(std::string filename);
     void setMatrixBlocks(int startRow, int startCol, int endRow, int endCol);
     void setMatrixBlocks(int endRow, int endCol);
@@ -40,7 +43,6 @@ private:
     double p = 2;
 
     // private methods
-    void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile);
     void step1();
     void step2();
     void step3();

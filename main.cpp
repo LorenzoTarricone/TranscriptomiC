@@ -23,10 +23,18 @@ int main(int argc, char *argv[])
     colocalisation matrix = colocalisation();
     //crop data
     matrix.setMatrixBlocks(100,100);
-    // read files
-    matrix.compute(expressionFile,spatialFile,geneNameFile);
 
-    matrix.saveToFile(path+"colocalisation_object.csv");
+    // read files
+    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
+
+    // filter
+//    matrix.test();
+    matrix.filter(true,0.001);
+
+//    // compute colocalisation matrix
+//    matrix.compute();
+
+//    matrix.saveToFile(path+"colocalisation_object.csv");
 
 
     return 0;
