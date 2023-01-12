@@ -13,6 +13,8 @@ Lorenzo Tarricone: Fine tuned all the methods needed for the two kinds of analys
 
 Jingai Si: Conducted research on generalised sliced Wasserstein Distances(GSW) for future mathematics application and generated a bullet-pointed summary, including fuction of GSW, companrison between GSW and max-GSW.
 
+Samuel Tillier: Determined the link between Sliced Wasserstein Distance (which is multidimensional and difficult to implement) and one-dimensional Earth Mover's Distance (EMD) by averaging a series of random linear projections of a probability distribution. Found a github repository which implements EMD in C++.
+
 ### Database
 Members:
 - Nicolás López Corral
