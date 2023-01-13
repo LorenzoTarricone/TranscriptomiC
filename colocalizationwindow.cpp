@@ -42,7 +42,7 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
 
                for(int i = 0; i < number_cols; i++){
                    for(int j = 0; j< number_rows; j++){
-                      colorMap->data()->setCell(i, j, m(i,j));
+                      colorMap->data()->setCell(i, j, m(i,j)); // maybe I can use fill
                    }
                }
 
@@ -51,7 +51,7 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
                ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
                colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right (actually atRight is already the default)
                colorMap->setColorScale(colorScale); // associate the color map with the color scale
-               colorScale->axis()->setLabel("Third coordinate");
+               colorScale->axis()->setLabel("Intensity");
 
                // set the color gradient of the color map to one of the presets:
                colorMap->setGradient(QCPColorGradient::gpPolar);
@@ -89,11 +89,11 @@ void colocalizationwindow::on_SaveHeatmapButton_clicked()
 void colocalizationwindow::on_SaveMatrixButton_clicked(){
 
     MatrixXd m(5,5); //needs to be changed to the colocalization matrix
-    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
-    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
-    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
-    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
-    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
+       m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
+       m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
+       m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
+       m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
+       m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
 
     //opens the file explorer and get file name (with full location)
     QString filename;

@@ -50,7 +50,7 @@ void bioprocesswindow::makeHeatMap(MatrixXd m){
            ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
            colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right (actually atRight is already the default)
            colorMap->setColorScale(colorScale); // associate the color map with the color scale
-           colorScale->axis()->setLabel("Third coordinate");
+           colorScale->axis()->setLabel("Intensity");
 
            // set the color gradient of the color map to one of the presets:
            colorMap->setGradient(QCPColorGradient::gpPolar);

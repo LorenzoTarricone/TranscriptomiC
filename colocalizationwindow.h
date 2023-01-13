@@ -40,6 +40,7 @@ private:
     Ui::colocalizationwindow *ui;
 
 
+
 };
 
 #endif // COLOCALIZATIONWINDOW_H
