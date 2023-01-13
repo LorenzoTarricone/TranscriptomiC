@@ -107,6 +107,7 @@ std::vector<std::string> readgenetxt::listgene_bio_pro(std::string filename, int
         std::string value;
         while (ss >> value) {
             if (i<nb_gene){
+                value.pop_back();
                 list.push_back(value);
                 i+=1;
             }
