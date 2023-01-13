@@ -56,6 +56,8 @@ void colocalisation::readFiles(std::string expressionFile, std::string spatialFi
     // read gene name file
     std::cout << "[Progress] Reading gene names file ..." << std::endl;
     geneNames = listgene(geneNameFile);
+    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
+    expression_raw.initiateGeneIndex(geneNames);
 
     std::cout << "[Progress] File reading finished successfully ..." << std::endl;
 

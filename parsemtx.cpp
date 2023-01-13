@@ -210,6 +210,24 @@ void parsemtx::getRowNamesFromFile(std::string filename){
     for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
         // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
         this->geneIndex[*i] = index;
+        // visualize
+        std::cout << "Index: " << index << "\t Gene: "<< all_names[index] << std::endl;
+        // incremeent index
+        index++;
+    }
+}
+
+
+// function to initiate geneIndex
+void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
+    all_names = geneList;
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // visualize
+        std::cout << "Index: " << index << "\t Gene: "<< all_names[index] << std::endl;
         // incremeent index
         index++;
     }
@@ -264,10 +282,10 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, 
     }
 
     std::cout << "Expression matrix = " << std::endl;
-    std::cout<<expression.block(0,0,s,c)<<std::endl;
+    std::cout<<expression.block(0,0,10,10)<<std::endl;
 
     std::cout << "Dense matrix = " << std::endl;
-    std::cout<<dense_matrix.block(0,0,std::min(s,s-removed),c)<<std::endl;
+    std::cout<<dense_matrix.block(0,0,std::min(10,s-removed),10)<<std::endl;
 
     return dense_matrix;
 }

@@ -15,6 +15,7 @@ public:
     void filter(bool zeroes, double min_expr_perc);
     Eigen::MatrixXd filter_simple(Eigen::MatrixXd expression,bool zeroes, double min_expr_perc);
     void getRowNamesFromFile(std::string filename);
+    void initiateGeneIndex(std::vector<std::string> geneList);
     void normalisation(std::string type_of_normal = "col_mean");
     void writeToFile(std::string filename);
     void writeToFile(std::string filename,Eigen::MatrixXd matrix);
