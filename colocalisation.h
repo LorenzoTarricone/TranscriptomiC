@@ -12,6 +12,7 @@ public:
     colocalisation();
     ~colocalisation();
     void filter(bool zeroes = true, double min_expr_perc = 0.1);
+    void normalisation(std::string type_of_normal = "col_mean");
     void test(bool def = true);
     void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile);
     void compute();

@@ -27,14 +27,17 @@ int main(int argc, char *argv[])
     // read files
     matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
+
     // filter
-//    matrix.test();
     matrix.filter(true,0.001);
 
-//    // compute colocalisation matrix
-//    matrix.compute();
+    // normalise data
+    matrix.normalisation();
 
-//    matrix.saveToFile(path+"colocalisation_object.csv");
+    // compute colocalisation matrix
+    matrix.compute();
+
+    matrix.saveToFile(path+"colocalisation_object.csv");
 
 
     return 0;

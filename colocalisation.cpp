@@ -26,12 +26,22 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Filtering data ..." << std::endl;
 //    std::cout << "Before filtering: " << std::endl;
 //    std::cout<<expression->block(0,0,10,10)<<std::endl;
-    Eigen::MatrixXd* temp = new Eigen::MatrixXd;
-    temp = expression;
+//    Eigen::MatrixXd* temp = new Eigen::MatrixXd;
+//    temp = expression;
     *expression = expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
-    delete temp;
+//    delete temp;
     std::cout << "After filtering: " << std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+}
+
+void colocalisation::normalisation(std::string type_of_normal){
+    std::cout << "[Progress] Normalising data according to " << type_of_normal << " ..." << std::endl;
+    std::cout << "Before normalisation: " << std::endl;
+    std::cout<<expression->block(0,0,10,10)<<std::endl;
+    *expression = expression_raw.normalisation_simple(*expression);
+    std::cout << "[Progress] Normalising data according to " << type_of_normal << " finished ..." << std::endl;
+    std::cout << "After normalisation: " << std::endl;
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
 void colocalisation::readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile){

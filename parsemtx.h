@@ -19,6 +19,7 @@ public:
     void initiateGeneIndex(std::vector<std::string> geneList);
     void printGeneIndex(int rows);
     void normalisation(std::string type_of_normal = "col_mean");
+    Eigen::MatrixXd normalisation_simple(Eigen::MatrixXd expression,std::string type_of_normal = "col_mean");
     void writeToFile(std::string filename);
     void writeToFile(std::string filename,Eigen::MatrixXd matrix);
     void createBeamFile(std::string file_out, std::string file_in = "");

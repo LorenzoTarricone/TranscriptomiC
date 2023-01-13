@@ -380,6 +380,48 @@ void parsemtx::filter(bool zeroes, double min_expr_perc){
     this->matrix = dense_matrix;
 }
 
+
+Eigen::MatrixXd parsemtx::normalisation_simple(Eigen::MatrixXd expression, std::string type_of_normal){
+    // extendable for different types of normalisation
+    if(type_of_normal != "col_mean"){
+        return expression;
+    }
+
+    int rows = expression.rows();
+    int cols = expression.cols();
+
+    // initiate array that will store the column sums
+    int col_sum[cols];
+    for(int i = 0;i<cols;i++){
+        col_sum[i] = 0;
+    }
+
+    // iterate through expression matrix to compute column sums
+    for(int j = 0; j < cols; j++){
+        for(int i = 0; i < rows; i++){
+            col_sum[j] += expression(i,j);
+        }
+    }
+
+
+    // divide each entry in the dense matrix
+    // iterate through the dense matrix in storage order, default for Eigen --> col Major
+    // reference: https://stackoverflow.com/questions/16283000/most-efficient-way-to-loop-through-an-eigen-matrix
+    for (size_t j = 0, nRows = expression.rows(), nCols = expression.cols(); j < nCols; ++j){
+        for (size_t i = 0; i < nRows; ++i){
+            // this works since we are not eliminating columns, only rows
+            // only execute for non-zero columns
+            if(col_sum[j] != 0){
+                expression(i,j) = expression(i,j)*cols/col_sum[j];
+            }
+
+        }
+    }
+
+    return expression;
+
+
+}
 // this function applies different types of normalisation to the dense expression matrix
 // the sparse representation of the same inital matrix remains the same
 
@@ -410,7 +452,11 @@ void parsemtx::normalisation(std::string type_of_normal){
     for (size_t j = 0, nRows = matrix.rows(), nCols = matrix.cols(); j < nCols; ++j){
         for (size_t i = 0; i < nRows; ++i){
             // this works since we are not eliminating columns, only rows
-            matrix(i,j) /= col_sum[j];
+            // only execute for non-zero columns
+            if(col_sum[j] != 0){
+                matrix(i,j) /= col_sum[j];
+            }
+
         }
     }
 
