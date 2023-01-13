@@ -1,4 +1,7 @@
-#include "readgenetxt.h"
+/* Take a file.txt (list of specific gene he wants to study from a researcher) and a file.tsv (gene present in the matrix table)
+ * and returns a set with all the different possible names of these genes that are also present in the matrix table
+ *
+ * #include "readgenetxt.h"
 #include "only_gene_name.h"
 #include "read_tsv_set.h"
 #include "intersection_sets.h"
@@ -12,19 +15,15 @@
 #include <algorithm>
 #include <fstream>
 #include <QJsonDocument>
-#include <set>
 
 
 
 int main(){
-    //First we read the txt file with the gene name for a particular biologicl process
-    //And we take all the name of these genes
-
-    std::string txt_gene="/Users/nicolas/Documents/TranscriptomiC/list_gene_bio_pro.txt"; //txt file with gene names separated with spaces, tabs or lines
+    std::string txt_gene="/Users/nicolas/Documents/TranscriptomiC/list_gene.txt"; //txt file with gene names separated with spaces, tabs or lines
     std::string line;
     readgenetxt vec;
     std::vector<std::string> res;
-    res=vec.listgene_bio_pro(txt_gene,500); //list of all the genes in the txt file, here 500 bc I want to test with only 500 genes linked to the biological process
+    res=vec.listgene(txt_gene); //list of all the genes in the txt file
     std::cout<<"[";
     for (const std::string& i : res) {
         std::cout << i<<" ";
@@ -59,7 +58,6 @@ int main(){
             std::cout << str << ' ';
           }
         std::cout<<"}";
-
     }
 
     //Now let us create the set of all the gene of the matrix file
@@ -97,3 +95,5 @@ int main(){
 ////    mtxobject.print();
 ////    return 0;
 //}
+
+*/

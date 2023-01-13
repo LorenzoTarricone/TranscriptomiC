@@ -14,7 +14,10 @@ SOURCES += \
     colocalizationwindow.cpp \
     filedata.cpp \
     genename.cpp \
+    intersection_sets.cpp \
     main.cpp \
+    main_API_bio_pro_to_gene.cpp \
+    main_API_gene_name.cpp \
     mainwindow.cpp \
     matrixeigen.cpp \
     parsemtx.cpp \
@@ -23,7 +26,8 @@ SOURCES += \
     SparseMatrix.cpp \
     colocalization_matrix.cpp \
     readgenetxt.cpp \
-    only_gene_name.cpp
+    only_gene_name.cpp \
+    read_tsv_set.cpp
 
 HEADERS += \
     api.hpp \
@@ -31,6 +35,7 @@ HEADERS += \
     colocalizationwindow.h \
     filedata.h \
     genename.h \
+    intersection_sets.h \
     mainwindow.h \
     matrixeigen.h \
     parsemtx.h \
@@ -38,7 +43,8 @@ HEADERS += \
     SparseMatrix.h \
     SecondWindow.h \
     readgenetxt.h \
-    only_gene_name.h
+    only_gene_name.h \
+    read_tsv_set.h
 
 
 FORMS += \

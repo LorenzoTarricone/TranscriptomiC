@@ -1,4 +1,7 @@
-#include "readgenetxt.h"
+/*Take a file.txt (list of genes linked to a specific biopro)+ file.tsv (list of genes in matrix table)
+ * and returns the names that are in both (after calling an API to have all the different names of the genes)
+ *
+ * #include "readgenetxt.h"
 #include "only_gene_name.h"
 #include "read_tsv_set.h"
 #include "intersection_sets.h"
