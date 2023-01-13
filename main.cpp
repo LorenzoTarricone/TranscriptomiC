@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     // filter
 //    matrix.test();
-//    matrix.filter(true,0.001);
+    matrix.filter(true,0.001);
 
 //    // compute colocalisation matrix
 //    matrix.compute();

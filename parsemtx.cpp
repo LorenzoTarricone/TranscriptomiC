@@ -233,6 +233,23 @@ void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
     }
 }
 
+void parsemtx::printGeneIndex(int rows){
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+        // only print entries in geneIndex that are relevant
+        if(geneIndex[*i] < rows){
+            // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+            std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
+            // incremeent index
+
+        }
+        index ++;
+    }
+    std::cout << "Total: " << rows << " genes left" << std::endl;
+    std::cout << "Total: " << index << " genes iterated" << std::endl;
+    return;
+}
 
 // filter function for the expression matrix, at the moment in sparse representation
 // given a sparse matrix, filters it according to given arguments, converts it to dense and assigns to private member matrix
@@ -276,7 +293,8 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, 
             std::cout << "Remove row " << i << " with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
             removeRow(dense_matrix, i-removed);
 //            // take care of gene name index when row is removed
-//             shiftGeneIndex(i,removed);
+             shiftGeneIndex(i,removed);
+             printGeneIndex(s-removed);
             removed ++;
         }
     }
@@ -288,6 +306,21 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, 
     std::cout<<dense_matrix.block(0,0,std::min(10,s-removed),10)<<std::endl;
 
     return dense_matrix;
+}
+
+Eigen::MatrixXd parsemtx::filterByGenes(Eigen::MatrixXd expression, std::vector<std::string> genes){
+    int row;
+    int removed = 0;
+    for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
+        row = geneIndex[*i];
+        if (row != -1){
+            removeRow(expression, row);
+            shiftGeneIndex(row,removed);
+            removed++;
+        }
+    }
+    return expression;
+
 }
 
 void parsemtx::filter(bool zeroes, double min_expr_perc){
