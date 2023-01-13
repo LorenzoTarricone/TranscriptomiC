@@ -21,7 +21,7 @@ template<typename MatrixType> void matrixVisitor(const MatrixType& p)
   m = MatrixType::Random(rows, cols);
   for(Index i = 0; i < m.size(); i++)
     for(Index i2 = 0; i2 < i; i2++)
-      while(m(i) == m(i2)) // yes, ==
+      while(numext::equal_strict(m(i), m(i2))) // yes, strict equality
         m(i) = internal::random<Scalar>();
   
   Scalar minc = Scalar(1000), maxc = Scalar(-1000);
@@ -173,6 +173,155 @@ template<typename VectorType> void vectorVisitor(const VectorType& w)
   }
 }
 
+template<typename T, bool Vectorizable>
+struct TrackedVisitor {
+  void init(T v, Index i, Index j) { return this->operator()(v,i,j); }
+  void operator()(T v, Index i, Index j) {
+    EIGEN_UNUSED_VARIABLE(v)
+    visited.push_back({i, j});
+    vectorized = false;
+  }
+  
+  template<typename Packet>
+  void packet(Packet p, Index i, Index j) {
+    EIGEN_UNUSED_VARIABLE(p)  
+    visited.push_back({i, j});
+    vectorized = true;
+  }
+  std::vector<std::pair<int,int>> visited;
+  bool vectorized;
+};
+
+namespace Eigen {
+namespace internal {
+
+template<typename T, bool Vectorizable>
+struct functor_traits<TrackedVisitor<T, Vectorizable> > {
+  enum { PacketAccess = Vectorizable, Cost = 1 };
+};
+
+}  // namespace internal
+}  // namespace Eigen
+
+void checkOptimalTraversal() {
+  
+  // Unrolled - ColMajor.
+  {
+    using MatrixType = Matrix<float, 4, 4, ColMajor>;
+    MatrixType X = MatrixType::Random(4, 4);
+    TrackedVisitor<MatrixType::Scalar, false> visitor;
+    X.visit(visitor);
+    Index count = 0;
+    for (Index j=0; j<X.cols(); ++j) {
+      for (Index i=0; i<X.rows(); ++i) {
+        VERIFY_IS_EQUAL(visitor.visited[count].first, i);
+        VERIFY_IS_EQUAL(visitor.visited[count].second, j);
+        ++count;
+      }
+    }
+  }
+  
+  // Unrolled - RowMajor.
+  {
+    using MatrixType = Matrix<float, 4, 4, RowMajor>;
+    MatrixType X = MatrixType::Random(4, 4);
+    TrackedVisitor<MatrixType::Scalar, false> visitor;
+    X.visit(visitor);
+    Index count = 0;
+    for (Index i=0; i<X.rows(); ++i) {
+      for (Index j=0; j<X.cols(); ++j) {
+        VERIFY_IS_EQUAL(visitor.visited[count].first, i);
+        VERIFY_IS_EQUAL(visitor.visited[count].second, j);
+        ++count;
+      }
+    }
+  }
+  
+  // Not unrolled - ColMajor
+  {
+    using MatrixType = Matrix<float, Dynamic, Dynamic, ColMajor>;
+    MatrixType X = MatrixType::Random(4, 4);
+    TrackedVisitor<MatrixType::Scalar, false> visitor;
+    X.visit(visitor);
+    Index count = 0;
+    for (Index j=0; j<X.cols(); ++j) {
+      for (Index i=0; i<X.rows(); ++i) {
+        VERIFY_IS_EQUAL(visitor.visited[count].first, i);
+        VERIFY_IS_EQUAL(visitor.visited[count].second, j);
+        ++count;
+      }
+    }
+  }
+  
+  // Not unrolled - RowMajor.
+  {
+    using MatrixType = Matrix<float, Dynamic, Dynamic, RowMajor>;
+    MatrixType X = MatrixType::Random(4, 4);
+    TrackedVisitor<MatrixType::Scalar, false> visitor;
+    X.visit(visitor);
+    Index count = 0;
+    for (Index i=0; i<X.rows(); ++i) {
+      for (Index j=0; j<X.cols(); ++j) {
+        VERIFY_IS_EQUAL(visitor.visited[count].first, i);
+        VERIFY_IS_EQUAL(visitor.visited[count].second, j);
+        ++count;
+      }
+    }
+  }
+  
+  // Vectorized - ColMajor
+  {
+    using MatrixType = Matrix<float, Dynamic, Dynamic, ColMajor>;
+    // Ensure rows/cols is larger than packet size.
+    constexpr int PacketSize = Eigen::internal::packet_traits<MatrixType::Scalar>::size;
+    MatrixType X = MatrixType::Random(4 * PacketSize, 4 * PacketSize);
+    TrackedVisitor<MatrixType::Scalar, true> visitor;
+    X.visit(visitor);
+    Index previ = -1;
+    Index prevj = 0;
+    for (const auto& p : visitor.visited) {
+      Index i = p.first;
+      Index j = p.second;
+      VERIFY(
+        (j == prevj && i == previ + 1)             // Advance single element
+        || (j == prevj && i == previ + PacketSize) // Advance packet
+        || (j == prevj + 1 && i == 0)              // Advance column
+      );
+      previ = i;
+      prevj = j;
+    }
+    if (Eigen::internal::packet_traits<MatrixType::Scalar>::Vectorizable) {
+      VERIFY(visitor.vectorized);
+    }
+  }
+  
+  // Vectorized - RowMajor.
+  {
+    using MatrixType = Matrix<float, Dynamic, Dynamic, RowMajor>;
+    // Ensure rows/cols is larger than packet size.
+    constexpr int PacketSize = Eigen::internal::packet_traits<MatrixType::Scalar>::size;
+    MatrixType X = MatrixType::Random(4 * PacketSize, 4 * PacketSize);
+    TrackedVisitor<MatrixType::Scalar, true> visitor;
+    X.visit(visitor);
+    Index previ = 0;
+    Index prevj = -1;
+    for (const auto& p : visitor.visited) {
+      Index i = p.first;
+      Index j = p.second;
+      VERIFY(
+        (i == previ && j == prevj + 1)             // Advance single element
+        || (i == previ && j == prevj + PacketSize) // Advance packet
+        || (i == previ + 1 && j == 0)              // Advance row
+      );
+      previ = i;
+      prevj = j;
+    }
+    if (Eigen::internal::packet_traits<MatrixType::Scalar>::Vectorizable) {
+      VERIFY(visitor.vectorized);
+    }
+  }
+}
+
 EIGEN_DECLARE_TEST(visitor)
 {
   for(int i = 0; i < g_repeat; i++) {
@@ -190,4 +339,5 @@ EIGEN_DECLARE_TEST(visitor)
     CALL_SUBTEST_9( vectorVisitor(RowVectorXd(10)) );
     CALL_SUBTEST_10( vectorVisitor(VectorXf(33)) );
   }
+  CALL_SUBTEST_11(checkOptimalTraversal());
 }
