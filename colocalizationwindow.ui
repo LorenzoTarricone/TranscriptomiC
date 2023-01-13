@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>270</height>
+    <width>290</width>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,74 +17,13 @@
    <string notr="true">background-color: rgb(248,247,245);
 </string>
   </property>
-  <widget class="QCustomPlot" name="customPlot" native="true">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>60</y>
-     <width>330</width>
-     <height>190</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255,255,255);
-border: 1px solid black ;
-border-radius: 5px;
-padding: 0 8px;
-color: rgb(0,0,0);</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="SaveMatrixButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>120</y>
-     <width>100</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(230,230,230);
-color: rgb(0,0,0);
-border: 1px solid black ;
-border-radius: 5px;
-padding: 0 8px;
-color: rgb(0, 0, 0);
-</string>
-   </property>
-   <property name="text">
-    <string>Save matrix</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="SaveHeatmapButton">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>160</y>
-     <width>100</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(230,230,230);
-color: rgb(0,0,0);
-border: 1px solid black ;
-border-radius: 5px;
-padding: 0 8px;
-color: rgb(0, 0, 0);
-</string>
-   </property>
-   <property name="text">
-    <string>Save heatmap</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="UploadGenesButton">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>20</y>
-     <width>150</width>
-     <height>20</height>
+     <x>40</x>
+     <y>190</y>
+     <width>210</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -98,6 +37,29 @@ color: rgb(0, 0, 0);
    </property>
    <property name="text">
     <string>Upload genes to analyze</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="GenerateHeatmapButton">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>230</y>
+     <width>130</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+font: 700 10pt &quot;Segoe UI&quot;;
+
+</string>
+   </property>
+   <property name="text">
+    <string>Generate</string>
    </property>
   </widget>
   <widget class="QPushButton" name="MenuWindowButton">
@@ -121,37 +83,118 @@ color: rgb(0,0,0);
     <string>Menu</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="GenerateHeatmapButton">
+  <widget class="QPlainTextEdit" name="pParamText">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>60</y>
-     <width>80</width>
-     <height>18</height>
+     <x>130</x>
+     <y>110</y>
+     <width>120</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,255,255);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+color: rgb(0,0,0);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="pParamLabel">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>110</y>
+     <width>70</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(230,230,230);
-color: rgb(0,0,0);
+font: 10pt &quot;Segoe UI&quot;;
 border: 1px solid black ;
 border-radius: 5px;
 padding: 0 8px;
+color: rgb(0,0,0);
 
 </string>
    </property>
    <property name="text">
-    <string>Generate</string>
+    <string> p</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="UploadLabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>250</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(220,220,220);
+font: 700 10pt &quot;Segoe UI&quot;;
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+color: rgb(0,0,0);
+</string>
+   </property>
+   <property name="text">
+    <string>Linkage Function Paramters</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="MParamLabel">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>150</y>
+     <width>70</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+font: 10pt &quot;Segoe UI&quot;;
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+color: rgb(0,0,0);
+
+</string>
+   </property>
+   <property name="text">
+    <string> M</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPlainTextEdit" name="MParamText">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>150</y>
+     <width>120</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,255,255);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+color: rgb(0,0,0);</string>
    </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header location="global">qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

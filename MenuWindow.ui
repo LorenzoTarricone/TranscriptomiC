@@ -6,16 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
-    <height>320</height>
+    <width>444</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Menu</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(248,247,245);
-</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(248,247,245);
@@ -42,8 +38,8 @@ color: rgb(0,0,0);</string>
    <widget class="QPushButton" name="ColocalizationButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>120</y>
+      <x>20</x>
+      <y>380</y>
       <width>180</width>
       <height>80</height>
      </rect>
@@ -63,8 +59,8 @@ padding: 0 8px;
    <widget class="QPushButton" name="BiologicalButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>210</y>
+      <x>220</x>
+      <y>380</y>
       <width>180</width>
       <height>80</height>
      </rect>
@@ -131,8 +127,8 @@ color: rgb(0,0,0);
    <widget class="QLabel" name="AnalysisPerformLabel">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>60</y>
+      <x>10</x>
+      <y>320</y>
       <width>400</width>
       <height>40</height>
      </rect>

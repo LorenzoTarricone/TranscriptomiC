@@ -53,7 +53,7 @@ void MenuWindow::on_ColocalizationButton_clicked()
 
     this->hide(); //hides menuwindow
     coWindow->show(); //shows colocalizationwindow
-    coWindow->makeHeatMap(); //makes the heatmap
+    //coWindow->makeHeatMap(); //makes the heatmap
 
 }
 

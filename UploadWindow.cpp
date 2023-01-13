@@ -12,7 +12,10 @@ UploadWindow::UploadWindow(QWidget *parent)
     , ui(new Ui::UploadWindow)
 {
     ui->setupUi(this);
-    ui->GeneFileText->setPlainText("Please select a file and then upload it.");
+
+    ui->GeneFileText->setPlainText("Please select a TSV File (*.tsv).");
+    ui->SpatialFileText->setPlainText("Please select a CSV File (*.csv).");
+    ui->ExpressFileText->setPlainText("Please select a MTX File (*.mtx).");
 
     PointerMenuWindow = new MenuWindow(this);
     connect(PointerMenuWindow, &MenuWindow::UploadWindow, this, &UploadWindow::show);

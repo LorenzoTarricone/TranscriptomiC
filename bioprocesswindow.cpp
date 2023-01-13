@@ -19,6 +19,15 @@ bioprocesswindow::~bioprocesswindow()
     delete ui;
 }
 
+
+void bioprocesswindow::on_MenuWindowButton_clicked()
+{
+    this->close();
+    emit MenuWindow(); //returns to menuWindow
+}
+
+
+
 void bioprocesswindow::setProcessesToAnalyze(){
     //this function will just create a vector with all the processes we can analyze
     //TEMPORARY, in the end we will have something a lot more sophisticated
@@ -59,13 +68,6 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow
     heatmapWindow->makeHeatMap(); //generates the heatmap
-}
-
-
-void bioprocesswindow::on_MenuWindowButton_clicked()
-{
-    this->close();
-    emit MenuWindow(); //returns to menuWindow
 }
 
 
