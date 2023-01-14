@@ -36,6 +36,19 @@ void bioprocesswindow::setProcessesToAnalyze(){
 
 }
 
+void bioprocesswindow::openHeatMapWindow(){
+    heatmapWindow = new HeatMapWindow(this);
+    connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+
+
+    heatmapWindow->setX(this->getX());
+    heatmapWindow->setY(this->getY());
+    heatmapWindow->setP(this->getP());
+
+    this->hide(); //hides menuwindow
+    heatmapWindow->show(); //shows biowindow
+    heatmapWindow->makeHeatMap(); //generates the heatmap
+}
 
 void bioprocesswindow::on_AnalyzeButton_clicked()
 {
@@ -52,22 +65,12 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     //if we can analyze that process assign it to inputProcess, if not send error message
     if (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()){
         inputProcess = process;
+        openHeatMapWindow();
     }
     else{
         QMessageBox::information(this, "Error", "We cannot analyze that process, please provide another one.", QMessageBox::Ok);
       }
 
-    heatmapWindow = new HeatMapWindow(this);
-    connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
-
-
-    heatmapWindow->setX(this->getX());
-    heatmapWindow->setY(this->getY());
-    heatmapWindow->setP(this->getP());
-
-    this->hide(); //hides menuwindow
-    heatmapWindow->show(); //shows biowindow
-    heatmapWindow->makeHeatMap(); //generates the heatmap
 }
 
 

@@ -18,7 +18,7 @@ public:
 
  //   void on_SaveHeatmapButton_clicked();
 
- //   void on_SaveMatrixButton_clicked();
+    void on_SaveMatrixButton_clicked();
 
 
 private:

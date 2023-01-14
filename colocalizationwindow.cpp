@@ -6,6 +6,7 @@
 #include <sstream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QDebug>>
 
 //#include <Eigen/Dense>
 
@@ -70,20 +71,36 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 {
 
     heatmapWindow = new ColocalizationHeatmapWindow(this);
+    connect(heatmapWindow, &ColocalizationHeatmapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+
 
     pParameter = ui->pParamText->toPlainText().toDouble();
-    QString MParameterQstring = ui->MParamText->toPlainText();
-    MParameter = MParameterQstring.toDouble();
+    MParameter = ui->MParamText->toPlainText().toDouble();
 
-    heatmapWindow->setX(this->getX());
-    heatmapWindow->setY(this->getY());
-    heatmapWindow->setP(this->getP());
 
-    this->hide(); //hides menuwindow
-    heatmapWindow->show(); //shows biowindow
-    heatmapWindow->makeHeatMap(); //generates the heatmap
+    if( (MParameter<10 || MParameter >10000) && (pParameter<0 || pParameter >5)){
+        QMessageBox::information(this, "Error", "Invalid value for p and M parameters", QMessageBox::Ok);
 
-    QMessageBox::information(this, "NEEDS to be changed", MParameterQstring, QMessageBox::Ok);
+    }
+    else if(MParameter<10 || MParameter >10000){
+        QMessageBox::information(this, "Error", "Invalid value for M parameter", QMessageBox::Ok);
+
+    }
+    else if(pParameter<=0 || pParameter >5){
+        QMessageBox::information(this, "Error", "Invalid value for p parameter", QMessageBox::Ok);
+
+    }
+    else{
+        heatmapWindow->setX(this->getX());
+        heatmapWindow->setY(this->getY());
+        heatmapWindow->setP(this->getP());
+
+        this->hide(); //hides menuwindow
+        heatmapWindow->show(); //shows biowindow
+        heatmapWindow->makeHeatMap(); //generates the heatmap
+    }
+
+
 
 }
 

@@ -23,6 +23,7 @@ public:
     void setP(const QVector<double>& givenP) {pValues = givenP;};
 
     void setProcessesToAnalyze();
+    void openHeatMapWindow();
 
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
