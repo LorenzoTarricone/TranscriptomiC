@@ -70,6 +70,11 @@ int main(){
     std::set<std::string> intersection_set;
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
+    small_set.~set();
+    res.~vector();
+    final_set.~set();
+    string_set_gene_matrix.~set();
+
     for (std::string x : intersection_set) {
         std::cout << x << " ";
     }

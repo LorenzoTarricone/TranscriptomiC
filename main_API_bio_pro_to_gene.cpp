@@ -75,6 +75,11 @@ int main(){
     std::set<std::string> intersection_set;
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
+    res.~vector();
+    small_set.~set();
+    final_set.~set();
+    string_set_gene_matrix.~set();
+
     for (std::string x : intersection_set) {
         std::cout << x << " ";
     }
@@ -100,3 +105,4 @@ int main(){
 ////    mtxobject.print();
 ////    return 0;
 //}
+*/
