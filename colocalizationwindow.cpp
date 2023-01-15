@@ -61,6 +61,11 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
                //Uncomment for ColourMap without interpolation
                colorMap->setInterpolate(false);
 
+               // make sure the axis rect and color scale synchronize their bottom and top margins (so they line up):
+               QCPMarginGroup *marginGroup = new QCPMarginGroup(ui->customPlot);
+               ui->customPlot->axisRect()->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
+               colorScale->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
+
                // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
                colorMap->rescaleDataRange();
 
