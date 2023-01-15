@@ -55,7 +55,8 @@ void bioprocesswindow::makeHeatMap(MatrixXd m){
            //Color gradient:
            QCPColorGradient gradient; // empty gradient with no defined colour stops
            //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
-           gradient.setColorStopAt(2, QCPColorGradient::gpJet);
+           gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
+           gradient.setColorStopAt(1, QColor(255,0,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
            gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
            gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
            gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
@@ -66,8 +67,8 @@ void bioprocesswindow::makeHeatMap(MatrixXd m){
 
            // make sure the axis rect and color scale synchronize their bottom and top margins (so they line up):
            QCPMarginGroup *marginGroup = new QCPMarginGroup(ui->customPlot);
-           ui->customPlot->axisRect()->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
-           colorScale->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
+           ui->customPlot->axisRect()->setMarginGroup(QCP::msTop|QCP::msBottom, marginGroup);
+           colorScale->setMarginGroup(QCP::msTop|QCP::msBottom, marginGroup);
 
            // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
            colorMap->rescaleDataRange();
