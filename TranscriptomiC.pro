@@ -25,7 +25,8 @@ SOURCES += \
     parsing.cpp \
     qcustomplot.cpp \
 #    SparseMatrix.cpp \
-    colocalization_matrix.cpp
+    colocalization_matrix.cpp \
+    search.cpp
 
 HEADERS += \
     MenuWindow.h \
@@ -44,6 +45,7 @@ HEADERS += \
     qcustomplot.h \
     colocalization_matrix.h \
     SecondWindow.h \
+    search.h
 
 FORMS += \
     MenuWindow.ui \
