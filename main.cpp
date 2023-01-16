@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -21,13 +21,18 @@ int main(int argc, char *argv[])
     // path to gene subset file
     std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
-    // create colocalisation object
-    colocalisation matrix = colocalisation();
-    //crop data
-    matrix.setMatrixBlocks(100,1000);
+    // initialize parse file object
+    parsefile files = parsefile();
 
-    // read files
-    matrix.readFiles(expressionFile,spatialFile,geneNameFile, geneSubsetFile);
+    files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+    // create colocalisation object
+    colocalisation matrix = colocalisation(files,700,700);
+    //crop data
+//    matrix.setMatrixBlocks(100,100);
+
+//    // read files
+//    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
 
     // filter
@@ -35,12 +40,12 @@ int main(int argc, char *argv[])
 
 
     // normalise data
-    //matrix.normalisation();
+    matrix.normalisation();
 
     // compute colocalisation matrix
-    //matrix.compute();
+    matrix.compute();
 
-    //matrix.saveToFile(path+"colocalisation_object.csv");
+    matrix.saveToFile(path+"colocalisation_object.csv");
 
 
     return 0;

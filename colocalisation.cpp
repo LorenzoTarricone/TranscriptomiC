@@ -3,13 +3,16 @@
 #include "colocalisation.h"
 
 
-colocalisation::colocalisation()
+colocalisation::colocalisation(parsefile files, int rows, int cols)
 {
-    geneNames = std::vector<std::string>();
+    expression_raw = files.getExpression();
+    spatial = files.getSpatial();
+    geneNames = files.getGenes();
     block_rows_start = 0;
     block_cols_start = 0;
     block_rows = 0;
     block_cols = 0;
+    initialise(rows, cols);
 
 }
 
@@ -21,6 +24,41 @@ colocalisation::~colocalisation(){
     delete A_colocalisation;
     delete expression;
 }
+
+void colocalisation::initialise(int rows, int cols){
+    // this method for now contains anything in the readFiles method that is not handled by the
+    // parsefile object
+    // set default cropping to dimensions of the matrix
+
+    std::cout << "[Progress] Extracting expression matrix ..." << std::endl;
+    expression = new Eigen::MatrixXd;
+
+    if(rows <= 0 || cols <= 0){
+        block_rows = expression_raw.getRows();
+        block_cols = expression_raw.getCols();
+
+        *expression =  expression_raw.getExpressionDense();
+    }
+    else{
+        block_rows = rows;
+        block_cols = cols;
+        std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
+        *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+
+    }
+
+
+
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+    std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
+
+    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
+    A_spatial = spatial.convertToMatrix();
+
+//    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
+//    expression_raw.initiateGeneIndex(geneNames);
+}
+
 
 
 //this function applies the filtering by gene names and then
@@ -36,7 +74,7 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
     //keep only desired genes
     *expression=expression_raw.filterByGenes(*expression, geneSubset);
 
-    std::cout << "[Progress ]Filtering by genes finished"<<std::endl;
+    std::cout << "[Progress] Filtering by genes finished"<<std::endl;
     std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout <<expression->block(0,0,20,20)<<std::endl;
 
@@ -51,7 +89,7 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
 void colocalisation::normalisation(std::string type_of_normal){
     std::cout << "[Progress] Normalising data according to " << type_of_normal << " ..." << std::endl;
     std::cout << "Before normalisation: " << std::endl;
-    std::cout<<expression->block(0,0,10,10)<<std::endl;
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
     *expression = expression_raw.normalisation_simple(*expression);
     std::cout << "[Progress] Normalising data according to " << type_of_normal << " finished ..." << std::endl;
     std::cout << "After normalisation: " << std::endl;
@@ -113,6 +151,11 @@ void colocalisation::setMatrixBlocks(int startRow, int startCol, int endRow, int
     block_rows = endRow;
     block_cols_start = startCol;
     block_cols = endCol;
+
+    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
+    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+
+
 
     def = false;
 }

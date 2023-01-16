@@ -287,11 +287,11 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min
         }
     }
 
-    std::cout << "[";
-    for(int i = 0; i < s-1; i++){
-        std::cout << count[i] << ",";
-    }
-    std::cout << count[s-1] << "]" << std::endl;
+//    std::cout << "[";
+//    for(int i = 0; i < s-1; i++){
+//        std::cout << count[i] << ",";
+//    }
+//    std::cout << count[s-1] << "]" << std::endl;
 
     //
 

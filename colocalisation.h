@@ -6,10 +6,12 @@
 
 #include "parsemtx.h"
 #include "parsing.h"
+#include "parsefile.h"
+
 class colocalisation
 {
 public:
-    colocalisation();
+    colocalisation(parsefile files, int rows = 0, int cols = 0);
     ~colocalisation();
     void filter(bool zeroes = true, double min_expr_perc = 0.1);
     void normalisation(std::string type_of_normal = "col_mean");
@@ -37,6 +39,7 @@ private:
     std::string geneNamesFile, spatialFile, expressionFile;
 
     // crop matrix
+    void initialise(int rows, int cols);
     int block_rows_start,block_cols_start,block_rows,block_cols;
     bool def = true;
 
