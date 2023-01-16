@@ -20,6 +20,7 @@ SOURCES += \
     genename.cpp \
     main.cpp \
     matrixeigen.cpp \
+    parsefile.cpp \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     parsing.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     filedata.h \
     genename.h \
     matrixeigen.h \
+    parsefile.h \
     parsemtx.h \
     qcustomplot.h \
 #    SparseMatrix.h \
