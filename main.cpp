@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
     std::string spatialFile = path+"MBASS_dd99_spatial.csv";
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
+    // path to gene subset file
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
     // initialize parse file object
     parsefile files = parsefile();
@@ -35,6 +37,7 @@ int main(int argc, char *argv[])
 
     // filter
     matrix.filter(true,0.001);
+
 
     // normalise data
     matrix.normalisation();

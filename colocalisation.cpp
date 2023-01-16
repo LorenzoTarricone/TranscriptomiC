@@ -55,19 +55,34 @@ void colocalisation::initialise(int rows, int cols){
     std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
     A_spatial = spatial.convertToMatrix();
 
-    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
-    expression_raw.initiateGeneIndex(geneNames);
+//    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
+//    expression_raw.initiateGeneIndex(geneNames);
 }
 
+
+
+//this function applies the filtering by gene names and then
+//filters out rows which either have only zeros (if zeroes==true)
+//or if their expression percentage is below min_expr_perc
 void colocalisation::filter(bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Filtering data ..." << std::endl;
 //    std::cout << "Before filtering: " << std::endl;
 //    std::cout<<expression->block(0,0,10,10)<<std::endl;
 //    Eigen::MatrixXd* temp = new Eigen::MatrixXd;
 //    temp = expression;
-    *expression = expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
+
+    //keep only desired genes
+    *expression=expression_raw.filterByGenes(*expression, geneSubset);
+
+    std::cout << "[Progress] Filtering by genes finished"<<std::endl;
+    std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
+    std::cout <<expression->block(0,0,20,20)<<std::endl;
+
+    //filter out sparse rows from the ones we kept before
+    expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
 //    delete temp;
     std::cout << "After filtering: " << std::endl;
+    std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 }
 
@@ -81,7 +96,7 @@ void colocalisation::normalisation(std::string type_of_normal){
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
-void colocalisation::readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile){
+void colocalisation::readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile, std::string geneSubsetFile){
     // read beams and spatial information into parsing object
     spatial = parsing();
     std::cout << "[Progress] Reading spatial data ..." << std::endl;
@@ -106,8 +121,15 @@ void colocalisation::readFiles(std::string expressionFile, std::string spatialFi
     // read gene name file
     std::cout << "[Progress] Reading gene names file ..." << std::endl;
     geneNames = listgene(geneNameFile);
+
+
+    // read gene subset files
+
+    std::cout << "[Progress] Reading gene names file ..." << std::endl;
+    geneSubset = listgene(geneSubsetFile);
+
     std::cout << "[Progress] Initiating gene name index ..." << std::endl;
-    expression_raw.initiateGeneIndex(geneNames);
+    expression_raw.initiateGeneIndex(geneNames, geneSubset);
 
     std::cout << "[Progress] File reading finished successfully ..." << std::endl;
 

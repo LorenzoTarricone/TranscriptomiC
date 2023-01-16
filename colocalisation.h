@@ -16,7 +16,7 @@ public:
     void filter(bool zeroes = true, double min_expr_perc = 0.1);
     void normalisation(std::string type_of_normal = "col_mean");
     void test(bool def = true);
-    void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile);
+    void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile, std::string geneSubsetFile);
     void compute();
     void saveToFile(std::string filename);
     void setMatrixBlocks(int startRow, int startCol, int endRow, int endCol);
@@ -26,6 +26,7 @@ private:
     parsemtx expression_raw;
     parsing spatial;
     std::vector<std::string> geneNames;
+    std::vector<std::string> geneSubset;
 
 
     Eigen::MatrixXd A_spatial;
