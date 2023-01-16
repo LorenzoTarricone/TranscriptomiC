@@ -73,10 +73,9 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     heatmapWindow = new ColocalizationHeatmapWindow(this);
     connect(heatmapWindow, &ColocalizationHeatmapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-
+    QString p = ui->pParamText->toPlainText();
     pParameter = ui->pParamText->toPlainText().toDouble();
     MParameter = ui->MParamText->toPlainText().toDouble();
-
 
     if( (MParameter<10 || MParameter >10000) && (pParameter<0 || pParameter >5)){
         QMessageBox::information(this, "Error", "Invalid value for p and M parameters", QMessageBox::Ok);
@@ -86,7 +85,7 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
         QMessageBox::information(this, "Error", "Invalid value for M parameter", QMessageBox::Ok);
 
     }
-    else if(pParameter<=0 || pParameter >5){
+    else if(pParameter<0 || pParameter >5 || p.length()>1){
         QMessageBox::information(this, "Error", "Invalid value for p parameter", QMessageBox::Ok);
 
     }
