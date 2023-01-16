@@ -19,9 +19,17 @@ public:
     explicit bioprocesswindow(QWidget *parent = nullptr);
     ~bioprocesswindow();
 
-    void makeHeatMap(MatrixXd m);
+    void makeHeatMap();
+    void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
+    void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
+    void setP(const QVector<double>& givenP) {pValues = givenP;};
 
     void setProcessesToAnalyze();
+
+    const QVector<double>& getX() {return xCoordinates;};
+    const QVector<double>& getY() {return yCoordinates;};
+    const QVector<double>& getP() {return pValues;};
+
 
 
 signals:
@@ -36,6 +44,10 @@ private slots:
 
 private:
     Ui::bioprocesswindow *ui;
+
+    QVector<double> xCoordinates;
+    QVector<double> yCoordinates;
+    QVector<double> pValues;
 
     std::vector<std::string> processesToAnalyze;
     std::string inputProcess;

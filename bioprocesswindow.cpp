@@ -18,7 +18,7 @@ bioprocesswindow::~bioprocesswindow()
     delete ui;
 }
 
-void bioprocesswindow::makeHeatMap(const MatrixXd m){
+void bioprocesswindow::makeHeatMap(){
 
           // configure axis:
            ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
@@ -29,26 +29,17 @@ void bioprocesswindow::makeHeatMap(const MatrixXd m){
            // QCPColorMap:
            QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-           // Matrix dimensions
-           int number_rows = m.rows();
-           int number_cols = m.cols();
+           // Vector lenght
+           int nx = sqrt(getX().size());
+           int ny = sqrt(getY().size());
 
            //set the range of the HeatMap;
-           colorMap->data()->setSize(number_cols, number_rows);
-           colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
+           colorMap->data()->setSize(nx, ny);
+           colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
 
-           // Work again with vectors
-           //assign some data, by accessing the QCPColorMapData instance of the color map:
-           for(int i = 0; i < number_cols; i++){
-               for(int j = 0; j< number_rows; j++){
-                   if(m(i,j)<3 && m(i,j)>-3){
-                       colorMap->data()->setCell(i, j, m(i,j));} // plot only data between -3 and 3
-                   else{colorMap->data()->setCell(i, j, 0);
-
-                   }
-               }
-           }
-
+           for(int Index = 0; Index < nx * ny; Index++){ // We have 49 data points
+                          colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
+                      }
 
            //Color scale:
            QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);

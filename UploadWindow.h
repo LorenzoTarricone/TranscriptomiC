@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "MenuWindow.h"
 #include "upload_matrix.h"
+#include "filedata.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -34,8 +35,12 @@ private:
     std::string input;
 
     std::string filename;
+    std::vector<double> x;
+    std::vector<double> y;
 
-    upload_matrix inputData;
+    //upload_matrix inputData; Uncomment to plot Colocalization
+    FileData inputData;
+
     bool readBoolean;
 };
 #endif // UPLOADWINDOW_H

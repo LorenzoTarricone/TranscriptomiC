@@ -48,9 +48,14 @@ void MenuWindow::on_BiologicalButton_clicked()
     bioWindow = new bioprocesswindow(this); //creates the instance of colocalizationWindow
     connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
+    //sets the data
+    bioWindow->setX(this->getX());
+    bioWindow->setY(this->getY());
+    bioWindow->setP(this->getP());
+
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
-    bioWindow->makeHeatMap(m); //generates the heatmap
+    bioWindow->makeHeatMap(); //generates the heatmap
     bioWindow->setProcessesToAnalyze(); //instantiates the vector of processes
 
 }

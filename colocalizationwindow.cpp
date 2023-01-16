@@ -54,7 +54,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                colorScale->setRangeDrag(&free); // drag the data range. we dont need that
                colorMap->setColorScale(colorScale); // associate the color map with the color scale
                colorScale->axis()->setLabel("Intensity");
-
+/*
                //color gradient:
                QCPColorGradient gradient; // empty gradient with no defined colour stops
                //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
@@ -63,7 +63,9 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
                gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
-               colorMap->setGradient(gradient);//assign it to the heatmap
+               colorMap->setGradient(gradient);//assign it to the heatmap */
+
+               colorMap->setGradient(QCPColorGradient::gpPolar);
 
                //Uncomment for ColourMap without interpolation
                colorMap->setInterpolate(false);
