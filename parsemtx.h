@@ -13,7 +13,7 @@ public:
     void readFile(std::string filename);
     void print();
     void filter(bool zeroes, double min_expr_perc);
-    Eigen::MatrixXd filter_simple(Eigen::MatrixXd expression,bool zeroes, double min_expr_perc);
+    Eigen::MatrixXd filter_simple(Eigen::MatrixXd expression,bool zeroes = true, double min_expr_perc = 0.05);
     Eigen::MatrixXd filterByGenes(Eigen::MatrixXd expression, std::vector<std::string> genes);
     void getRowNamesFromFile(std::string filename);
     void initiateGeneIndex(std::vector<std::string> geneList);
