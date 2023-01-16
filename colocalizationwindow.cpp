@@ -6,7 +6,7 @@
 #include <sstream>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QDebug>>
+#include <QDebug>
 
 //#include <Eigen/Dense>
 

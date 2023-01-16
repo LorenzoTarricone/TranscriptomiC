@@ -45,7 +45,7 @@ color: rgb(0, 0, 0);
      <x>80</x>
      <y>230</y>
      <width>130</width>
-     <height>41</height>
+     <height>40</height>
     </rect>
    </property>
    <property name="styleSheet">
