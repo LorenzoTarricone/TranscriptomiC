@@ -278,14 +278,17 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, 
         }
     }
 
-    std::cout << "[";
-    for(int i = 0; i < s-1; i++){
-        std::cout << count[i] << ",";
-    }
-    std::cout << count[s-1] << "]" << std::endl;
+//    std::cout << "[";
+//    for(int i = 0; i < s-1; i++){
+//        std::cout << count[i] << ",";
+//    }
+//    std::cout << count[s-1] << "]" << std::endl;
 
     //
+
     Eigen::MatrixXd dense_matrix = expression;
+
+    std::cout << "[Progress] Created object dense_matrix ..." << std::endl;
 
     int removed = 0;
     for(int i = 0;i<s;i++){
@@ -294,7 +297,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd expression,bool zeroes, 
             removeRow(dense_matrix, i-removed);
 //            // take care of gene name index when row is removed
              shiftGeneIndex(i,removed);
-             printGeneIndex(s-removed);
+//             printGeneIndex(s-removed);
             removed ++;
         }
     }

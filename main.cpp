@@ -19,13 +19,18 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
 
-    // create colocalisation object
-    colocalisation matrix = colocalisation();
-    //crop data
-    matrix.setMatrixBlocks(100,100);
+    // initialize parse file object
+    parsefile files = parsefile();
 
-    // read files
-    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
+    files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+    // create colocalisation object
+    colocalisation matrix = colocalisation(files,700,700);
+    //crop data
+//    matrix.setMatrixBlocks(100,100);
+
+//    // read files
+//    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
 
     // filter
