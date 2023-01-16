@@ -37,3 +37,6 @@ int main () {
     outfile.close();
     return 0;
 }
+
+
+main()
