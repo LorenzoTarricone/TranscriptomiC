@@ -20,6 +20,8 @@ public:
 
     vector<string> simpleSearch(); // basic search : find all strings in l matching s ignoring the case
 
+    vector<string> prefixSearch(); // prefix search : find all strings in l that have s as a prefix
+
     // TO DO
     vector<string> trieSearch(); // trie search : efficiently find all strings in l that have s as a prefix thanks to a trie structure
 
