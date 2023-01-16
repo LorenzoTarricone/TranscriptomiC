@@ -224,6 +224,11 @@ void parsemtx::getRowNamesFromFile(std::string filename){
     }
 }
 
+// overloaded method to initiate gene index
+void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
+    initiateGeneIndex(geneList,geneList);
+    geneIndexFinal = geneIndex;
+}
 
 // function to initiate geneIndex
 void parsemtx::initiateGeneIndex(std::vector<std::string> geneList, std::vector<std::string> geneListSubset){
@@ -291,6 +296,8 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min
 //    std::cout << count[s-1] << "]" << std::endl;
 
     //
+
+    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
 
     for(int i = 0;i<s;i++){
         if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){

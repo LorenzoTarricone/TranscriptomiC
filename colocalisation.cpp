@@ -60,6 +60,12 @@ void colocalisation::initialise(int rows, int cols){
 }
 
 
+// this function takes a list of genes on which the analysis should be performed
+void colocalisation::addGeneList(std::string geneListPath){
+    filterGenes = true;
+    geneSubset = listgene(geneListPath);
+}
+
 
 //this function applies the filtering by gene names and then
 //filters out rows which either have only zeros (if zeroes==true)
@@ -71,14 +77,31 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
 //    Eigen::MatrixXd* temp = new Eigen::MatrixXd;
 //    temp = expression;
 
-    //keep only desired genes
-    *expression=expression_raw.filterByGenes(*expression, geneSubset);
+    std::cout << "Before filtering: " << std::endl;
+    std::cout << "expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 
-    std::cout << "[Progress] Filtering by genes finished"<<std::endl;
-    std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
-    std::cout <<expression->block(0,0,20,20)<<std::endl;
+
+    if(filterGenes){
+        //keep only desired genes
+        std::cout << "[Progress] Filtering data for desired genes ..." << std::endl;
+
+        *expression=expression_raw.filterByGenes(*expression, geneSubset);
+
+        std::cout << "[Progress] Filtering by genes finished"<<std::endl;
+        std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
+        std::cout <<expression->block(0,0,20,20)<<std::endl;
+
+    }
+    else{
+        // initialize gene index
+        std::cout << "[Progress] Initializing gene index ..." << std::endl;
+        expression_raw.initiateGeneIndex(geneNames);
+    }
+
 
     //filter out sparse rows from the ones we kept before
+    std::cout << "[Progress] Filtering sparse rows ..." << std::endl;
     expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
 //    delete temp;
     std::cout << "After filtering: " << std::endl;
@@ -88,9 +111,12 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
 
 void colocalisation::normalisation(std::string type_of_normal){
     std::cout << "[Progress] Normalising data according to " << type_of_normal << " ..." << std::endl;
+
     std::cout << "Before normalisation: " << std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
+
     *expression = expression_raw.normalisation_simple(*expression);
+
     std::cout << "[Progress] Normalising data according to " << type_of_normal << " finished ..." << std::endl;
     std::cout << "After normalisation: " << std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;

@@ -15,6 +15,7 @@ public:
     ~colocalisation();
     void filter(bool zeroes = true, double min_expr_perc = 0.1);
     void normalisation(std::string type_of_normal = "col_mean");
+    void addGeneList(std::string geneListPath);
     void test(bool def = true);
     void readFiles(std::string expressionFile, std::string spatialFile, std::string geneNameFile, std::string geneSubsetFile);
     void compute();
@@ -26,7 +27,7 @@ private:
     parsemtx expression_raw;
     parsing spatial;
     std::vector<std::string> geneNames;
-    std::vector<std::string> geneSubset;
+
 
 
     Eigen::MatrixXd A_spatial;
@@ -46,6 +47,10 @@ private:
     // linkage parameters
     double m = 5000;
     double p = 2;
+
+    // filter parameters
+    std::vector<std::string> geneSubset;
+    bool filterGenes = false;
 
     // private methods
     void step1();

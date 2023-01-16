@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
 //    // read files
 //    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
+    // add gene subset file
+    matrix.addGeneList(geneSubsetFile);
 
     // filter
     matrix.filter(true,0.001);

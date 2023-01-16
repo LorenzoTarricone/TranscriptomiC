@@ -17,6 +17,7 @@ public:
     Eigen::MatrixXd filterByGenes(const Eigen::MatrixXd &expression, std::vector<std::string> genes);
     void getRowNamesFromFile(std::string filename);
     void initiateGeneIndex(std::vector<std::string> geneList, std::vector<std::string> geneListSubset);
+    void initiateGeneIndex(std::vector<std::string> geneList);
     void printGeneIndex(int rows);
     void normalisation(std::string type_of_normal = "col_mean");
     Eigen::MatrixXd normalisation_simple(Eigen::MatrixXd expression,std::string type_of_normal = "col_mean");
