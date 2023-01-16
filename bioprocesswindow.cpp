@@ -3,6 +3,7 @@
 #include "qcustomplot.h"
 #include "ui_bioprocesswindow.h"
 #include "qdebug.h"
+#include <algorithm>
 
 bioprocesswindow::bioprocesswindow(QWidget *parent) :
     QDialog(parent),
@@ -17,7 +18,7 @@ bioprocesswindow::~bioprocesswindow()
     delete ui;
 }
 
-void bioprocesswindow::makeHeatMap(MatrixXd m){
+void bioprocesswindow::makeHeatMap(const MatrixXd m){
 
           // configure axis:
            ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
@@ -36,10 +37,15 @@ void bioprocesswindow::makeHeatMap(MatrixXd m){
            colorMap->data()->setSize(number_cols, number_rows);
            colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
+           // Work again with vectors
            //assign some data, by accessing the QCPColorMapData instance of the color map:
            for(int i = 0; i < number_cols; i++){
                for(int j = 0; j< number_rows; j++){
-                  colorMap->data()->setCell(i, j, m(i,j));
+                   if(m(i,j)<3 && m(i,j)>-3){
+                       colorMap->data()->setCell(i, j, m(i,j));} // plot only data between -3 and 3
+                   else{colorMap->data()->setCell(i, j, 0);
+
+                   }
                }
            }
 

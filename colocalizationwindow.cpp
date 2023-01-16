@@ -19,7 +19,7 @@ colocalizationwindow::~colocalizationwindow()
     delete ui;
 }
 
-void colocalizationwindow::makeHeatMap(MatrixXd m){
+void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
     // configure axis rect:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
@@ -39,9 +39,13 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
 
                for(int i = 0; i < number_cols; i++){
                    for(int j = 0; j< number_rows; j++){
-                      colorMap->data()->setCell(i, j, m(i,j)); // maybe I can use fill
+                       if(m(i,j)<3 && m(i,j)>-3){
+                           colorMap->data()->setCell(i, j, m(i,j));} // plot only data between -3 and 3
+                       else{colorMap->data()->setCell(i, j, 0);}
+
+                       }
                    }
-               }
+
 
                // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
@@ -55,7 +59,7 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
                QCPColorGradient gradient; // empty gradient with no defined colour stops
                //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
                gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
-               gradient.setColorStopAt(1, QColor(255,150,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
+               gradient.setColorStopAt(1, QColor(255,255,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
                gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
                gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
