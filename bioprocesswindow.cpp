@@ -63,7 +63,7 @@ void bioprocesswindow::makeHeatMap(MatrixXd m){
            colorMap->setGradient(gradient);//assign it to the heatmap
 
            //Uncomment for ColourMap without interpolation
-           //colorMap->setInterpolate(false);
+           colorMap->setInterpolate(false);
 
            // make sure the axis rect and color scale synchronize their bottom and top margins (so they line up):
            QCPMarginGroup *marginGroup = new QCPMarginGroup(ui->customPlot);

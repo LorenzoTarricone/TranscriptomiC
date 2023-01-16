@@ -34,11 +34,8 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
 
                colorMap->data()->setSize(number_cols, number_rows);
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
-               //This is just for rec_Data: We need to find the Range for each individual file
 
                // now we assign some data, by accessing the QCPColorMapData instance of the color map:
-               //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
-
 
                for(int i = 0; i < number_cols; i++){
                    for(int j = 0; j< number_rows; j++){
@@ -46,17 +43,23 @@ void colocalizationwindow::makeHeatMap(MatrixXd m){
                    }
                }
 
-               // add a color scale
+               // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
                ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
-               colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right (actually atRight is already the default)
+               colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right
+               colorScale->setRangeDrag(&free); // drag the data range. we dont need that
                colorMap->setColorScale(colorScale); // associate the color map with the color scale
                colorScale->axis()->setLabel("Intensity");
 
-               // set the color gradient of the color map to one of the presets:
-               colorMap->setGradient(QCPColorGradient::gpPolar);
-               // we could have also created a QCPColorGradient instance and added own colors to
-               // the gradient, see the documentation of QCPColorGradient for what's possible.
+               //color gradient:
+               QCPColorGradient gradient; // empty gradient with no defined colour stops
+               //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
+               gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
+               gradient.setColorStopAt(1, QColor(255,150,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
+               gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
+               gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
+               gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
+               colorMap->setGradient(gradient);//assign it to the heatmap
 
                //Uncomment for ColourMap without interpolation
                colorMap->setInterpolate(false);
