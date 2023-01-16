@@ -163,10 +163,13 @@ std::vector<std::string> listgene(std::string txt_file){
     file.open(txt_file); //open file
     if ( file.is_open() ) {
         while (!file.eof()){ //check if there is still a line
-        file>>value;
-        list.push_back(value);
-        value.clear();
-    }}
+            file>>value;
+            if(value!="" && value!= "\n"){
+                list.push_back(value);
+            }
+            value.clear();
+        }
+    }
     file.close();
     return list;
 }
