@@ -38,7 +38,7 @@ double linkage(double d, double m, double p) {
 
 //STEP 2
 //given an eigen matrix of the distance between points and the values m and p, returns an eigen matrix with the linkage values
-Eigen::MatrixXd matrix_linkage(Eigen::MatrixXd &A_distance, double m, double p){
+Eigen::MatrixXd matrix_linkage(const Eigen::MatrixXd &A_distance, double m, double p){
     //MatrixXd A_distance = matrix_distance(A);
     Eigen::MatrixXd A_linkage(A_distance.rows(), A_distance.rows());
     for (int i = 0; i < A_distance.rows(); i++){
@@ -54,7 +54,7 @@ Eigen::MatrixXd matrix_linkage(Eigen::MatrixXd &A_distance, double m, double p){
 // given an eigen matrix containing the linkage values (kxk) and a eigen matrix containing the gene - beams values (nxk)
 // returns an nxk matrix indicating average gene expression in neighbouring beams
 
-Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_expression){
+Eigen::MatrixXd combine_linkage(const Eigen::MatrixXd &A_linkage, const Eigen::MatrixXd &A_expression){
     std::cout<<"\n Entered function"<<std::endl;
 
     int k = A_linkage.rows();
@@ -69,7 +69,7 @@ Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_e
 
     // iterate through columns of A_combine
     for(int j = 0; j < k; j++){
-        std::cout<<"\n Beam n: " << j <<std::endl;
+//        std::cout<<"\n Beam n: " << j <<std::endl;
         double row_total = A_linkage.row(j).sum();
         // create a lambda function to compute the weighted sum
         //auto compute_weighted_sum = [j, &A_linkage, &A_expression, &A_combine, &mutex, row_total]() {
@@ -108,12 +108,46 @@ Eigen::MatrixXd combine_linkage(Eigen::MatrixXd &A_linkage, Eigen::MatrixXd &A_e
 //by using a special functions with certain desirable characteristics to obtain a tensor. Both matrices have dimension n_genes*n_beams,
 //while the tensor will have dimension n_beams*n_genes*n_genes.
 
+//open mp
+
 
 double important_function(double x_i, double Y, double a=2, double b=0.5){
     return -a*abs(x_i-Y) + b*(x_i+Y);
 }
 
-Eigen::MatrixXd comparison(Eigen::MatrixXd &expression, Eigen::MatrixXd &neighbors, double a, double b){
+// old version of the function for testing purposes
+Eigen::MatrixXd comparison_old(const Eigen::MatrixXd &expression, const Eigen::MatrixXd &neighbors, double a, double b){
+    int n_beams=expression.cols();
+    int n_genes=expression.rows();
+
+    //taking the mean over the beams and returning the matrix
+    //TODO: make it more efficient?
+
+    Eigen::MatrixXd mat_new(n_genes,n_genes);
+
+    for(int i=0;i<n_genes; i++){
+//        std::cout<<"\n iterating through column " << i <<std::endl;
+        if(i%100==0){
+//            std::cout<<"\n iterating through column " << i <<std::endl;
+         }
+        for(int j=0;j<n_genes;j++){
+            std::vector<double> vec_for_average;
+            for (int beam=0;beam<n_beams;beam++){
+                vec_for_average.push_back(important_function(expression(i,beam), neighbors(j,beam), a, b));
+            }
+            mat_new(i,j)=reduce(vec_for_average.begin(), vec_for_average.end()) / n_beams;
+        }
+    }
+//    std::cout << "[Progress] Comparison matrix created successfully ..." << std::endl;
+//    std::cout<< mat_new.block(0,0,10,10) << std::endl;
+//    std::cout<<"\n Comparison matrix shape: (" << mat_new.rows() << ", " << mat_new.cols() << ")"<<std::endl;
+
+    return mat_new;
+}
+
+
+
+Eigen::MatrixXd comparison(const Eigen::MatrixXd &expression,const Eigen::MatrixXd &neighbors, double a, double b){
     int n_beams=expression.cols();
     int n_genes=expression.rows();
 
@@ -161,7 +195,7 @@ Eigen::MatrixXd comparison(Eigen::MatrixXd &expression, Eigen::MatrixXd &neighbo
 //this step currently crashes the program
 // TODO: determine whether method should modify given matrix or create new matrix
 
-Eigen::MatrixXd enrichment(Eigen::MatrixXd &A){
+Eigen::MatrixXd enrichment(const Eigen::MatrixXd &A){
     int N = A.rows();
     // array to store the row sums (N size of matrix)
     // TODO: add this function to the object that stores the colocalisation matrix, use private member N

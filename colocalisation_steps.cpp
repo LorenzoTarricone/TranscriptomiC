@@ -6,7 +6,6 @@
 void colocalisation::step1(){
     std::cout << "[Progress] Running step 1 ..." << std::endl;
     A_distance = new Eigen::MatrixXd;
-    // TODO: wrap methods for steps 1-5 in object and make them static
     *A_distance = matrix_distance(A_spatial.block(block_rows_start,0,block_cols,2));
 }
 
@@ -27,16 +26,18 @@ void colocalisation::step3(){
     //  step 3 - apply linkage to expression matrix -> neighbouring matrix
     std::cout << "[Progress] Running step 3 ..." << std::endl;
 
-    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
-    std::cout<<"\n step 1"<<std::endl;
-    expression = new Eigen::MatrixXd;
-    std::cout<<"\n step 2"<<std::endl;
-    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
-    std::cout<<"\n step 3"<<std::endl;
+//    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
+////    std::cout<<"\n step 1"<<std::endl;
+//    expression = new Eigen::MatrixXd;
+////    std::cout<<"\n step 2"<<std::endl;
+//    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+////    *expression =  expression_raw.getExpressionDense().block(0,0,10,10);
+
+////    std::cout<<"\n step 3"<<std::endl;
 
 
-    std::cout<<expression->block(0,0,10,10)<<std::endl;
-    std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
+//    std::cout<<expression->block(0,0,10,10)<<std::endl;
+//    std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
 
 
     A_combine = new Eigen::MatrixXd;
@@ -51,16 +52,19 @@ void colocalisation::step3(){
 void colocalisation::step4(){
     //  step 4 - compare expression and neighbouring matrices (with default parameters
     std::cout << "[Progress] Running step 4 ..." << std::endl;
-    *A_compare = comparison(*expression, *A_combine);
-
-    delete A_combine;
+    A_compare = new Eigen::MatrixXd;
+    *A_compare = comparison_old(*expression, *A_combine);
 
     std::cout<<A_compare->block(0,0,10,10)<<std::endl;
     std::cout<<"\n Comparison matrix shape: (" << A_compare->rows() << ", " << A_compare->cols() << ")"<<std::endl;
+
+
+    delete A_combine;
 }
 
 void colocalisation::step5(){
     std::cout << "[Progress] Running step 5 ..." << std::endl;
+    A_colocalisation = new Eigen::MatrixXd;
     *A_colocalisation = enrichment(*A_compare);
 
     std::cout<<A_colocalisation->block(0,0,10,10)<<std::endl;
