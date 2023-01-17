@@ -35,7 +35,9 @@ int main(int argc, char *argv[])
 //    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
     // add gene subset file
-    matrix.addGeneList(geneSubsetFile);
+//    matrix.addGeneList(geneSubsetFile);
+
+    // TODO set linkage parameters!!!
 
     // filter
     matrix.filter(true,false,0.001);

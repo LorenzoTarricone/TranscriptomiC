@@ -12,10 +12,12 @@ CONFIG += c++17
 SOURCES += \
     MenuWindow.cpp \
     UploadWindow.cpp \
+    biologicalprocess.cpp \
     bioprocesswindow.cpp \
     colocalisation.cpp \
     colocalisation_steps.cpp \
     colocalizationwindow.cpp \
+    computation.cpp \
     filedata.cpp \
     genename.cpp \
     main.cpp \
@@ -31,9 +33,11 @@ SOURCES += \
 HEADERS += \
     MenuWindow.h \
     UploadWindow.h \
+    biologicalprocess.h \
     bioprocesswindow.h \
     colocalisation.h \
     colocalizationwindow.h \
+    computation.h \
     filedata.h \
     genename.h \
     matrixeigen.h \
