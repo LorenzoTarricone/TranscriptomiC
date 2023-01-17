@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     api.cpp \
+    api_gene_name.cpp \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \
     filedata.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 
 HEADERS += \
     api.hpp \
+    api_gene_name.h \
     bioprocesswindow.h \
     colocalizationwindow.h \
     filedata.h \
