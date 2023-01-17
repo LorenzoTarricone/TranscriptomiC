@@ -27,9 +27,15 @@ public:
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
 
+signals:
+    void MenuWindow();
+
+
 private slots:
     void on_SaveHeatmapButton_clicked();
     void on_AnalyzeButton_clicked();
+
+    void on_MenuWindowButton_clicked();
 
 private:
     Ui::bioprocesswindow *ui;
@@ -40,6 +46,8 @@ private:
 
     std::vector<std::string> processesToAnalyze;
     std::string inputProcess;
+
+
 };
 
 #endif // BIOPROCESSWINDOW_H

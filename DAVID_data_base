@@ -31,5 +31,14 @@ ids  = a list of user's gene IDs separated by ","
 tool  = one of DAVID tool names
 
 Examples of types, annot, ids, tool on
-https://david.ncifcrf.gov/content.jsp?file=DAVID_API.html#input_list 
+https://david.ncifcrf.gov/content.jsp?file=DAVID_API.html
 website 
+
+Our research:
+The API search for 3 genes those Ids are 7422,10397 and 2821 should be something like that:
+https://david.ncifcrf.gov/api.jsp?type=ENTREZ_GENE_ID&ids=7422,10397,2821&tool=geneReportFull
+Can change the type, tool, annot, the different possibilities are on the website of the database.
+Need to find a way to have access to the biological processes linked to these genes. 
+This should work:
+https://david.ncifcrf.gov/api.jsp?type=GENE_SYMBOL&ids=7422,10397,2821&tool=geneReport&annot=GOTERM_BP_ALL,
+But there is a problem with the type

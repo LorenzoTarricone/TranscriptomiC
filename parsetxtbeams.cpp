@@ -1,5 +1,6 @@
 #include "parsetxtbeams.h"
 #include <random>
+#include <Eigen/Dense>
 #ifdef WINDOWS
     #include <direct.h>
     #define GetCurrentDir _getcwd
@@ -25,6 +26,7 @@ void parseTxtBeams::readFile(std::string filename){
 
     if(!fin){
         std::cerr << "[ERROR] File " << filename << " could not be opened. Stopping program" << std::endl;
+        return;
     }
     else{
         std::cout << "[SUCCESS] File " << filename << " opened successfully" << std::endl;
@@ -58,6 +60,22 @@ void parseTxtBeams::readFile(std::string filename){
     fin.close();
 
 
+}
+
+Eigen::MatrixXd parseTxtBeams::convertToMatrix(){
+    int m = y.size();
+    Eigen::MatrixXd coords = Eigen::MatrixXd(m,2);
+    int j = 0;
+    for(typename std::vector<int>::iterator i = x.begin(); i != x.end(); i++){
+        coords(j,0) = *i;
+        j++;
+    }
+    j = 0;
+    for(typename std::vector<int>::iterator i = y.begin(); i != y.end(); i++){
+        coords(j,1) = *i;
+        j++;
+    }
+    return coords;
 }
 
 void parseTxtBeams::createDummyFile(unsigned int rows, std::string filename){

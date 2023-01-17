@@ -9,13 +9,25 @@ FileData::FileData()
 
 bool FileData::readData(std::string fileName){
 
+    /*This function opens a file and reads it into three vectors for x, y, and p values.
+     * It is used for the inital data upload, and then the data is used for plotting the scatterplot
+     * and heatmaps.
+     */
+
+    //clears the three vectors in case they had been used before
+    xCoordinates.clear();
+    yCoordinates.clear();
+    pValues.clear();
+
+    //opens the file
     std::ifstream coordinates;
     coordinates.open(fileName);
 
-    if(coordinates.fail()){return false;};
+    if(coordinates.fail()){return false;}; //in case the file is not found
 
     std::string line = "";
 
+    //reads and parses the file datapoint by datapoint into the vectors
     while(getline(coordinates, line)){
         std::stringstream s(line);
 
@@ -45,13 +57,22 @@ bool FileData::readData(std::string fileName){
 }
 
 bool FileData::readGenes(std::string fileName){
+
+    /*This function opens a file and reads it into one vector with the names of the genes to analyze.
+     * It is used in the colocalization window, because the user will upload a file with the genes
+     * that they want to analyze. This function handles the parsing of that file.
+     */
+
+    genesToAnalyze.clear();
+
     std::ifstream genes;
     genes.open(fileName);
 
-    if(genes.fail()){return false;};
+    if(genes.fail()){return false;}; //in case the file is not found
 
     std::string line = "";
 
+    //reads and parses the file gene by gene into the vector
     while(getline(genes, line)){
         std::stringstream s(line);
 
