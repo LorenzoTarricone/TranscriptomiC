@@ -38,8 +38,8 @@ private:
     std::vector<double> x;
     std::vector<double> y;
 
-    //upload_matrix inputData; Uncomment to plot Colocalization
-    FileData inputData;
+    upload_matrix inputData;// Uncomment to plot Colocalization
+    //FileData inputData;
 
     bool readBoolean;
 };

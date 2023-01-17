@@ -34,12 +34,12 @@ void UploadWindow::close(){
     PointerMenuWindow = new MenuWindow(this);
 
     //uncomment for plotting colocalization
-    //PointerMenuWindow->setMatrix(inputData.getMatrix());
+    PointerMenuWindow->setMatrix(inputData.getMatrix());
 
     //sets the data biological process
-    PointerMenuWindow->setX(inputData.getX());
-    PointerMenuWindow->setY(inputData.getY());
-    PointerMenuWindow->setP(inputData.getP());
+    //PointerMenuWindow->setX(inputData.getX());
+    //PointerMenuWindow->setY(inputData.getY());
+    //PointerMenuWindow->setP(inputData.getP());
 
     PointerMenuWindow->show(); //shows menuwindow
 
@@ -70,8 +70,8 @@ void UploadWindow::on_UploadButton_clicked()
     filename = userText.toStdString(); //converts the file location to std::string
 
     //Uncomment for colocalization
-    //readBoolean = inputData.setData_Matrix(filename); //reads and parses the data, returns a boolean to check for sucessful upload
-    readBoolean = inputData.readData(filename);
+    readBoolean = inputData.setData_Matrix(filename); //reads and parses the data, returns a boolean to check for sucessful upload
+    //readBoolean = inputData.readData(filename);
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
         close(); //closes this window and opens the menu

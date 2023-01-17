@@ -45,9 +45,27 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
                        }
                    }
+              // Ticks
+              QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
+              ui->customPlot->xAxis->setTicker(textTickerx);
 
+              QSharedPointer<QCPAxisTickerText> textTickery(new QCPAxisTickerText);
+              ui->customPlot->yAxis->setTicker(textTickery);
 
-               // color scale:
+              for(int i = 0; i < number_cols; i++){
+                  textTickerx->addTick(i, "Bacteria");};
+
+              for(int j = 0; j< number_rows; j++){
+                  textTickery->addTick(j, "Bacteria");};
+
+              // tick strategy. readability is more important
+              textTickerx->setTickStepStrategy(QCPAxisTicker::tssReadability);
+              textTickerx->setTickCount(3);
+
+              textTickery->setTickStepStrategy(QCPAxisTicker::tssReadability);
+              textTickery->setTickCount(3);
+
+              // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
                ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
                colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right
@@ -59,7 +77,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                QCPColorGradient gradient; // empty gradient with no defined colour stops
                //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
                gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
-               gradient.setColorStopAt(1, QColor(255,255,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
+               gradient.setColorStopAt(1, QColor(255,100,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
                gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
                gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
