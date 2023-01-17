@@ -13,7 +13,7 @@ class colocalisation
 public:
     colocalisation(parsefile files, int rows = 0, int cols = 0);
     ~colocalisation();
-    void filter(bool zeroes = true, double min_expr_perc = 0.1);
+    void filter(bool zeroes = true, bool filterGenes = false, double min_expr_perc = 0.1);
     void normalisation(std::string type_of_normal = "col_mean");
     void addGeneList(std::string geneListPath);
     void test(bool def = true);

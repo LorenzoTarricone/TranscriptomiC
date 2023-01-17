@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -38,17 +38,18 @@ int main(int argc, char *argv[])
     matrix.addGeneList(geneSubsetFile);
 
     // filter
-    matrix.filter(true,0.001);
+    matrix.filter(true,false,0.001);
 
 
     // normalise data
-    matrix.normalisation();
+    //matrix.normalisation();
 
     // compute colocalisation matrix
-    matrix.compute();
+    //matrix.compute();
 
-    matrix.saveToFile(path+"colocalisation_object.csv");
+    //matrix.saveToFile(path+"colocalisation_object.csv");
 
+    std::cout << "[Progress] Everything done!" << std::endl;
 
     return 0;
 //    QApplication a(argc, argv);

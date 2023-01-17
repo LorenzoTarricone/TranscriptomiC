@@ -184,21 +184,33 @@ void printVector(std::vector<std::string> vec){
 
 
 // this function updates the geneIndexFinal map (dictonary) when a row is removed from the matrix
-void parsemtx::shiftGeneIndex(int row, int removed){
+void parsemtx::shiftGeneIndex(int row, int removed, bool filterGenes){
     // TODO: decide how to deal with row deletion and mapping
     // deal with element of the row to remove
     //std::string toRemove = all_names[row+removed];
     //geneIndex[toRemove] = -1;
     std::cout<<"shiftGeneIndex called"<<std::endl;
 
-    std::string toRemove = geneSubset[row];
-    geneIndexFinal[toRemove] = -1;
+    if(filterGenes){
+        std::string toRemove = geneSubset[row];
+        geneIndexFinal[toRemove] = -1;
 
-    // TODO: add error handeling
-    // for each element after the removed row, decrement index by 1
-    for(int i = row+1; i < geneSubset.size(); i++){
-        geneIndexFinal[geneSubset[i]] -= 1;
+        // TODO: add error handeling
+        // for each element after the removed row, decrement index by 1
+        for(int i = row+1; i < geneSubset.size(); i++){
+            geneIndexFinal[geneSubset[i]] -= 1;
+        }
+    }else{
+        std::string toRemove = all_names[row];
+        geneIndex[toRemove] = -1;
+
+        // TODO: add error handeling
+        // for each element after the removed row, decrement index by 1
+        for(int i = row+1; i < all_names.size(); i++){
+            geneIndex[all_names[i]] -= 1;
+        }
     }
+
 
     // since the all_names array is not changed by removing rows in the matrix,
     // the argument removed is necessary
@@ -227,10 +239,19 @@ void parsemtx::getRowNamesFromFile(std::string filename){
     }
 }
 
-// overloaded method to initiate gene index
+// overloaded method to initiate gene index without filtering by genes
 void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
-    initiateGeneIndex(geneList,geneList);
-    geneIndexFinal = geneIndex;
+    all_names = geneList;
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // visualize
+        std::cout << "Index: " << index << "\t Gene: "<< all_names[index] << std::endl;
+        // incremeent index
+        index++;
+    }
 }
 
 // function to initiate geneIndex
@@ -249,19 +270,33 @@ void parsemtx::initiateGeneIndex(std::vector<std::string> geneList, std::vector<
     }
 }
 
-void parsemtx::printGeneIndex(int rows){
+void parsemtx::printGeneIndex(int rows, bool filterGenes){
     int index = 0;
-    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
-    for(typename std::vector<std::string>::iterator i = geneSubset.begin(); i != geneSubset.end(); i++){
-        // only print entries in geneIndex that are relevant
-        if(geneIndexFinal[*i]!=-1 && geneIndexFinal[*i] < rows){
-            // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-            std::cout << "Index: " << this->geneIndexFinal[*i] << "\t Gene: "<< *i << std::endl;
-            // incremeent index
+    if(filterGenes){
+        // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+        for(typename std::vector<std::string>::iterator i = geneSubset.begin(); i != geneSubset.end(); i++){
+            // only print entries in geneIndex that are relevant
+            if(geneIndexFinal[*i]!=-1 && geneIndexFinal[*i] < rows){
+                // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+                std::cout << "Index: " << this->geneIndexFinal[*i] << "\t Gene: "<< *i << std::endl;
+                // incremeent index
 
+            }
+            index ++;
         }
-        index ++;
+    }else{
+        for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+            // only print entries in geneIndex that are relevant
+            if(geneIndex[*i]!=-1 && geneIndex[*i] < rows){
+                // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+                std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
+                // incremeent index
+
+            }
+            index ++;
+        }
     }
+
     std::cout << "Total: " << rows << " genes left" << std::endl;
     std::cout << "Total: " << index << " genes iterated" << std::endl;
     return;
@@ -274,7 +309,7 @@ void parsemtx::printGeneIndex(int rows){
 // TODO: decide whether object should directly filter private member sparse
 
 
-void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
+void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, bool filterGenes,double min_expr_perc){
     std::cout << "[Progress] Function filter_simple called ..." << std::endl;
     int s = expression.rows();
     int c = expression.cols();
@@ -304,11 +339,15 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min
 
     for(int i = 0;i<s;i++){
         if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
-            std::cout << "Remove row " << i << " or index "<<geneIndexFinal[geneSubset[i]] <<" corresponding to gene "<< geneSubset[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            if(filterGenes){
+                std::cout << "Remove row " << i << " or index "<<geneIndexFinal[geneSubset[i]] <<" corresponding to gene "<< geneSubset[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            }else{
+                std::cout << "Remove row " << i << " or index "<<geneIndex[all_names[i]] <<" corresponding to gene "<< all_names[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            }
             //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
             removeRow(expression, i-removed);
             //call function to adjust indices after removing row
-            shiftGeneIndex(i,removed);
+            shiftGeneIndex(i,removed, filterGenes);
             //printGeneIndex(s-removed);
             removed ++;
             std::cout<<"removed: "<< removed<<std::endl;

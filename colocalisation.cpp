@@ -62,7 +62,7 @@ void colocalisation::initialise(int rows, int cols){
 
 // this function takes a list of genes on which the analysis should be performed
 void colocalisation::addGeneList(std::string geneListPath){
-    filterGenes = true;
+    //filterGenes = true;
     geneSubset = listgene(geneListPath);
 }
 
@@ -70,7 +70,7 @@ void colocalisation::addGeneList(std::string geneListPath){
 //this function applies the filtering by gene names and then
 //filters out rows which either have only zeros (if zeroes==true)
 //or if their expression percentage is below min_expr_perc
-void colocalisation::filter(bool zeroes, double min_expr_perc){
+void colocalisation::filter(bool zeroes, bool filterGenes, double min_expr_perc){
     std::cout << "[Progress] Filtering data ..." << std::endl;
 //    std::cout << "Before filtering: " << std::endl;
 //    std::cout<<expression->block(0,0,10,10)<<std::endl;
@@ -86,6 +86,10 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
         //keep only desired genes
         std::cout << "[Progress] Filtering data for desired genes ..." << std::endl;
 
+        std::cout << "[Progress] Initializing gene index ..." << std::endl;
+
+        expression_raw.initiateGeneIndex(geneNames,geneSubset);
+
         *expression=expression_raw.filterByGenes(*expression, geneSubset);
 
         std::cout << "[Progress] Filtering by genes finished"<<std::endl;
@@ -95,6 +99,7 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
     }
     else{
         // initialize gene index
+        std::cout << "[Progress] Filtering without gene list ..." << std::endl;
         std::cout << "[Progress] Initializing gene index ..." << std::endl;
         expression_raw.initiateGeneIndex(geneNames);
     }
@@ -102,7 +107,7 @@ void colocalisation::filter(bool zeroes, double min_expr_perc){
 
     //filter out sparse rows from the ones we kept before
     std::cout << "[Progress] Filtering sparse rows ..." << std::endl;
-    expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
+    expression_raw.filter_simple(*expression,zeroes,filterGenes,min_expr_perc);
 //    delete temp;
     std::cout << "After filtering: " << std::endl;
     std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
