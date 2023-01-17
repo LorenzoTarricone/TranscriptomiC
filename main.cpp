@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-    colocalisation matrix = colocalisation(files,700,700);
+    computation matrix = computation(files,700,700);
     //crop data
 //    matrix.setMatrixBlocks(100,100);
 
@@ -35,12 +35,12 @@ int main(int argc, char *argv[])
 //    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
     // add gene subset file
-//    matrix.addGeneList(geneSubsetFile);
+    matrix.addGeneList(geneSubsetFile);
 
     // TODO set linkage parameters!!!
 
     // filter
-    matrix.filter(true,false,0.001);
+    matrix.filter(true,true,0.001);
 
 
     // normalise data
