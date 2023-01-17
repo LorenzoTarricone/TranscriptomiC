@@ -15,6 +15,7 @@ HEADERS += \
     #Back-End
     #genename.h \
     #parsemtx.h \
+    api_bio_pro_to_gene.h \
     filedata.h \
     #matrixeigen.h \
     #SparseMatrix.h \
@@ -31,6 +32,7 @@ HEADERS += \
 >>>>>>> Stashed changes
 SOURCES += \
     api.cpp \
+    api_bio_pro_to_gene.cpp \
     api_gene_name.cpp \
     bioprocesswindow.cpp \
     colocalizationwindow.cpp \

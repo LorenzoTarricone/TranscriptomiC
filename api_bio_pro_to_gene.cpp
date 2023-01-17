@@ -1,8 +1,7 @@
-/*Take a file.txt (list of specific gene he wants to study from a researcher) and a file.tsv (gene present in the matrix table)
- * and returns a set with all the different possible names of these genes that are also present in the matrix table
- */
-
-#include "api_gene_name.h"
+/*Take a file.txt (list of genes linked to a specific biopro)+ file.tsv (list of genes in matrix table)
+ * and returns the names that are in both (after calling an API to have all the different names of the genes)
+ **/
+#include "api_bio_pro_to_gene.h"
 #include "readgenetxt.h"
 #include "only_gene_name.h"
 #include "read_tsv_set.h"
@@ -17,19 +16,21 @@
 #include <algorithm>
 #include <fstream>
 #include <QJsonDocument>
-#include <stdio.h>
-api_gene_name::api_gene_name()
+#include <set>
+
+api_bio_pro_to_gene::api_bio_pro_to_gene()
 {
 
 }
 
-std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNameFile, std::string geneSubsetFile){
+std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::string geneNameFile, std::string geneBioProFile){
 
-    //first we open the set of the genes the researcher is interested and call the
-    //API on each gene to find all their different names
+    //First we read the txt file with the gene name for a particular biologicl process
+    //And we take all the name of these genes
+
     readgenetxt vec;
     std::vector<std::string> res;
-    res=vec.listgene(geneSubsetFile); //list of all the genes in the txt file
+    res=vec.listgene_bio_pro(geneNameFile,500); //list of all the genes in the txt file, here 500 bc I want to test with only 500 genes linked to the biological process
     std::cout<<"[";
     for (const std::string& i : res) {
         std::cout << i<<" ";
@@ -41,7 +42,6 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
         std::string search=res[i];
         qDebug() << QString::fromStdString(search);
         std::string l;
-
         //API call
 
         QMap<QString, QString> params;
@@ -65,12 +65,13 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
             std::cout << str << ' ';
           }
         std::cout<<"}";
+
     }
 
     //Now let us create the set of all the gene of the matrix file
     read_tsv_set test2;
     std::set<std::string> string_set_gene_matrix;
-    string_set_gene_matrix=test2.read_tsv(geneNameFile);
+    string_set_gene_matrix=test2.read_tsv(geneBioProFile);
 
     //Now we take the intersection of the 2 sets, to keep only the genes we are interrested in
     intersection_sets test3;
@@ -79,6 +80,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
 
     //now we remove the sets and vectors we don't use anymore to free memory
     res.~vector();
+    small_set.~set();
     final_set.~set();
     string_set_gene_matrix.~set();
 
@@ -89,7 +91,5 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     //return a vector instead of a set since the backend team was working with a set
     std::vector<string> v(intersection_set.begin(), intersection_set.end());
 
-    return v;
-}
-
+    return v;}
 
