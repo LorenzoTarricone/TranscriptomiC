@@ -4,18 +4,18 @@
 #include <iostream>
 #include <string.h>
 #include <set>
-using namespace std;
+
 
 class Genename
 {
 private:
-    string true_list;
-    set<string> res;
+    std::string true_list;
+    std::set<std::string> res;
 public:
     Genename();
-    int isSubstring(string s1, string s2);
-    set<string> listgene(string l, string search);
-    void printset(set<string> result);
+    int isSubstring(std::string s1, std::string s2);
+    std::set<std::string> listgene(std::string l, std::string search);
+    void printset(std::set<std::string> result);
 };
 
 #endif // GENENAME_H

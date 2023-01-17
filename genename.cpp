@@ -37,15 +37,8 @@ int main(){
 #include <vector>
 #include <algorithm>
 #include <set>
-using namespace std;
-
-using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::vector; using std::istringstream;
-using std::stringstream;
 
 
-using namespace std;
 
 
 Genename::Genename()
@@ -53,7 +46,7 @@ Genename::Genename()
 
 }
 
-int Genename::isSubstring(string s1, string s2)
+int Genename::isSubstring(std::string s1, std::string s2)
 {
     int M = s1.length();
     int N = s2.length();
@@ -72,15 +65,15 @@ int Genename::isSubstring(string s1, string s2)
     return -1;
 }
 
-set<string> Genename::listgene(string l, string search){
+std::set<std::string> Genename::listgene(std::string l, std::string search){
     int o=0; //nb of [
     int c=0; //nb of ]
-    string len;
-    string v;
-    string index;
-    string name;
-    string list;
-    string true_list;
+    std::string len;
+    std::string v;
+    std::string index;
+    std::string name;
+    std::string list;
+    std::string true_list;
     int j;
 
     for (int i=0;i<l.length();i++){
@@ -102,9 +95,9 @@ set<string> Genename::listgene(string l, string search){
             name+=v;
         }
     }
-    cout<<'\n';
-    cout<<len<<'\n'<<'\n';
-    cout<<index<<'\n'<<'\n';
+    std::cout<<'\n';
+    std::cout<<len<<'\n'<<'\n';
+    std::cout<<index<<'\n'<<'\n';
 
     o=0;
     c=0;
@@ -121,10 +114,10 @@ set<string> Genename::listgene(string l, string search){
         }
 
         else if (c==o) {
-            cout<<list<<'\n';
+            std::cout<<list<<'\n';
             int res = isSubstring(search,list);
             if (res !=-1){
-                cout<<"Found"<<'\n';
+                std::cout<<"Found"<<'\n';
                 true_list=list;
             }
             list="";
@@ -132,9 +125,9 @@ set<string> Genename::listgene(string l, string search){
 
     }
 
-    string value;
-    set<string> res;
-    string val;
+    std::string value;
+    std::set<std::string> res;
+    std::string val;
     for (int i=0; i<true_list.length();i++){
         value=true_list[i];
         if (value==","){
@@ -151,13 +144,13 @@ set<string> Genename::listgene(string l, string search){
     return res;}
 
 
-void Genename::printset(set<string> result){
-    cout<<'\n'<<"Set is: { ";
+void Genename::printset(std::set<std::string> result){
+    std::cout<<'\n'<<"Set is: { ";
     for(auto& str: result)
       {
         std::cout << str << ' ';
       }
-    cout<<"}";
+    std::cout<<"}";
 }
 
 
