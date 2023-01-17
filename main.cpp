@@ -1,12 +1,13 @@
 
-#include "UploadWindow.h"
-//#include "mainwindow.h"
-#include "parsemtx.h"
-#include "parsetxtbeams.h"
-#include "matrixeigen.h"
-#include "colocalization_matrix.h"
-#include "parsing.h"
+//#include "UploadWindow.h"
+////#include "mainwindow.h"
+//#include "parsemtx.h"
+//#include "parsetxtbeams.h"
+//#include "matrixeigen.h"
+//#include "colocalization_matrix.h"
+//#include "parsing.h"
 #include "colocalisation.h"
+#include "biologicalprocess.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -27,7 +28,11 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-    colocalisation matrix = colocalisation(files,700,700);
+//    colocalisation matrix = colocalisation(files,700,700);
+
+    // create biological process object
+    biologicalprocess bp = biologicalprocess(files,100,100);
+
     //crop data
 //    matrix.setMatrixBlocks(100,100);
 
@@ -40,16 +45,22 @@ int main(int argc, char *argv[])
     // TODO set linkage parameters!!!
 
     // filter
-    matrix.filter(true,0.001);
+//    matrix.filter(true,0.001);
+    bp.filter(true,0.001);
 
 
     // normalise data
-    matrix.normalisation();
+//    matrix.normalisation();
+    bp.normalisation();
 
-    // compute colocalisation matrix
-    matrix.compute();
+    // compute total expression
+    bp.compute_tot_expr();
 
-    matrix.saveToFile(path+"colocalisation_object.csv");
+
+//    // compute colocalisation matrix
+//    matrix.compute();
+
+//    matrix.saveToFile(path+"colocalisation_object.csv");
 
 
     return 0;
