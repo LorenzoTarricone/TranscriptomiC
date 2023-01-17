@@ -70,7 +70,7 @@ colocalisation::~colocalisation(){
 ////this function applies the filtering by gene names and then
 ////filters out rows which either have only zeros (if zeroes==true)
 ////or if their expression percentage is below min_expr_perc
-//void colocalisation::filter(bool zeroes, double min_expr_perc){
+//void colocalisation::filter(bool zeroes, bool filterGenes, double min_expr_perc){
 //    std::cout << "[Progress] Filtering data ..." << std::endl;
 ////    std::cout << "Before filtering: " << std::endl;
 ////    std::cout<<expression->block(0,0,10,10)<<std::endl;
@@ -180,7 +180,6 @@ colocalisation::~colocalisation(){
 
 //    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
 //    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
-
 
 
 //    def = false;

@@ -33,6 +33,9 @@ int main(int argc, char *argv[])
     // create biological process object
     biologicalprocess bp = biologicalprocess(files,100,100);
 
+
+    computation matrix = computation(files,700,700);
+
     //crop data
 //    matrix.setMatrixBlocks(100,100);
 
@@ -40,13 +43,14 @@ int main(int argc, char *argv[])
 //    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
     // add gene subset file
-//    matrix.addGeneList(geneSubsetFile);
+    matrix.addGeneList(geneSubsetFile);
 
     // TODO set linkage parameters!!!
 
     // filter
-//    matrix.filter(true,0.001);
-    bp.filter(true,0.001);
+//    matrix.filter(true,true,0.001);
+    // TODO - let bp computation handle filtering
+    bp.filter(true,false,0.001);
 
 
     // normalise data
@@ -62,6 +66,8 @@ int main(int argc, char *argv[])
 
 //    matrix.saveToFile(path+"colocalisation_object.csv");
 
+
+    std::cout << "[Progress] Everything done!" << std::endl;
 
     return 0;
 //    QApplication a(argc, argv);
