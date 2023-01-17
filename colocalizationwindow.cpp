@@ -65,7 +65,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
                colorMap->setGradient(gradient);//assign it to the heatmap */
 
-               colorMap->setGradient(QCPColorGradient::gpPolar);
+               colorMap->setGradient(QCPColorGradient::gpJet);
 
                //Uncomment for ColourMap without interpolation
                colorMap->setInterpolate(false);
