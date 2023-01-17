@@ -24,9 +24,10 @@ private:
 
 //    Eigen::MatrixXd A_spatial;
     Eigen::MatrixXd total_expression;
+    Eigen::MatrixXd perc_expression;
 //    Eigen::MatrixXd* expression;
 
-    Eigen::MatrixXd compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial);
+    Eigen::MatrixXd compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial,bool perc=false);
 
 
 };

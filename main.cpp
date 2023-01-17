@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset.tsv";
 
     // initialize parse file object
     parsefile files = parsefile();
@@ -28,43 +28,43 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-//    colocalisation matrix = colocalisation(files,700,700);
+    colocalisation matrix = colocalisation(files,700,700);
 
     // create biological process object
-    biologicalprocess bp = biologicalprocess(files,100,100);
+//    biologicalprocess bp = biologicalprocess(files,100,700);
 
 
-    computation matrix = computation(files,700,700);
+//    computation matrix = computation(files,700,700);
 
-    //crop data
-//    matrix.setMatrixBlocks(100,100);
 
-//    // read files
-//    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
-    // add gene subset file
+//    // add gene subset file
+//    std::cout << "[Progress] Adding gene subset file..." << std::endl;
     matrix.addGeneList(geneSubsetFile);
+//    bp.addGeneList(geneSubsetFile);
+
+//    std::cout << "[Progress] Adding gene subset file successful!" << std::endl;
 
     // TODO set linkage parameters!!!
 
     // filter
-//    matrix.filter(true,true,0.001);
+    matrix.filter(true,true,0.001);
     // TODO - let bp computation handle filtering
-    bp.filter(true,false,0.001);
+//    bp.filter(true,false,0.001);
 
 
     // normalise data
-//    matrix.normalisation();
-    bp.normalisation();
+    matrix.normalisation();
+
 
     // compute total expression
-    bp.compute_tot_expr();
+//    bp.compute_tot_expr();
 
 
-//    // compute colocalisation matrix
-//    matrix.compute();
+    // compute colocalisation matrix
+    matrix.compute();
 
-//    matrix.saveToFile(path+"colocalisation_object.csv");
+    matrix.saveToFile(path+"colocalisation_object.csv");
 
 
     std::cout << "[Progress] Everything done!" << std::endl;

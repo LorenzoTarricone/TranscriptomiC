@@ -1,6 +1,6 @@
 #include "biologicalprocess.h"
 
-Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial){
+Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial, bool perc){
     std::cout << "[Progress] Calling total expression function ... "<<std::endl;
     int rows = expression.rows();
     int cols = expression.cols();
@@ -23,7 +23,10 @@ Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixX
         for(int i = 0; i < expression.rows(); i++){
             tot(j,0) = spatial(j,0);
             tot(j,1) = spatial(j,1);
-            tot(j,2) += expression(i,j);
+            if(perc){
+                tot(j,2) += expression(i,j)/total_expression(j,2);
+            }
+
         }
     }
 
@@ -37,15 +40,15 @@ Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixX
 
 void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Computing total expression ... "<<std::endl;
-
     total_expression = compute_total_expression(*expression,A_spatial);
 
-    for(int j = 0; j < total_expression.cols(); j++){
-        for(int i = 0; i < total_expression.rows(); i++){
-            std::cout << total_expression(i,j) << "\t";
-        }
-        std::cout << std::endl;
-    }
+    std::cout << "[Progress] Filter by genes ... "<<std::endl;
+    filter(false,true);
+    std::cout << "[Progress] Filter by genes done. "<<std::endl;
+
+    std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
+    perc_expression = compute_total_expression(*expression,A_spatial,true);
+
 
 
 }

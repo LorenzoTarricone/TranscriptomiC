@@ -314,6 +314,11 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, bool filte
     int s = expression.rows();
     int c = expression.cols();
 
+    // to avoid double filtering in bp
+    if(!zeroes){
+        return;
+    }
+
 
     int count[s];
     for(int i = 0;i<s;i++){
