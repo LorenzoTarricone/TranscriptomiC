@@ -47,9 +47,20 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                    }
               // Ticks
               QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
+
+              // tick strategy. readability is more important
+              textTickerx->setTickStepStrategy(QCPAxisTicker::tssReadability);
+              textTickerx->setTickCount(3);
+
+              //set x-axis ticker
               ui->customPlot->xAxis->setTicker(textTickerx);
 
               QSharedPointer<QCPAxisTickerText> textTickery(new QCPAxisTickerText);
+              // tick strategy. readability is more important
+              textTickery->setTickStepStrategy(QCPAxisTicker::tssReadability);
+              textTickery->setTickCount(3);
+
+              //set y-axis ticker
               ui->customPlot->yAxis->setTicker(textTickery);
 
               for(int i = 0; i < number_cols; i++){
@@ -57,13 +68,6 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
               for(int j = 0; j< number_rows; j++){
                   textTickery->addTick(j, "Bacteria");};
-
-              // tick strategy. readability is more important
-              textTickerx->setTickStepStrategy(QCPAxisTicker::tssReadability);
-              textTickerx->setTickCount(3);
-
-              textTickery->setTickStepStrategy(QCPAxisTicker::tssReadability);
-              textTickery->setTickCount(3);
 
               // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
