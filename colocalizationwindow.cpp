@@ -77,6 +77,19 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     pParameter = ui->pParamText->toPlainText().toDouble();
     MParameter = ui->MParamText->toPlainText().toDouble();
 
+    bool checker = true;
+    qDebug() <<"this is p" << p;
+
+    if(p.length() == 1){
+        for(int i = 0; i <= 5; i++){
+            if(p == QString::number(i)){
+                checker = false;
+                break;
+            }
+        }
+    }
+
+
     if( (MParameter<10 || MParameter >10000) && (pParameter<0 || pParameter >5)){
         QMessageBox::information(this, "Error", "Invalid value for p and M parameters", QMessageBox::Ok);
 
@@ -85,11 +98,13 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
         QMessageBox::information(this, "Error", "Invalid value for M parameter", QMessageBox::Ok);
 
     }
-    else if(pParameter<0 || pParameter >5 || p.length()>1){
+    else if(pParameter<0 || pParameter >5 || checker){
         QMessageBox::information(this, "Error", "Invalid value for p parameter", QMessageBox::Ok);
 
     }
     else{
+
+        //setLinkageParameters(pParameter, MParameter)
         heatmapWindow->setX(this->getX());
         heatmapWindow->setY(this->getY());
         heatmapWindow->setP(this->getP());
