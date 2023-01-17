@@ -1,6 +1,7 @@
 /*Take a file.txt (list of specific gene he wants to study from a researcher) and a file.tsv (gene present in the matrix table)
  * and returns a set with all the different possible names of these genes that are also present in the matrix table
  */
+
 #include "api_gene_name.h"
 #include "readgenetxt.h"
 #include "only_gene_name.h"
@@ -24,8 +25,8 @@ api_gene_name::api_gene_name()
 
 std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNameFile, std::string geneSubsetFile){
 
-    std::string txt_gene="/Users/nicolas/Documents/TranscriptomiC/list_gene.txt"; //txt file with gene names separated with spaces, tabs or lines
-    std::string line;
+    //first we open the set of the genes the researcher is interested and call the
+    //API on each gene to find all their different names
     readgenetxt vec;
     std::vector<std::string> res;
     res=vec.listgene(geneSubsetFile); //list of all the genes in the txt file
@@ -40,6 +41,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
         std::string search=res[i];
         qDebug() << QString::fromStdString(search);
         std::string l;
+
         //API call
 
         QMap<QString, QString> params;
@@ -75,7 +77,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     std::set<std::string> intersection_set;
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
-
+    //now we remove the sets and vectors we don't use anymore to free memory
     res.~vector();
     final_set.~set();
     string_set_gene_matrix.~set();
@@ -83,9 +85,13 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     for (std::string x : intersection_set) {
         std::cout << x << " ";
     }
+
+    //return a vector instead of a set since the backend team was working with a set
     std::vector<string> v(intersection_set.begin(), intersection_set.end());
 
     return v;
 }
+
+
 
 
