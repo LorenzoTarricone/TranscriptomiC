@@ -35,16 +35,42 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                colorMap->data()->setSize(number_cols, number_rows);
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
+               //Quantile
+               double median = 0;
+               double q1 = 0;
+               double q3 = 0;
+               double eta = 0.005;
+
+               for(int i= 0; i<number_cols; i++){
+                   for (int j = 0; j<number_rows; j++){
+                      median += eta *std::copysign(1.0f,m(i,j) - median);
+                   }
+               }
+               for(int i= 0; i<number_cols; i++){
+                   for (int j = 0; j<number_rows; j++){
+                       if(m(i,j) < median)
+                           q1 += eta*std::copysign(1.0f,m(i,j) - q1);
+                       else
+                           q3 += eta*std::copysign(1.0f,m(i,j) - q3);
+                   }
+               }
+               std::cout << median;
+               std::cout << q1;
+               std::cout << q3;
+
+
+
                // now we assign some data, by accessing the QCPColorMapData instance of the color map:
 
                for(int i = 0; i < number_cols; i++){
                    for(int j = 0; j< number_rows; j++){
-                       if(m(i,j)<3 && m(i,j)>-3){
-                           colorMap->data()->setCell(i, j, m(i,j));} // plot only data between -3 and 3
+                       if(m(i,j)>q1 && m(i,j)<q3){
+                           colorMap->data()->setCell(i, j, m(i,j));} // plot only data between -3 and 3 here we want quantile
                        else{colorMap->data()->setCell(i, j, 0);}
 
                        }
                    }
+
               // Ticks
               QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
 
