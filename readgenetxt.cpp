@@ -1,47 +1,4 @@
-/*
- * #include "readgenetxt.h"
-
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <iterator>
-#include <vector>
-#include <algorithm>
-#include <fstream>
-
-using namespace std;
-
-//read gene txt
-int main(){
-    string txt_gene="list_gene.txt";
-
-    readgenetxt vec;
-    vector<string> res;
-    res=vec.listgene(txt_gene);
-    cout<<"[";
-    for (const string& i : res) {
-        cout << i<<" ";
-      }
-    cout<<"]";
-    return 0;}
-
-//read gene of bio process
-
-int main(){
-    string txt_gene="D:\\CLEMENCE\\C++ project\\build-transcriptomics_development-Desktop_Qt_6_2_4_MinGW_64_bit-Debug\\list_gene_bio_process_mitochondrion_inheritance.txt";
-
-    readgenetxt vec;
-    vector<string> res;
-    int nb_gene=100; //normally the right value will be 500
-    res=vec.listgene_bio_pro(txt_gene,nb_gene);
-    cout<<"[";
-    for (const string& i : res) {
-        cout << i<<" ";
-      }
-    cout<<"]";
-    return 0;}
-
-*/
+//read the input_gene.txt file and store names in a vector of strings 
 
 #include "readgenetxt.h"
 
@@ -122,6 +79,52 @@ std::vector<std::string> readgenetxt::listgene_bio_pro(std::string filename, int
     file.close();
     return list;
 }
+
+ /* to test it in main
+ 
+#include "readgenetxt.h"
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <iterator>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+
+using namespace std;
+
+//read gene txt
+int main(){
+    string txt_gene="list_gene.txt";
+
+    readgenetxt vec;
+    vector<string> res;
+    res=vec.listgene(txt_gene);
+    cout<<"[";
+    for (const string& i : res) {
+        cout << i<<" ";
+      }
+    cout<<"]";
+    return 0;}
+
+//read gene of bio process
+
+int main(){
+    string txt_gene="D:\\CLEMENCE\\C++ project\\build-transcriptomics_development-Desktop_Qt_6_2_4_MinGW_64_bit-Debug\\list_gene_bio_process_mitochondrion_inheritance.txt";
+
+    readgenetxt vec;
+    vector<string> res;
+    int nb_gene=100; //normally the right value will be 500
+    res=vec.listgene_bio_pro(txt_gene,nb_gene);
+    cout<<"[";
+    for (const string& i : res) {
+        cout << i<<" ";
+      }
+    cout<<"]";
+    return 0;}
+
+*/
 
 
 
