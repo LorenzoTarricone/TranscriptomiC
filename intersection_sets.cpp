@@ -1,22 +1,4 @@
-/*#include <iostream>
-#include <set>
-#include "intersection_sets.h"
-using namespace std;
-
-
-int main() {
-    set<string> set1 = {"je","h", "j"};
-    set<string> set2 = {"h", "k", "je"};
-    Intersection_sets test;
-    set<string> intersection_set;
-    intersection_set = test.set_intersection(set1, set2);
-    for (string x : intersection_set) {
-        cout << x << " ";
-    }
-    return 0;
-}
-
-*/
+//take intersection of 2 sets of strings
 
 #include "intersection_sets.h"
 #include <iostream>
@@ -38,3 +20,24 @@ std::set<std::string> intersection_sets::set_intersection(std::set<std::string> 
     return result;
 }
 
+
+/*main to test 
+#include <iostream>
+#include <set>
+#include "intersection_sets.h"
+using namespace std;
+
+
+int main() {
+    set<string> set1 = {"je","h", "j"};
+    set<string> set2 = {"h", "k", "je"};
+    Intersection_sets test;
+    set<string> intersection_set;
+    intersection_set = test.set_intersection(set1, set2);
+    for (string x : intersection_set) {
+        cout << x << " ";
+    }
+    return 0;
+}
+
+*/
