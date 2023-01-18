@@ -3,6 +3,10 @@
 
 #include "heatmapwindow.h"
 #include <QDialog>
+#include <Eigen/Eigen>
+/*Includes Dense and Sparse header files (the whole Eigen library)*/
+using Eigen::MatrixXd;
+using namespace std;
 
 namespace Ui {
 class bioprocesswindow;
@@ -17,7 +21,6 @@ public:
     ~bioprocesswindow();
 
     void makeHeatMap();
-
     void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
     void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
     void setP(const QVector<double>& givenP) {pValues = givenP;};
@@ -28,6 +31,8 @@ public:
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
+
+
 
 signals:
     void MenuWindow();
