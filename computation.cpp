@@ -61,7 +61,7 @@ void computation::filter_simple(bool zeroes, double min_expr_perc){
 
     //filter out sparse rows from the ones we kept before
     std::cout << "[Progress] Filtering sparse rows ..." << std::endl;
-    expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
+    *expression=expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
     std::cout << "After filtering: " << std::endl;
     std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;

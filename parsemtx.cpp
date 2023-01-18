@@ -271,7 +271,7 @@ void parsemtx::printGeneIndex(int rows){
 // TODO: decide whether object should directly filter private member sparse
 
 
-void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
+void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Function filter_simple called ..." << std::endl;
     int s = expression.rows();
     int c = expression.cols();
@@ -319,12 +319,78 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min
             temp.push_back(currentGenes[i]);
         }
     }
-    printGeneIndex(s-removed);
     currentGenes=temp;
+    printGeneIndex(s-removed);
 
     std::cout << "Expression matrix = " << std::endl;
     std::cout<<expression.block(0,0,std::min(10,s-removed),10)<<std::endl;
 
+}
+
+//faster implementation of simple filtering with respect to filter_simple_old.
+
+Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
+    std::cout << "[Progress] Function filter_simple_test called ..." << std::endl;
+    int s = expression.rows();
+    int c = expression.cols();
+
+    // to avoid double filtering in bp
+    if(!zeroes){
+        return expression;
+    }
+
+
+    int count[s];
+    for(int i = 0;i<s;i++){
+        count[i] = 0;
+    }
+
+    // dense matrix stored in column major
+    for(int j = 0; j < expression.cols();j++){
+        for(int i = 0; i<expression.rows();i++){
+            count[i] += (expression(i,j)>0);
+        }
+    }
+
+//    std::cout << "[";
+//    for(int i = 0; i < s-1; i++){
+//        std::cout << count[i] << ",";
+//    }
+//    std::cout << count[s-1] << "]" << std::endl;
+
+    //
+    Eigen::MatrixXd filtered_expression(s, c);
+    std::vector<std::string> temp;
+    int index=0;
+    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
+
+
+    for(int i = 0;i<s;i++){
+        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
+            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            //resize matrix if we remove a row
+            filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+            this->geneIndex[currentGenes[i]]=-1;
+            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
+            //removeRow(expression, i-removed);
+            //call function to adjust indices after removing row
+            //shiftGeneIndex(i);
+            removed ++;
+            std::cout<<"removed: "<< removed<<std::endl;
+        }else{
+            filtered_expression.row(index)=expression.row(i);
+            this->geneIndex[currentGenes[i]]=index;
+            temp.push_back(currentGenes[i]);
+            index++;
+        }
+    }
+    currentGenes=temp;
+    printGeneIndex(s-removed);
+
+    std::cout << "Expression matrix = " << std::endl;
+    std::cout<<expression.block(0,0,std::min(10,s-removed),10)<<std::endl;
+
+    return filtered_expression;
 }
 
 //given the dense expression matrix and a vector of strings containing all the genes we want to keep
