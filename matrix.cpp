@@ -1,3 +1,6 @@
+//Take either the input_matrix or input_coordinates file, in txt or csv form, 
+//and convert the values inside the file into a matrix object (with only the integers value) 
+
 #include "matrix.h"
 #include <stdio.h>
 #include <iostream>
