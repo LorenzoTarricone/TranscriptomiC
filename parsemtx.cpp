@@ -391,7 +391,9 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
         if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
             std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
             //resize matrix if we remove a row
-            filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+            //filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+            Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
+            filtered_expression=temp_matrix;
             this->geneIndex[currentGenes[i]]=-1;
             //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
             //removeRow(expression, i-removed);
