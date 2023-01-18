@@ -62,6 +62,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                //95 percent confidence level
                //get data size
                int data_size = number_cols * number_rows;
+
                //calculate mean
                double mean = 0.0;
                for(int i= 0; i<number_cols; i++){
@@ -80,11 +81,16 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                    }
                }
 
+
+               //standart error
                sd = sqrt(sd/(data_size));
 
                //calculate 95% confidence interval
-               double  n = sqrt(data_size);
-               double ci = 1.96 * (sd/n);
+               //double  n = sqrt(data_size);
+               //double ci = 1.96 * (sd/n); // maybe 2
+
+               //margin of error
+               double ci = 2* sd;
 
                double q1 = mean-ci;
                double q3 = mean+ci;
