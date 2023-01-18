@@ -86,17 +86,22 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
               textTickery->setTickOrigin(0);// sets origin (not necessary)
               textTickery->setTickCount(4);
 
-              //set x-axis ticker
-              ui->customPlot->xAxis->setTicker(textTickerx);
-
-              //set y-axis ticker
-              ui->customPlot->yAxis->setTicker(textTickery);
-
+              //assing the labels
+              //textTickerx->setTicks(const QVector<double> &positions, const QVector<QString> &labels);
+              //textTickery->setTicks(const QVector<double> &positions, const QVector<QString> &labels);
               for(int i = 0; i < number_cols; i++){
                   textTickerx->addTick(i, "Bacteria");};
 
               for(int j = 0; j< number_rows; j++){
                   textTickery->addTick(j, "Bacteria");};
+
+
+
+              //set x-axis ticker
+              ui->customPlot->xAxis->setTicker(textTickerx);
+
+              //set y-axis ticker
+              ui->customPlot->yAxis->setTicker(textTickery);
 
               // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
