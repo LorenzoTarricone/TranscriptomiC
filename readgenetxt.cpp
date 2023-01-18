@@ -1,4 +1,5 @@
 //read the input_gene.txt file and store names in a vector of strings 
+//read the bio_pro_gene.txt file that the researcher will upload and only select the first x genes (x is a parameter) in the file and store them in a vector of strings
 
 #include "readgenetxt.h"
 
@@ -17,7 +18,7 @@ readgenetxt::readgenetxt()
     std::vector<std::string> list;
 }
 
-
+//read the input_gene.txt file and store names in a vector of strings 
 std::vector<std::string> readgenetxt::listgene(std::string filename){
     std::vector<std::string> list;
     std::ifstream file;
@@ -45,7 +46,7 @@ std::vector<std::string> readgenetxt::listgene(std::string filename){
 }
 
 
-
+//read the bio_pro_gene.txt file that the researcher will upload and only select the first x genes in the file and store them in a vector of strings
 std::vector<std::string> readgenetxt::listgene_bio_pro(std::string filename, int nb_gene){
     std::vector<std::string> list;
     std::ifstream file;
