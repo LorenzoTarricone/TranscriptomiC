@@ -240,6 +240,28 @@ void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
     }
 }
 
+// function to initiate geneIndex when cropping matrix
+void parsemtx::initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop){
+    all_names=geneList;
+    currentGenes = std::vector<std::string>(all_names.begin(), all_names.begin()+row_crop);
+    int index = 0;
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = currentGenes.begin(); i != currentGenes.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // visualize
+        std::cout << "Index: " << index << "\t Gene: "<< currentGenes[index] << std::endl;
+        // incremeent index
+        index++;
+    }
+    for(typename std::vector<std::string>::iterator i = all_names.begin()+row_crop+1; i != all_names.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = -1;
+        // visualize
+        std::cout << "Index: -1 for cropped Gene: "<< *i << std::endl;
+    }
+}
+
 // function to initiate geneSubset
 void parsemtx::initiateGeneSubset(std::vector<std::string> geneListSubset){
     geneSubset = geneListSubset;
@@ -324,8 +346,6 @@ void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double
     currentGenes=temp;
     printGeneIndex(s-removed);
 
-    std::cout << "Expression matrix = " << std::endl;
-    std::cout<<expression.block(0,0,std::min(10,s-removed),10)<<std::endl;
 
 }
 
@@ -389,9 +409,6 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
     currentGenes=temp;
     printGeneIndex(s-removed);
 
-    std::cout << "Expression matrix = " << std::endl;
-    std::cout<<expression.block(0,0,std::min(10,s-removed),10)<<std::endl;
-
     return filtered_expression;
 }
 
@@ -411,15 +428,20 @@ Eigen::MatrixXd parsemtx::filterByGenes(const Eigen::MatrixXd &expression, std::
     try {
         for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
             row = geneIndex[*i];
+            std::cout << "[Progress] Inside loop: gene " <<*i<<" with row number "<<row<< std::endl;
             //check if gene was filtered out previously: if not, include it
-            if(row!=-1){
+            if(row==-1){
+                std::cout << "Removing gene "<<*i << std::endl;
+                //resize array if one of the genes was filtered out previously
+                Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
+                filtered_expression=temp_matrix;
+                std::cout << "Removed "<<*i << std::endl;
+            }else{
+                std::cout << "Keeping gene"<<*i << std::endl;
                 filtered_expression.row(index)=expression.row(row);
                 this->geneIndex[*i]=index;
                 temp.push_back(*i);
                 index++;
-            }else{
-                //resize array if one of the genes was filtered out previously
-                filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
             }
         }
     } catch (...) {

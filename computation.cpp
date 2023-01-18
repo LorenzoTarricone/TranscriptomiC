@@ -16,8 +16,6 @@ void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
     // parsefile object
     // set default cropping to dimensions of the matrix
-    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
-    A_spatial = spatial.convertToMatrix();
 
     std::cout << "[Progress] Extracting expression matrix ..." << std::endl;
     expression = new Eigen::MatrixXd;
@@ -35,7 +33,7 @@ void computation::initialise(int rows, int cols){
         return;
     }
     else if(rows <= 0){
-        block_rows = expression_raw.getRows();
+        block_rows = expression_raw.getRows()-1;
         block_cols = cols;
         std::cout << "Considering all rows of the expression matrix" << std::endl;
 
@@ -43,15 +41,13 @@ void computation::initialise(int rows, int cols){
     }
     else if(cols <= 0){
         block_rows = rows;
-        block_cols = expression_raw.getCols();
+        block_cols = expression_raw.getCols()-1;
         std::cout << "Considering all columns of the expression matrix" << std::endl;
 
     }
     else{
         block_rows = rows;
         block_cols = cols;
-
-
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
@@ -65,8 +61,9 @@ void computation::initialise(int rows, int cols){
 
 
 
-//    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
-//    expression_raw.initiateGeneIndex(geneNames);
+    std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
+
+    expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
 }
 
 void computation::filter_simple(bool zeroes, double min_expr_perc){
@@ -76,11 +73,6 @@ void computation::filter_simple(bool zeroes, double min_expr_perc){
     std::cout << "expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 
-    // initialize gene index if not initiated
-    if (expression_raw.geneIndexEmpty()){
-        std::cout << "[Progress] Initializing gene index ..." << std::endl;
-        expression_raw.initiateGeneIndex(geneNames);
-    }
 
     //filter out sparse rows from the ones we kept before
     std::cout << "[Progress] Filtering sparse rows ..." << std::endl;
@@ -100,11 +92,6 @@ void computation::filter_genes(){
     std::cout << "expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 
-    // initialize gene index if not initiated
-    if (expression_raw.geneIndexEmpty()){
-        std::cout << "[Progress] Initializing gene index ..." << std::endl;
-        expression_raw.initiateGeneIndex(geneNames);
-    }
 
     expression_raw.initiateGeneSubset(geneSubset);
 

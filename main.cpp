@@ -6,8 +6,8 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
-//    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+    //std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -18,18 +18,18 @@ int main(int argc, char *argv[])
     std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
 
     // initialize parse file object
-    parsefile files = parsefile();
+    //parsefile files = parsefile();
 
-    files.readFiles(expressionFile, spatialFile, geneNameFile);
+    //files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-    colocalisation matrix = colocalisation(files,1000,10);
+    //colocalisation matrix = colocalisation(files,1000,10);
     // add gene subset file
-    matrix.addGeneList(geneSubsetFile);
+    //matrix.addGeneList(geneSubsetFile);
     // TODO set linkage parameters!!!
     // filter
-    matrix.filter_simple(true,0.001);
-    matrix.filter_genes();
+    //matrix.filter_simple(true,0.001);
+    //matrix.filter_genes();
 
 //    // normalise data
 //    matrix.normalisation();
@@ -67,9 +67,9 @@ int main(int argc, char *argv[])
 
     biologicalprocess bp = biologicalprocess(bp_files,100);
     bp.addGeneList(geneSubsetFile);
-//    bp.filter_simple(true,0.001);
-//    bp.filter_genes();
-    bp.compute_tot_expr();
+    bp.filter_simple(true,0.001);
+    bp.filter_genes();
+    //bp.compute_tot_expr();
     //bp.bioprocess_2(3);
 
 

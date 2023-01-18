@@ -27,6 +27,7 @@ public:
     void writeToFile(std::string filename,Eigen::MatrixXd matrix);
     void createBeamFile(std::string file_out, std::string file_in = "");
     bool geneIndexEmpty();
+    void initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop);
     std::vector<std::string> getcurrentGenes();
 
     int getRows();
