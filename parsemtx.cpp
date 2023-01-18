@@ -252,7 +252,9 @@ void parsemtx::printGeneIndex(int rows){
         // only print entries in geneIndex that are relevant
         if(geneIndex[*i]!=-1 && geneIndex[*i] < rows){
             // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-            std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
+//            std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
+            std::cout << *i << std::endl;
+
             // incremeent index
 
          }
@@ -403,24 +405,30 @@ Eigen::MatrixXd parsemtx::filterByGenes(const Eigen::MatrixXd &expression, std::
     Eigen::MatrixXd filtered_expression(genes.size(), expression.cols());
     std::vector<std::string> temp;
 
+
     int index=0;
     int row;
-    for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
-        row = geneIndex[*i];
-        //check if gene was filtered out previously: if not, include it
-        if(row!=-1){
-            filtered_expression.row(index)=expression.row(row);
-            this->geneIndex[*i]=index;
-            temp.push_back(*i);
-            index++;
-        }else{
-            //resize array if one of the genes was filtered out previously
-            filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+    try {
+        for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
+            row = geneIndex[*i];
+            //check if gene was filtered out previously: if not, include it
+            if(row!=-1){
+                filtered_expression.row(index)=expression.row(row);
+                this->geneIndex[*i]=index;
+                temp.push_back(*i);
+                index++;
+            }else{
+                //resize array if one of the genes was filtered out previously
+                filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+            }
         }
+    } catch (...) {
+        std::cerr << "[Error] filterByGenes failed at index "<< index << " and row " << row << std::endl;
     }
 
+
     currentGenes=temp;
-    printGeneIndex(filtered_expression.rows());
+//    printGeneIndex(filtered_expression.rows());
 
     return filtered_expression;
 }

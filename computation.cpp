@@ -16,31 +16,47 @@ void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
     // parsefile object
     // set default cropping to dimensions of the matrix
+    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
+    A_spatial = spatial.convertToMatrix();
 
     std::cout << "[Progress] Extracting expression matrix ..." << std::endl;
     expression = new Eigen::MatrixXd;
 
-    if(rows <= 0 || cols <= 0){
-        block_rows = expression_raw.getRows();
-        block_cols = expression_raw.getCols();
-
+    if(rows <= 0 && cols <= 0){
+        std::cout << "Considering the entire expression matrix" << std::endl;
         *expression =  expression_raw.getExpressionDense();
+        std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+        std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
+        return;
+    }
+    else if(rows <= 0){
+        block_rows = expression_raw.getRows();
+        block_cols = cols;
+        std::cout << "Considering all rows of the expression matrix" << std::endl;
+
+
+    }
+    else if(cols <= 0){
+        block_rows = rows;
+        block_cols = expression_raw.getCols();
+        std::cout << "Considering all columns of the expression matrix" << std::endl;
+
     }
     else{
         block_rows = rows;
         block_cols = cols;
-        std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
-        *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
 
     }
+
+    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
+    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
 
 
 
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
     std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
 
-    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
-    A_spatial = spatial.convertToMatrix();
+
 
 //    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
 //    expression_raw.initiateGeneIndex(geneNames);

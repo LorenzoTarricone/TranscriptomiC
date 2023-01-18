@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
 
     // initialize parse file object
     parsefile files = parsefile();
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-    colocalisation matrix = colocalisation(files,100,100);
+    colocalisation matrix = colocalisation(files,1000,10);
     // add gene subset file
     matrix.addGeneList(geneSubsetFile);
     // TODO set linkage parameters!!!
@@ -31,42 +31,45 @@ int main(int argc, char *argv[])
     matrix.filter_simple(true,0.001);
     matrix.filter_genes();
 
-    // normalise data
-    matrix.normalisation();
-    // compute colocalisation matrix
-    matrix.compute();
-    //matrix.saveToFile(path+"colocalisation_object.csv");
+//    // normalise data
+//    matrix.normalisation();
+//    // compute colocalisation matrix
+//    matrix.compute();
+//    //matrix.saveToFile(path+"colocalisation_object.csv");
 
-//    files.~parsefile();
-    files.clear();
+////    files.~parsefile();
 
-    // create colocalisation object
-    colocalisation matrix2 = colocalisation(files,200,200);
-    // add gene subset file
-    matrix2.addGeneList(geneSubsetFile);
-    // TODO set linkage parameters!!!
-    // filter
-    matrix2.filter_simple(true,0.001);
-    matrix2.filter_genes();
-
-    // normalise data
-    matrix2.normalisation();
-    // compute colocalisation matrix
-    matrix2.compute();
-    //matrix.saveToFile(path+"colocalisation_object.csv");
-
-    files.~parsefile();
-//    matrix.~colocalisation();
 
 //    parsefile bp_files = parsefile();
 //    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+//    // create colocalisation object
+//    colocalisation matrix2 = colocalisation(bp_files);
+//    // add gene subset file
+//    matrix2.addGeneList(geneSubsetFile);
+//    // TODO set linkage parameters!!!
+//    // filter
+//    matrix2.filter_simple(true,0.001);
+//    matrix2.filter_genes();
 
-//    biologicalprocess bp = biologicalprocess(bp_files,20,100);
-//    bp.addGeneList(geneSubsetFile);
+//    // normalise data
+//    matrix2.normalisation();
+//    // compute colocalisation matrix
+//    matrix2.compute();
+//    //matrix.saveToFile(path+"colocalisation_object.csv");
+
+//    files.~parsefile();
+//    matrix.~colocalisation();
+
+    parsefile bp_files = parsefile();
+    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+    biologicalprocess bp = biologicalprocess(bp_files,100);
+    bp.addGeneList(geneSubsetFile);
 //    bp.filter_simple(true,0.001);
-////    bp.filter_genes();
-//    bp.compute_tot_expr();
+//    bp.filter_genes();
+    bp.compute_tot_expr();
 
+////    std::cout << "[Progress] Final gene count for bp: "
 
     std::cout << "[Progress] Everything done!" << std::endl;
 
