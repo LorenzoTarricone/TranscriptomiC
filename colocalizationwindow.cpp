@@ -59,7 +59,9 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                std::cout << q1;
                std::cout << q3; */
 
-               //95 percent confidence level
+
+
+               //95 PERCENT CONFIDENCE LEVEL
                //get data size
                int data_size = number_cols * number_rows;
 
