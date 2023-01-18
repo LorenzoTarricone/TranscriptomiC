@@ -35,7 +35,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                colorMap->data()->setSize(number_cols, number_rows);
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
-               //Quantile Matrix : I dont know if this is right.
+              /* //Quantile Matrix : I dont know if this is right.
                double median = 0;
                double q1 = 0;
                double q3 = 0;
@@ -57,7 +57,40 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                //test
                std::cout << median;
                std::cout << q1;
-               std::cout << q3;
+               std::cout << q3; */
+
+               //95 percent confidence level
+               //get data size
+               int data_size = number_cols * number_rows;
+               //calculate mean
+               double mean = 0.0;
+               for(int i= 0; i<number_cols; i++){
+                   for (int j = 0; j<number_rows; j++){
+                       mean += m(i,j);
+                   }
+               }
+
+               mean /= number_cols*number_rows;
+
+               //calculate standard deviation
+               double sd = 0.0;
+               for(int i= 0; i<number_cols; i++){
+                   for (int j = 0; j<number_rows; j++){
+                        sd += pow(m(i,j) - mean,2);
+                   }
+               }
+
+               sd = sqrt(sd/(data_size));
+
+               //calculate 95% confidence interval
+               double  n = sqrt(data_size);
+               double ci = 1.96 * (sd/n);
+
+               double q1 = mean-ci;
+               double q3 = mean+ci;
+               //output
+               cout << "95% Confidence Interval: [" << mean - ci << ", " << mean + ci << "]" << endl;
+
 
 
 
