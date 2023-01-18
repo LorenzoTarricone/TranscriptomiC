@@ -13,17 +13,18 @@ public:
     void readFile(std::string filename);
     void print();
     void filter(bool zeroes, double min_expr_perc);
-    void filter_simple(Eigen::MatrixXd &expression,bool zeroes = true, bool filterGenes=false, double min_expr_perc = 0.05);
+    void filter_simple(Eigen::MatrixXd &expression,bool zeroes = true, double min_expr_perc = 0.05);
     Eigen::MatrixXd filterByGenes(const Eigen::MatrixXd &expression, std::vector<std::string> genes);
     void getRowNamesFromFile(std::string filename);
-    void initiateGeneIndex(std::vector<std::string> geneList, std::vector<std::string> geneListSubset);
     void initiateGeneIndex(std::vector<std::string> geneList);
-    void printGeneIndex(int rows, bool filterGenes = false);
+    void initiateGeneSubset(std::vector<std::string> geneListSubset);
+    void printGeneIndex(int rows);
     void normalisation(std::string type_of_normal = "col_mean");
     Eigen::MatrixXd normalisation_simple(Eigen::MatrixXd expression,std::string type_of_normal = "col_mean");
     void writeToFile(std::string filename);
     void writeToFile(std::string filename,Eigen::MatrixXd matrix);
     void createBeamFile(std::string file_out, std::string file_in = "");
+    bool geneIndexEmpty();
 
     int getRows();
     int getCols();
@@ -38,10 +39,10 @@ private:
     // map containing the gene names and respective row index
     // TODO: check if this is the ideal data type for this
     std::map<std::string, int> geneIndex;
-    std::map<std::string, int> geneIndexFinal;
     std::vector<std::string> all_names;
+    std::vector<std::string> currentGenes;
     std::vector<std::string> geneSubset;
-    void shiftGeneIndex(int row, int removed, bool filterGenes=true);
+    void shiftGeneIndex(int row);
     int N,M,removed;
 };
 

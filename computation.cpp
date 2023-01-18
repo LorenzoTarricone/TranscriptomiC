@@ -46,50 +46,51 @@ void computation::initialise(int rows, int cols){
 //    expression_raw.initiateGeneIndex(geneNames);
 }
 
-void computation::filter(bool zeroes, bool filterGenes, double min_expr_perc){
-    std::cout << "[Progress] Filtering data ..." << std::endl;
-//    std::cout << "Before filtering: " << std::endl;
-//    std::cout<<expression->block(0,0,10,10)<<std::endl;
-//    Eigen::MatrixXd* temp = new Eigen::MatrixXd;
-//    temp = expression;
+void computation::filter_simple(bool zeroes, double min_expr_perc){
+    std::cout << "[Progress] Filtering data (simple)..." << std::endl;
 
     std::cout << "Before filtering: " << std::endl;
     std::cout << "expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 
-
-    if(filterGenes){
-        //keep only desired genes
-        std::cout << "[Progress] Filtering data for desired genes ..." << std::endl;
-
-        std::cout << "[Progress] Initializing gene index ..." << std::endl;
-
-        expression_raw.initiateGeneIndex(geneNames,geneSubset);
-
-        *expression=expression_raw.filterByGenes(*expression, geneSubset);
-
-        std::cout << "[Progress] Filtering by genes finished"<<std::endl;
-        std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
-        std::cout <<expression->block(0,0,20,20)<<std::endl;
-
-    }
-    else{
-        // initialize gene index
-        std::cout << "[Progress] Filtering without gene list ..." << std::endl;
+    // initialize gene index if not initiated
+    if (expression_raw.geneIndexEmpty()){
         std::cout << "[Progress] Initializing gene index ..." << std::endl;
         expression_raw.initiateGeneIndex(geneNames);
     }
 
-
     //filter out sparse rows from the ones we kept before
     std::cout << "[Progress] Filtering sparse rows ..." << std::endl;
-    expression_raw.filter_simple(*expression,zeroes,filterGenes,min_expr_perc);
-//    delete temp;
+    expression_raw.filter_simple(*expression,zeroes,min_expr_perc);
     std::cout << "After filtering: " << std::endl;
     std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
 }
 
+//function to filter by genes
+void computation::filter_genes(){
+    std::cout << "[Progress] Filtering data for desired genes..." << std::endl;
+
+
+    std::cout << "Before filtering: " << std::endl;
+    std::cout << "expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+
+    // initialize gene index if not initiated
+    if (expression_raw.geneIndexEmpty()){
+        std::cout << "[Progress] Initializing gene index ..." << std::endl;
+        expression_raw.initiateGeneIndex(geneNames);
+    }
+
+    expression_raw.initiateGeneSubset(geneSubset);
+
+    *expression=expression_raw.filterByGenes(*expression, geneSubset);
+
+    std::cout << "[Progress] Filtering by genes finished"<<std::endl;
+    std::cout << "After filtering: " << std::endl;
+    std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
+    std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+}
 
 
 

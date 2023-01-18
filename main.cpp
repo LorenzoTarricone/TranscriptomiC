@@ -1,18 +1,17 @@
 
-//#include "UploadWindow.h"
-////#include "mainwindow.h"
-//#include "parsemtx.h"
-//#include "parsetxtbeams.h"
-//#include "matrixeigen.h"
-//#include "colocalization_matrix.h"
-//#include "parsing.h"
+#include "UploadWindow.h"
+//#include "mainwindow.h"
+#include "parsemtx.h"
+#include "parsetxtbeams.h"
+#include "matrixeigen.h"
+#include "colocalization_matrix.h"
+#include "parsing.h"
 #include "colocalisation.h"
-#include "biologicalprocess.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -20,7 +19,7 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
     // initialize parse file object
     parsefile files = parsefile();
@@ -28,44 +27,30 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     // create colocalisation object
-    colocalisation matrix = colocalisation(files,700,700);
+    computation matrix = computation(files,700,700);
+    //crop data
+//    matrix.setMatrixBlocks(100,100);
 
-    // create biological process object
-//    biologicalprocess bp = biologicalprocess(files,100,700);
+//    // read files
+//    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
 
-
-//    computation matrix = computation(files,700,700);
-
-
-
-//    // add gene subset file
-//    std::cout << "[Progress] Adding gene subset file..." << std::endl;
+    // add gene subset file
     matrix.addGeneList(geneSubsetFile);
-//    bp.addGeneList(geneSubsetFile);
-
-//    std::cout << "[Progress] Adding gene subset file successful!" << std::endl;
 
     // TODO set linkage parameters!!!
 
     // filter
-    matrix.filter(true,true,0.001);
-    // TODO - let bp computation handle filtering
-//    bp.filter(true,false,0.001);
+    matrix.filter_genes();
+    matrix.filter_simple(true,0.001);
 
 
     // normalise data
-    matrix.normalisation();
-
-
-    // compute total expression
-//    bp.compute_tot_expr();
-
+    //matrix.normalisation();
 
     // compute colocalisation matrix
-    matrix.compute();
+    //matrix.compute();
 
-    matrix.saveToFile(path+"colocalisation_object.csv");
-
+    //matrix.saveToFile(path+"colocalisation_object.csv");
 
     std::cout << "[Progress] Everything done!" << std::endl;
 

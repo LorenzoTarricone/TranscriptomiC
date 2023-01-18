@@ -43,7 +43,7 @@ void biologicalprocess::compute_tot_expr(){
     total_expression = compute_total_expression(*expression,A_spatial);
 
     std::cout << "[Progress] Filter by genes ... "<<std::endl;
-    filter(false,true);
+    //filter(false,true);
     std::cout << "[Progress] Filter by genes done. "<<std::endl;
 
     std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
