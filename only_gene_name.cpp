@@ -40,6 +40,10 @@ int only_gene_name::isSubstring(string s1, string s2)
 }
 
 //parse the API answer for gene name
+//Takes the string of the answer of the API as input and the "search parameter”(=the gene we are looking for)
+//and returns a set with all the different names of this gene 
+//(it was only gene like “GENE”, so I added the names like “Gene” and “gene” since there was some issue later with this)
+
 std::set<std::string> only_gene_name::listgene(std::string l, std::string search){
     //if the search parameter is not only in upper case
     std::string upper_search = search;
@@ -140,7 +144,10 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     }
     return res;}
 
-//parse the API answer for biological processe
+
+//parse the API answer for biological process 
+//takes the string of the answer of the API as input 3 "search parameter” (normally it will be number_in_list, id and label)
+//return these info for the first biological process in API answer
 set<Info> only_gene_name::list_bio_process(string json, string search1, string search2, string search3){
     cout<<json<<'\n';
     set<Info> infoSet;
