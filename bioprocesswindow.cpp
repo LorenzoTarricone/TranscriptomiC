@@ -4,6 +4,7 @@
 #include "ui_bioprocesswindow.h"
 #include "qdebug.h"
 #include <algorithm>
+#include <iostream>
 
 bioprocesswindow::bioprocesswindow(QWidget *parent) :
     QDialog(parent),
@@ -37,7 +38,32 @@ void bioprocesswindow::makeHeatMap(){
            colorMap->data()->setSize(nx, ny);
            colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
 
-           for(int Index = 0; Index < nx * ny; Index++){ // We have 49 data points
+           //Quantile Vector
+           double median = 0;
+           double q1 = 0;
+           double q3 = 0;
+           double eta = 0.005;
+
+           for(int i= 0; i<getP().size(); i++){
+               median += eta *std::copysign(1.0f,getP()[i] - median);
+
+           }
+           for(int j= 0; j<getP().size(); j++){
+
+                   if(getP()[j] < median)
+                       q1 += eta*std::copysign(1.0f,getP()[j] - q1);
+                   else
+                       q3 += eta*std::copysign(1.0f,getP()[j] - q3);
+
+           }
+           //test
+           std::cout << median;
+           std::cout << q1;
+           std::cout << q3;
+
+
+
+           for(int Index = 0; Index < nx * ny; Index++){
                           colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
                       }
 
@@ -45,21 +71,25 @@ void bioprocesswindow::makeHeatMap(){
            QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
            ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis
            colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right
+           colorScale->setBarWidth(8); //width of scale
            colorScale->setRangeDrag(&free); // drag the data range. we dont need that
            colorMap->setColorScale(colorScale); // associate the color map with the color scale
            colorScale->axis()->setLabel("Intensity");
 
-           /*//Color gradient:
+           //color gradient:
            QCPColorGradient gradient; // empty gradient with no defined colour stops
            //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
-           gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
-           gradient.setColorStopAt(1, QColor(255,0,0));//In between these color stops, the color is interpolated according to setColorInterpolation.
-           gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
+           //In between these color stops, the color is interpolated according to setColorInterpolation.
+           gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space
+           gradient.setColorStopAt(0, QColor(0, 0, 100));
+           gradient.setColorStopAt(0.15, QColor(0, 50, 255));
+           gradient.setColorStopAt(0.35, QColor(0, 255, 255));
+           gradient.setColorStopAt(0.65, QColor(255, 255, 0));
+           gradient.setColorStopAt(0.85, QColor(255, 30, 0));
+           gradient.setColorStopAt(1, QColor(100, 0, 0));
            gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
            gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
-           colorMap->setGradient(gradient);//assign it to the heatmap*/
-
-           colorMap->setGradient(QCPColorGradient::gpJet);
+           colorMap->setGradient(gradient);//assign it to the heatmap
 
            //Uncomment for ColourMap without interpolation
            colorMap->setInterpolate(false);
