@@ -1,17 +1,13 @@
 
-#include "UploadWindow.h"
-//#include "mainwindow.h"
-#include "parsemtx.h"
-#include "parsetxtbeams.h"
-#include "matrixeigen.h"
-#include "colocalization_matrix.h"
-#include "parsing.h"
+
 #include "colocalisation.h"
+#include "biologicalprocess.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+//    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -26,31 +22,27 @@ int main(int argc, char *argv[])
 
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-    // create colocalisation object
-    computation matrix = computation(files,700,700);
-    //crop data
-//    matrix.setMatrixBlocks(100,100);
+//    // create colocalisation object
+//    colocalisation matrix = colocalisation(files,700,700);
+//    // add gene subset file
+//    matrix.addGeneList(geneSubsetFile);
+//    // TODO set linkage parameters!!!
+//    // filter
+//    matrix.filter_simple(true,0.001);
+//    matrix.filter_genes();
 
-//    // read files
-//    matrix.readFiles(expressionFile,spatialFile,geneNameFile);
+//    // normalise data
+//    matrix.normalisation();
+//    // compute colocalisation matrix
+//    matrix.compute();
+//    //matrix.saveToFile(path+"colocalisation_object.csv");
 
-    // add gene subset file
-    matrix.addGeneList(geneSubsetFile);
+    biologicalprocess bp = biologicalprocess(files,700,700);
+    bp.addGeneList(geneSubsetFile);
+    bp.filter_simple(true,0.001);
+//    bp.filter_genes();
+    bp.compute_tot_expr();
 
-    // TODO set linkage parameters!!!
-
-    // filter
-    matrix.filter_genes();
-    matrix.filter_simple(true,0.001);
-
-
-    // normalise data
-    //matrix.normalisation();
-
-    // compute colocalisation matrix
-    //matrix.compute();
-
-    //matrix.saveToFile(path+"colocalisation_object.csv");
 
     std::cout << "[Progress] Everything done!" << std::endl;
 

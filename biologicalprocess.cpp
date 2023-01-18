@@ -24,7 +24,10 @@ Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixX
             tot(j,0) = spatial(j,0);
             tot(j,1) = spatial(j,1);
             if(perc){
-                tot(j,2) += expression(i,j)/total_expression(j,2);
+                tot(j,2) += (double) expression(i,j)/total_expression(j,2);
+            }
+            else{
+                tot(j,2) += (double) expression(i,j);
             }
 
         }
@@ -43,7 +46,7 @@ void biologicalprocess::compute_tot_expr(){
     total_expression = compute_total_expression(*expression,A_spatial);
 
     std::cout << "[Progress] Filter by genes ... "<<std::endl;
-    //filter(false,true);
+    filter_genes();
     std::cout << "[Progress] Filter by genes done. "<<std::endl;
 
     std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
