@@ -20,6 +20,10 @@ void computation::initialise(int rows, int cols){
     std::cout << "[Progress] Extracting expression matrix ..." << std::endl;
     expression = new Eigen::MatrixXd;
 
+
+    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
+    A_spatial = spatial.convertToMatrix();
+
     if(rows <= 0 || cols <= 0){
         block_rows = expression_raw.getRows();
         block_cols = expression_raw.getCols();
@@ -31,16 +35,18 @@ void computation::initialise(int rows, int cols){
         block_cols = cols;
         std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
         *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+        std::cout << "crop spatial at block("<<block_rows_start<<","<<block_cols_start<<","<<block_cols<<","<<2<<")"<<std::endl;
+        A_spatial=A_spatial.block(block_rows_start,block_cols_start,block_cols,2);
 
     }
 
+    expression_raw.initiateGeneIndex(geneNames);
 
 
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
     std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
 
-    std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
-    A_spatial = spatial.convertToMatrix();
+
 
 //    std::cout << "[Progress] Initiating gene name index ..." << std::endl;
 //    expression_raw.initiateGeneIndex(geneNames);
@@ -65,6 +71,7 @@ void computation::filter_simple(bool zeroes, double min_expr_perc){
     std::cout << "After filtering: " << std::endl;
     std::cout << "New expression matrix size: ("<<(*expression).rows()<<","<<(*expression).cols()<<")"<<std::endl;
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
+
 }
 
 //function to filter by genes
@@ -117,4 +124,8 @@ void computation::addGeneList(std::string geneListPath){
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
     expression_raw.writeToFile(filename,*expression);
+}
+
+std::vector<std::string> computation::getcurrentGenes(){
+    return expression_raw.getcurrentGenes();
 }

@@ -667,3 +667,7 @@ int parsemtx::getCols(){
 bool parsemtx::geneIndexEmpty(){
     return geneIndex.empty();
 }
+
+std::vector<std::string> parsemtx::getcurrentGenes(){
+    return currentGenes;
+}

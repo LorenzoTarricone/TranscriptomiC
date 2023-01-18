@@ -13,6 +13,7 @@ public:
     void normalisation(std::string type_of_normal = "col_mean");
     void addGeneList(std::string geneListPath);
     void saveToFile(std::string filename);
+    std::vector<std::string> getcurrentGenes();
 
 protected:
     parsemtx expression_raw;

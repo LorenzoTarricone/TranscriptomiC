@@ -37,12 +37,13 @@ int main(int argc, char *argv[])
 //    matrix.compute();
 //    //matrix.saveToFile(path+"colocalisation_object.csv");
 
-    biologicalprocess bp = biologicalprocess(files,700,700);
-    bp.addGeneList(geneSubsetFile);
+    biologicalprocess bp = biologicalprocess(files,200,100);
+    //bp.addGeneList(geneSubsetFile);
     bp.filter_simple(true,0.001);
-//    bp.filter_genes();
-    bp.compute_tot_expr();
+    //bp.filter_genes();
+    //bp.compute_tot_expr();
 
+    bp.bioprocess_2(3);
 
     std::cout << "[Progress] Everything done!" << std::endl;
 

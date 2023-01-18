@@ -70,4 +70,3 @@ macx:INCLUDEPATH += "$$PWD/eigen_mac"
 #INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 
-
