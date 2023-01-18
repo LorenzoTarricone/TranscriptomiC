@@ -1,20 +1,5 @@
-/*
- * #include "read_tsv_set.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <set>
 
-
-
-int main() {
-    read_tsv_set test;
-    std::set<std::string> string_set;
-    string_set=test.read_tsv("D:\\CLEMENCE\\C++ project\\build-transcriptomics_development-Desktop_Qt_6_2_4_MinGW_64_bit-Debug\\gene_tsv.tsv");
-    return 0;
-}
-
-*/
+//read tsv file that read the gene.tsv file and store them in a set
 
 #include "read_tsv_set.h"
 #include <iostream>
@@ -50,6 +35,22 @@ set<string> read_tsv_set::read_tsv(string file_path) {
 }
 
 
+/* main to test it 
+ * #include "read_tsv_set.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <set>
 
+
+
+int main() {
+    read_tsv_set test;
+    std::set<std::string> string_set;
+    string_set=test.read_tsv("D:\\CLEMENCE\\C++ project\\build-transcriptomics_development-Desktop_Qt_6_2_4_MinGW_64_bit-Debug\\gene_tsv.tsv");
+    return 0;
+}
+
+*/
 
 
