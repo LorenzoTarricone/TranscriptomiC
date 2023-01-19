@@ -1,5 +1,6 @@
 #include "colocalizationheatmapwindow.h"
 #include "colocalizationwindow.h"
+#include "filedata.h"
 #include "ui_colocalizationheatmapwindow.h"
 #include "heatmapwindow.h"
 
@@ -23,7 +24,7 @@ ColocalizationHeatmapWindow::~ColocalizationHeatmapWindow()
 
 
 
-
+/*
 void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
     // configure axis rect:
@@ -90,7 +91,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
                gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
-               colorMap->setGradient(gradient);//assign it to the heatmap */
+               colorMap->setGradient(gradient);//assign it to the heatmap
 
                colorMap->setGradient(QCPColorGradient::gpJet);
 
@@ -109,13 +110,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                ui->customPlot->rescaleAxes();
 
 
-}
-
-void colocalizationwindow::on_SaveHeatmapButton_clicked()
-{
-    this->close();
-    emit MenuWindow(); //returns to menuWindow
-}
+}*/
 
 void colocalizationwindow::on_SaveMatrixButton_clicked(){
 
@@ -205,4 +200,4 @@ void colocalizationwindow::on_SaveMatrixButton_clicked(){
 };
 
 
- */
+

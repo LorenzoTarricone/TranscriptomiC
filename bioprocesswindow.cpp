@@ -115,6 +115,7 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     //if we can analyze that process assign it to inputProcess, if not send error message
     if (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()){
         inputProcess = process;
+        openHeatMapWindow();
     }
     else{
         QMessageBox::information(this, "Error", "We cannot analyze that process, please provide another one.", QMessageBox::Ok);
@@ -141,7 +142,7 @@ void bioprocesswindow::openHeatMapWindow(){
 
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow
-    heatmapWindow->makeHeatMap(); //generates the heatmap
+   // heatmapWindow->makeHeatMap(); //generates the heatmap
 }
 
 
