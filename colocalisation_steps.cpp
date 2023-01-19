@@ -26,19 +26,6 @@ void colocalisation::step3(){
     //  step 3 - apply linkage to expression matrix -> neighbouring matrix
     std::cout << "[Progress] Running step 3 ..." << std::endl;
 
-//    std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
-////    std::cout<<"\n step 1"<<std::endl;
-//    expression = new Eigen::MatrixXd;
-////    std::cout<<"\n step 2"<<std::endl;
-//    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
-////    *expression =  expression_raw.getExpressionDense().block(0,0,10,10);
-
-////    std::cout<<"\n step 3"<<std::endl;
-
-
-//    std::cout<<expression->block(0,0,10,10)<<std::endl;
-//    std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
-
 
     A_combine = new Eigen::MatrixXd;
     *A_combine = combine_linkage(*A_linkage,*expression);

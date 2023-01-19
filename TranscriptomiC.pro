@@ -26,8 +26,8 @@ SOURCES += \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     parsing.cpp \
-    matrixeigen.cpp \
-    SparseMatrix.cpp \
+#    matrixeigen.cpp \
+#    SparseMatrix.cpp \
     colocalization_matrix.cpp\
     colocalisation.cpp \
     colocalisation_steps.cpp \
@@ -43,6 +43,7 @@ SOURCES += \
     filedata.cpp \
     mainwindow.cpp \
     secondwindow.cpp \
+    api_bio_pro_to_gene.cpp \
     #Package
     qcustomplot.cpp \
 
@@ -62,8 +63,8 @@ HEADERS += \
     parsemtx.h \
     parsetxtbeams.h \
     parsing.h \
-    matrixeigen.h \
-    SparseMatrix.h \
+#    matrixeigen.h \
+#    SparseMatrix.h \
     colocalization_matrix.h\
     colocalisation.h \
     biologicalprocess.h \
@@ -78,6 +79,7 @@ HEADERS += \
     filedata.h \
     SecondWindow.h \
     mainwindow.h \
+    api_bio_pro_to_gene.h \
     #Package
     qcustomplot.h \
     SparseMatrix.h \
@@ -100,6 +102,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
 macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
+
 macx: LIBS += -lcurl
 
 
@@ -111,8 +114,7 @@ macx: LIBS += -lcurl
 #LinkParameterWindow.cpp \
 
 #INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
-#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
+INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
 #INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
-
 
 

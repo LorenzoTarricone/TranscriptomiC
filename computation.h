@@ -8,10 +8,12 @@ class computation
 {
 public:
     computation(parsefile files,int rows = 0, int cols = 0);
-    void filter(bool zeroes = true, bool filterGenes=false, double min_expr_perc = 0.1);
+    void filter_simple(bool zeroes = true, double min_expr_perc = 0.1);
+    void filter_genes();
     void normalisation(std::string type_of_normal = "col_mean");
     void addGeneList(std::string geneListPath);
     void saveToFile(std::string filename);
+    std::vector<std::string> getcurrentGenes();
 
 protected:
     parsemtx expression_raw;

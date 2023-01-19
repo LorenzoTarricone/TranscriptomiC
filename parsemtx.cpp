@@ -183,37 +183,23 @@ void printVector(std::vector<std::string> vec){
 
 
 
-// this function updates the geneIndexFinal map (dictonary) when a row is removed from the matrix
-void parsemtx::shiftGeneIndex(int row, int removed, bool filterGenes){
+// this function updates the geneIndex map (dictonary) when a row is removed from the matrix
+void parsemtx::shiftGeneIndex(int row){
     // TODO: decide how to deal with row deletion and mapping
     // deal with element of the row to remove
     //std::string toRemove = all_names[row+removed];
     //geneIndex[toRemove] = -1;
     std::cout<<"shiftGeneIndex called"<<std::endl;
 
-    if(filterGenes){
-        std::string toRemove = geneSubset[row];
-        geneIndexFinal[toRemove] = -1;
+    std::string toRemove = currentGenes[row];
+    geneIndex[toRemove] = -1;
 
-        // TODO: add error handeling
-        // for each element after the removed row, decrement index by 1
-        for(int i = row+1; i < geneSubset.size(); i++){
-            geneIndexFinal[geneSubset[i]] -= 1;
-        }
-    }else{
-        std::string toRemove = all_names[row];
-        geneIndex[toRemove] = -1;
-
-        // TODO: add error handeling
-        // for each element after the removed row, decrement index by 1
-        for(int i = row+1; i < all_names.size(); i++){
-            geneIndex[all_names[i]] -= 1;
-        }
+    // TODO: add error handeling
+    // for each element after the removed row, decrement index by 1
+    for(int i = row+1; i < currentGenes.size(); i++){
+        geneIndex[currentGenes[i]] -= 1;
     }
 
-
-    // since the all_names array is not changed by removing rows in the matrix,
-    // the argument removed is necessary
 
     std::cout<<"shiftGeneIndex finished"<<std::endl;
 
@@ -239,62 +225,62 @@ void parsemtx::getRowNamesFromFile(std::string filename){
     }
 }
 
-// overloaded method to initiate gene index without filtering by genes
-void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
-    all_names = geneList;
-    int index = 0;
-    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
-    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
-        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-        this->geneIndex[*i] = index;
-        // visualize
-        std::cout << "Index: " << index << "\t Gene: "<< all_names[index] << std::endl;
-        // incremeent index
-        index++;
-    }
-}
-
 // function to initiate geneIndex
-void parsemtx::initiateGeneIndex(std::vector<std::string> geneList, std::vector<std::string> geneListSubset){
-    all_names = geneList;
-    geneSubset = geneListSubset;
+void parsemtx::initiateGeneIndex(std::vector<std::string> geneList){
+    currentGenes = geneList;
     int index = 0;
     // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
-    for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
+    for(typename std::vector<std::string>::iterator i = currentGenes.begin(); i != currentGenes.end(); i++){
         // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
         this->geneIndex[*i] = index;
         // visualize
-        std::cout << "Index: " << index << "\t Gene: "<< all_names[index] << std::endl;
+        std::cout << "Index: " << index << "\t Gene: "<< currentGenes[index] << std::endl;
         // incremeent index
         index++;
     }
 }
 
-void parsemtx::printGeneIndex(int rows, bool filterGenes){
+// function to initiate geneIndex when cropping matrix
+void parsemtx::initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop){
+    all_names=geneList;
+    currentGenes = std::vector<std::string>(all_names.begin(), all_names.begin()+row_crop);
     int index = 0;
-    if(filterGenes){
-        // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
-        for(typename std::vector<std::string>::iterator i = geneSubset.begin(); i != geneSubset.end(); i++){
-            // only print entries in geneIndex that are relevant
-            if(geneIndexFinal[*i]!=-1 && geneIndexFinal[*i] < rows){
-                // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-                std::cout << "Index: " << this->geneIndexFinal[*i] << "\t Gene: "<< *i << std::endl;
-                // incremeent index
+    // https://stackoverflow.com/questions/31478897/how-to-iterate-over-a-vector
+    for(typename std::vector<std::string>::iterator i = currentGenes.begin(); i != currentGenes.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = index;
+        // visualize
+        std::cout << "Index: " << index << "\t Gene: "<< currentGenes[index] << std::endl;
+        // incremeent index
+        index++;
+    }
+    for(typename std::vector<std::string>::iterator i = all_names.begin()+row_crop+1; i != all_names.end(); i++){
+        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+        this->geneIndex[*i] = -1;
+        // visualize
+        std::cout << "Index: -1 for cropped Gene: "<< *i << std::endl;
+    }
+}
 
-            }
-            index ++;
-        }
-    }else{
-        for(typename std::vector<std::string>::iterator i = all_names.begin(); i != all_names.end(); i++){
-            // only print entries in geneIndex that are relevant
-            if(geneIndex[*i]!=-1 && geneIndex[*i] < rows){
-                // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-                std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
-                // incremeent index
+// function to initiate geneSubset
+void parsemtx::initiateGeneSubset(std::vector<std::string> geneListSubset){
+    geneSubset = geneListSubset;
+}
 
-            }
-            index ++;
-        }
+
+void parsemtx::printGeneIndex(int rows){
+    int index = 0;
+    for(typename std::vector<std::string>::iterator i = currentGenes.begin(); i != currentGenes.end(); i++){
+        // only print entries in geneIndex that are relevant
+        if(geneIndex[*i]!=-1 && geneIndex[*i] < rows){
+            // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
+//            std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
+            std::cout << *i << std::endl;
+
+            // incremeent index
+
+         }
+         index ++;
     }
 
     std::cout << "Total: " << rows << " genes left" << std::endl;
@@ -309,7 +295,7 @@ void parsemtx::printGeneIndex(int rows, bool filterGenes){
 // TODO: decide whether object should directly filter private member sparse
 
 
-void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, bool filterGenes,double min_expr_perc){
+void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Function filter_simple called ..." << std::endl;
     int s = expression.rows();
     int c = expression.cols();
@@ -342,46 +328,132 @@ void parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, bool filte
 
     std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
 
+    std::vector<std::string> temp;
+
     for(int i = 0;i<s;i++){
         if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
-            if(filterGenes){
-                std::cout << "Remove row " << i << " or index "<<geneIndexFinal[geneSubset[i]] <<" corresponding to gene "<< geneSubset[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
-            }else{
-                std::cout << "Remove row " << i << " or index "<<geneIndex[all_names[i]] <<" corresponding to gene "<< all_names[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
-            }
+            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
             //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
             removeRow(expression, i-removed);
             //call function to adjust indices after removing row
-            shiftGeneIndex(i,removed, filterGenes);
-            //printGeneIndex(s-removed);
+            shiftGeneIndex(i);
             removed ++;
             std::cout<<"removed: "<< removed<<std::endl;
+        }else{
+            temp.push_back(currentGenes[i]);
+        }
+    }
+    currentGenes=temp;
+    printGeneIndex(s-removed);
 
+
+}
+
+//faster implementation of simple filtering with respect to filter_simple_old.
+
+Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
+    std::cout << "[Progress] Function filter_simple_test called ..." << std::endl;
+    int s = expression.rows();
+    int c = expression.cols();
+
+    // to avoid double filtering in bp
+    if(!zeroes){
+        return expression;
+    }
+
+
+    int count[s];
+    for(int i = 0;i<s;i++){
+        count[i] = 0;
+    }
+
+    // dense matrix stored in column major
+    for(int j = 0; j < expression.cols();j++){
+        for(int i = 0; i<expression.rows();i++){
+            count[i] += (expression(i,j)>0);
         }
     }
 
-    std::cout << "Expression matrix = " << std::endl;
-    std::cout<<expression.block(0,0,std::min(10,s-removed),10)<<std::endl;
+//    std::cout << "[";
+//    for(int i = 0; i < s-1; i++){
+//        std::cout << count[i] << ",";
+//    }
+//    std::cout << count[s-1] << "]" << std::endl;
 
+    //
+    Eigen::MatrixXd filtered_expression(s, c);
+    std::vector<std::string> temp;
+    int index=0;
+    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
+
+
+    for(int i = 0;i<s;i++){
+        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
+            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+            //resize matrix if we remove a row
+            //filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
+            Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
+            filtered_expression=temp_matrix;
+            this->geneIndex[currentGenes[i]]=-1;
+            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
+            //removeRow(expression, i-removed);
+            //call function to adjust indices after removing row
+            //shiftGeneIndex(i);
+            removed ++;
+            std::cout<<"removed: "<< removed<<std::endl;
+        }else{
+            filtered_expression.row(index)=expression.row(i);
+            this->geneIndex[currentGenes[i]]=index;
+            temp.push_back(currentGenes[i]);
+            index++;
+        }
+    }
+    currentGenes=temp;
+    printGeneIndex(s-removed);
+
+    return filtered_expression;
 }
 
 //given the dense expression matrix and a vector of strings containing all the genes we want to keep
 //initialize a new dense filtered_expression matrix which only keeps the rows of the original matrix
-//corresponding to the genes in the "genes" vector. We also update geneIndexFinal to keep track of which
+//corresponding to the genes in the "genes" vector, if they haven't been filtered previously. We also update geneIndex to keep track of which
 //index each gene corresponds to.
 Eigen::MatrixXd parsemtx::filterByGenes(const Eigen::MatrixXd &expression, std::vector<std::string> genes){
     std::cout << "[Progress] Function filterByGenes called ..." << std::endl;
 
     Eigen::MatrixXd filtered_expression(genes.size(), expression.cols());
+    std::vector<std::string> temp;
+
 
     int index=0;
     int row;
-    for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
-        row = geneIndex[*i];
-        filtered_expression.row(index)=expression.row(row);
-        this->geneIndexFinal[*i]=index;
-        index++;
+    try {
+        for(typename std::vector<std::string>::iterator i = genes.begin(); i != genes.end(); i++){
+            row = geneIndex[*i];
+            std::cout << "[Progress] Inside loop: gene " <<*i<<" with row number "<<row<< std::endl;
+            //check if gene was filtered out previously: if not, include it
+            if(row==-1){
+                std::cout << "Removing gene "<<*i << std::endl;
+                //resize array if one of the genes was filtered out previously
+                Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
+                filtered_expression=temp_matrix;
+                std::cout << "Removed "<<*i << std::endl;
+            }else{
+                std::cout << "Keeping gene"<<*i << std::endl;
+                filtered_expression.row(index)=expression.row(row);
+                this->geneIndex[*i]=index;
+                temp.push_back(*i);
+                index++;
+            }
+        }
+    } catch (...) {
+        std::cerr << "[Error] filterByGenes failed at index "<< index << " and row " << row << std::endl;
     }
+
+
+    currentGenes=temp;
+//    printGeneIndex(filtered_expression.rows());
+
     return filtered_expression;
 }
 
@@ -434,7 +506,7 @@ void parsemtx::filter(bool zeroes, double min_expr_perc){
         if((zeroes && (count[i] == 0)) || count[i]/M <= min_expr_perc){
             removeRow(dense_matrix, i-removed);
             // take care of gene name index when row is removed
-             shiftGeneIndex(i,removed);
+             shiftGeneIndex(i);
             removed ++;
         }
     }
@@ -621,4 +693,13 @@ int parsemtx::getRows(){
 }
 int parsemtx::getCols(){
     return sparse.cols();
+}
+
+// function to verify if we've already initated the geneIndex (useful during filtering)
+bool parsemtx::geneIndexEmpty(){
+    return geneIndex.empty();
+}
+
+std::vector<std::string> parsemtx::getcurrentGenes(){
+    return currentGenes;
 }
