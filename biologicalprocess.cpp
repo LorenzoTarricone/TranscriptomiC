@@ -1,4 +1,7 @@
 #include "biologicalprocess.h"
+#include "float.h"
+#include "wasserstein.h"
+#include <time.h>
 
 
 Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial, bool perc){
@@ -61,125 +64,172 @@ void biologicalprocess::compute_tot_expr(){
 
 }
 
-double biologicalprocess::WassersteinDistance(const Eigen::MatrixXd& mat1, const Eigen::MatrixXd& mat2, const Eigen::MatrixXd& distance) {
-  // Number of points in each matrix
+double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations){
 
-  std::cout << "Started WassersteinDistance"<<std::endl;
 
-  int n1 = mat1.rows();
-  int n2 = mat2.rows();
-
-  // Create sparse matrix for each matrix
-  Eigen::MatrixXd A(n1, n2);
-  Eigen::MatrixXd B(n1, n2);
-
-  // Fill sparse matrices with weights
-  for (int i = 0; i < n1; i++) {
-    A.row(i)=distance.row(i)*mat1(i,2);
-    B.col(i)=distance.col(i)*mat2(i,2);
-  }
-
-  std::cout << "Finished weight initialization, starting linear program"<<std::endl;
-  // Solve linear program to find optimal transport plan
-  Eigen::VectorXd x(n1 + n2);
-  Eigen::VectorXd b(n1 + n2);
-  b.head(n1) = Eigen::VectorXd::Ones(n1);
-  b.tail(n2) = Eigen::VectorXd::Ones(n2);
-  Eigen::SparseMatrix<double> G(n1 + n2, n1 + n2);
-  for(int i = 0; i < n1; i++)
-    G.insert(i,i) = 1;
-  for(int i = n1; i < n1 + n2; i++)
-    G.insert(i,i) = -1;
-  Eigen::VectorXd c(n1 + n2);
-  c.head(n1) = A * Eigen::VectorXd::Ones(n2);
-  c.tail(n2) = B.transpose() * Eigen::VectorXd::Ones(n1);
-  Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>> solver;
-  solver.compute(G.transpose() * G);
-  x = solver.solve(G.transpose() * c);
-
-  // Compute Wasserstein distance
-  std::cout << "finished linear program"<<std::endl;
-  return x.dot(c);
-}
-
-Eigen::MatrixXd biologicalprocess::EMD_Matrix(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial){
-
-    Eigen::MatrixXd EMD = Eigen::MatrixXd::Zero(expression.rows(),expression.rows());
-    Eigen::MatrixXd distance(expression.cols(),expression.cols());
-
-    for (int i = 0; i < expression.cols(); i++) {
-      for (int j = 0; j < expression.cols(); j++) {
-        distance(i,j) = sqrt(pow(spatial(i, 0) - spatial(j, 0), 2) + pow(spatial(i, 1) - spatial(j, 1), 2));
-      }
+    std::vector<double> First_expr(Express_mat.cols());
+    for(int i = 0; i < Express_mat.cols(); i++)
+    {
+       //this will put all the elements in the first column of Eigen::Matrix into the column3 vector
+        First_expr.at(i) = Express_mat(gene_1, i);
     }
 
-    for(int gene1=0;gene1<expression.rows()-1;gene1++){
-        for(int gene2=gene1+1;gene2<expression.rows();gene2++){
-            std::cout << "Looping through gene1: "<<gene1<<" and gene2: "<<gene2<<std::endl;
-            Eigen::MatrixXd coords1(expression.cols(),3);
-            Eigen::MatrixXd coords2(expression.cols(),3);
-
-            std::cout << "[Progress] coords1 computed with size ("<<coords1.rows()<<","<<coords1.cols()<<")"<<std::endl;
-            std::cout << "[Progress] spatial size: ("<<spatial.rows()<<","<<spatial.cols()<<")"<<std::endl;
-
-            coords1.col(0)=spatial.col(0);
-            coords2.col(0)=spatial.col(0);
-            coords1.col(1)=spatial.col(1);
-            coords2.col(1)=spatial.col(1);
-
-            coords1.col(2)=expression.row(gene1);
-            coords2.col(2)=expression.row(gene2);
 
 
-            double value=WassersteinDistance(coords1,coords2, distance);
+    std::vector<double> Second_expr(Express_mat.cols());
+    for(int j = 0; j < Express_mat.cols(); j++)
+    {
+       //this will put all the elements in the first column of Eigen::Matrix into the column3 vector
+        Second_expr.at(j) = Express_mat(gene_2, j);
+    }
+
+    srand(42);
+
+    //Calculte random direction Wass dist
+
+    std::vector<double> All_dists(n_computations);
+
+    for(int timer = 0; timer < n_computations; timer ++){
+
+
+        double value1 = (double) rand()/RAND_MAX;
+        double value2 = sqrt(1 - (value1 * value1));
+
+
+        std::vector<double> Proj_coord(Coord_mat.rows());
+
+        for( int i = 0; i < Coord_mat.cols(); i++){
+            Proj_coord.at(i) = Coord_mat(i, 0) * value1 + Coord_mat(i, 1) * value2;
+        }
+
+         double dist = wasserstein(Proj_coord,First_expr,Proj_coord,Second_expr);
+         All_dists.push_back(dist);
+
+    }
+
+    double avg = std::reduce(All_dists.begin(), All_dists.end()) / n_computations;
+
+
+    return avg;
+}
+
+
+Eigen::MatrixXd biologicalprocess::Wass_Matrix(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int n_compute){
+
+    Eigen::MatrixXd EMD = Eigen::MatrixXd::Zero(Express_mat.rows(),Express_mat.rows());
+
+    for (int gene_1 = 0; gene_1 < Express_mat.rows() - 1; gene_1++){
+        for(int gene_2 = gene_1 + 1; gene_2 < Express_mat.rows(); gene_2++){
+
+            double value=Wass_distance(Coord_mat, Express_mat, gene_1, gene_2, n_compute);
             std::cout << "Wass distance:"<< value <<std::endl;
-            EMD(gene1,gene2)=value;
-            EMD(gene2,gene1)=value;
+            EMD(gene_1,gene_2)=value;
+            EMD(gene_2,gene_1)=value;
         }
     }
 
-    return distance;
 
+    return EMD;
 }
 
-std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::MatrixXd& EMD, int n){
-    std::map<int, std::vector<std::string>> clusters_dict;
-    double maxcoeff=EMD.maxCoeff()+1;
-    for(int i=0;i<EMD.rows();i++){
-        EMD(i,i)=maxcoeff;
-    }
-    //fill diagonal with max value
-    int numPoints = EMD.rows();
-    Eigen::VectorXi clusters = Eigen::VectorXi::LinSpaced(numPoints, 0, numPoints-1); // Initialize each data point to its own cluster
-    std::cout<<"started Clustering"<<std::endl;
-    int index = 0;
-    while (clusters.maxCoeff()+1 > n) { // Repeat until number of clusters is less than or equal to n
-        std::cout << "clusters.maxCoeff() = "<< clusters.maxCoeff() << std::endl;
-        std::cout << "index: " << index << std::endl;
-        // Find the two closest clusters
-        int minRow, minCol;
-        EMD.minCoeff(&minRow, &minCol);
-        if (minRow > minCol) std::swap(minRow, minCol);
 
-        // Merge the two closest clusters
-        for (int i = 0; i < numPoints; i++) {
-            if (clusters(i) == minCol) {
-                clusters(i) = minRow;
-             }else if (clusters(i) > minCol) {
-                clusters(i)--;
-             }
+int biologicalprocess::findNearestMedoid(Eigen::MatrixXd distanceMatrix, std::vector<int> medoids, int point) {
+    int nearestMedoid = -1;
+    double minDistance = DBL_MAX;
+
+    for (int i=0;i<medoids.size();i++) {
+        double distance = distanceMatrix(point, medoids[i]);
+        if (distance < minDistance) {
+            nearestMedoid = i;
+            minDistance = distance;
         }
+    }
 
-        // Update the distance matrix
-        EMD.block(minRow, minCol, 1, EMD.cols()-minCol) = EMD.block(minCol, minCol, 1, EMD.cols()-minCol);
-        EMD.block(minRow, minCol+1, EMD.rows()-minCol-1, 1) = EMD.block(minCol+1, minCol, EMD.rows()-minCol-1, 1);
-        EMD.conservativeResize(numPoints-1, numPoints-1);
+    return nearestMedoid;
+}
 
-        index++;
-     }
+std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd distanceMatrix, int k, int num_runs) {
+    std::vector<std::string> clusters_dict(k);
+    double bestCost = DBL_MAX;
+    std::vector<std::vector<int>> best_clusters(k);
+    int n = distanceMatrix.rows();
+    std::srand(42);
 
-    std::cout<<"finished clustering, got clusters: \n"<<clusters<<std::endl;
 
+    std::cout<<"started Clustering"<<std::endl;
+    for(int run=0;run<num_runs;run++){
+        std::cout<<"started run number "<<run<<std::endl;
+        std::vector<int> medoids(k);
+        std::vector<std::vector<int>> clusters(k);
+        // randomly select initial medoids
+        for (int i = 0; i < k; i++) {
+            int random = rand()%n;
+            while (std::find(medoids.begin(), medoids.end(), random) != medoids.end()) {
+                random = rand()%n;
+            }
+            medoids[i] = random;
+        }
+        bool changed;
+        do {
+            std::cout<<"iterating again"<<std::endl;
+            changed = false;
+
+            // assign each point to the nearest medoid
+            for (int i = 0; i < n; i++) {
+                int nearestMedoid = findNearestMedoid(distanceMatrix, medoids, i);
+                clusters[nearestMedoid].push_back(i);
+            }
+
+            // try to improve the solution by swapping medoids
+            for (int i = 0; i < k; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (std::find(medoids.begin(), medoids.end(), j) == medoids.end()) {
+                        int oldMedoid = medoids[i];
+                        double oldCost = 0;
+                        for (int point : clusters[i]) {
+                            oldCost += distanceMatrix(point, oldMedoid);
+                        }
+
+                        medoids[i] = j;
+                        double newCost = 0;
+                        for (int point : clusters[i]) {
+                            newCost += distanceMatrix(point, j);
+                        }
+
+                        if (newCost >= oldCost) {
+                            medoids[i] = oldMedoid;
+                        } else {
+                            changed = true;
+                            // clear the clusters
+                            for (int i = 0; i < k; i++) {
+                                clusters[i].clear();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        } while (changed);
+        //calculate cost of this clustering solution
+        double cost = 0;
+        for (int i = 0; i < k; i++) {
+            for (int point : clusters[i]) {
+                cost += distanceMatrix(point, medoids[i]);
+            }
+        }
+        // check if this clustering solution is the best so far
+        if (cost < bestCost) {
+            bestCost = cost;
+            best_clusters=clusters;
+        }
+    }
+    std::cout << "Finished clustering, got clusters: "<<std::endl;
+    for(int i = 0; i < best_clusters.size(); i++){
+        for(int j=0;j<best_clusters[i].size();j++){
+            std::cout<<"cluster "<<i<<" with gene: "<<best_clusters[i][j]<<std::endl;
+        }
+    }
     std::vector<std::string> currentGenes=getcurrentGenes();
 
     std::cout << "Current genes are: [";
@@ -189,20 +239,34 @@ std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::Matrix
     std::cout << currentGenes[currentGenes.size()-1] << "]" << std::endl;
 
 
-    for(int i=0;i<clusters.size();i++){
-        int current_cluster=clusters[i];
-        clusters_dict[current_cluster].push_back(currentGenes[i]);
+    for(int i=0;i<best_clusters.size();i++){
+        std::vector<int> current_cluster=best_clusters[i];
+        //clusters_dict[i]="";
+        if(current_cluster.size()>0){
+            for(int j=0;j<current_cluster.size()-1;j++){
+                std::string current_string=currentGenes[current_cluster[j]];
+                clusters_dict[i]+=(current_string+",");
+            }
+            clusters_dict[i]+=currentGenes[current_cluster[current_cluster.size()-1]];
+        }else{
+            clusters_dict[i]+="empty";
+        }
     }
 
     return clusters_dict;
 }
 
-void biologicalprocess::bioprocess_2(int n){
+void biologicalprocess::bioprocess_2(int n, int num_runs){
     std::cout << "[Progress] Computing EMD Matrix ... "<<std::endl;
-    Eigen::MatrixXd EMD_Mat = EMD_Matrix(*expression,A_spatial);
+    Eigen::MatrixXd EMD_Mat = Wass_Matrix(A_spatial, *expression,3);
 
     std::cout << "[Progress] EMD Matrix computed with size ("<<EMD_Mat.rows()<<","<<EMD_Mat.cols()<<")"<<std::endl;
     std::cout << "EMD Matrix:\n "<<EMD_Mat.block(0,0,10,10)<<std::endl;
-    std::map<int, std::vector<std::string>> clusters=Cluster(EMD_Mat,n);
+    std::vector<std::string> clusters_dict=kMedoidsClustering(EMD_Mat,n, num_runs);
+
+    std::cout << "Finished bioprocess 2, got clusters: "<<std::endl;
+    for(int i = 0; i < clusters_dict.size(); i++){
+        std::cout<<"cluster "<<i<<" with genes: "<<clusters_dict[i]<<std::endl;
+    }
 
 }
