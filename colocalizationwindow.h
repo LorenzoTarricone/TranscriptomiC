@@ -23,6 +23,12 @@ public:
 
     void makeHeatMap(MatrixXd m);
 
+    const QVector<double> &getXCoordinates() const;
+
+    const QVector<double> &getYCoordinates() const;
+
+    const QVector<double> &getPValues() const;
+
 signals:
     void MenuWindow();
 

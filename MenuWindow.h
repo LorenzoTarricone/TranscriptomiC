@@ -3,7 +3,6 @@
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
-#include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
 

@@ -1,7 +1,7 @@
 #include "upload_matrix.h"
 #include <fstream>
 #include <sstream>
-using namespace std;
+//using namespace std;
 
 upload_matrix::upload_matrix()
 {
@@ -18,16 +18,16 @@ bool upload_matrix::setData_Matrix(std::string fileName){
         //    d e f]
         // the entries are stored as matrixEntries=[a,b,c,d,e,f], that is the variable "matrixEntries" is a row vector
         // later on, this vector is mapped into the Eigen matrix format
-        vector<double> matrixEntries;
+        std::vector<double> matrixEntries;
 
         // in this object we store the data from the matrix
-        ifstream matrixDataFile(fileName);
+        std::ifstream matrixDataFile(fileName);
 
         // this variable is used to store the row of the matrix that contains commas
-        string matrixRowString;
+        std::string matrixRowString;
 
         // this variable is used to store the matrix entry;
-        string matrixEntry;
+        std::string matrixEntry;
 
         // this variable is used to track the number of rows
         int matrixRowNumber = 0;
@@ -35,7 +35,7 @@ bool upload_matrix::setData_Matrix(std::string fileName){
 
         while (getline(matrixDataFile, matrixRowString)) // here we read a row by row of matrixDataFile and store every line into the string variable matrixRowString
         {
-            stringstream matrixRowStringStream(matrixRowString); //convert matrixRowString that is a string to a stream variable.
+            std::stringstream matrixRowStringStream(matrixRowString); //convert matrixRowString that is a string to a stream variable.
             while (getline(matrixRowStringStream, matrixEntry, ',')) // here we read pieces of the stream matrixRowStringStream until every comma, and store the resulting character into the matrixEntry
             {
                 matrixEntries.push_back(stod(matrixEntry));   //here we convert the string to double and fill in the row vector storing all the matrix entries

@@ -1,5 +1,5 @@
-#include "heatmapwindow.h"
 #include "ui_heatmapwindow.h"
+#include "heatmapwindow.h"
 #include <iostream>
 
 HeatMapWindow::HeatMapWindow(QWidget *parent) :

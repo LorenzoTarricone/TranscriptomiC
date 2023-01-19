@@ -37,7 +37,7 @@ int main(){
 #include <vector>
 #include <algorithm>
 #include <set>
-using namespace std;
+//using namespace std;
 
 using std::cout; using std::cin;
 using std::endl; using std::string;
@@ -45,7 +45,7 @@ using std::vector; using std::istringstream;
 using std::stringstream;
 
 
-using namespace std;
+//using namespace std;
 
 
 Genename::Genename()

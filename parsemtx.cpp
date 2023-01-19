@@ -381,8 +381,8 @@ void parsemtx::createBeamFile(std::string file_out, std::string file_in){
         for(typename std::vector<std::string>::iterator i = list.begin(); i != list.end(); i++){
             // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
 //            std::cout << *i << "," << std::endl;
-            int x = random()%MAX_COORD;
-            int y = random()%MAX_COORD;
+            int x = rand()%MAX_COORD;
+            int y = rand()%MAX_COORD;
             fout << *i << "\t" << x << "\t" << y << "\n";
 //            std::cout << *i << "\t" << x << "\t" << y << "\n" << std::endl;
         }

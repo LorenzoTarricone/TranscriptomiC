@@ -10,7 +10,7 @@
 
 //#include <Eigen/Dense>
 
-using namespace std;
+//using namespace std;
 //using namespace Eigen;
 
 
@@ -106,9 +106,9 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     else{
 
         //setLinkageParameters(pParameter, MParameter)
-        heatmapWindow->setX(this->getX());
-        heatmapWindow->setY(this->getY());
-        heatmapWindow->setP(this->getP());
+        heatmapWindow->setX(this->getXCoordinates());
+        heatmapWindow->setY(this->getYCoordinates());
+        heatmapWindow->setP(this->getPValues());
 
         this->hide(); //hides menuwindow
         heatmapWindow->show(); //shows biowindow
@@ -117,5 +117,20 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 
 
 
+}
+
+const QVector<double> &colocalizationwindow::getPValues() const
+{
+    return pValues;
+}
+
+const QVector<double> &colocalizationwindow::getYCoordinates() const
+{
+    return yCoordinates;
+}
+
+const QVector<double> &colocalizationwindow::getXCoordinates() const
+{
+    return xCoordinates;
 }
 

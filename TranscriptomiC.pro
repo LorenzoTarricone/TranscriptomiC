@@ -73,7 +73,6 @@ SOURCES += \
     parsing.h \
     qcustomplot.h \
     colocalization_matrix.h \
-    SecondWindow.h \
     upload_matrix.h
 
 FORMS += \
@@ -92,8 +91,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-#macx:INCLUDEPATH += "$$PWD/eigen_mac"
+win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
 
 

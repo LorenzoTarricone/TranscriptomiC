@@ -6,8 +6,8 @@
 #include <random>
 #include <iostream>
 
-using namespace std;
-using namespace Eigen;
+//using namespace std;
+//using namespace Eigen;
 
 MatrixEigen::MatrixEigen()
 {

@@ -107,7 +107,7 @@ void UploadWindow::on_UploadButton_clicked()
     if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
 
     //Uncomment for colocalization
-    readBoolean = inputData.setData_Matrix(filename); //reads and parses the data, returns a boolean to check for sucessful upload
+    readBoolean = inputData.setData_Matrix(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
     //readBoolean = inputData.readData(filename);
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
@@ -123,6 +123,7 @@ void UploadWindow::on_UploadButton_clicked()
         QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
     }
 
+}
 }
 
 

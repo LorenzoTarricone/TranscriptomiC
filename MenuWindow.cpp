@@ -1,5 +1,5 @@
-#include "MenuWindow.h"
 #include "ui_MenuWindow.h"
+#include "MenuWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
 #include <QMessageBox>

@@ -109,12 +109,12 @@ void parseTxtBeams::createDummyFile(unsigned int rows, std::string filename){
         // randomly generate a beam name
         std::string beam = "";
         for(int j = 0; j < 9; j++){
-            int index = random()%list.size(); // pick a random index
+            int index = rand()%list.size(); // pick a random index
             std::string base = list[index];
             beam.append(base);
         }
-        int x = random()%MAX_COORD;
-        int y = random()%MAX_COORD;
+        int x = rand()%MAX_COORD;
+        int y = rand()%MAX_COORD;
         fout << beam << "\t" << x << "\t" << y << "\n";
         std::cout << beam << "\t" << x << "\t" << y << "\n" << std::endl;
     }
