@@ -52,7 +52,7 @@ void UploadWindow::on_GeneSelectButton_clicked()
      * chosen, it sets the path as the text in the text edit.
      */
 
-    QString GFileFilter = "CSV File (*.csv);;";//"TSV File (*.tsv);;"; //creates a file filter so that only the relevant formats can be chosen
+    QString GFileFilter = "TSV File (*.tsv);;";//"CSV File (*.csv);;"; //creates a file filter so that only the relevant formats can be chosen
     QString GeneUserText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", GFileFilter); //opens the file explorer with the filter
     ui->GeneFileText->setPlainText(GeneUserText); //sets the test in the text edit to be the flie location
 
@@ -69,7 +69,7 @@ void UploadWindow::on_SpatialSelectButton_clicked(){
 
 void UploadWindow::on_ExpressSelectButton_clicked(){
 
-    QString EFileFilter = "CSV File (*.csv);;";//"MTX File (*.mtx);;"; //creates a file filter so that only the relevant formats can be chosen
+    QString EFileFilter = "MTX File (*.mtx);;";//"CSV File (*.csv);;" //creates a file filter so that only the relevant formats can be chosen
     QString ExpressUserText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", EFileFilter); //opens the file explorer with the filter
     ui->ExpressFileText->setPlainText(ExpressUserText); //sets the test in the text edit to be the flie location
 
@@ -82,20 +82,20 @@ void UploadWindow::on_UploadButton_clicked()
      * window and closes the upload window.
      */
 
-    FileData Genedata;
-    FileData Spatialdata;
+    FileData Data;
 
     GeneUserText = ui->GeneFileText->toPlainText(); //takes the file location
     GeneFilename = GeneUserText.toStdString(); //converts the file location to std::string
-    GeneBoolean = Genedata.readData(GeneFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    GeneBoolean = Data.readGenes(GeneFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     SpatialUserText = ui->SpatialFileText->toPlainText(); //takes the file location
     SpatialFilename = SpatialUserText.toStdString(); //converts the file location to std::string
-    SpatialBoolean = Spatialdata.readData(SpatialFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    SpatialBoolean = Data.readSpatial(SpatialFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
+    //?? what are our inputs
     ExpressUserText = ui->ExpressFileText->toPlainText(); //takes the file location
     ExpressFilename = ExpressUserText.toStdString(); //converts the file location to std::string
-    ExpressBoolean = ExpressData.readData(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    ExpressBoolean = Data.readMatrix(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
 

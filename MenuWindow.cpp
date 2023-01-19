@@ -3,6 +3,7 @@
 #include "qcustomplot.cpp"
 #include <iostream>
 #include <QMessageBox>
+#include "Eigen/Eigen"
 
 
 MenuWindow::MenuWindow(QWidget *parent) :

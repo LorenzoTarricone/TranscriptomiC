@@ -1,6 +1,7 @@
 #ifndef MENUWINDOW_H
 #define MENUWINDOW_H
 
+#include "Eigen/Eigen"
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
 #include "qdebug.h"
@@ -21,7 +22,6 @@ public:
     ~MenuWindow();
 
     void makePlot();
-
 
     void setX(const QVector<double>& givenX) {x = givenX;};
     void setY(const QVector<double>& givenY) {y = givenY;};
@@ -48,10 +48,13 @@ private:
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
 
-
+    //Spatial
     QVector<double> x;
     QVector<double> y;
     QVector<double> p;
+
+    //Expression
+    Eigen::MatrixXd m;
 
 
 };
