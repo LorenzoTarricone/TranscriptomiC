@@ -10,7 +10,7 @@ class api_bio_pro_to_gene
 {
 public:
     api_bio_pro_to_gene();
-    std::vector<std::string> api_bio_pro_to_gene_function(std::string geneNameFile, std::string geneBioProFile);
+    std::vector<std::string> api_bio_pro_to_gene_function(std::string geneNameFile, std::string geneBioProFile, int nb_study);
 
 };
 

@@ -23,14 +23,14 @@ api_bio_pro_to_gene::api_bio_pro_to_gene()
 
 }
 
-std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::string geneNameFile, std::string geneBioProFile){
+std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::string geneNameFile, std::string geneBioProFile, int nb_study){
 
     //First we read the txt file with the gene name for a particular biologicl process
     //And we take all the name of these genes
 
     readgenetxt vec;
     std::vector<std::string> res;
-    res=vec.listgene_bio_pro(geneNameFile,500); //list of all the genes in the txt file, here 500 bc I want to test with only 500 genes linked to the biological process
+    res=vec.listgene_bio_pro(geneNameFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
     std::cout<<"[";
     for (const std::string& i : res) {
         std::cout << i<<" ";
