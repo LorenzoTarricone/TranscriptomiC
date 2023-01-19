@@ -1,6 +1,6 @@
-#include "colocalization_matrix.h".h"
+#include "colocalization_matrix.h"
 #include <QApplication>
-#include "UploadWindow.h"
+//#include "UploadWindow.h"
 #include <Eigen/Dense>
 #include <math.h>
 #include <thread>

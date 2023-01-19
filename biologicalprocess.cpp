@@ -147,7 +147,10 @@ std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::Matrix
     int numPoints = EMD.rows();
     Eigen::VectorXi clusters = Eigen::VectorXi::LinSpaced(numPoints, 0, numPoints-1); // Initialize each data point to its own cluster
     std::cout<<"started Clustering"<<std::endl;
+    int index = 0;
     while (clusters.maxCoeff()+1 > n) { // Repeat until number of clusters is less than or equal to n
+        std::cout << "clusters.maxCoeff() = "<< clusters.maxCoeff() << std::endl;
+        std::cout << "index: " << index << std::endl;
         // Find the two closest clusters
         int minRow, minCol;
         EMD.minCoeff(&minRow, &minCol);
@@ -166,6 +169,8 @@ std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::Matrix
         EMD.block(minRow, minCol, 1, EMD.cols()-minCol) = EMD.block(minCol, minCol, 1, EMD.cols()-minCol);
         EMD.block(minRow, minCol+1, EMD.rows()-minCol-1, 1) = EMD.block(minCol+1, minCol, EMD.rows()-minCol-1, 1);
         EMD.conservativeResize(numPoints-1, numPoints-1);
+
+        index++;
      }
 
     std::cout<<"finished clustering, got clusters: \n"<<clusters<<std::endl;

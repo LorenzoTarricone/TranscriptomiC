@@ -3,6 +3,7 @@
 #include <QByteArray>
 #include <QUrl>
 #include <QUrlQuery>
+#include "api.h"
 
 // Function to be called by libcurl when there is data to be written
 size_t write_data(void *ptr, size_t size, size_t nmemb, QByteArray *data) {

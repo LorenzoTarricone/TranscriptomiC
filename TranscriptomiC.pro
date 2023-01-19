@@ -26,8 +26,6 @@ SOURCES += \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     parsing.cpp \
-#    matrixeigen.cpp \
-#    SparseMatrix.cpp \
     colocalization_matrix.cpp\
     colocalisation.cpp \
     colocalisation_steps.cpp \
@@ -48,6 +46,7 @@ SOURCES += \
 HEADERS += \
     #API
     api.h \
+    api.h \
     api_gene_name.h \
     genename.h \
     intersection_sets.h \
@@ -64,6 +63,7 @@ HEADERS += \
 #    matrixeigen.h \
 #    SparseMatrix.h \
     colocalization_matrix.h\
+    colocalisation_steps.h \
     colocalisation.h \
     biologicalprocess.h \
     computation.h \
@@ -98,7 +98,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
+#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
 #macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
 

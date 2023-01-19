@@ -7,7 +7,7 @@
 #include "only_gene_name.h"
 #include "read_tsv_set.h"
 #include "intersection_sets.h"
-#include "api.cpp"
+#include "api.h"
 
 #include <iostream>
 #include <string>
