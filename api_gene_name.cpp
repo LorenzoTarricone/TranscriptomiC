@@ -1,5 +1,11 @@
 /*Take a file.txt (list of specific gene he wants to study from a researcher) and a file.tsv (gene present in the matrix table)
  * and returns a set with all the different possible names of these genes that are also present in the matrix table
+ *
+ * The API will work like that: read gene.tsv file, stores all gene names in a set, 
+ * then read gene.txt file, store in a vector, 
+ * then call the API on this vector to create a set with all the possible names of the genes, 
+ * and then take the intersection of the 2 sets (so that we only keep the one we are interested in), 
+ * transform the set into a vector and return this vector. 
  */
 
 #include "api_gene_name.h"
