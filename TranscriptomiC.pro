@@ -54,7 +54,7 @@ FORMS += \
     colocalizationwindow.ui \
 
 
-INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\Project\eigen-3.4.0\eigen-3.4.0"
+#INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\Project\eigen-3.4.0\eigen-3.4.0"
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
