@@ -111,7 +111,7 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 
         this->hide(); //hides menuwindow
         heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(); //generates the heatmap
+        heatmapWindow->makeHeatMap(m); //generates the heatmap
     }
 
 

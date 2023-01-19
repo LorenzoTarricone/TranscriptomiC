@@ -16,51 +16,89 @@ HeatMapWindow::~HeatMapWindow()
 
 void HeatMapWindow::makeHeatMap(){
 
-    // configure axis rect:
-           ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
-           ui->customPlot->axisRect()->setupFullAxesBox(true);
-           ui->customPlot->xAxis->setLabel("x");
-           ui->customPlot->yAxis->setLabel("y");
-           // set up the QCPColorMap:
-           QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
+    // configure axis:
+               ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
+               ui->customPlot->axisRect()->setupFullAxesBox(true);
+               ui->customPlot->xAxis->setLabel("x");
+               ui->customPlot->yAxis->setLabel("y");
 
-           // Use nx = ny = 7 for rec_Data: We need to find nx and ny for each individual file.
-           // It only works for quadratic matrices, we want to get the biggest x- and y-coordinate of the coordinate vectors
-           int nx = sqrt(getX().size());
-           std::cout << "nx: "<< nx;// check if nx is correct: delete this line later
-           int ny = sqrt(getX().size());
-           std::cout << "ny:"<< ny; // check if ny is correct: delte this line later
+               // QCPColorMap:
+               QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-           colorMap->data()->setSize(nx, ny);
-           colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
-           //This is just for rec_Data: We need to find the Range for each individual file
+               // Vector lenght
+               int nx = sqrt(getX().size());
+               int ny = sqrt(getY().size());
 
-           // now we assign some data, by accessing the QCPColorMapData instance of the color map:
-           //HERE WE WOULD LIKE TO USE THE DATA FROM THE TEXTFILES
+               //set the range of the HeatMap;
+               colorMap->data()->setSize(nx, ny);
+               colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
 
-           for(int Index = 0; Index< nx * ny; Index++){ // We have 49 data points for rec_Data file
-               colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
-           }
-           // add a color scale
-           QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
-           ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
-           colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right (actually atRight is already the default)
-           colorMap->setColorScale(colorScale); // associate the color map with the color scale
-           colorScale->axis()->setLabel("Third coordinate");
+               //Quantile Vector
+               double median = 0;
+               double q1 = 0;
+               double q3 = 0;
+               double eta = 0.005;
 
-           // set the color gradient of the color map to one of the presets:
-           colorMap->setGradient(QCPColorGradient::gpPolar);
-           // we could have also created a QCPColorGradient instance and added own colors to
-           // the gradient, see the documentation of QCPColorGradient for what's possible.
+               for(int i= 0; i<getP().size(); i++){
+                   median += eta *std::copysign(1.0f,getP()[i] - median);
 
-           //Uncomment for ColourMap without interpolation
-           //colorMap->setInterpolate(false);
+               }
+               for(int j= 0; j<getP().size(); j++){
 
-           // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
-           colorMap->rescaleDataRange();
+                       if(getP()[j] < median)
+                           q1 += eta*std::copysign(1.0f,getP()[j] - q1);
+                       else
+                           q3 += eta*std::copysign(1.0f,getP()[j] - q3);
 
-           // rescale the key (x) and value (y) axes so the whole color map is visible:
-           ui->customPlot->rescaleAxes();
+               }
+               //test
+               std::cout << median;
+               std::cout << q1;
+               std::cout << q3;
+
+
+
+               for(int Index = 0; Index < nx * ny; Index++){
+                              colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
+                          }
+
+               //Color scale:
+               QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
+               ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis
+               colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right
+               colorScale->setBarWidth(8); //width of scale
+               colorScale->setRangeDrag(&free); // drag the data range. we dont need that
+               colorMap->setColorScale(colorScale); // associate the color map with the color scale
+               colorScale->axis()->setLabel("Intensity");
+
+               //color gradient:
+               QCPColorGradient gradient; // empty gradient with no defined colour stops
+               //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
+               //In between these color stops, the color is interpolated according to setColorInterpolation.
+               gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space
+               gradient.setColorStopAt(0, QColor(0, 0, 100));
+               gradient.setColorStopAt(0.15, QColor(0, 50, 255));
+               gradient.setColorStopAt(0.35, QColor(0, 255, 255));
+               gradient.setColorStopAt(0.65, QColor(255, 255, 0));
+               gradient.setColorStopAt(0.85, QColor(255, 30, 0));
+               gradient.setColorStopAt(1, QColor(100, 0, 0));
+               gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
+               gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
+               colorMap->setGradient(gradient);//assign it to the heatmap
+
+               //Uncomment for ColourMap without interpolation
+               colorMap->setInterpolate(false);
+
+               // make sure the axis rect and color scale synchronize their bottom and top margins (so they line up):
+               QCPMarginGroup *marginGroup = new QCPMarginGroup(ui->customPlot);
+               ui->customPlot->axisRect()->setMarginGroup(QCP::msTop|QCP::msBottom, marginGroup);
+               colorScale->setMarginGroup(QCP::msTop|QCP::msBottom, marginGroup);
+
+               // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
+               colorMap->rescaleDataRange();
+               // rescale the key (x) and value (y) axes so the whole color map is visible:
+               ui->customPlot->rescaleAxes();
+
 
 }
 
