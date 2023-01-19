@@ -2,6 +2,8 @@
 #define HEATMAPWINDOW_H
 
 #include <QDialog>
+#include "qcustomplot.h"
+
 
 namespace Ui {
 class HeatMapWindow;

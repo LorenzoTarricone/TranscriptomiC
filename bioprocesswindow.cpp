@@ -19,7 +19,7 @@ bioprocesswindow::~bioprocesswindow()
     delete ui;
 }
 
-void bioprocesswindow::makeHeatMap(){
+/*void bioprocesswindow::makeHeatMap(){
 
           // configure axis:
            ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
@@ -50,7 +50,7 @@ void bioprocesswindow::makeHeatMap(){
            colorMap->setColorScale(colorScale); // associate the color map with the color scale
            colorScale->axis()->setLabel("Intensity");
 
-           /*//Color gradient:
+           //Color gradient:
            QCPColorGradient gradient; // empty gradient with no defined colour stops
            //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
            gradient.setColorStopAt(0, QColor(0,0,0));//Sets the color the gradient will have at the specified position (from 0 to 1).
@@ -58,7 +58,7 @@ void bioprocesswindow::makeHeatMap(){
            gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space.
            gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
            gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
-           colorMap->setGradient(gradient);//assign it to the heatmap*/
+           colorMap->setGradient(gradient);//assign it to the heatmap
 
            colorMap->setGradient(QCPColorGradient::gpJet);
 
@@ -89,7 +89,7 @@ void bioprocesswindow::on_SaveHeatmapButton_clicked()
 
     heatmap.save(filename + ".png"); // saves as .png
 
-}
+}*/
 
 void bioprocesswindow::setProcessesToAnalyze(){
     //this function will just create a vector with all the processes we can analyze
@@ -105,8 +105,8 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     QString bio;
     std::string process;
 
-    bio = ui->plainTextEdit->toPlainText(); //gets the text the user wrote
-    ui->plainTextEdit->setPlainText(""); //resets the text box to be empty
+    bio = ui->ChosenProcessText->toPlainText(); //gets the text the user wrote
+    ui->ChosenProcessText->setPlainText(""); //resets the text box to be empty
 
     process = bio.toStdString();
 
@@ -130,14 +130,6 @@ void bioprocesswindow::on_MenuWindowButton_clicked()
 
 
 
-void bioprocesswindow::setProcessesToAnalyze(){
-    //this function will just create a vector with all the processes we can analyze
-    //TEMPORARY, in the end we will have something a lot more sophisticated
-
-    processesToAnalyze.push_back("hypoxia");
-
-}
-
 void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow = new HeatMapWindow(this);
     connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
@@ -152,27 +144,5 @@ void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow->makeHeatMap(); //generates the heatmap
 }
 
-void bioprocesswindow::on_AnalyzeButton_clicked()
-{
-    QString bio;
-    std::string process;
-
-    bio = ui->ChosenProcessText->toPlainText(); //gets the text the user wrote
-    ui->ChosenProcessText->setPlainText("Write here the chosen Process"); //resets the text box to be empty
-
-    process = bio.toStdString();
-
-    std::transform(process.begin(), process.end(), process.begin(), ::tolower); //converts to lowercase
-
-    //if we can analyze that process assign it to inputProcess, if not send error message
-    if (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()){
-        inputProcess = process;
-        openHeatMapWindow();
-    }
-    else{
-        QMessageBox::information(this, "Error", "We cannot analyze that process, please provide another one.", QMessageBox::Ok);
-      }
-
-}
 
 

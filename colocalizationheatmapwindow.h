@@ -16,7 +16,7 @@ public:
     explicit ColocalizationHeatmapWindow(QWidget *parent = nullptr);
     ~ColocalizationHeatmapWindow();
 
- //   void on_SaveHeatmapButton_clicked();
+    void on_SaveHeatmapButton_clicked();
 
     void on_SaveMatrixButton_clicked();
 
