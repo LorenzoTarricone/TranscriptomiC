@@ -35,9 +35,9 @@ void UploadWindow::close(){
      */
 
     //sets the data
-    PointerMenuWindow->setX(inputData.getX());
-    PointerMenuWindow->setY(inputData.getY());
-    PointerMenuWindow->setP(inputData.getP());
+    PointerMenuWindow->setX(ExpressData.getX());
+    PointerMenuWindow->setY(ExpressData.getY());
+    PointerMenuWindow->setP(ExpressData.getP());
 
 
     PointerMenuWindow->makePlot(); //generates the plot
@@ -82,17 +82,20 @@ void UploadWindow::on_UploadButton_clicked()
      * window and closes the upload window.
      */
 
+    FileData Genedata;
+    FileData Spatialdata;
+
     GeneUserText = ui->GeneFileText->toPlainText(); //takes the file location
     GeneFilename = GeneUserText.toStdString(); //converts the file location to std::string
-    GeneBoolean = inputData.readData(GeneFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    GeneBoolean = Genedata.readData(GeneFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     SpatialUserText = ui->SpatialFileText->toPlainText(); //takes the file location
     SpatialFilename = SpatialUserText.toStdString(); //converts the file location to std::string
-    SpatialBoolean = inputData.readData(SpatialFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    SpatialBoolean = Spatialdata.readData(SpatialFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     ExpressUserText = ui->ExpressFileText->toPlainText(); //takes the file location
     ExpressFilename = ExpressUserText.toStdString(); //converts the file location to std::string
-    ExpressBoolean = inputData.readData(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    ExpressBoolean = ExpressData.readData(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
     if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
 

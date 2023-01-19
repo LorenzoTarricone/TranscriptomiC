@@ -11,6 +11,7 @@ bioprocesswindow::bioprocesswindow(QWidget *parent) :
     ui(new Ui::bioprocesswindow)
 {
     ui->setupUi(this);
+    ui->ChosenProcessText->setPlainText("Write here the chosen Process");
 
 }
 
@@ -55,8 +56,8 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     QString bio;
     std::string process;
 
-    bio = ui->plainTextEdit->toPlainText(); //gets the text the user wrote
-    ui->plainTextEdit->setPlainText(""); //resets the text box to be empty
+    bio = ui->ChosenProcessText->toPlainText(); //gets the text the user wrote
+    ui->ChosenProcessText->setPlainText("Write here the chosen Process"); //resets the text box to be empty
 
     process = bio.toStdString();
 

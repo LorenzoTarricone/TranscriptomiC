@@ -89,6 +89,9 @@ FORMS += \
     colocalizationheatmapwindow.ui \
     colocalizationwindow.ui \
 
+
+INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\Project\eigen-3.4.0\eigen-3.4.0"
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -96,7 +99,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-macx:INCLUDEPATH += "$$PWD/eigen_mac"
+#macx:INCLUDEPATH += "$$PWD/eigen_mac"
 
 
 macx: LIBS += -lcurl
@@ -104,7 +107,6 @@ macx: LIBS += -lcurl
 
 #INCLUDEPATH += /Users/adrianduesselberg/CSE201Pro/eigen-3.4.0
 
-#INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
 #INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
 
 #LinkParameterWindow.cpp \

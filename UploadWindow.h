@@ -52,6 +52,6 @@ private:
     std::vector<double> x;
     std::vector<double> y;
 
-    FileData inputData;
+    FileData ExpressData;
 };
 #endif // UPLOADWINDOW_H
