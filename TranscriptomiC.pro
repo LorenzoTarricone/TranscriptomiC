@@ -10,50 +10,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    MenuWindow.cpp \
-    UploadWindow.cpp \
-    bioprocesswindow.cpp \
-    colocalisation.cpp \
-    colocalisation_steps.cpp \
-    colocalizationwindow.cpp \
-    filedata.cpp \
-    genename.cpp \
+    #general
     main.cpp \
-    matrixeigen.cpp \
+    #API
+    #Back-End
+    #parsefile.cpp \
     parsemtx.cpp \
     parsetxtbeams.cpp \
     parsing.cpp \
-    qcustomplot.cpp \
-#    SparseMatrix.cpp \
-    colocalization_matrix.cpp \
-    upload_matrix.cpp
-
-HEADERS += \
-    #Back-End
-    #genename.h \
-    #parsemtx.h \
-    filedata.h \
-    #matrixeigen.h \
-    #SparseMatrix.h \
-    #Front-End
-    MenuWindow.h \
-    UploadWindow.h \
-    bioprocesswindow.h \
-    heatmapwindow.h \
-    colocalizationwindow.h \
-    colocalizationheatmapwindow.h \
-    #Package
-    qcustomplot.h
-
-SOURCES += \
-    main.cpp \
-    #Back-End
-    #parsemtx.cpp \
-    filedata.cpp \
-    #genename.cpp \
-    #matrixeigen.cpp \
-    #SparseMatrix.cpp \
-    #colocalization_matrix.cpp\
+    colocalization_matrix.cpp\
+    colocalisation.cpp \
+    colocalisation_steps.cpp \
+    #biologicalprocess.cpp \
+    #computation.cpp \
     #Front-End
     MenuWindow.cpp \
     UploadWindow.cpp \
@@ -61,27 +30,36 @@ SOURCES += \
     heatmapwindow.cpp \
     colocalizationwindow.cpp \
     colocalizationheatmapwindow.cpp \
+    filedata.cpp \
+    #api_bio_pro_to_gene.cpp \
     #Package
     qcustomplot.cpp \
-    filedata.h \
-    genename.h \
-    matrixeigen.h \
+
+HEADERS += \
+    #Back-End
+    #parsefile.h \
     parsemtx.h \
-    qcustomplot.h \
-#    SparseMatrix.h \
     parsetxtbeams.h \
     parsing.h \
+#    matrixeigen.h \
+#    SparseMatrix.h \
+    colocalization_matrix.h\
+    colocalisation_steps.h \
+    colocalisation.h \
+    biologicalprocess.h \
+    computation.h \
+    #Front-End
+    MenuWindow.h \
+    UploadWindow.h \
+    bioprocesswindow.h \
+    heatmapwindow.h \
+    colocalizationwindow.h \
+    colocalizationheatmapwindow.h \
+    filedata.h \
+    api_bio_pro_to_gene.h \
+    #Package
     qcustomplot.h \
-    colocalization_matrix.h \
-    upload_matrix.h
-
-FORMS += \
-    MenuWindow.ui \
-    UploadWindow.ui \
-    bioprocesswindow.ui \
-    heatmapwindow.ui\
-    colocalizationheatmapwindow.ui \
-    colocalizationwindow.ui \
+    SparseMatrix.h \
 
 
 INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\Project\eigen-3.4.0\eigen-3.4.0"

@@ -41,7 +41,7 @@ void UploadWindow::close(){
     PointerMenuWindow = new MenuWindow(this);
 
     //uncomment for plotting colocalization
-    PointerMenuWindow->setMatrix(inputData.getMatrix());
+//PointerMenuWindow->setMatrix(inputData.getMatrix());
 
     //sets the data biological process
     //PointerMenuWindow->setX(inputData.getX());
@@ -107,7 +107,7 @@ void UploadWindow::on_UploadButton_clicked()
     if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
 
     //Uncomment for colocalization
-    readBoolean = inputData.setData_Matrix(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
+    //readBoolean = inputData.setData_Matrix(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
     //readBoolean = inputData.readData(filename);
     if(readBoolean){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message

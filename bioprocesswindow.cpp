@@ -1,8 +1,7 @@
 #include "bioprocesswindow.h"
 #include "colocalizationwindow.h"
-#include "qcustomplot.h"
 #include "ui_bioprocesswindow.h"
-#include "qdebug.h"
+#include <QMessageBox>
 #include <algorithm>
 #include <iostream>
 
