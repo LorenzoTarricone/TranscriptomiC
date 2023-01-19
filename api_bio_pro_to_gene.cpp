@@ -80,7 +80,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
     //now we remove the sets and vectors we don't use anymore to free memory
     res.~vector();
-    small_set.~set();
+//    small_set.~set();
     final_set.~set();
     string_set_gene_matrix.~set();
 

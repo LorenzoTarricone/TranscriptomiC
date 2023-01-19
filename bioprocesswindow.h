@@ -37,11 +37,11 @@ private slots:
 
     void on_MenuWindowButton_clicked();
 
-    void on_SaveHeatmapButton_clicked();
+//    void on_SaveHeatmapButton_clicked();
 
     void on_AnalyzeButton_clicked();
 
-    void on_GenerateHeatmapButton_clicked();
+//    void on_GenerateHeatmapButton_clicked();
 
 private:
     Ui::bioprocesswindow *ui;

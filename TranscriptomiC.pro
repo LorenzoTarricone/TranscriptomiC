@@ -41,8 +41,6 @@ SOURCES += \
     colocalizationwindow.cpp \
     colocalizationheatmapwindow.cpp \
     filedata.cpp \
-    mainwindow.cpp \
-    secondwindow.cpp \
     api_bio_pro_to_gene.cpp \
     #Package
     qcustomplot.cpp \
@@ -77,13 +75,11 @@ HEADERS += \
     colocalizationwindow.h \
     colocalizationheatmapwindow.h \
     filedata.h \
-    SecondWindow.h \
-    mainwindow.h \
     api_bio_pro_to_gene.h \
     #Package
     qcustomplot.h \
     SparseMatrix.h \
-    SecondWindow.h
+
 
 FORMS += \
     MenuWindow.ui \
