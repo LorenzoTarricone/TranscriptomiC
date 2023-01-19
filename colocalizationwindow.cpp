@@ -106,7 +106,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                        }
                    }
 
-              // Ticks
+              // Ticks and Labels
               QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
 
               // tick strategy. readability is more important
@@ -150,9 +150,13 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
               //set x-axis ticker
               ui->customPlot->xAxis->setTicker(textTickerx);
+              ui->customPlot->xAxis->setTickLabelPadding(8); //Sets the distance between the axis base line
+              ui->customPlot->xAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels.
+              ui->customPlot->xAxis->setTickLabelRotation(-90.0); //Sets the rotation of the tick labels.
 
               //set y-axis ticker
               ui->customPlot->yAxis->setTicker(textTickery);
+              ui->customPlot->yAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels.
 
               // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
