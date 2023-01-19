@@ -1,6 +1,12 @@
 /*Take a file.txt (list of genes linked to a specific biopro)+ file.tsv (list of genes in matrix table)
  * and returns the names that are in both (after calling an API to have all the different names of the genes)
- **/
+ *
+ * The API will work like that: read gene.tsv file, stores all gene names in a set, 
+ * then read gene.txt file, store in a vector, 
+ * then call the API on this vector to create a set with all the possible names of the genes, 
+ * and then take the intersection of the 2 sets (so that we only keep the one we are interested in), 
+ * transform the set into a vector and return this vector.  
+ */
 #include "api_bio_pro_to_gene.h"
 #include "readgenetxt.h"
 #include "only_gene_name.h"
