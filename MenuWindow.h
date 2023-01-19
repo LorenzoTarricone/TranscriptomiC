@@ -4,6 +4,7 @@
 #include "Eigen/Eigen"
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
+#include "filedata.h"
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
@@ -23,14 +24,10 @@ public:
 
     void makePlot();
 
-    void setX(const QVector<double>& givenX) {x = givenX;};
-    void setY(const QVector<double>& givenY) {y = givenY;};
-    void setP(const QVector<double>& givenP) {p = givenP;};
+    void setData(FileData givenData){Data = givenData;};
 
 
-    const QVector<double>& getX() {return x;};
-    const QVector<double>& getY() {return y;};
-    const QVector<double>& getP() {return p;};
+
 
 signals:
     void UploadWindow();
@@ -48,13 +45,7 @@ private:
     colocalizationwindow *coWindow;
     bioprocesswindow *bioWindow;
 
-    //Spatial
-    QVector<double> x;
-    QVector<double> y;
-    QVector<double> p;
-
-    //Expression
-    Eigen::MatrixXd m;
+   FileData Data;
 
 
 };

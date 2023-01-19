@@ -18,6 +18,8 @@ public:
     UploadWindow(QWidget *parent = nullptr);
     ~UploadWindow();
 
+    FileData getData(){return Data;};
+
 private slots:
 
     void on_GeneSelectButton_clicked();
@@ -52,6 +54,6 @@ private:
     std::vector<double> x;
     std::vector<double> y;
 
-    FileData ExpressData;
+    FileData Data;
 };
 #endif // UPLOADWINDOW_H

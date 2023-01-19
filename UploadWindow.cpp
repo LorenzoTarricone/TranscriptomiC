@@ -35,10 +35,7 @@ void UploadWindow::close(){
      */
 
     //sets the data
-    PointerMenuWindow->setX(ExpressData.getX());
-    PointerMenuWindow->setY(ExpressData.getY());
-    PointerMenuWindow->setP(ExpressData.getP());
-
+    PointerMenuWindow->setData(Data);
 
     PointerMenuWindow->makePlot(); //generates the plot
     PointerMenuWindow->show(); //shows menuwindow
@@ -81,8 +78,6 @@ void UploadWindow::on_UploadButton_clicked()
     /*This file uploads the data. It reads it and parses it, if everything is fine, then it opens the menu
      * window and closes the upload window.
      */
-
-    FileData Data;
 
     GeneUserText = ui->GeneFileText->toPlainText(); //takes the file location
     GeneFilename = GeneUserText.toStdString(); //converts the file location to std::string

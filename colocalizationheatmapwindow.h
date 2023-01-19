@@ -2,7 +2,7 @@
 #define COLOCALIZATIONHEATMAPWINDOW_H
 
 #include "heatmapwindow.h"
-
+#include "Eigen/Eigen"
 
 namespace Ui {
 class ColocalizationHeatmapWindow;
@@ -17,6 +17,7 @@ public:
     ~ColocalizationHeatmapWindow();
 
  //   void on_SaveHeatmapButton_clicked();
+    void makeHeatMap(const Eigen::MatrixXd m);
 
     void on_SaveMatrixButton_clicked();
 

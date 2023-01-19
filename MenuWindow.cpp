@@ -23,7 +23,7 @@ void MenuWindow::makePlot() {
     //This fucntion makes the scatterplot
 
     ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setData(this->getX(),this->getY());
+    ui->customPlot->graph(0)->setData(this->Data.getX(),this->Data.getY());
     ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsNone); //lsNone = no line
     ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle::ssStar); //ssStar = star points
 
@@ -47,10 +47,10 @@ void MenuWindow::on_ColocalizationButton_clicked()
     coWindow = new colocalizationwindow(this); //creates the instance of colocalizationWindow
     connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    coWindow->setX(this->getX());
-    coWindow->setY(this->getY());
-    coWindow->setP(this->getP());
+    //sets the data // WHAT DATA DO WE HAVE TO USE HERE
+    coWindow->setX(this->Data.getX());
+    coWindow->setY(this->Data.getY());
+    coWindow->setP(this->Data.getP());
 
     this->hide(); //hides menuwindow
     coWindow->show(); //shows colocalizationwindow
@@ -71,10 +71,10 @@ void MenuWindow::on_BiologicalButton_clicked()
     bioWindow = new bioprocesswindow(this); //creates the instance of colocalizationWindow
     connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    bioWindow->setX(this->getX());
-    bioWindow->setY(this->getY());
-    bioWindow->setP(this->getP());
+    //sets the data //  WHAT DATA DO WE HAVE TO USE HERE
+    bioWindow->setX(this->Data.getX());
+    bioWindow->setY(this->Data.getY());
+    bioWindow->setP(this->Data.getP());
 
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
