@@ -1,3 +1,13 @@
+/*
+From a txt file of the form:
+C1 C2 C3 C4 C5 C6 C7 C8 C9 C10
+G1 2 3 5 8 2 8 9 0 9 0 
+G2 2 7 6 7 4 0 0 0 0 2
+G3 4 0 0 0 0 0 0 0 0 0
+G4 0 0 0 8 7 6 5 4 4 0
+Create another file of the same form with log2 every values
+*/
+
 #include "test_txt.h"
 
 #include <iostream>
@@ -5,15 +15,6 @@
 #include <string>
 #include<string.h>
 #include <bits/stdc++.h>
-
-
-
-/* int main(){
-  test_txt t;
-  t.log2_nk ();
-  return 0;
-}
-*/
 
 using namespace std;
 
