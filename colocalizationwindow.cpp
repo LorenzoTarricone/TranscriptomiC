@@ -14,6 +14,7 @@ using namespace std;
 //using namespace Eigen;
 
 
+
 colocalizationwindow::colocalizationwindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::colocalizationwindow)
@@ -36,6 +37,7 @@ void colocalizationwindow::on_MenuWindowButton_clicked()
     this->close();
     emit MenuWindow(); //returns to menuWindow
 }
+
 
 void colocalizationwindow::on_UploadGenesButton_clicked()
 {
@@ -78,7 +80,6 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     MParameter = ui->MParamText->toPlainText().toDouble();
 
     bool checker = true;
-    qDebug() <<"this is p" << p;
 
     if(p.length() == 1){
         for(int i = 0; i <= 5; i++){

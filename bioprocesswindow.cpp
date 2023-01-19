@@ -3,8 +3,8 @@
 #include "qcustomplot.h"
 #include "ui_bioprocesswindow.h"
 #include "qdebug.h"
-
-
+#include <algorithm>
+#include <iostream>
 
 bioprocesswindow::bioprocesswindow(QWidget *parent) :
     QDialog(parent),

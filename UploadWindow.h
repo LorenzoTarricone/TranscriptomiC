@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "MenuWindow.h"
+#include "upload_matrix.h"
 #include "filedata.h"
 
 
@@ -53,5 +54,9 @@ private:
     std::vector<double> y;
 
     FileData ExpressData;
+    upload_matrix inputData;// Uncomment to plot Colocalization
+    //FileData inputData;
+
+    bool readBoolean;
 };
 #endif // UPLOADWINDOW_H
