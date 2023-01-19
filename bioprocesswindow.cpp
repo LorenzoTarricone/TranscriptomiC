@@ -38,7 +38,7 @@ void bioprocesswindow::makeHeatMap(){
            colorMap->data()->setSize(nx, ny);
            colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
 
-           //Quantile Vector
+           /*//Quantile Vector
            double median = 0;
            double q1 = 0;
            double q3 = 0;
@@ -59,7 +59,7 @@ void bioprocesswindow::makeHeatMap(){
            //test
            std::cout << median;
            std::cout << q1;
-           std::cout << q3;
+           std::cout << q3;*/
 
 
 
