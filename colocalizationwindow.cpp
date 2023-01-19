@@ -111,6 +111,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
               // tick strategy. readability is more important
               textTickerx->setTickStepStrategy(QCPAxisTicker::tssReadability);
+              textTickerx->setTickOrigin(0);// sets origin (not necessary)
               textTickerx->setTickCount(3);
 
               QSharedPointer<QCPAxisTickerText> textTickery(new QCPAxisTickerText);
@@ -120,14 +121,30 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
               textTickery->setTickOrigin(0);// sets origin (not necessary)
               textTickery->setTickCount(4);
 
-              //assing the labels
-              //textTickerx->setTicks(const QVector<double> &positions, const QVector<QString> &labels); // can also assign vectors
-              //textTickery->setTicks(const QVector<double> &positions, const QVector<QString> &labels);
+              //assign the labels using vectors
+              QVector<QString> xgenenames;
+              QVector<double> xpositions;
               for(int i = 0; i < number_cols; i++){
-                  textTickerx->addTick(i, "Bacteria");};
+                  xgenenames.append("Bacteria");
+                  xpositions.append(i);
+              };
+
+              QVector<QString> ygenenames;
+              QVector<double> ypositions;
+              for(int i = 0; i < number_cols; i++){
+                  ygenenames.append("Bacteria");
+                  ypositions.append(i);
+              };
+
+              textTickerx->setTicks(xpositions, xgenenames);
+              textTickery->setTicks(ypositions, ygenenames);
+
+              /*//assign each label individually
+              for(int i = 0; i < number_cols; i++){
+                  textTickerx->addTick(i, "Bacteria");}; // Here we need the gene names
 
               for(int j = 0; j< number_rows; j++){
-                  textTickery->addTick(j, "Bacteria");};
+                  textTickery->addTick(j, "Bacteria");}; // Here we need the gene names */
 
 
 
