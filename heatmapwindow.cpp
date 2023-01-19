@@ -15,6 +15,7 @@ HeatMapWindow::~HeatMapWindow()
 }
 
 void HeatMapWindow::makeHeatMap(){
+    //Craetes a HeatMap using vectors
 
     // configure axis:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
@@ -25,15 +26,17 @@ void HeatMapWindow::makeHeatMap(){
                // QCPColorMap:
                QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-               // Vector lenght
+               // Vector size // Need to change that
                int nx = sqrt(getX().size());
                int ny = sqrt(getY().size());
+
+               int data_size = getP().size();
 
                //set the range of the HeatMap;
                colorMap->data()->setSize(nx, ny);
                colorMap->data()->setRange(QCPRange(0, nx-1), QCPRange(0, ny-1)); //set the range of the HeatMap;
 
-               //Quantile Vector
+               /*//Quantile Vector
                double median = 0;
                double q1 = 0;
                double q3 = 0;
@@ -54,13 +57,42 @@ void HeatMapWindow::makeHeatMap(){
                //test
                std::cout << median;
                std::cout << q1;
-               std::cout << q3;
+               std::cout << q3;*/
+
+               //95 PERCENT CONFIDENCE interval
+               //calculate mean
+               double mean = 0.0;
+
+               for(int i= 0; i<getP().size(); i++){
+                   mean += getP()[i]; };
+
+               mean /= data_size;
+
+               //calculate standard deviation
+               double sd = 0.0;
+               for(int i= 0; i<data_size; i++){
+                   sd += pow(getP()[i] - mean,2);}
+
+               //standart error
+               sd = sqrt(sd/(data_size));
+
+               //margin of error
+               double ci = 2* sd;
+
+               double q1 = mean-ci;
+               double q3 = mean+ci;
+               //output
+               std::cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << std::endl;
 
 
 
-               for(int Index = 0; Index < nx * ny; Index++){
-                              colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);
-                          }
+
+               for(int Index = 0; Index < data_size; Index++){
+                   if(getP()[Index]>q1 && getP()[Index]<q3){
+                       colorMap->data()->setCell(getX()[Index], getY()[Index], getP()[Index]);//if the value is in the confidence level.
+                   }
+               }
+               //Labels and Tickers?
 
                //Color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
