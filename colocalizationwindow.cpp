@@ -31,6 +31,8 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
                int number_rows = m.rows();
                int number_cols = m.cols();
+               // data size
+               int data_size = number_cols * number_rows;
 
                colorMap->data()->setSize(number_cols, number_rows);
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
@@ -61,19 +63,16 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
 
 
 
-               //95 PERCENT CONFIDENCE LEVEL
-               //get data size
-               int data_size = number_cols * number_rows;
-
+               //95 PERCENT CONFIDENCE interval
                //calculate mean
                double mean = 0.0;
                for(int i= 0; i<number_cols; i++){
                    for (int j = 0; j<number_rows; j++){
                        mean += m(i,j);
+
                    }
                }
-
-               mean /= number_cols*number_rows;
+               mean /= data_size;
 
                //calculate standard deviation
                double sd = 0.0;
@@ -82,14 +81,8 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                         sd += pow(m(i,j) - mean,2);
                    }
                }
-
-
                //standart error
                sd = sqrt(sd/(data_size));
-
-               //calculate 95% confidence interval
-               //double  n = sqrt(data_size);
-               //double ci = 1.96 * (sd/n); // maybe 2
 
                //margin of error
                double ci = 2* sd;
@@ -97,7 +90,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
                double q1 = mean-ci;
                double q3 = mean+ci;
                //output
-               cout << "95% Confidence Interval: [" << mean - ci << ", " << mean + ci << "]" << endl;
+               cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << endl;
 
 
 
@@ -128,7 +121,7 @@ void colocalizationwindow::makeHeatMap(const MatrixXd m){
               textTickery->setTickCount(4);
 
               //assing the labels
-              //textTickerx->setTicks(const QVector<double> &positions, const QVector<QString> &labels);
+              //textTickerx->setTicks(const QVector<double> &positions, const QVector<QString> &labels); // can also assign vectors
               //textTickery->setTicks(const QVector<double> &positions, const QVector<QString> &labels);
               for(int i = 0; i < number_cols; i++){
                   textTickerx->addTick(i, "Bacteria");};
