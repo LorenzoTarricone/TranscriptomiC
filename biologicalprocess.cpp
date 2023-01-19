@@ -138,12 +138,17 @@ Eigen::MatrixXd biologicalprocess::EMD_Matrix(const Eigen::MatrixXd& expression,
         }
     }
 
-    return EMD;
+    return distance;
 
 }
 
 std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::MatrixXd& EMD, int n){
     std::map<int, std::vector<std::string>> clusters_dict;
+    double maxcoeff=EMD.maxCoeff()+1;
+    for(int i=0;i<EMD.rows();i++){
+        EMD(i,i)=maxcoeff;
+    }
+    //fill diagonal with max value
     int numPoints = EMD.rows();
     Eigen::VectorXi clusters = Eigen::VectorXi::LinSpaced(numPoints, 0, numPoints-1); // Initialize each data point to its own cluster
     std::cout<<"started Clustering"<<std::endl;
@@ -189,13 +194,15 @@ std::map<int, std::vector<std::string>> biologicalprocess::Cluster(Eigen::Matrix
         clusters_dict[current_cluster].push_back(currentGenes[i]);
     }
 
+    return clusters_dict;
 }
 
 void biologicalprocess::bioprocess_2(int n){
     std::cout << "[Progress] Computing EMD Matrix ... "<<std::endl;
     Eigen::MatrixXd EMD_Mat = EMD_Matrix(*expression,A_spatial);
-    std::map<int, std::vector<std::string>> clusters=Cluster(EMD_Mat,n);
 
     std::cout << "[Progress] EMD Matrix computed with size ("<<EMD_Mat.rows()<<","<<EMD_Mat.cols()<<")"<<std::endl;
     std::cout << "EMD Matrix:\n "<<EMD_Mat.block(0,0,10,10)<<std::endl;
+    std::map<int, std::vector<std::string>> clusters=Cluster(EMD_Mat,n);
+
 }

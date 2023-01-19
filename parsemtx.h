@@ -28,6 +28,7 @@ public:
     void createBeamFile(std::string file_out, std::string file_in = "");
     bool geneIndexEmpty();
     void initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop);
+    Eigen::SparseMatrix<double> getSparse();
     std::vector<std::string> getcurrentGenes();
 
     int getRows();

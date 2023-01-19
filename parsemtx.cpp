@@ -686,6 +686,10 @@ Eigen::MatrixXd parsemtx::getExpressionDense(){
 //    return Eigen::MatrixXd(sparse);
 }
 
+Eigen::SparseMatrix<double> parsemtx::getSparse(){
+    return sparse;
+}
+
 
 // methods ot return dimensions of matrix wrappend in this object
 int parsemtx::getRows(){

@@ -51,7 +51,8 @@ void computation::initialise(int rows, int cols){
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
-    *expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+    //*expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
+    *expression =  expression_raw.getSparse().block(block_rows_start,block_cols_start,block_rows,block_cols);
     std::cout << "crop spatial at block("<<block_rows_start<<","<<block_cols_start<<","<<block_cols<<","<<2<<")"<<std::endl;
     A_spatial=A_spatial.block(block_rows_start,block_cols_start,block_cols,2);
 
