@@ -89,3 +89,22 @@ void MenuWindow::on_MenuWindowButton_clicked()
     emit UploadWindow(); //returns to uploadwindow
 }
 
+
+const QVector<double>& MenuWindow::getX() {
+    std::vector<double> stdVec = plot.getExprX();
+    x = QVector<double>(stdVec.begin(), stdVec.end());
+    return x;
+}
+
+
+const QVector<double>& MenuWindow::getY() {
+    std::vector<double> stdVec = plot.getExprY();
+    y = QVector<double>(stdVec.begin(), stdVec.end());
+    return y;
+}
+const QVector<double>& MenuWindow::getP() {
+    std::vector<double> stdVec = plot.getExprVal();
+    p = QVector<double>(stdVec.begin(), stdVec.end());
+    return p;
+}
+
