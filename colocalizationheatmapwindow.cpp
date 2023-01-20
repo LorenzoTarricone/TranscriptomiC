@@ -27,6 +27,7 @@ ColocalizationHeatmapWindow::~ColocalizationHeatmapWindow()
 //    double colocalizationwindow::MParameter;
 
 void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<QString> genes ){
+    //Creates a heatmap using a matrix
      // data size
     int number_rows = m.rows();
     int number_cols = m.cols();

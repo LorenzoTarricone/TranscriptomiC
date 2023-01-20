@@ -15,7 +15,7 @@ HeatMapWindow::~HeatMapWindow()
 }
 
 void HeatMapWindow::makeHeatMap(){
-    //Craetes a HeatMap using vectors
+    //Creates a HeatMap using vectors
 
     // configure axis:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by zooming/dragging
