@@ -1,4 +1,6 @@
 #include "MenuWindow.h"
+#include "biologicalprocess.h"
+#include "colocalisation.h"
 #include "ui_MenuWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
@@ -19,20 +21,20 @@ MenuWindow::~MenuWindow()
 
 void MenuWindow::makePlot() {
 
-    //This fucntion makes the scatterplot
+//    //This fucntion makes the scatterplot
 
-    ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setData(this->getX(),this->getY());
-    ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsNone); //lsNone = no line
-    ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle::ssStar); //ssStar = star points
+//    ui->customPlot->addGraph();
+//    ui->customPlot->graph(0)->setData(this->getX(),this->getY());
+//    ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsNone); //lsNone = no line
+//    ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle::ssStar); //ssStar = star points
 
-    ui->customPlot->xAxis->setLabel("x"); //axis labels
-    ui->customPlot->yAxis->setLabel("y");
+//    ui->customPlot->xAxis->setLabel("x"); //axis labels
+//    ui->customPlot->yAxis->setLabel("y");
 
-    ui->customPlot->xAxis->setRange(0,10); //axis ranges
-    ui->customPlot->yAxis->setRange(0,10);
+//    ui->customPlot->xAxis->setRange(0,10); //axis ranges
+//    ui->customPlot->yAxis->setRange(0,10);
 
-    ui->customPlot->replot();
+//    ui->customPlot->replot();
 }
 
 void MenuWindow::on_ColocalizationButton_clicked()
@@ -43,13 +45,15 @@ void MenuWindow::on_ColocalizationButton_clicked()
      * calls makeHeatMap() to generate the heatmap.
      */
 
+
     coWindow = new colocalizationwindow(this); //creates the instance of colocalizationWindow
     connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    coWindow->setX(this->getX());
-    coWindow->setY(this->getY());
-    coWindow->setP(this->getP());
+    coWindow->setFileObject(files);
+//    //sets the data
+//    coWindow->setX(this->getX());
+//    coWindow->setY(this->getY());
+//    coWindow->setP(this->getP());
 
     this->hide(); //hides menuwindow
     coWindow->show(); //shows colocalizationwindow
@@ -70,10 +74,11 @@ void MenuWindow::on_BiologicalButton_clicked()
     bioWindow = new bioprocesswindow(this); //creates the instance of colocalizationWindow
     connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    bioWindow->setX(this->getX());
-    bioWindow->setY(this->getY());
-    bioWindow->setP(this->getP());
+    bioWindow->setFileObject(files);
+//    //sets the data
+//    bioWindow->setX(this->getX());
+//    bioWindow->setY(this->getY());
+//    bioWindow->setP(this->getP());
 
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
@@ -90,21 +95,21 @@ void MenuWindow::on_MenuWindowButton_clicked()
 }
 
 
-const QVector<double>& MenuWindow::getX() {
-    std::vector<double> stdVec = plot.getExprX();
-    x = QVector<double>(stdVec.begin(), stdVec.end());
-    return x;
-}
+//const QVector<double>& MenuWindow::getX() {
+//    std::vector<double> stdVec = plot.getExprX();
+//    x = QVector<double>(stdVec.begin(), stdVec.end());
+//    return x;
+//}
 
 
-const QVector<double>& MenuWindow::getY() {
-    std::vector<double> stdVec = plot.getExprY();
-    y = QVector<double>(stdVec.begin(), stdVec.end());
-    return y;
-}
-const QVector<double>& MenuWindow::getP() {
-    std::vector<double> stdVec = plot.getExprVal();
-    p = QVector<double>(stdVec.begin(), stdVec.end());
-    return p;
-}
+//const QVector<double>& MenuWindow::getY() {
+//    std::vector<double> stdVec = plot.getExprY();
+//    y = QVector<double>(stdVec.begin(), stdVec.end());
+//    return y;
+//}
+//const QVector<double>& MenuWindow::getP() {
+//    std::vector<double> stdVec = plot.getExprVal();
+//    p = QVector<double>(stdVec.begin(), stdVec.end());
+//    return p;
+//}
 

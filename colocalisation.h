@@ -13,10 +13,15 @@
 class colocalisation : public computation
 {
 public:
+    colocalisation(): computation(){};
     colocalisation(parsefile files, int rows = 0, int cols = 0) : computation(files,rows,cols){};
     ~colocalisation();
     void compute();
     void saveToFile(std::string filename);
+    void setM(double m){this->m = m;};
+    void setP(double p){this->p = p;};
+
+    Eigen::MatrixXd getColocalisationMatrix(){return *A_colocalisation;};
 
 
 private:

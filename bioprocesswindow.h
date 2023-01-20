@@ -1,7 +1,10 @@
 #ifndef BIOPROCESSWINDOW_H
 #define BIOPROCESSWINDOW_H
 
+#include "biologicalprocess.h"
+#include "computation.h"
 #include "heatmapwindow.h"
+#include "parsefile.h"
 #include <QDialog>
 
 namespace Ui {
@@ -21,6 +24,7 @@ public:
     void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
     void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
     void setP(const QVector<double>& givenP) {pValues = givenP;};
+    void setFileObject(const parsefile givenFiles) {files = givenFiles;};
 
     void setProcessesToAnalyze();
     void openHeatMapWindow();
@@ -37,11 +41,9 @@ private slots:
 
     void on_MenuWindowButton_clicked();
 
-//    void on_SaveHeatmapButton_clicked();
 
     void on_AnalyzeButton_clicked();
 
-//    void on_GenerateHeatmapButton_clicked();
 
 private:
     Ui::bioprocesswindow *ui;
@@ -55,7 +57,9 @@ private:
 
     HeatMapWindow *heatmapWindow;
 
-
+    parsefile files;
+//    plotObject plot = plotObject{};
+    biologicalprocess object = biologicalprocess();
 
 };
 

@@ -1,4 +1,5 @@
 #include "colocalizationwindow.h"
+#include "colocalisation.h"
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
 #include <iostream>
@@ -47,9 +48,8 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
      * (can be accessed with getter)
      */
 
-    QString FileFilter = "CSV File (*.csv);;";
-    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
-    std::string filename;
+    QString FileFilter = "TSV File (*.tsv);;";
+    userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     FileData geneNames;
     bool uploadChecker;
 
@@ -72,6 +72,7 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 
     heatmapWindow = new ColocalizationHeatmapWindow(this);
     connect(heatmapWindow, &ColocalizationHeatmapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+
 
     QString p = ui->pParamText->toPlainText();
     pParameter = ui->pParamText->toPlainText().toDouble();
@@ -105,13 +106,29 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     else{
 
         //setLinkageParameters(pParameter, MParameter)
-        heatmapWindow->setX(this->getX());
-        heatmapWindow->setY(this->getY());
-        heatmapWindow->setP(this->getP());
+        object = colocalisation(files,200,200);
+        std::cout << "[Progress] Colocalisation object initialised ..." << std::endl;
+        object.addGeneList(filename);
+        std::cout << "[Progress] Gene list added ..." << std::endl;
+
+
+        object.setM(MParameter);
+        object.setP(pParameter);
+        std::cout << "[Progress] Parameter m and p set ..." << std::endl;
+        double perc = 0.001;
+
+        object.filter_simple(true,perc);
+        object.filter_genes();
+        // normalise data
+        object.normalisation();
+        // compute colocalisation matrix
+        object.compute();
+
+        std::cout << "[Progress] Matrix computation done ..." << std::endl;
 
         this->hide(); //hides menuwindow
         heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(); //generates the heatmap
+        heatmapWindow->makeHeatMap(object.getColocalisationMatrix()); //generates the heatmap
     }
 
 

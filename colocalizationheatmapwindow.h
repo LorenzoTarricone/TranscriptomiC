@@ -1,6 +1,7 @@
 #ifndef COLOCALIZATIONHEATMAPWINDOW_H
 #define COLOCALIZATIONHEATMAPWINDOW_H
 
+#include "colocalisation.h"
 #include "heatmapwindow.h"
 
 
@@ -19,10 +20,13 @@ public:
  //   void on_SaveHeatmapButton_clicked();
 
     void on_SaveMatrixButton_clicked();
+    void setColocalisationObject(colocalisation* object){this->object = object;};
+
 
 
 private:
     Ui::ColocalizationHeatmapWindow *ui;
+    colocalisation* object;
 };
 
 #endif // COLOCALIZATIONHEATMAPWINDOW_H

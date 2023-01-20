@@ -3,6 +3,7 @@
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
+#include "computation.h"
 #include "parsefile.h"
 #include "plotobject.h"
 #include "qdebug.h"
@@ -29,10 +30,7 @@ public:
     void setY(const QVector<double>& givenY) {y = givenY;};
     void setP(const QVector<double>& givenP) {p = givenP;};
 
-    void setFileObject(const parsefile givenFiles) {
-        files = givenFiles;
-        plot = plotObject(files.getExpression().getSparse());
-    };
+    void setFileObject(const parsefile& givenFiles) {files = givenFiles;};
 //    void setPlotObject(const plotObject givenPlot){ plot = givenPlot;};
 
     const QVector<double>& getX();
@@ -65,8 +63,8 @@ private:
     QVector<double> p;
 
     parsefile files;
-    plotObject plot = plotObject{};
-
+//    plotObject plot = plotObject{};
+    computation object = computation{};
 
 };
 

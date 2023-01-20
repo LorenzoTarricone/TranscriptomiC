@@ -15,7 +15,7 @@ HeatMapWindow::~HeatMapWindow()
     delete ui;
 }
 
-void HeatMapWindow::makeHeatMap(const MatrixXd m){
+void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
 
     // configure axis rect:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
@@ -86,7 +86,7 @@ void HeatMapWindow::makeHeatMap(const MatrixXd m){
                double q1 = mean-ci;
                double q3 = mean+ci;
                //output
-               cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << endl;
+               std::cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << std::endl;
 
 
 

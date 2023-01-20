@@ -2,6 +2,7 @@
 #define HEATMAPWINDOW_H
 
 #include <QDialog>
+#include <Eigen/Dense>
 
 namespace Ui {
 class HeatMapWindow;
@@ -15,7 +16,8 @@ public:
     explicit HeatMapWindow(QWidget *parent = nullptr);
     ~HeatMapWindow();
 
-    void makeHeatMap();
+//    void makeHeatMap();
+    void makeHeatMap(const Eigen::MatrixXd m);
     void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
     void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
     void setP(const QVector<double>& givenP) {pValues = givenP;};

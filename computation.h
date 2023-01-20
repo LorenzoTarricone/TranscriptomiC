@@ -7,6 +7,7 @@
 class computation
 {
 public:
+    computation(){};
     computation(parsefile files,int rows = 0, int cols = 0);
     void filter_simple(bool zeroes = true, double min_expr_perc = 0.1);
     void filter_genes();

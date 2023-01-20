@@ -1,6 +1,7 @@
 #include "colocalizationheatmapwindow.h"
 #include "ui_colocalizationheatmapwindow.h"
 #include "heatmapwindow.h"
+#include "QFileDialog"
 
 
 ColocalizationHeatmapWindow::ColocalizationHeatmapWindow(QWidget *parent) :
@@ -72,54 +73,44 @@ void colocalizationwindow::makeHeatMap(){
            ui->customPlot->rescaleAxes();
 
 }
+*/
 
-void colocalizationwindow::on_SaveHeatmapButton_clicked()
-{
-    QPixmap heatmap;
-    QString filename;
-
-    //grabs the heatmap widget as a QPixmap
-    heatmap = ui->customPlot->grab();
-
-    //opens the file explorer and get file name (with full location)
-    filename = QFileDialog::getSaveFileName(this,"Save file");
-
-    heatmap.save(filename + ".png"); //saves as .png
-
-}
-
-
-void colocalizationwindow::on_SaveMatrixButton_clicked(){
+void ColocalizationHeatmapWindow::on_SaveMatrixButton_clicked(){
 
     //opens the file explorer and get file name (with full location)
     QString filename;
     filename = QFileDialog::getSaveFileName(this,"Save file");
     filename = filename + ".csv";
+    std::string name;
+    name = filename.toStdString();
 
 
-    MatrixXd m(5,5); //needs to be changed to the colocalization matrix
-    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
-    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
-    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
-    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
-    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
+     object->saveToFile(name);
+
+//    MatrixXd m(5,5); //needs to be changed to the colocalization matrix
+//    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
+//    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
+//    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
+//    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
+//    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
 
 
 
-    // Using std library to create and writes the file
-    std::string stdfilemane;
-    stdfilemane = filename.toStdString();
-    ofstream fout;
+//    // Using std library to create and writes the file
+//    std::string stdfilemane;
+//    stdfilemane = filename.toStdString();
+//    ofstream fout;
 
-    //opens file, parses the data and writes it as a .csv
-    fout.open(stdfilemane, ios::out);
-    const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
-    fout <<m.format(CSVFormat);
-
-
-    QMessageBox::information(this, "Success (COMENTED OUT)", "The colocalization matrix has been saved under" + filename , QMessageBox::Ok);
-
-};
+//    //opens file, parses the data and writes it as a .csv
+//    fout.open(stdfilemane, ios::out);
+//    const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
+//    fout <<m.format(CSVFormat);
 
 
- */
+//    QMessageBox::information(this, "Success (COMENTED OUT)", "The colocalization matrix has been saved under" + filename , QMessageBox::Ok);
+
+}
+
+
+
+

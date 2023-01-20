@@ -33,17 +33,17 @@ int main(int argc, char *argv[])
     // path to gene subset file
     std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
-//    QApplication a(argc, argv);
-//    UploadWindow w;
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    UploadWindow w;
+    w.show();
+    return a.exec();
 
-//     initialize parse file object
+////     initialize parse file object
     parsefile files = parsefile();
 
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-//     create colocalisation object
+////     create colocalisation object
     colocalisation matrix = colocalisation(files,200,200);
 //     add gene subset file
     matrix.addGeneList(geneSubsetFile);
@@ -56,21 +56,21 @@ int main(int argc, char *argv[])
     matrix.normalisation();
     // compute colocalisation matrix
     matrix.compute();
-    matrix.saveToFile(path+"colocalisation_object.csv");
+//    matrix.saveToFile(path+"colocalisation_object.csv");
 
-    std::cout << "[Progress] Colocalisation done!" << std::endl;
-
-
-    parsefile bp_files = parsefile();
-    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+//    std::cout << "[Progress] Colocalisation done!" << std::endl;
 
 
-    biologicalprocess bp = biologicalprocess(files,400);
-    bp.addGeneList(geneSubsetFile);
-    bp.filter_simple(true,0.001);
-    bp.filter_genes();
-    bp.compute_tot_expr();
-//    bp.bioprocess_2(50);
+//    parsefile bp_files = parsefile();
+//    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+
+//    biologicalprocess bp = biologicalprocess(files,400);
+//    bp.addGeneList(geneSubsetFile);
+//    bp.filter_simple(true,0.001);
+//    bp.filter_genes();
+//    bp.compute_tot_expr();
+////    bp.bioprocess_2(50);
 
 
 

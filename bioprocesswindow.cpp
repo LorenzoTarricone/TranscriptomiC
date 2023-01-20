@@ -48,7 +48,7 @@ void bioprocesswindow::openHeatMapWindow(){
 
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow
-    heatmapWindow->makeHeatMap(); //generates the heatmap
+    //heatmapWindow->makeHeatMap(); //generates the heatmap
 }
 
 void bioprocesswindow::on_AnalyzeButton_clicked()
