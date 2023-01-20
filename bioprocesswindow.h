@@ -39,12 +39,16 @@ private slots:
 
     void on_SaveHeatmapButton_clicked();
 
+    void on_UploadGenesButton_clicked();
+
     void on_AnalyzeButton_clicked();
 
     void on_GenerateHeatmapButton_clicked();
 
 private:
     Ui::bioprocesswindow *ui;
+
+    bool uploadChecker;
 
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
