@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     bp.filter_simple(true,0.01);
     //bp.filter_genes();
     //bp.compute_tot_expr();
-    bp.bioprocess_2(4);
+    std::vector<std::string> clusters_dict=bp.bioprocess_2(4);
 
 
 ////    std::cout << "[Progress] Final gene count for bp: "

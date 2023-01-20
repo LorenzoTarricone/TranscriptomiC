@@ -11,7 +11,7 @@ class biologicalprocess : public computation
 public:
     biologicalprocess(parsefile files,int rows = 0, int cols = 0) : computation(files,rows,cols){};
     double WassersteinDistance(const Eigen::MatrixXd& mat1, const Eigen::MatrixXd& mat2, const Eigen::MatrixXd& distance);
-    void bioprocess_2(int n=5, int num_runs=3);
+    std::vector<std::string> bioprocess_2(int n=5, int num_runs=3);
     void compute_tot_expr();
 
 

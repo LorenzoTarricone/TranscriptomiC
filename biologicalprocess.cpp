@@ -200,12 +200,14 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
                             medoids[i] = oldMedoid;
                         } else {
                             changed = true;
-                            // clear the clusters
-                            for (int i = 0; i < k; i++) {
-                                clusters[i].clear();
-                            }
                         }
                     }
+                }
+            }
+            // clear the clusters
+            if(changed){
+                for (int i = 0; i < k; i++) {
+                    clusters[i].clear();
                 }
             }
 
@@ -256,7 +258,7 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
     return clusters_dict;
 }
 
-void biologicalprocess::bioprocess_2(int n, int num_runs){
+std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
     std::cout << "[Progress] Computing EMD Matrix ... "<<std::endl;
     Eigen::MatrixXd EMD_Mat = Wass_Matrix(A_spatial, *expression,3);
 
@@ -268,5 +270,7 @@ void biologicalprocess::bioprocess_2(int n, int num_runs){
     for(int i = 0; i < clusters_dict.size(); i++){
         std::cout<<"cluster "<<i<<" with genes: "<<clusters_dict[i]<<std::endl;
     }
+
+    return clusters_dict;
 
 }
