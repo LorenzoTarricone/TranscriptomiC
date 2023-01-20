@@ -116,6 +116,25 @@ void parsemtx::print(){
           }
 }
 
+// returns all genes in order that are left in the gene index
+std::vector<std::string> parsemtx::getFinalGenes(){
+    std::cout << "[Progress] getFinalGenes() called" << std::endl;
+
+    std::string array[geneIndex.size()];
+
+
+    for (typename std::map<std::string, int>::iterator i = geneIndex.begin(); i != geneIndex.end(); i++){
+        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+        if(i->second != -1){
+            array[i->second] = i->first;
+            std::cout << "final[" << i->second << "] = " << i->first << std::endl;
+        }
+    }
+
+    int n = sizeof(array) / sizeof(array[0]);
+    std::vector<std::string> final(array, array + n);
+    return final;
+}
 
 // overloaded version of writeToFile to write expression matrix to file
 void parsemtx::writeToFile(std::string filename, bool names){
@@ -123,10 +142,10 @@ void parsemtx::writeToFile(std::string filename, bool names){
     if (!matrix.rows()){
         matrix = Eigen::MatrixXd(sparse);
     }
-    parsemtx::writeToFile(filename,matrix,names);
+    parsemtx::writeToFile(filename,matrix, getFinalGenes(), names);
 }
 
-void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, bool names){
+void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, std::vector<std::string> genes, bool names){
     // file stream
     std::ofstream fout(filename);
 
@@ -140,7 +159,15 @@ void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, bool na
 
     // this will be transposed, as the sparse matrix is stored in column major
     // TODO change to row wise iteration
+    // add genes as first row
+    fout << "\t,";
+    for(int i = 0; i < genes.size()-1; i++){
+        fout << genes[i] << ",";
+    }
+    fout << genes[genes.size()-1] << "\n";
+
     for (int i = 0; i < matrix.rows() ; i++){
+        fout << genes[i] << ",";
         for (int j = 0; j < matrix.rows()-1; j++){
             fout << matrix(i,j) << ","; //distance between coordinate i and j
         }

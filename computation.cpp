@@ -128,7 +128,7 @@ void computation::addGeneList(std::string geneListPath){
 
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*expression);
+    expression_raw.writeToFile(filename,*expression,expression_raw.getFinalGenes());
 }
 
 std::vector<std::string> computation::getcurrentGenes(){

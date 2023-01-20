@@ -33,10 +33,10 @@ int main(int argc, char *argv[])
     // path to gene subset file
     std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
-    QApplication a(argc, argv);
-    UploadWindow w;
-    w.show();
-    return a.exec();
+//    QApplication a(argc, argv);
+//    UploadWindow w;
+//    w.show();
+//    return a.exec();
 
 //     initialize parse file object
     parsefile files = parsefile();
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
 //     create colocalisation object
-    colocalisation matrix = colocalisation(files,2000,2000);
+    colocalisation matrix = colocalisation(files,200,200);
 //     add gene subset file
     matrix.addGeneList(geneSubsetFile);
 //     TODO set linkage parameters!!!
