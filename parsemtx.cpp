@@ -116,39 +116,39 @@ void parsemtx::print(){
           }
 }
 
-// returns all genes in order that are left in the gene index
-std::vector<std::string> parsemtx::getFinalGenes(){
-    std::cout << "[Progress] getFinalGenes() called" << std::endl;
+//// returns all genes in order that are left in the gene index
+//std::vector<std::string> parsemtx::getFinalGenes(){
+//    std::cout << "[Progress] getFinalGenes() called" << std::endl;
 
 
-    std::map<std::string,int> temp;
+//    std::map<std::string,int> temp;
 
 
-    for (typename std::map<std::string, int>::iterator i = geneIndex.begin(); i != geneIndex.end(); i++){
-//        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-        if(i->second != -1){
-            temp[i->first] = i->second;
-//            array[i->second] = i->first;
-            std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-        }
-    }
+//    for (typename std::map<std::string, int>::iterator i = geneIndex.begin(); i != geneIndex.end(); i++){
+////        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+//        if(i->second != -1){
+//            temp[i->first] = i->second;
+////            array[i->second] = i->first;
+//            std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+//        }
+//    }
 
-    std::string array[temp.size()];
+//    std::string array[temp.size()];
 
-    for (typename std::map<std::string, int>::iterator i = temp.begin(); i != temp.end(); i++){
-//        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-        array[i->second] = i->first;
-        std::cout << "final[" << i->second << "] = " << i->first << std::endl;
+//    for (typename std::map<std::string, int>::iterator i = temp.begin(); i != temp.end(); i++){
+////        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+//        array[i->second] = i->first;
+//        std::cout << "final[" << i->second << "] = " << i->first << std::endl;
 
-    }
+//    }
 
-    int n = sizeof(array) / sizeof(array[0]);
-    std::vector<std::string> final(array, array + n);
+//    int n = sizeof(array) / sizeof(array[0]);
+//    std::vector<std::string> final(array, array + n);
 
 
 
-    return final;
-}
+//    return final;
+//}
 
 // overloaded version of writeToFile to write expression matrix to file
 void parsemtx::writeToFile(std::string filename, bool names){
@@ -156,7 +156,7 @@ void parsemtx::writeToFile(std::string filename, bool names){
     if (!matrix.rows()){
         matrix = Eigen::MatrixXd(sparse);
     }
-    parsemtx::writeToFile(filename,matrix, getFinalGenes(), names);
+    parsemtx::writeToFile(filename,matrix, getcurrentGenes(), names);
 }
 
 void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, std::vector<std::string> genes, bool names){

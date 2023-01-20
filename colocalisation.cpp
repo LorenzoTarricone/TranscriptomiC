@@ -34,7 +34,7 @@ void colocalisation::compute(){
 
 void colocalisation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*A_colocalisation,expression_raw.getFinalGenes());
+    expression_raw.writeToFile(filename,*A_colocalisation,expression_raw.getcurrentGenes());
 }
 
 
