@@ -23,6 +23,8 @@ colocalizationwindow::colocalizationwindow(QWidget *parent) :
     ui->pParamText->setPlainText("2");
     ui->MParamText->setPlainText("5000");
 
+    uploadChecker=false;
+
 }
 
 colocalizationwindow::~colocalizationwindow()
@@ -51,7 +53,7 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     std::string filename;
     FileData geneNames;
-    bool uploadChecker;
+
 
     filename = userText.toStdString();
     uploadChecker = geneNames.readGenes(filename); //checks for successful upload and reads the genes
@@ -80,7 +82,7 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     MParameter = ui->MParamText->toPlainText().toDouble();
 
     bool PercentChecker = false;
-    qDebug() <<"this is p" << Percent;
+
     if(Percent.length() <=3){
         for(int i = 0; i <= 100; i++){
             if(Percent == QString::number(i)){
@@ -102,26 +104,30 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
         }
     }
 
-
-    if((PercentParameter<0 && PercentParameter>1 && PercentChecker) || (pParameter<0 && pParameter>5 && pChecker) || (MParameter<10 && MParameter>10000)){
-
-        QString ErrorMesage = "Invalid Parameters.\n";
-        if(PercentParameter<0 || pParameter >1 || PercentChecker){ErrorMesage.append("Invalid value for Percentage of Expression.");}else{ErrorMesage.append("Valid Percentage of Expression.");};
-        if(pParameter<0 || pParameter >5 || pChecker){ErrorMesage.append("Invalid value for p parameter.\n");}else{ErrorMesage.append("Valid p parameter.\n");};
-        if(MParameter<10 || MParameter >10000){ErrorMesage.append("Invalid value for M parameter.\n");}else{ErrorMesage.append("Valid M parameter.\n");};
-
-        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
-    }
-    else{
+    if(uploadChecker && (PercentParameter>0 && PercentParameter<=1 && PercentChecker) && (pParameter>=0 && pParameter<=5 && pChecker) && (MParameter>=10 && MParameter<=10000)){
 
         //setLinkageParameters(PercentParameter,pParameter, MParameter)
         heatmapWindow->setX(this->getX());
         heatmapWindow->setY(this->getY());
         heatmapWindow->setP(this->getP());
 
+        QMessageBox::information(this, "Success", "File has been uploaded and \n Parameters have been inputed.", QMessageBox::Ok); //sucess message
+
         this->hide(); //hides menuwindow
         heatmapWindow->show(); //shows biowindow
         heatmapWindow->makeHeatMap(); //generates the heatmap
+
+    }
+    else{
+
+        QString ErrorMesage = "Invalid Parameters.\n";
+        if(uploadChecker){ErrorMesage.append("File has been uploaded correctly. \n");}else{ErrorMesage.append("Please upload a file. \n");};
+        if(PercentParameter>0 && PercentParameter<=1 && PercentChecker){ErrorMesage.append("Valid Percentage of Expression. \n");}else{ErrorMesage.append("Invalid value for Percentage of Expression. \n");};
+        if(pParameter>=0 && pParameter<=5 && pChecker){ErrorMesage.append("Valid p parameter.\n");}else{ErrorMesage.append("Invalid value for p parameter.\n");};
+        if(MParameter>=10 && MParameter<=10000){ErrorMesage.append("Valid M parameter.\n");}else{ErrorMesage.append("Invalid value for M parameter.");};
+
+        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
+
     }
 
 

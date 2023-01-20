@@ -41,6 +41,8 @@ private slots:
 private:
     Ui::colocalizationwindow *ui;
 
+    bool uploadChecker;
+
     double pParameter;
     double MParameter;
     double PercentParameter;
