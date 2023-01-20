@@ -24,8 +24,8 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
-//    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+    //std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
 
 //    QApplication a(argc, argv);
 //    UploadWindow w;

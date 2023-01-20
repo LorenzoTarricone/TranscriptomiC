@@ -121,11 +121,17 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
 
     }
 
-    //remove the " " at the beginning and at the end of the string
-    gene=upper_search.substr(1, upper_search.length() - 2);
+    //remove the " " at the beginning and at the end of the string if they are present
+    //gene=upper_search.substr(1, upper_search.length() - 2);
+    gene.reserve(upper_search.size());
+    std::remove_copy_if(
+        begin(upper_search), end(upper_search),
+        std::back_inserter(gene),
+        [m = std::locale{}](auto ch) { return std::isspace(ch, m); }
+    );
 
     //insert the gene name in the set to be sure the original name given by the researcher is in the set
-    res.insert(gene);
+    res.insert(search);
 
     for (const std::string& str : res) {
         std::string lowercase_str = str;

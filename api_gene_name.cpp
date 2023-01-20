@@ -33,6 +33,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
 
     //first we open the set of the genes the researcher is interested and call the
     //API on each gene to find all their different names
+    std::cout<<"entered gene_name_function"<<std::endl;
     readgenetxt vec;
     std::vector<std::string> res;
     res=vec.listgene(geneSubsetFile); //list of all the genes in the txt file
@@ -44,6 +45,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
 
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
+        std::cout<<"loop number: "<<i<<std::endl;
         std::string search=res[i];
 //        qDebug() << QString::fromStdString(search);
         std::string l;
@@ -85,9 +87,9 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
     //now we remove the sets and vectors we don't use anymore to free memory
-    res.~vector();
-    final_set.~set();
-    string_set_gene_matrix.~set();
+    //res.~vector();
+    //final_set.~set();
+    //string_set_gene_matrix.~set();
 
     std::vector<std::string> v = std::vector<std::string>();
 
