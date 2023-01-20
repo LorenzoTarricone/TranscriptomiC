@@ -19,7 +19,7 @@ colocalizationwindow::colocalizationwindow(QWidget *parent) :
     ui(new Ui::colocalizationwindow)
 {
     ui->setupUi(this);
-
+    ui->PercentParamText->setPlainText("5");
     ui->pParamText->setPlainText("2");
     ui->MParamText->setPlainText("5000");
 
@@ -73,38 +73,48 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     heatmapWindow = new ColocalizationHeatmapWindow(this);
     connect(heatmapWindow, &ColocalizationHeatmapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
+    QString Percent = ui->PercentParamText->toPlainText();
+    PercentParameter = ui->PercentParamText->toPlainText().toDouble()*0.01;
     QString p = ui->pParamText->toPlainText();
     pParameter = ui->pParamText->toPlainText().toDouble();
     MParameter = ui->MParamText->toPlainText().toDouble();
 
-    bool checker = true;
-    qDebug() <<"this is p" << p;
-
-    if(p.length() == 1){
-        for(int i = 0; i <= 5; i++){
-            if(p == QString::number(i)){
-                checker = false;
+    bool PercentChecker = false;
+    qDebug() <<"this is p" << Percent;
+    if(Percent.length() <=3){
+        for(int i = 0; i <= 100; i++){
+            if(Percent == QString::number(i)){
+                PercentChecker = true;
                 break;
             }
         }
     }
 
 
-    if( (MParameter<10 || MParameter >10000) && (pParameter<0 || pParameter >5)){
-        QMessageBox::information(this, "Error", "Invalid value for p and M parameters", QMessageBox::Ok);
+    bool pChecker = false;
 
+    if(p.length() == 1){
+        for(int i = 0; i <= 5; i++){
+            if(p == QString::number(i)){
+                pChecker = true;
+                break;
+            }
+        }
     }
-    else if(MParameter<10 || MParameter >10000){
-        QMessageBox::information(this, "Error", "Invalid value for M parameter", QMessageBox::Ok);
 
-    }
-    else if(pParameter<0 || pParameter >5 || checker){
-        QMessageBox::information(this, "Error", "Invalid value for p parameter", QMessageBox::Ok);
 
+    if((PercentParameter<0 && PercentParameter>1 && PercentChecker) || (pParameter<0 && pParameter>5 && pChecker) || (MParameter<10 && MParameter>10000)){
+
+        QString ErrorMesage = "Invalid Parameters.\n";
+        if(PercentParameter<0 || pParameter >1 || PercentChecker){ErrorMesage.append("Invalid value for Percentage of Expression.");}else{ErrorMesage.append("Valid Percentage of Expression.");};
+        if(pParameter<0 || pParameter >5 || pChecker){ErrorMesage.append("Invalid value for p parameter.\n");}else{ErrorMesage.append("Valid p parameter.\n");};
+        if(MParameter<10 || MParameter >10000){ErrorMesage.append("Invalid value for M parameter.\n");}else{ErrorMesage.append("Valid M parameter.\n");};
+
+        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
     }
     else{
 
-        //setLinkageParameters(pParameter, MParameter)
+        //setLinkageParameters(PercentParameter,pParameter, MParameter)
         heatmapWindow->setX(this->getX());
         heatmapWindow->setY(this->getY());
         heatmapWindow->setP(this->getP());

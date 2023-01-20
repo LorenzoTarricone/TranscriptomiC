@@ -99,7 +99,7 @@ void UploadWindow::on_UploadButton_clicked()
 
     if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
 
-        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
+        QMessageBox::information(this, "Success", "Files have been uploaded.", QMessageBox::Ok); //sucess message
         close(); //closes this window and opens the menu
 
     }else{

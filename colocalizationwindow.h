@@ -43,6 +43,7 @@ private:
 
     double pParameter;
     double MParameter;
+    double PercentParameter;
 
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
