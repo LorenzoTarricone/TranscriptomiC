@@ -79,7 +79,6 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     MParameter = ui->MParamText->toPlainText().toDouble();
 
     bool checker = true;
-    qDebug() <<"this is p" << p;
 
     if(p.length() == 1){
         for(int i = 0; i <= 5; i++){
@@ -106,29 +105,35 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     else{
 
         //setLinkageParameters(pParameter, MParameter)
-        object = colocalisation(files,200,200);
-        std::cout << "[Progress] Colocalisation object initialised ..." << std::endl;
-        object.addGeneList(filename);
-        std::cout << "[Progress] Gene list added ..." << std::endl;
+        qDebug() << "Instantiating colocalisation object ... ";
+        colocalisation* object = new colocalisation(files,200,200);
+        qDebug() << "[Progress] Colocalisation object initialised ..." ;
+        object->addGeneList(filename);
+        qDebug() << "[Progress] Gene list added ..." ;
 
+        double MParameter = 5000;
+        double pParameter = 2;
 
-        object.setM(MParameter);
-        object.setP(pParameter);
-        std::cout << "[Progress] Parameter m and p set ..." << std::endl;
+        object->setM(MParameter);
+        object->setP(pParameter);
+        qDebug() << "[Progress] Parameter m and p set ...";
         double perc = 0.001;
 
-        object.filter_simple(true,perc);
-        object.filter_genes();
+        object->filter_simple(true,perc);
+        object->filter_genes();
         // normalise data
-        object.normalisation();
+        object->normalisation();
         // compute colocalisation matrix
-        object.compute();
+        object->compute();
 
-        std::cout << "[Progress] Matrix computation done ..." << std::endl;
+        qDebug() << "[Progress] Matrix computation done ..." ;
 
         this->hide(); //hides menuwindow
+        qDebug() << "[Progress] Setting colocalisation object ..." ;
+        heatmapWindow->setColocalisationObject(object);
+        qDebug() << "[Progress] Setting colocalisation object done." ;
         heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(object.getColocalisationMatrix()); //generates the heatmap
+        heatmapWindow->makeHeatMap(object->getColocalisationMatrix()); //generates the heatmap
     }
 
 

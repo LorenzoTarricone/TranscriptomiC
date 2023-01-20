@@ -59,7 +59,7 @@ private:
 
     parsefile files;
 //    plotObject plot = plotObject{};
-    biologicalprocess object = biologicalprocess();
+    biologicalprocess object; // = biologicalprocess();
 
 };
 

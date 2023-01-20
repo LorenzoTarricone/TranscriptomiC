@@ -287,6 +287,8 @@ void parsemtx::initiateGeneIndex_cropped(std::vector<std::string> geneList, int 
         // visualize
         std::cout << "Index: -1 for cropped Gene: "<< *i << std::endl;
     }
+
+    std::cout << "[Progress] Initiating gene index finished!" << std::endl;
 }
 
 // function to initiate geneSubset

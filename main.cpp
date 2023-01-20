@@ -31,31 +31,53 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
 
     QApplication a(argc, argv);
     UploadWindow w;
     w.show();
     return a.exec();
 
-////     initialize parse file object
+//////     initialize parse file object
     parsefile files = parsefile();
 
     files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-////     create colocalisation object
-    colocalisation matrix = colocalisation(files,200,200);
-//     add gene subset file
-    matrix.addGeneList(geneSubsetFile);
-//     TODO set linkage parameters!!!
-//     filter
-    matrix.filter_simple(true,0.001);
-    matrix.filter_genes();
+    colocalisation object = colocalisation(files,200,200);
+    std::cout << "[Progress] Colocalisation object initialised ..." << std::endl;
+    object.addGeneList(geneSubsetFile);
+    std::cout << "[Progress] Gene list added ..." << std::endl;
 
+    double MParameter = 5000;
+    double pParameter = 2;
+
+    object.setM(MParameter);
+    object.setP(pParameter);
+    std::cout << "[Progress] Parameter m and p set ..." << std::endl;
+    double perc = 0.001;
+
+    object.filter_simple(true,perc);
+    object.filter_genes();
     // normalise data
-    matrix.normalisation();
+    object.normalisation();
     // compute colocalisation matrix
-    matrix.compute();
+    object.compute();
+
+    std::cout << "[Progress] Matrix computation done ..." << std::endl;
+
+//////     create colocalisation object
+//    colocalisation matrix = colocalisation(files,200,200);
+////     add gene subset file
+//    matrix.addGeneList(geneSubsetFile);
+////     TODO set linkage parameters!!!
+////     filter
+//    matrix.filter_simple(true,0.001);
+//    matrix.filter_genes();
+
+//    // normalise data
+//    matrix.normalisation();
+//    // compute colocalisation matrix
+//    matrix.compute();
 //    matrix.saveToFile(path+"colocalisation_object.csv");
 
 //    std::cout << "[Progress] Colocalisation done!" << std::endl;

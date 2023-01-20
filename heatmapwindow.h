@@ -1,6 +1,7 @@
 #ifndef HEATMAPWINDOW_H
 #define HEATMAPWINDOW_H
 
+#include "computation.h"
 #include <QDialog>
 #include <Eigen/Dense>
 
@@ -22,10 +23,14 @@ public:
     void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
     void setP(const QVector<double>& givenP) {pValues = givenP;};
 
+    void setObject(const computation givenObject) {object = givenObject;};
+
 
     const QVector<double>& getX() {return xCoordinates;};
     const QVector<double>& getY() {return yCoordinates;};
     const QVector<double>& getP() {return pValues;};
+
+
 
 private slots:
     void on_SaveHeatmapButton_clicked();
@@ -41,6 +46,8 @@ private:
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;
     QVector<double> pValues;
+
+    computation object;
 
 };
 

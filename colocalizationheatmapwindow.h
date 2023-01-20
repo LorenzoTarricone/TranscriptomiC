@@ -19,8 +19,9 @@ public:
 
  //   void on_SaveHeatmapButton_clicked();
 
+    void setColocalisationObject(colocalisation* givenObject){object = givenObject;};
+private slots:
     void on_SaveMatrixButton_clicked();
-    void setColocalisationObject(colocalisation* object){this->object = object;};
 
 
 

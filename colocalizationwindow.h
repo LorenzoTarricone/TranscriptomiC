@@ -57,7 +57,7 @@ private:
 
     parsefile files;
 //    plotObject plot = plotObject{};
-    colocalisation object = colocalisation{};
+    colocalisation object;
     QString userText;
     std::string filename;
 

@@ -65,6 +65,8 @@ void computation::initialise(int rows, int cols){
     std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
 
     expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
+
+    std::cout << "[Progress] Construction succesful! ..." << std::endl;
 }
 
 void computation::filter_simple(bool zeroes, double min_expr_perc){
