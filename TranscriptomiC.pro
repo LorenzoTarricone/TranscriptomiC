@@ -81,6 +81,7 @@ HEADERS += \
     #Package
     qcustomplot.h \
     SparseMatrix.h \
+    wasserstein.h
 
 
 FORMS += \

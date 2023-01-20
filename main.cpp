@@ -65,12 +65,17 @@ int main(int argc, char *argv[])
 //    parsefile bp_files = parsefile();
 //    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-//    biologicalprocess bp = biologicalprocess(files,400);
-//    bp.addGeneList(geneSubsetFile);
-//    bp.filter_simple(true,0.001);
-//    bp.filter_genes();
-//    bp.compute_tot_expr();
-////    bp.bioprocess_2(50);
+
+
+    parsefile bp_files = parsefile();
+    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+    biologicalprocess bp = biologicalprocess(bp_files,500,2000);
+    bp.addGeneList(geneSubsetFile);
+    bp.filter_simple(true,0.01);
+    //bp.filter_genes();
+    //bp.compute_tot_expr();
+    std::vector<std::string> clusters_dict=bp.bioprocess_2(4);
 
 
 
