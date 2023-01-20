@@ -92,7 +92,6 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
         }
     }
 
-
     bool pChecker = false;
 
     if(p.length() == 1){
