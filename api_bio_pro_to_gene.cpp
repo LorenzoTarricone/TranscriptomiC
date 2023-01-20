@@ -37,11 +37,11 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     readgenetxt vec;
     std::vector<std::string> res;
     res=vec.listgene_bio_pro(geneNameFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
-    std::cout<<"[";
-    for (const std::string& i : res) {
-        std::cout << i<<" ";
-      }
-    std::cout<<"]";
+//    std::cout<<"[";
+//    for (const std::string& i : res) {
+//        std::cout << i<<" ";
+//      }
+//    std::cout<<"]";
 
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
@@ -56,7 +56,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
         QJsonDocument doc = searchHGNC(params);
         QString strJson(doc.toJson(QJsonDocument::Compact));
         l=strJson.toStdString();
-        std::cout<<"THIS IS" << search<<l;
+//        std::cout<<"THIS IS" << search<<l;
 
         only_gene_name test; //search other name of this specific gene in the string l
         std::set<std::string> small_set;
@@ -65,12 +65,12 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
         final_set.insert(small_set.begin(), small_set.end()); //add the set of the names of this gene in the set of all the genes
 
-        std::cout<<'\n'<<"Set is: { "; //print final set
-        for(auto& str: final_set)
-          {
-            std::cout << str << ' ';
-          }
-        std::cout<<"}";
+//        std::cout<<'\n'<<"Set is: { "; //print final set
+//        for(auto& str: final_set)
+//          {
+//            std::cout << str << ' ';
+//          }
+//        std::cout<<"}";
 
     }
 
@@ -90,12 +90,16 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     final_set.~set();
     string_set_gene_matrix.~set();
 
-    for (std::string x : intersection_set) {
-        std::cout << x << " ";
-    }
+//    for (std::string x : intersection_set) {
+//        std::cout << x << " ";
+//    }
+
+    std::cout << "Cross reference finished" << std::endl;
 
     //return a vector instead of a set since the backend team was working with a set
     std::vector<string> v(intersection_set.begin(), intersection_set.end());
+
+    std::cout << "Conversion finished" << std::endl;
 
     return v;}
 

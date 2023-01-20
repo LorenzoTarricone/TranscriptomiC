@@ -1,5 +1,6 @@
 
 #include "UploadWindow.h"
+#include "api_bio_pro_to_gene.h"
 #include "colocalisation.h"
 #include "biologicalprocess.h"
 #include <QApplication>
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
     // path to expression matrix
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_2.tsv";
+    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
 
 //    QApplication a(argc, argv);
 //    UploadWindow w;
@@ -45,8 +46,15 @@ int main(int argc, char *argv[])
 
 //     create colocalisation object
     colocalisation matrix = colocalisation(files,200,200);
-//     add gene subset file
-    matrix.addGeneList(geneSubsetFile);
+    // filter contents of the gene subset file through the data base
+//    std::vector<std::string> geneSubsetList;
+    int nb_study = 50;
+    std::vector<std::string> geneSubsetList = api_bio_pro_to_gene::api_bio_pro_to_gene_function(geneNameFile,geneSubsetFile, nb_study);
+    std::cout << "[Progress] geneSubsetList finished!" << std::endl;
+
+    //     add gene subset file
+    matrix.addGeneList(geneSubsetList);
+//    matrix.addGeneList(listgene(geneSubsetFile));
 //     TODO set linkage parameters!!!
 //     filter
     matrix.filter_genes();
@@ -67,15 +75,15 @@ int main(int argc, char *argv[])
 
 
 
-    parsefile bp_files = parsefile();
-    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+//    parsefile bp_files = parsefile();
+//    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-    biologicalprocess bp = biologicalprocess(bp_files,500,2000);
-    bp.addGeneList(geneSubsetFile);
-    bp.filter_simple(true,0.01);
-    //bp.filter_genes();
-    //bp.compute_tot_expr();
-    std::vector<std::string> clusters_dict=bp.bioprocess_2(4);
+//    biologicalprocess bp = biologicalprocess(bp_files,500,2000);
+//    bp.addGeneList(geneSubsetFile);
+//    bp.filter_simple(true,0.01);
+//    //bp.filter_genes();
+//    //bp.compute_tot_expr();
+//    std::vector<std::string> clusters_dict=bp.bioprocess_2(4);
 
 
 

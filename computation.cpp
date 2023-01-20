@@ -119,10 +119,16 @@ void computation::normalisation(std::string type_of_normal){
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
+void computation::addGeneList(std::vector<std::string> geneList){
+    std::cout << "[Progress] Adding gene subset ..." << std::endl;
+    geneSubset = geneList;
+    std::cout << "[Progress] Subset added ..." << std::endl;
 
+}
 
 void computation::addGeneList(std::string geneListPath){
-    geneSubset = listgene(geneListPath);
+    addGeneList(listgene(geneListPath));
+//    geneSubset = listgene(geneListPath);
 }
 
 
