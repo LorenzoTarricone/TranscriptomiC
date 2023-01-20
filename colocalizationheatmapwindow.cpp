@@ -26,9 +26,18 @@ ColocalizationHeatmapWindow::~ColocalizationHeatmapWindow()
 //    double colocalizationwindow::pParameter;
 //    double colocalizationwindow::MParameter;
 
-void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<std::string> genes ){
+void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<QString> genes ){
+     // data size
+    int number_rows = m.rows();
+    int number_cols = m.cols();
+    int data_size = number_cols * number_rows;
 
-    // configure axis rect:
+    // Exit Codes
+    if (genes.size() != number_rows && genes.size() !=number_cols){
+        std::cout << "Genevector and matrix are not compatible" << std::endl;
+    }else {
+
+               // configure axis rect:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
                ui->customPlot->axisRect()->setupFullAxesBox(true);
                ui->customPlot->xAxis->setLabel("x");
@@ -36,10 +45,6 @@ void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<std::st
                // set up the QCPColorMap:
                QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-               int number_rows = m.rows();
-               int number_cols = m.cols();
-               // data size
-               int data_size = number_cols * number_rows;
 
                colorMap->data()->setSize(number_cols, number_rows);
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
@@ -128,14 +133,14 @@ void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<std::st
               textTickery->setTickCount(4);
 
               //assign the labels using vectors
-              //QVector<QString> xgenenames;
+              //QVector<QString> xgenenames; //test
               QVector<double> xpositions;
               for(int i = 0; i < number_cols; i++){
                   //xgenenames.append("Bacteria"); // test
                   xpositions.append(i);
               };
 
-              //QVector<QString> ygenenames;
+              //QVector<QString> ygenenames; //test
               QVector<double> ypositions;
               for(int i = 0; i < number_cols; i++){
                   //ygenenames.append("Bacteria");//test
@@ -201,7 +206,7 @@ void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<std::st
 
                // rescale the key (x) and value (y) axes so the whole color map is visible:
                ui->customPlot->rescaleAxes();
-
+    }
 
 };
 /*

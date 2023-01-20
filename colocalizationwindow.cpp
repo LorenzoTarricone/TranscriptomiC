@@ -104,14 +104,15 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     }
     else{
 
-        //setLinkageParameters(pParameter, MParameter)
+        /*//setLinkageParameters(pParameter, MParameter)
         heatmapWindow->setX(this->getX());
         heatmapWindow->setY(this->getY());
-        heatmapWindow->setP(this->getP());
+        heatmapWindow->setP(this->getP());*/
+        heatmapWindow->setMatrix(this->getMatrix());
 
         this->hide(); //hides menuwindow
         heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(m); //generates the heatmap
+        heatmapWindow->makeHeatMap(m,); //generates the heatmap
     }
 
 

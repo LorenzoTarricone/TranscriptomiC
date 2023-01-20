@@ -17,7 +17,7 @@ public:
     ~ColocalizationHeatmapWindow();
 
  //   void on_SaveHeatmapButton_clicked();
-    void makeHeatMap(const Eigen::MatrixXd m, QVector<std::string> genes);
+    void makeHeatMap(const Eigen::MatrixXd m, QVector<QString> genes);
 
     void on_SaveMatrixButton_clicked();
 
