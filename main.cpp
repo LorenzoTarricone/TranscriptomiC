@@ -1,6 +1,7 @@
 
 #include "UploadWindow.h"
 #include "api_bio_pro_to_gene.h"
+#include "api_gene_name.h"
 #include "colocalisation.h"
 #include "biologicalprocess.h"
 #include <QApplication>
@@ -48,9 +49,16 @@ int main(int argc, char *argv[])
     colocalisation matrix = colocalisation(files,200,200);
     // filter contents of the gene subset file through the data base
 //    std::vector<std::string> geneSubsetList;
+    api_gene_name api;
     int nb_study = 50;
-    std::vector<std::string> geneSubsetList = api_bio_pro_to_gene::api_bio_pro_to_gene_function(geneNameFile,geneSubsetFile, nb_study);
-    std::cout << "[Progress] geneSubsetList finished!" << std::endl;
+    std::vector<std::string> geneSubsetList;
+    geneSubsetList = api.api_gene_name_funtion(geneNameFile,geneSubsetFile);
+    std::cout << "[Progress] geneSubsetList finished: " << std::endl;
+    std::cout << "Printing Vector after conversion\n";
+    for (std::string i : geneSubsetList){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
 
     //     add gene subset file
     matrix.addGeneList(geneSubsetList);

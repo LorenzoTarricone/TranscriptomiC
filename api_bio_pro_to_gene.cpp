@@ -46,13 +46,13 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
         std::string search=res[i];
-        qDebug() << QString::fromStdString(search);
+//        qDebug() << QString::fromStdString(search);
         std::string l;
         //API call
 
         QMap<QString, QString> params;
         params["terms"]= QString::fromStdString(search);
-        qDebug() <<params;
+//        qDebug() <<params;
         QJsonDocument doc = searchHGNC(params);
         QString strJson(doc.toJson(QJsonDocument::Compact));
         l=strJson.toStdString();
@@ -101,5 +101,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
     std::cout << "Conversion finished" << std::endl;
 
-    return v;}
+    return v;
+
+}
 

@@ -36,41 +36,42 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     readgenetxt vec;
     std::vector<std::string> res;
     res=vec.listgene(geneSubsetFile); //list of all the genes in the txt file
-    std::cout<<"[";
-    for (const std::string& i : res) {
-        std::cout << i<<" ";
-      }
-    std::cout<<"]";
+//    std::cout<<"[";
+//    for (const std::string& i : res) {
+//        std::cout << i<<" ";
+//      }
+//    std::cout<<"]";
 
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
         std::string search=res[i];
-        qDebug() << QString::fromStdString(search);
+//        qDebug() << QString::fromStdString(search);
         std::string l;
 
         //API call
 
         QMap<QString, QString> params;
         params["terms"]= QString::fromStdString(search);
-        qDebug() <<params;
+//        qDebug() <<params;
         QJsonDocument doc = searchHGNC(params);
         QString strJson(doc.toJson(QJsonDocument::Compact));
         l=strJson.toStdString();
-        std::cout<<"THIS IS" << search<<l;
+//        std::cout<<"THIS IS" << search<<l;
+
 
         only_gene_name test; //search other name of this specific gene in the string l
         std::set<std::string> small_set;
         small_set=test.listgene(l, search);
-        test.printset(small_set);
+//        test.printset(small_set);
 
         final_set.insert(small_set.begin(), small_set.end()); //add the set of the names of this gene in the set of all the genes
 
-        std::cout<<'\n'<<"Set is: { "; //print final set
-        for(auto& str: final_set)
-          {
-            std::cout << str << ' ';
-          }
-        std::cout<<"}";
+//        std::cout<<'\n'<<"Set is: { "; //print final set
+//        for(auto& str: final_set)
+//          {
+//            std::cout << str << ' ';
+//          }
+//        std::cout<<"}";
     }
 
     //Now let us create the set of all the gene of the matrix file
@@ -88,12 +89,20 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
     final_set.~set();
     string_set_gene_matrix.~set();
 
+    std::vector<std::string> v = std::vector<std::string>();
+
     for (std::string x : intersection_set) {
         std::cout << x << " ";
+        v.push_back(x);
     }
+    std::cout << std::endl;
 
+    std::cout << "Set operations finished" << std::endl;
+
+
+//    for(set<std::string>::iterator i = final_set.begin())
     //return a vector instead of a set since the backend team was working with a set
-    std::vector<string> v(intersection_set.begin(), intersection_set.end());
+//    std::vector<string> v(intersection_set.begin(), intersection_set.end());
 
     return v;
 }

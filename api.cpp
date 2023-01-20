@@ -1,3 +1,4 @@
+
 #include <QJsonDocument>
 #include <curl/curl.h>
 #include <QByteArray>
@@ -32,7 +33,7 @@ QJsonDocument searchHGNC(QMap<QString, QString> params) {
         query.addQueryItem(it.key(), it.value());
     }
     url.setQuery(query);
-    qDebug() << "url:" << url.toString();
+//    qDebug() << "url:" << url.toString();
     QByteArray data = downloadUrl(url);
     QJsonDocument doc = QJsonDocument::fromJson(data);
     return doc;

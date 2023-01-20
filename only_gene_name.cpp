@@ -48,7 +48,7 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     //if the search parameter is not only in upper case
     std::string upper_search = search;
     transform(upper_search.begin(), upper_search.end(), upper_search.begin(), ::toupper);
-    std::cout<<"UP"<<upper_search<<'\n';
+//    std::cout<<"UP"<<upper_search<<'\n';
 
 
     int o=0; //nb of [
@@ -57,7 +57,7 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     std::string list;
     std::string name="[";
     std::string true_list;
-    std::cout<<l<<'\n';
+//    std::cout<<l<<'\n';
     //First look for the last list of list (the only part of the string we are interrested in
     for (unsigned int i=0;i<l.length()-2;i++){
         v=l[i];
@@ -71,8 +71,8 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
             name+=v;
         }}
 
-    std::cout<<'\n';
-    std::cout<<name<<'\n'<<'\n';
+//    std::cout<<'\n';
+//    std::cout<<name<<'\n'<<'\n';
 
     //Then look for each list of this list and check if our "search" parameter is in it
     std::string value;
@@ -94,11 +94,11 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
         }
 
         else if (c==o) {
-            std::cout<<list<<'\n';
-            std::cout<<"search= "<<upper_search<<'\n';
+//            std::cout<<list<<'\n';
+//            std::cout<<"search= "<<upper_search<<'\n';
             int res = isSubstring(upper_search,list);
             if (res !=-1){
-                std::cout<<"Found"<<'\n';
+//                std::cout<<"Found"<<'\n';
                 true_list=list;
             }
             list="";
@@ -140,7 +140,7 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     }
 
     for (const std::string& str : res) {
-        std::cout << str << std::endl;
+//        std::cout << str << std::endl;
     }
     return res;}
 
