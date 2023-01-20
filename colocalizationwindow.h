@@ -16,15 +16,12 @@ public:
     explicit colocalizationwindow(QWidget *parent = nullptr);
     ~colocalizationwindow();
 
-    void makeHeatMap();
-    void setX(const QVector<double>& givenX) {xCoordinates = givenX;};
-    void setY(const QVector<double>& givenY) {yCoordinates = givenY;};
-    void setP(const QVector<double>& givenP) {pValues = givenP;};
+    void makeHeatMap(m);
 
 
-    const QVector<double>& getX() {return xCoordinates;};
-    const QVector<double>& getY() {return yCoordinates;};
-    const QVector<double>& getP() {return pValues;};
+
+    Eigen :: MatrixXd getMatrix() {return m;};
+    void setMatrix(Eigen::MatrixXd given_m){m = given_m;};
 
 signals:
     void MenuWindow();
@@ -44,9 +41,7 @@ private:
     double pParameter;
     double MParameter;
 
-    QVector<double> xCoordinates;
-    QVector<double> yCoordinates;
-    QVector<double> pValues;
+    Eigen::MatrixXd m;
 
     ColocalizationHeatmapWindow *heatmapWindow;
 
