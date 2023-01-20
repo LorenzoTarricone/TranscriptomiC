@@ -12,6 +12,10 @@ public:
     parsemtx getExpression();
     parsing getSpatial();
     std::vector<std::string> getGenes();
+    std::vector<double> getExprX();
+    std::vector<double> getExprY();
+    std::vector<double> getExprVals();
+
 private:
     parsemtx expression_raw;
     parsing spatial;

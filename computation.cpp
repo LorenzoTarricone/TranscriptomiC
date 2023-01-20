@@ -26,7 +26,7 @@ void computation::initialise(int rows, int cols){
 
     if(rows <= 0 && cols <= 0){
         std::cout << "Considering the entire expression matrix" << std::endl;
-        *expression =  expression_raw.getExpressionDense();
+        *expression =  expression_raw.getSparse();
         std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
         std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
         expression_raw.initiateGeneIndex(geneNames);
@@ -128,7 +128,7 @@ void computation::addGeneList(std::string geneListPath){
 
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*expression);
+    expression_raw.writeToFile(filename,*expression,expression_raw.getFinalGenes());
 }
 
 std::vector<std::string> computation::getcurrentGenes(){

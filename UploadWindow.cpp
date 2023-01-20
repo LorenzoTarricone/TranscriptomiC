@@ -1,4 +1,5 @@
 #include "UploadWindow.h"
+#include "parsefile.h"
 #include "ui_UploadWindow.h"
 #include <fstream>
 #include <QMessageBox>
@@ -39,8 +40,9 @@ void UploadWindow::close(){
     PointerMenuWindow->setY(ExpressData.getY());
     PointerMenuWindow->setP(ExpressData.getP());
 
+    PointerMenuWindow->setFileObject(this->files);
 
-    PointerMenuWindow->makePlot(); //generates the plot
+//    PointerMenuWindow->makePlot(); //generates the plot
     PointerMenuWindow->show(); //shows menuwindow
 
     this->hide(); //hides uploadwindow
@@ -52,7 +54,7 @@ void UploadWindow::on_GeneSelectButton_clicked()
      * chosen, it sets the path as the text in the text edit.
      */
 
-    QString GFileFilter = "CSV File (*.csv);;";//"TSV File (*.tsv);;"; //creates a file filter so that only the relevant formats can be chosen
+    QString GFileFilter = "TSV File (*.tsv);;";//"TSV File (*.tsv);;"; //creates a file filter so that only the relevant formats can be chosen
     QString GeneUserText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", GFileFilter); //opens the file explorer with the filter
     ui->GeneFileText->setPlainText(GeneUserText); //sets the test in the text edit to be the flie location
 
@@ -69,7 +71,7 @@ void UploadWindow::on_SpatialSelectButton_clicked(){
 
 void UploadWindow::on_ExpressSelectButton_clicked(){
 
-    QString EFileFilter = "CSV File (*.csv);;";//"MTX File (*.mtx);;"; //creates a file filter so that only the relevant formats can be chosen
+    QString EFileFilter = "MTX File (*.mtx);;";//"MTX File (*.mtx);;"; //creates a file filter so that only the relevant formats can be chosen
     QString ExpressUserText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", EFileFilter); //opens the file explorer with the filter
     ui->ExpressFileText->setPlainText(ExpressUserText); //sets the test in the text edit to be the flie location
 
@@ -81,6 +83,8 @@ void UploadWindow::on_UploadButton_clicked()
     /*This file uploads the data. It reads it and parses it, if everything is fine, then it opens the menu
      * window and closes the upload window.
      */
+
+    files = parsefile();
 
     FileData Genedata;
     FileData Spatialdata;
@@ -97,20 +101,36 @@ void UploadWindow::on_UploadButton_clicked()
     ExpressFilename = ExpressUserText.toStdString(); //converts the file location to std::string
     ExpressBoolean = ExpressData.readData(ExpressFilename); //reads and parses the data, returns a boolean to check for sucessful upload
 
-    if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
+    int fileRead = files.readFiles(ExpressFilename, SpatialFilename, GeneFilename);
 
+    if(fileRead == 0){
         QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
         close(); //closes this window and opens the menu
 
     }else{
 
         QString ErrorMesage = "Could not find all of the files.\n";
-        if(GeneBoolean){ErrorMesage.append("Gene File is allowed,\n");}else{ErrorMesage.append("Select Gene File again,\n");};
-        if(SpatialBoolean){ErrorMesage.append("Spatial File is allowed,\n");}else{ErrorMesage.append("Select Spatial File again,\n");};
-        if(ExpressBoolean){ErrorMesage.append("Express File is allowed.");}else{ErrorMesage.append("Select Express File again.");};
+        if(fileRead != 3){ErrorMesage.append("Gene File is allowed,\n");}else{ErrorMesage.append("Select Gene File again,\n");};
+        if(fileRead != 1){ErrorMesage.append("Spatial File is allowed,\n");}else{ErrorMesage.append("Select Spatial File again,\n");};
+        if(fileRead != 2){ErrorMesage.append("Express File is allowed.");}else{ErrorMesage.append("Select Express File again.");};
 
         QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
     }
+
+
+//    if(GeneBoolean&&SpatialBoolean&&ExpressBoolean){
+//        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok); //sucess message
+//        close(); //closes this window and opens the menu
+
+//    }else{
+
+//        QString ErrorMesage = "Could not find all of the files.\n";
+//        if(GeneBoolean){ErrorMesage.append("Gene File is allowed,\n");}else{ErrorMesage.append("Select Gene File again,\n");};
+//        if(SpatialBoolean){ErrorMesage.append("Spatial File is allowed,\n");}else{ErrorMesage.append("Select Spatial File again,\n");};
+//        if(ExpressBoolean){ErrorMesage.append("Express File is allowed.");}else{ErrorMesage.append("Select Express File again.");};
+
+//        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
+//    }
 
 }
 

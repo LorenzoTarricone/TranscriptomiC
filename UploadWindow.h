@@ -53,5 +53,7 @@ private:
     std::vector<double> y;
 
     FileData ExpressData;
+
+    parsefile files;
 };
 #endif // UPLOADWINDOW_H

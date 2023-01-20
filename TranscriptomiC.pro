@@ -18,6 +18,7 @@ SOURCES += \
     intersection_sets.cpp \
     main_API_bio_pro_to_gene.cpp \
     main_API_gene_name.cpp \
+    plotobject.cpp \
     readgenetxt.cpp \
     only_gene_name.cpp \
     read_tsv_set.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     intersection_sets.h \
     main_API_bio_pro_to_gene.h \
     main_API_gene_name.h \
+    plotobject.h \
     readgenetxt.h \
     only_gene_name.h \
     read_tsv_set.h \
@@ -113,7 +115,7 @@ macx: LIBS += -lcurl
 #LinkParameterWindow.cpp \
 
 #INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
-#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
-INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
+INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
+#INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 
