@@ -16,7 +16,7 @@ public:
     explicit colocalizationwindow(QWidget *parent = nullptr);
     ~colocalizationwindow();
 
-    void makeHeatMap(m);
+    void makeHeatMap();
 
 
 

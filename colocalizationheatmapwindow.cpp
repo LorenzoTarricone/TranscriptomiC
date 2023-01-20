@@ -26,7 +26,7 @@ ColocalizationHeatmapWindow::~ColocalizationHeatmapWindow()
 //    double colocalizationwindow::pParameter;
 //    double colocalizationwindow::MParameter;
 
-void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m){
+void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m, QVector<std::string> genes ){
 
     // configure axis rect:
                ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
@@ -128,22 +128,22 @@ void ColocalizationHeatmapWindow::makeHeatMap(Eigen::MatrixXd m){
               textTickery->setTickCount(4);
 
               //assign the labels using vectors
-              QVector<QString> xgenenames;
+              //QVector<QString> xgenenames;
               QVector<double> xpositions;
               for(int i = 0; i < number_cols; i++){
-                  xgenenames.append("Bacteria");
+                  //xgenenames.append("Bacteria"); // test
                   xpositions.append(i);
               };
 
-              QVector<QString> ygenenames;
+              //QVector<QString> ygenenames;
               QVector<double> ypositions;
               for(int i = 0; i < number_cols; i++){
-                  ygenenames.append("Bacteria");
+                  //ygenenames.append("Bacteria");//test
                   ypositions.append(i);
               };
 
-              textTickerx->setTicks(xpositions, xgenenames);
-              textTickery->setTicks(ypositions, ygenenames);
+              textTickerx->setTicks(xpositions, genes);
+              textTickery->setTicks(ypositions, genes);
 
               /*//assign each label individually
               for(int i = 0; i < number_cols; i++){
