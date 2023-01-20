@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
     matrix.addGeneList(geneSubsetFile);
 //     TODO set linkage parameters!!!
 //     filter
-    matrix.filter_simple(true,0.001);
     matrix.filter_genes();
+    matrix.filter_simple(true,0.001);
+
 
     // normalise data
     matrix.normalisation();
@@ -61,15 +62,15 @@ int main(int argc, char *argv[])
     std::cout << "[Progress] Colocalisation done!" << std::endl;
 
 
-    parsefile bp_files = parsefile();
-    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+//    parsefile bp_files = parsefile();
+//    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
 
-    biologicalprocess bp = biologicalprocess(files,400);
-    bp.addGeneList(geneSubsetFile);
-    bp.filter_simple(true,0.001);
-    bp.filter_genes();
-    bp.compute_tot_expr();
-//    bp.bioprocess_2(50);
+//    biologicalprocess bp = biologicalprocess(files,400);
+//    bp.addGeneList(geneSubsetFile);
+//    bp.filter_simple(true,0.001);
+//    bp.filter_genes();
+//    bp.compute_tot_expr();
+////    bp.bioprocess_2(50);
 
 
 

@@ -120,19 +120,33 @@ void parsemtx::print(){
 std::vector<std::string> parsemtx::getFinalGenes(){
     std::cout << "[Progress] getFinalGenes() called" << std::endl;
 
-    std::string array[geneIndex.size()];
+
+    std::map<std::string,int> temp;
 
 
     for (typename std::map<std::string, int>::iterator i = geneIndex.begin(); i != geneIndex.end(); i++){
-        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+//        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
         if(i->second != -1){
-            array[i->second] = i->first;
-            std::cout << "final[" << i->second << "] = " << i->first << std::endl;
+            temp[i->first] = i->second;
+//            array[i->second] = i->first;
+            std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
         }
+    }
+
+    std::string array[temp.size()];
+
+    for (typename std::map<std::string, int>::iterator i = temp.begin(); i != temp.end(); i++){
+//        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
+        array[i->second] = i->first;
+        std::cout << "final[" << i->second << "] = " << i->first << std::endl;
+
     }
 
     int n = sizeof(array) / sizeof(array[0]);
     std::vector<std::string> final(array, array + n);
+
+
+
     return final;
 }
 
@@ -156,6 +170,9 @@ void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, std::ve
     else{
         std::cout << "[SUCCESS] File " << filename << " opened successfully" << std::endl;
     }
+
+    std::cout << "Dimensions of the final gene index = " << genes.size() << std::endl;
+    std::cout << "Dimensions of the final expression matrix = " << matrix.rows() << " or " << matrix.cols() << std::endl;
 
     // this will be transposed, as the sparse matrix is stored in column major
     // TODO change to row wise iteration
@@ -322,59 +339,59 @@ void parsemtx::printGeneIndex(int rows){
 // TODO: decide whether object should directly filter private member sparse
 
 
-void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
-    std::cout << "[Progress] Function filter_simple called ..." << std::endl;
-    int s = expression.rows();
-    int c = expression.cols();
+//void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
+//    std::cout << "[Progress] Function filter_simple called ..." << std::endl;
+//    int s = expression.rows();
+//    int c = expression.cols();
 
-    // to avoid double filtering in bp
-    if(!zeroes){
-        return;
-    }
-
-
-    int count[s];
-    for(int i = 0;i<s;i++){
-        count[i] = 0;
-    }
-
-    // dense matrix stored in column major
-    for(int j = 0; j < expression.cols();j++){
-        for(int i = 0; i<expression.rows();i++){
-            count[i] += (expression(i,j)>0);
-        }
-    }
-
-//    std::cout << "[";
-//    for(int i = 0; i < s-1; i++){
-//        std::cout << count[i] << ",";
+//    // to avoid double filtering in bp
+//    if(!zeroes){
+//        return;
 //    }
-//    std::cout << count[s-1] << "]" << std::endl;
-
-    //
-
-    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
-
-    std::vector<std::string> temp;
-
-    for(int i = 0;i<s;i++){
-        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
-            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
-            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
-            removeRow(expression, i-removed);
-            //call function to adjust indices after removing row
-            shiftGeneIndex(i);
-            removed ++;
-            std::cout<<"removed: "<< removed<<std::endl;
-        }else{
-            temp.push_back(currentGenes[i]);
-        }
-    }
-    currentGenes=temp;
-    printGeneIndex(s-removed);
 
 
-}
+//    int count[s];
+//    for(int i = 0;i<s;i++){
+//        count[i] = 0;
+//    }
+
+//    // dense matrix stored in column major
+//    for(int j = 0; j < expression.cols();j++){
+//        for(int i = 0; i<expression.rows();i++){
+//            count[i] += (expression(i,j)>0);
+//        }
+//    }
+
+////    std::cout << "[";
+////    for(int i = 0; i < s-1; i++){
+////        std::cout << count[i] << ",";
+////    }
+////    std::cout << count[s-1] << "]" << std::endl;
+
+//    //
+
+//    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
+
+//    std::vector<std::string> temp;
+
+//    for(int i = 0;i<s;i++){
+//        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
+//            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
+//            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
+//            removeRow(expression, i-removed);
+//            //call function to adjust indices after removing row
+//            shiftGeneIndex(i);
+//            removed ++;
+//            std::cout<<"removed: "<< removed<<std::endl;
+//        }else{
+//            temp.push_back(currentGenes[i]);
+//        }
+//    }
+//    currentGenes=temp;
+//    printGeneIndex(s-removed);
+
+
+//}
 
 //faster implementation of simple filtering with respect to filter_simple_old.
 
@@ -484,63 +501,6 @@ Eigen::MatrixXd parsemtx::filterByGenes(const Eigen::MatrixXd &expression, std::
     return filtered_expression;
 }
 
-void parsemtx::filter(bool zeroes, double min_expr_perc){
-    // from https://www.geeksforgeeks.org/remove-all-zero-rows-and-all-zero-columns-from-a-matrix/
-
-    // idea: count all non-zero entries per row and store them in a vector of size n (number of genes)
-    // create a dense matrix from the sparse matrix
-    // remove each row in the dense matrix where the corresponding element in the vector is zero
-    // (or less than the minimum expression percentage)
-    // complexity: O(n+k+r) where k is the number of non-zero entries and r is the complexity of building
-    // a dense matrix from a sparse matrix in Eigen
-
-    // sparse - dense conversion (if necessary):
-    // https://stackoverflow.com/questions/15484622/how-to-convert-sparse-matrix-to-dense-matrix-in-eigen
-
-    // get rows and columns
-    // https://stackoverflow.com/questions/68877737/how-to-get-shape-dimensions-of-an-eigen-matrix
-    N = sparse.rows();
-    M = sparse.cols();
-
-    std::cout << "Sparse matrix with dimensions rows = "<<N<<" and cols = "<<M<<std::endl;
-
-    // declare and initialize count array (not a vector, because we will index directly
-    int count[N];
-    for(int i = 0;i<N;i++){
-        count[i] = 0;
-    }
-
-
-    // count non-zero entries, since matrix is represented in sparse, each tuple (row,column) represents
-    // a non-zero element
-    for (int k=0; k<sparse.outerSize(); ++k){
-        for (Eigen::SparseMatrix<double>::InnerIterator it(sparse,k); it; ++it)
-        {
-                count[it.row()] += 1;
-        }
-    }
-
-    // TODO: keep track of old row indicies
-
-    // convert to dense matrix
-    Eigen::MatrixXd dense_matrix = Eigen::MatrixXd(sparse);
-
-
-    // remove rows where expression percantage is less or equal to min_expr_per
-    // keep count of rows that have been removed
-    int removed = 0;
-    for(int i = 0;i<N;i++){
-        if((zeroes && (count[i] == 0)) || count[i]/M <= min_expr_perc){
-            removeRow(dense_matrix, i-removed);
-            // take care of gene name index when row is removed
-             shiftGeneIndex(i);
-            removed ++;
-        }
-    }
-
-    this->matrix = dense_matrix;
-}
-
 
 Eigen::MatrixXd parsemtx::normalisation_simple(Eigen::MatrixXd expression, std::string type_of_normal){
     // extendable for different types of normalisation
@@ -586,42 +546,6 @@ Eigen::MatrixXd parsemtx::normalisation_simple(Eigen::MatrixXd expression, std::
 // this function applies different types of normalisation to the dense expression matrix
 // the sparse representation of the same inital matrix remains the same
 
-void parsemtx::normalisation(std::string type_of_normal){
-    // extendable for different types of normalisation
-    if(type_of_normal != "col_mean"){
-        return;
-    }
-
-    // initiate array that will store the column sums
-    int col_sum[M];
-    for(int i = 0;i<M;i++){
-        col_sum[i] = 0;
-    }
-
-
-    // iterate through expression matrix in sparse representation to compute column sums
-    for (int k=0; k<sparse.outerSize(); ++k){
-        for (Eigen::SparseMatrix<double>::InnerIterator it(sparse,k); it; ++it)
-        {
-                col_sum[it.col()] += it.value();
-        }
-    }
-
-    // divide each entry in the dense matrix
-    // iterate through the dense matrix in storage order, default for Eigen --> col Major
-    // reference: https://stackoverflow.com/questions/16283000/most-efficient-way-to-loop-through-an-eigen-matrix
-    for (size_t j = 0, nRows = matrix.rows(), nCols = matrix.cols(); j < nCols; ++j){
-        for (size_t i = 0; i < nRows; ++i){
-            // this works since we are not eliminating columns, only rows
-            // only execute for non-zero columns
-            if(col_sum[j] != 0){
-                matrix(i,j) /= col_sum[j];
-            }
-
-        }
-    }
-
-}
 
 // declarations of functions to remove certain row or column from eigen dense matrix
 //removeRow is very slow
@@ -649,58 +573,6 @@ void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
     matrix.conservativeResize(numRows,numCols);
 }
 
-// this method will use the file containing beam names as well as the dimensions of the expression matrix
-// and generate spatial data until we have actual data to analyse
-// it will write said data to a tsv file that can later be used for filtering etc
-void parsemtx::createBeamFile(std::string file_out, std::string file_in){
-    // if no input filename is given, the file will be created entirely at random
-    if(file_in == ""){
-        parseTxtBeams::createDummyFile(N,file_out);
-        return;
-    }
-
-    std::vector<std::string> list = listgene(file_in);
-    int l = list.size();
-    std::cout << "There are " << l << " beams and " << N << " columns in the expression matrix" << std::endl;
-
-//    for(typename std::vector<std::string>::iterator i = list.begin(); i != list.end(); i++){
-//        // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-//        std::cout << *i << "," << std::endl;
-//    }
-
-    // this operation sets the seed for the randomization (generates different values for each iteration)
-    srand(time(nullptr));
-
-    // file stream
-    std::ofstream fout;
-
-    // open file
-    fout.open(file_out);
-
-    // check if file was opened correctly
-    if(!fout){
-        std::cerr << "[ERROR] File " << file_in << " could not be opened. Stopping program" << std::endl;
-    }
-    else{
-        std::cout << "[SUCCESS] File " << file_in << " opened successfully" << std::endl;
-    }
-
-
-    // define maximum range for coordinates
-    int MAX_COORD = 2000;
-
-        for(typename std::vector<std::string>::iterator i = list.begin(); i != list.end(); i++){
-            // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-//            std::cout << *i << "," << std::endl;
-            int x = random()%MAX_COORD;
-            int y = random()%MAX_COORD;
-            fout << *i << "\t" << x << "\t" << y << "\n";
-//            std::cout << *i << "\t" << x << "\t" << y << "\n" << std::endl;
-        }
-
-    // close the file (stream)
-    fout.close();
-}
 
 
 // method that returns the expression matrix in its current state as an Eigen object
