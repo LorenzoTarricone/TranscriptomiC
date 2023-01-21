@@ -38,8 +38,9 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
 
                colorMap->data()->setSize(number_cols, number_rows);
 
-               //Maybe use here min and max values
-               colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
+               //Maybe use here min and max values. If it doesn't work create a bigger map first
+               colorMap->data()->setRange(QCPRange(minValx, maxValx), QCPRange(minValy,maxValy));
+               //colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
               /* //Quantile Matrix : I dont know if this is right.
                double median = 0;
