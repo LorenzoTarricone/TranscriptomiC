@@ -26,10 +26,14 @@ private slots:
 
     void on_ProcessButton_clicked();
 
+    void on_ClusterButton_clicked();
+
 private:
     Ui::BioChooser *ui;
     bioprocesswindow *biowindow;
     parsefile files;
+
+    HeatMapWindow *cluster1, *cluster2, *cluster3, *cluster4;
 };
 
 #endif // BIOCHOOSER_H

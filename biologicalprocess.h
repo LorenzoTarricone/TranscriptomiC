@@ -14,7 +14,7 @@ public:
     double WassersteinDistance(const Eigen::MatrixXd& mat1, const Eigen::MatrixXd& mat2, const Eigen::MatrixXd& distance);
     std::vector<std::string> bioprocess_2(int n=5, int num_runs=5);
     void compute_tot_expr();
-
+    std::vector<std::vector<std::string>> plottable(std::vector<std::string> cluster_dict);
 
 
 

@@ -140,3 +140,5 @@ void computation::saveToFile(std::string filename){
 std::vector<std::string> computation::getcurrentGenes(){
     return expression_raw.getcurrentGenes();
 }
+
+

@@ -279,3 +279,24 @@ std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
     return clusters_dict;
 
 }
+
+std::vector<std::string> split(std::string text, char delim) {
+    std::string line;
+    std::vector<std::string> vec;
+    std::stringstream ss(text);
+    while(std::getline(ss, line, delim)) {
+        vec.push_back(line);
+    }
+    return vec;
+}
+
+
+std::vector<std::vector<std::string>> biologicalprocess::plottable(std::vector<std::string> cluster_dict){
+    std::vector<std::vector<std::string>> clusters;
+
+    for(std::string i : cluster_dict){
+        clusters.push_back(split(i,','));
+    }
+
+    return clusters;
+}

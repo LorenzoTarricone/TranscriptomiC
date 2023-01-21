@@ -2,6 +2,7 @@
 #define HEATMAPWINDOW_H
 
 #include "computation.h"
+#include "ui_heatmapwindow.h"
 #include <QDialog>
 #include <Eigen/Dense>
 #include <Eigen/Eigen>
@@ -27,9 +28,7 @@ public:
     void setObject(const computation givenObject) {object = givenObject;};
 
 
-    const QVector<double>& getX() {return xCoordinates;};
-    const QVector<double>& getY() {return yCoordinates;};
-    const QVector<double>& getP() {return pValues;};
+    void setLabel(std::string text){ui->label->setText(QString::fromStdString(text));};
 
 
 
