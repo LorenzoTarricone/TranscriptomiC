@@ -36,10 +36,10 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                double maxValy = m.col(1).maxCoeff(); // biggest y- value
                double minValy = m.col(1).minCoeff(); // smallest y- value
 
-               colorMap->data()->setSize(number_cols, number_rows);
+               colorMap->data()->setSize(number_rows, number_rows); // Change that
 
                //Maybe use here min and max values. If it doesn't work create a bigger map first
-               colorMap->data()->setRange(QCPRange(minValx, maxValx), QCPRange(minValy,maxValy));
+               colorMap->data()->setRange(QCPRange(minValx-1, maxValx+1), QCPRange(minValy-1,maxValy+1));
                //colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
               /* //Quantile Matrix : I dont know if this is right.
@@ -72,14 +72,14 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                //calculate mean
                double mean = 0.0;
                for(int i= 0; i<data_size; i++){
-                      mean += m(2,i); };//only the third column
+                      mean += m(i,2); };//only the third column
 
                          mean /= data_size;
 
                //calculate standard deviation
                double sd = 0.0;
                for(int i= 0; i<data_size; i++){
-                      sd += pow(m(2,i) - mean,2);} // only third column
+                      sd += pow(m(i,2) - mean,2);} // only third column
                //standart error
                sd = sqrt(sd/(data_size));
 
