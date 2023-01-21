@@ -13,7 +13,6 @@
 #include <list>
 #include "api.h"
 
-using namespace std;
 
 // Function to be called by libcurl when there is data to be written
 size_t write_data(void *ptr, size_t size, size_t nmemb, QByteArray *data) {
@@ -22,8 +21,8 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, QByteArray *data) {
 }
 
 QByteArray downloadUrl(const QUrl &url) {
-    qDebug() << "Downloading from" << url.toString(QUrl::RemoveFilename).toStdString().c_str();
-    auto start = chrono::high_resolution_clock::now();
+    qDebug() << "Downloading from" << url.toString(QUrl::RemoveQuery).toStdString().c_str();
+    auto start = std::chrono::high_resolution_clock::now();
     CURL *curl = curl_easy_init();
     QByteArray data;
     if (curl) {
@@ -33,8 +32,8 @@ QByteArray downloadUrl(const QUrl &url) {
         curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
-    auto stop = chrono::high_resolution_clock::now();
-    qDebug() << "Downloaded" << data.size() << "bytes in" << chrono::duration_cast<chrono::seconds>(stop - start).count() << "seconds";
+    auto stop = std::chrono::high_resolution_clock::now();
+    qDebug() << "Downloaded" << data.size() << "bytes in" << std::chrono::duration_cast<std::chrono::seconds>(stop - start).count() << "seconds";
     return data;
 }
 
@@ -65,28 +64,28 @@ QJsonDocument searchPanther(QString geneInputList) {
     }
     url.setQuery(query);
     QByteArray data = downloadUrl(url);
-    QString string = QString::fromUtf8(data.constData(), data.size());
+    // QString string = QString::fromUtf8(data.constData(), data.size());
     // qDebug() << string;
     QJsonDocument doc = QJsonDocument::fromJson(data);
     return doc;
 }
 
 void saveTxt(QByteArray data, QString filename) {
-    std::ofstream outfile(filename.toStdString(), ios::out);
+    std::ofstream outfile(filename.toStdString(), std::ios::out);
     // qDebug() << "data is" << data.data();
     outfile << data.data() << std::endl;
     outfile.close();
 }
 
-string getGeneontology() {
+std::string getGeneontology() {
     QUrl url("http://current.geneontology.org/ontology/go.obo");
     QByteArray data = downloadUrl(url);
     return data.toStdString();
 }
 
-vector<string> getOverrep(vector<string> geneLists) {
-    vector<string> labelList = {};
-    for (vector<string>::iterator geneList = geneLists.begin(); geneList != geneLists.end(); ++geneList) {
+std::vector<std::string> getOverrep(std::vector<std::string> geneLists) {
+    std::vector<std::string> labelList = {};
+    for (std::vector<std::string>::iterator geneList = geneLists.begin(); geneList != geneLists.end(); ++geneList) {
         QJsonDocument doc = searchPanther(QString::fromStdString(*geneList));
         labelList.push_back(doc.object()["results"].toObject()["result"].toArray().first().toObject()["term"].toObject()["label"].toString().toStdString());
     } return labelList;
