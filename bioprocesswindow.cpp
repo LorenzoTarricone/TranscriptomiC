@@ -25,7 +25,7 @@ bioprocesswindow::~bioprocesswindow()
 void bioprocesswindow::on_MenuWindowButton_clicked()
 {
     this->close();
-    emit MenuWindow(); //returns to menuWindow
+    emit chooserWindow(); //returns to chooserWindow
 }
 
 

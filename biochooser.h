@@ -24,6 +24,8 @@ signals:
 private slots:
     void on_MenuButton_clicked();
 
+    void on_ProcessButton_clicked();
+
 private:
     Ui::BioChooser *ui;
     bioprocesswindow *biowindow;

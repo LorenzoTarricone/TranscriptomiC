@@ -74,14 +74,14 @@ void MenuWindow::on_BiologicalButton_clicked()
     biochooseWindow = new BioChooser(this); //creates the instance of colocalizationWindow
     connect(BioChooser, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    bioWindow->setFileObject(files);
+    biochooseWindow->setFileObject(files);
 //    //sets the data
 //    bioWindow->setX(this->getX());
 //    bioWindow->setY(this->getY());
 //    bioWindow->setP(this->getP());
 
     this->hide(); //hides menuwindow
-    bioWindow->show(); //shows biowindow
+    biochooseWindow->show(); //shows biowindow
     //bioWindow->makeHeatMap(); //generates the heatmap
 
 }

@@ -34,8 +34,7 @@ public:
     const QVector<double>& getP() {return pValues;};
 
 signals:
-    void MenuWindow();
-
+    void chooserWindow();
 
 private slots:
 
