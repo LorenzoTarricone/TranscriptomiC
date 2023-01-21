@@ -6,6 +6,10 @@
 using namespace Eigen;
 using namespace std;
 
+//This function takes as input an x vs y position of gene matrix and has functions to return the distance between two points, 
+//the distance between every point in the matrix in a new eigen matrix, the linkage value between two genes and finally an 
+//eigen matrix with all of the linkage values, so in other words, the colocalization matrix as an eigen matrix.
+
 int main(int argc, char *argv[])
 {
     MatrixXd A = openData("/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/dummyData.csv");
