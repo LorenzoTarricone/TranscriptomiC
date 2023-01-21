@@ -25,12 +25,20 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                // set up the QCPColorMap:
                QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-               int number_rows = m.rows();
-               int number_cols = m.cols();
+               int number_rows = m.rows(); // number beams x,y -coordinate
+               int number_cols = m.cols(); // should be 3
                // data size
-               int data_size = number_cols * number_rows;
+               int data_size = number_cols; // just the third column
+
+               // Maybe I have to change the size and find first max, min value
+               double maxValx = m.col(0).maxCoeff(); // biggest x- value
+               double minValx = m.col(0).minCoeff(); // smalles x- value
+               double maxValy = m.col(1).maxCoeff(); // biggest y- value
+               double minValy = m.col(1).minCoeff(); // smallest y- value
 
                colorMap->data()->setSize(number_cols, number_rows);
+
+               //Maybe use here min and max values
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
               /* //Quantile Matrix : I dont know if this is right.
@@ -62,21 +70,15 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                //95 PERCENT CONFIDENCE interval
                //calculate mean
                double mean = 0.0;
-               for(int i= 0; i<number_cols; i++){
-                   for (int j = 0; j<number_rows; j++){
-                       mean += m(i,j);
+               for(int i= 0; i<data_size; i++){
+                      mean += m(2,i); };//only the third column
 
-                   }
-               }
-               mean /= data_size;
+                         mean /= data_size;
 
                //calculate standard deviation
                double sd = 0.0;
-               for(int i= 0; i<number_cols; i++){
-                   for (int j = 0; j<number_rows; j++){
-                        sd += pow(m(i,j) - mean,2);
-                   }
-               }
+               for(int i= 0; i<data_size; i++){
+                      sd += pow(m(2,i) - mean,2);} // only third column
                //standart error
                sd = sqrt(sd/(data_size));
 
@@ -93,16 +95,15 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
 
                // now we assign some data, by accessing the QCPColorMapData instance of the color map:
 
-               for(int i = 0; i < number_cols; i++){
-                   for(int j = 0; j< number_rows; j++){
-                       if(m(i,j)>q1 && m(i,j)<q3){
-                           colorMap->data()->setCell(i, j, m(i,j));} // plot only data between q1 and q3 here we want quantile
-                       else{colorMap->data()->setCell(i, j, 0);}
+               for(int i = 0; i < number_rows; i++){
+                       if(m(i,2)>q1 && m(i,2)<q3){ // if the third value of the row is in the confidence interval
+                           colorMap->data()->setCell(m(i,0),m(i,1), m(i,2));} // plot only data between q1 and q3 here we want quantile
+                       else{colorMap->data()->setCell(m(i,0),m(i,1), m(i,2));} //assign 0
 
-                       }
                    }
 
-              // Ticks and Labels
+               // Do we have axis labels?
+              /*// Ticks and Labels
               QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
 
               // tick strategy. readability is more important
@@ -132,15 +133,16 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                   ypositions.append(i);
               };
 
+
               textTickerx->setTicks(xpositions, xgenenames);
               textTickery->setTicks(ypositions, ygenenames);
 
-              /*//assign each label individually
+              ///assign each label individually
               for(int i = 0; i < number_cols; i++){
                   textTickerx->addTick(i, "Bacteria");}; // Here we need the gene names
 
               for(int j = 0; j< number_rows; j++){
-                  textTickery->addTick(j, "Bacteria");}; // Here we need the gene names */
+                  textTickery->addTick(j, "Bacteria");}; // Here we need the gene names
 
 
 
@@ -152,7 +154,7 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
 
               //set y-axis ticker
               ui->customPlot->yAxis->setTicker(textTickery);
-              ui->customPlot->yAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels.
+              ui->customPlot->yAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels. */
 
               // color scale:
                QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
