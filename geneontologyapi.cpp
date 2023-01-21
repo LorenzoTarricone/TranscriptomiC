@@ -3,6 +3,8 @@
 #include <fstream>
 using namespace std;
 
+//Takes nothing as input and returns 0, although it creates a txt file in which the text of a link is written.
+
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
     ((std::string*)userp)->append((char*)contents, size * nmemb);
