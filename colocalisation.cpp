@@ -44,6 +44,8 @@ void colocalisation::step1(){
     std::cout << "[Progress] Running step 1 ..." << std::endl;
     A_distance = new Eigen::MatrixXd;
     *A_distance = matrix_distance(A_spatial);
+    std::cout<<(*A_distance).block(0,0,10,10)<<std::endl;
+    std::cout<<"\nDistance matrix shape: (" << (*A_distance).rows() << ", " << (*A_distance).cols() << ")"<<std::endl;
 }
 
 void colocalisation::step2(){
