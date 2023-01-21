@@ -6,6 +6,8 @@
 
 using namespace std;
 
+//This function takes a csv file as input and returns a matrix with the information from the csv file.
+
 int main()
 {
       string line;
