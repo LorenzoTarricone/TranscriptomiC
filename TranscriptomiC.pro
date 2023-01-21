@@ -108,7 +108,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 macx: LIBS += -lcurl
 
 
-#INCLUDEPATH += /Users/adrianduesselberg/CSE201Pro/eigen-3.4.0
+INCLUDEPATH += /Users/adrianduesselberg/CSE201Pro/eigen-3.4.0
 
 #INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
 

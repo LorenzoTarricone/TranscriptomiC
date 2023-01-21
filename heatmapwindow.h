@@ -4,6 +4,7 @@
 #include "computation.h"
 #include <QDialog>
 #include <Eigen/Dense>
+#include <Eigen/Eigen>
 
 namespace Ui {
 class HeatMapWindow;
