@@ -31,8 +31,14 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                int data_size = number_cols; // just the third column
 
                // Maybe I have to change the size and find first max, min value
+               double maxValx = m.col(0).maxCoeff(); // biggest x- value
+               double minValx = m.col(0).minCoeff(); // smalles x- value
+               double maxValy = m.col(1).maxCoeff(); // biggest y- value
+               double minValy = m.col(1).minCoeff(); // smallest y- value
 
                colorMap->data()->setSize(number_cols, number_rows);
+
+               //Maybe use here min and max values
                colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
 
               /* //Quantile Matrix : I dont know if this is right.
