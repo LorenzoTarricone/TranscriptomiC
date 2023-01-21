@@ -298,6 +298,7 @@ void parsemtx::initiateGeneIndex_cropped(std::vector<std::string> geneList, int 
         // incremeent index
         index++;
     }
+
     for(typename std::vector<std::string>::iterator i = all_names.begin()+row_crop+1; i != all_names.end(); i++){
         // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
         this->geneIndex[*i] = -1;

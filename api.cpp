@@ -22,7 +22,7 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, QByteArray *data) {
 }
 
 QByteArray downloadUrl(const QUrl &url) {
-    qDebug() << "Downloading from" << url.toString(QUrl::RemoveFilename).toStdString().c_str();
+    qDebug() << "Downloading from" << url.toString().toStdString().c_str();
     auto start = chrono::high_resolution_clock::now();
     CURL *curl = curl_easy_init();
     QByteArray data;

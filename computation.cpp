@@ -36,18 +36,19 @@ void computation::initialise(int rows, int cols){
         block_rows = expression_raw.getRows()-1;
         block_cols = cols;
         std::cout << "Considering all rows of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex(geneNames);
 
     }
     else if(cols <= 0){
         block_rows = rows;
         block_cols = expression_raw.getCols()-1;
         std::cout << "Considering all columns of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
     else{
         block_rows = rows;
         block_cols = cols;
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
@@ -63,8 +64,6 @@ void computation::initialise(int rows, int cols){
 
 
     std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
-
-    expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
 }
 
 void computation::filter_simple(bool zeroes, double min_expr_perc){

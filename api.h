@@ -13,5 +13,7 @@ QJsonDocument searchHGNC(QMap<QString, QString> params);
 QJsonDocument searchDavid(QMap<QString, QString> params);
 void printExample();
 
+std::vector<std::string> getOverrep(std::vector<std::string> geneLists);
+
 #endif // API_H
 
