@@ -17,6 +17,9 @@ public:
 
 
 
+
+    const Eigen::MatrixXd &getPerc_expression() const;
+
 private:
     Eigen::MatrixXd total_expression;
     Eigen::MatrixXd perc_expression;

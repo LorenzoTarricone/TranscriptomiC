@@ -75,15 +75,9 @@ void MenuWindow::on_BiologicalButton_clicked()
     connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
     bioWindow->setFileObject(files);
-//    //sets the data
-//    bioWindow->setX(this->getX());
-//    bioWindow->setY(this->getY());
-//    bioWindow->setP(this->getP());
-
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
     //bioWindow->makeHeatMap(); //generates the heatmap
-    bioWindow->setProcessesToAnalyze(); //instantiates the vector of processes
 
 }
 
@@ -95,21 +89,4 @@ void MenuWindow::on_UploadWindowButton_clicked()
 }
 
 
-//const QVector<double>& MenuWindow::getX() {
-//    std::vector<double> stdVec = plot.getExprX();
-//    x = QVector<double>(stdVec.begin(), stdVec.end());
-//    return x;
-//}
-
-
-//const QVector<double>& MenuWindow::getY() {
-//    std::vector<double> stdVec = plot.getExprY();
-//    y = QVector<double>(stdVec.begin(), stdVec.end());
-//    return y;
-//}
-//const QVector<double>& MenuWindow::getP() {
-//    std::vector<double> stdVec = plot.getExprVal();
-//    p = QVector<double>(stdVec.begin(), stdVec.end());
-//    return p;
-//}
 

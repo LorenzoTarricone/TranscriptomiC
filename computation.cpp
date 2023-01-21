@@ -12,6 +12,7 @@ computation::computation(parsefile files,int rows, int cols){
     initialise(rows, cols);
 }
 
+
 void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
     // parsefile object

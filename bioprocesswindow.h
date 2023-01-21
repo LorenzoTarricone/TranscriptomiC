@@ -44,12 +44,8 @@ private:
 
     bool uploadChecker;
 
-    QVector<double> xCoordinates;
-    QVector<double> yCoordinates;
-    QVector<double> pValues;
 
-    std::vector<std::string> processesToAnalyze;
-    std::string inputProcess;
+    std::string filename;
 
     HeatMapWindow *heatmapWindow;
 

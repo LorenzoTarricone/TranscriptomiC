@@ -15,11 +15,13 @@ public:
     std::vector<double> getExprX();
     std::vector<double> getExprY();
     std::vector<double> getExprVals();
+    std::string getGenePath();
 
 private:
     parsemtx expression_raw;
     parsing spatial;
     std::vector<std::string> geneNames;
+    std::string geneNamePath;
 };
 
 

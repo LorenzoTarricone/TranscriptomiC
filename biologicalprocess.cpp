@@ -64,6 +64,11 @@ void biologicalprocess::compute_tot_expr(){
 
 }
 
+const Eigen::MatrixXd &biologicalprocess::getPerc_expression() const
+{
+    return perc_expression;
+}
+
 double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations){
 
 
