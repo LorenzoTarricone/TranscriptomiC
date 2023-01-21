@@ -27,7 +27,7 @@ void BioChooser::on_ProcessButton_clicked()
 {
     biowindow = new bioprocesswindow;
     biowindow->setFileObject(files);
-    connect(bioprocesswindow, &bioprocesswindow::chooserWindow, this, &BioChooser::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+    connect(biowindow, &bioprocesswindow::chooserWindow, this, &BioChooser::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
 
     this->hide();

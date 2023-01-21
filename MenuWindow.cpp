@@ -72,7 +72,7 @@ void MenuWindow::on_BiologicalButton_clicked()
      */
 
     biochooseWindow = new BioChooser(this); //creates the instance of colocalizationWindow
-    connect(BioChooser, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+    connect(biochooseWindow, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
     biochooseWindow->setFileObject(files);
 //    //sets the data

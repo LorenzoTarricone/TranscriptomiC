@@ -27,20 +27,9 @@ public:
     void makePlot();
 
 
-    void setX(const QVector<double>& givenX) {x = givenX;};
-    void setY(const QVector<double>& givenY) {y = givenY;};
-    void setP(const QVector<double>& givenP) {p = givenP;};
 
     void setFileObject(const parsefile& givenFiles) {files = givenFiles;};
-//    void setPlotObject(const plotObject givenPlot){ plot = givenPlot;};
 
-    const QVector<double>& getX();
-    const QVector<double>& getY();
-    const QVector<double>& getP();
-
-//    const QVector<double>& getX() {return x;};
-//    const QVector<double>& getY() {return y;};
-//    const QVector<double>& getP() {return p;};
 
 signals:
     void UploadWindow();
