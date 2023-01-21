@@ -85,10 +85,10 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
     //now we remove the sets and vectors we don't use anymore to free memory
-    res.~vector();
+    // res.~vector();
 //    small_set.~set();
-    final_set.~set();
-    string_set_gene_matrix.~set();
+    // final_set.~set();
+    // string_set_gene_matrix.~set(); (removed these lines since the program crashed, anyway these sets and vectors will be destroyed at the end of the function)
 
 //    for (std::string x : intersection_set) {
 //        std::cout << x << " ";
