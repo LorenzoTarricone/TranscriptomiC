@@ -13,6 +13,7 @@ public:
     void filter_genes();
     void normalisation(std::string type_of_normal = "col_mean");
     void addGeneList(std::string geneListPath);
+    void addGeneList(std::vector<std::string> geneList);
     void saveToFile(std::string filename);
     std::vector<std::string> getcurrentGenes();
 
