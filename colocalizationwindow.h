@@ -46,8 +46,11 @@ private slots:
 private:
     Ui::colocalizationwindow *ui;
 
+    bool uploadChecker;
+
     double pParameter;
     double MParameter;
+    double PercentParameter;
 
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;

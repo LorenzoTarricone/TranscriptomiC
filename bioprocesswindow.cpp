@@ -1,8 +1,9 @@
 #include "bioprocesswindow.h"
-#include "colocalizationwindow.h"
-#include "qcustomplot.h"
+#include "filedata.h"
 #include "ui_bioprocesswindow.h"
-#include "qdebug.h"
+#include <QMessageBox>
+#include <QFileDialog>
+
 
 
 
@@ -12,7 +13,7 @@ bioprocesswindow::bioprocesswindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->ChosenProcessText->setPlainText("Write here the chosen Process");
-
+    uploadChecker=false;
 }
 
 bioprocesswindow::~bioprocesswindow()
@@ -36,6 +37,24 @@ void bioprocesswindow::setProcessesToAnalyze(){
     processesToAnalyze.push_back("hypoxia");
 
 }
+
+void bioprocesswindow::on_UploadGenesButton_clicked(){
+
+    QString FileFilter = "Txt File (*.txt);;";
+    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
+    std::string filename;
+    FileData geneNames;
+
+    filename = userText.toStdString();
+    uploadChecker = geneNames.readGenes(filename); //checks for successful upload and reads the genes
+
+    if(uploadChecker){
+        QMessageBox::information(this, "Success", "File has been uploaded.", QMessageBox::Ok);
+    }
+    else{
+        QMessageBox::information(this, "Error", "Could not find file, please specify the entire file location.", QMessageBox::Ok);
+    }
+};
 
 void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow = new HeatMapWindow(this);
@@ -64,13 +83,18 @@ void bioprocesswindow::on_AnalyzeButton_clicked()
     std::transform(process.begin(), process.end(), process.begin(), ::tolower); //converts to lowercase
 
     //if we can analyze that process assign it to inputProcess, if not send error message
-    if (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()){
+    if ( (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()) && uploadChecker){
         inputProcess = process;
         openHeatMapWindow();
     }
     else{
-        QMessageBox::information(this, "Error", "We cannot analyze that process, please provide another one.", QMessageBox::Ok);
-      }
+
+        QString ErrorMesage = "Invalid Parameters.\n";
+        if(uploadChecker){ErrorMesage.append("File has been uploaded correctly. \n");}else{ErrorMesage.append("Please upload a file. \n");};
+        if((std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end())){ErrorMesage.append("Valid Percentage of Expression. \n");}else{ErrorMesage.append( "We cannot analyze that process, please provide another one.");};
+
+        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok);
+    }
 
 }
 

@@ -42,11 +42,15 @@ private slots:
     void on_MenuWindowButton_clicked();
 
 
+    void on_UploadGenesButton_clicked();
+
     void on_AnalyzeButton_clicked();
 
 
 private:
     Ui::bioprocesswindow *ui;
+
+    bool uploadChecker;
 
     QVector<double> xCoordinates;
     QVector<double> yCoordinates;

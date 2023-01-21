@@ -50,7 +50,7 @@ private slots:
 
     void on_BiologicalButton_clicked();
 
-    void on_MenuWindowButton_clicked();
+    void on_UploadWindowButton_clicked();
 
 private:
     Ui::MenuWindow *ui;

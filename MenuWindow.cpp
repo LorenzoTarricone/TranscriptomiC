@@ -88,7 +88,7 @@ void MenuWindow::on_BiologicalButton_clicked()
 }
 
 
-void MenuWindow::on_MenuWindowButton_clicked()
+void MenuWindow::on_UploadWindowButton_clicked()
 {
     this->close();
     emit UploadWindow(); //returns to uploadwindow
