@@ -71,8 +71,8 @@ void MenuWindow::on_BiologicalButton_clicked()
      * be deleted later on.
      */
 
-    bioWindow = new bioprocesswindow(this); //creates the instance of colocalizationWindow
-    connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+    biochooseWindow = new BioChooser(this); //creates the instance of colocalizationWindow
+    connect(BioChooser, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
     bioWindow->setFileObject(files);
 //    //sets the data
@@ -83,7 +83,6 @@ void MenuWindow::on_BiologicalButton_clicked()
     this->hide(); //hides menuwindow
     bioWindow->show(); //shows biowindow
     //bioWindow->makeHeatMap(); //generates the heatmap
-    bioWindow->setProcessesToAnalyze(); //instantiates the vector of processes
 
 }
 

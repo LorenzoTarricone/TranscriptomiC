@@ -9,6 +9,7 @@
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
+#include "biochooser.h"
 
 
 namespace Ui {
@@ -55,12 +56,9 @@ private slots:
 private:
     Ui::MenuWindow *ui;
     colocalizationwindow *coWindow;
-    bioprocesswindow *bioWindow;
+    BioChooser *biochooseWindow;
 
 
-    QVector<double> x;
-    QVector<double> y;
-    QVector<double> p;
 
     parsefile files;
 //    plotObject plot = plotObject{};

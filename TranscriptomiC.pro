@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     #general
+    biochooser.cpp \
     main.cpp \
     #API
     api.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     api.h \
     api.h \
     api_gene_name.h \
+    biochooser.h \
     genename.h \
     intersection_sets.h \
     main_API_bio_pro_to_gene.h \
@@ -87,6 +89,7 @@ HEADERS += \
 FORMS += \
     MenuWindow.ui \
     UploadWindow.ui \
+    biochooser.ui \
     bioprocesswindow.ui \
     heatmapwindow.ui\
     colocalizationheatmapwindow.ui \
