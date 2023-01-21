@@ -74,12 +74,8 @@ void MenuWindow::on_BiologicalButton_clicked()
     biochooseWindow = new BioChooser(this); //creates the instance of colocalizationWindow
     connect(biochooseWindow, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    biochooseWindow->setFileObject(files);
-//    //sets the data
-//    bioWindow->setX(this->getX());
-//    bioWindow->setY(this->getY());
-//    bioWindow->setP(this->getP());
 
+    biochooseWindow->setFileObject(files);
     this->hide(); //hides menuwindow
     biochooseWindow->show(); //shows biowindow
     //bioWindow->makeHeatMap(); //generates the heatmap
@@ -94,21 +90,4 @@ void MenuWindow::on_UploadWindowButton_clicked()
 }
 
 
-//const QVector<double>& MenuWindow::getX() {
-//    std::vector<double> stdVec = plot.getExprX();
-//    x = QVector<double>(stdVec.begin(), stdVec.end());
-//    return x;
-//}
-
-
-//const QVector<double>& MenuWindow::getY() {
-//    std::vector<double> stdVec = plot.getExprY();
-//    y = QVector<double>(stdVec.begin(), stdVec.end());
-//    return y;
-//}
-//const QVector<double>& MenuWindow::getP() {
-//    std::vector<double> stdVec = plot.getExprVal();
-//    p = QVector<double>(stdVec.begin(), stdVec.end());
-//    return p;
-//}
 

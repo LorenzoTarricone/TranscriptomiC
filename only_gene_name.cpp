@@ -48,7 +48,10 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     //if the search parameter is not only in upper case
     std::string upper_search = search;
     transform(upper_search.begin(), upper_search.end(), upper_search.begin(), ::toupper);
-    std::cout<<"UP"<<upper_search<<'\n';
+//    std::cout<<"UP"<<upper_search<<'\n';
+
+    //insert the gene name in the set to be sure the original name given by the researcher is in the set
+    res.insert(search);
 
 
     int o=0; //nb of [
@@ -57,90 +60,98 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     std::string list;
     std::string name="[";
     std::string true_list;
-    std::cout<<l<<'\n';
-    //First look for the last list of list (the only part of the string we are interrested in
-    for (unsigned int i=0;i<l.length()-2;i++){
-        v=l[i];
-        if (o!=2){
+//    std::cout<<l<<'\n';
+    if(l.empty()){
+        return res;
+    }else{
+        //First look for the last list of list (the only part of the string we are interrested in
+        for (unsigned int i=0;i<l.length()-2;i++){
+            v=l[i];
+            if (o!=2){
+                if (v=="["){
+                    o+=1;}
+                else{
+                    o=0;
+                }}
+            else{
+                name+=v;
+            }}
+
+    //    std::cout<<'\n';
+    //    std::cout<<name<<'\n'<<'\n';
+
+        //Then look for each list of this list and check if our "search" parameter is in it
+        std::string value;
+        std::set<std::string> res;
+        std::string val;
+        std::string gene;
+
+        o=0;
+        c=0;
+        for (unsigned int i=0;i<name.length();i++){
+            v=name[i];
             if (v=="["){
                 o+=1;}
-            else{
-                o=0;
-            }}
-        else{
-            name+=v;
-        }}
+            else if (v=="]"){
+                c+=1;}
 
-    std::cout<<'\n';
-    std::cout<<name<<'\n'<<'\n';
-
-    //Then look for each list of this list and check if our "search" parameter is in it
-    std::string value;
-    std::set<std::string> res;
-    std::string val;
-    std::string gene;
-
-    o=0;
-    c=0;
-    for (unsigned int i=0;i<name.length();i++){
-        v=name[i];
-        if (v=="["){
-            o+=1;}
-        else if (v=="]"){
-            c+=1;}
-
-        if ((o-c)==1 and v!="["){
-            list+=v;
-        }
-
-        else if (c==o) {
-            std::cout<<list<<'\n';
-            std::cout<<"search= "<<upper_search<<'\n';
-            int res = isSubstring(upper_search,list);
-            if (res !=-1){
-                std::cout<<"Found"<<'\n';
-                true_list=list;
+            if ((o-c)==1 and v!="["){
+                list+=v;
             }
-            list="";
-        }
 
-        // If the search parameter is in it: list becomes true_list, then we need to add every element of the list in the set
-        for (unsigned int j=0; j<true_list.length();j++){
-            value=true_list[j];
-            if (value==","){
+            else if (c==o) {
+    //            std::cout<<list<<'\n';
+    //            std::cout<<"search= "<<upper_search<<'\n';
+                int res = isSubstring(upper_search,list);
+                if (res !=-1){
+    //                std::cout<<"Found"<<'\n';
+                    true_list=list;
+                }
+                list="";
+            }
+
+            // If the search parameter is in it: list becomes true_list, then we need to add every element of the list in the set
+            for (unsigned int j=0; j<true_list.length();j++){
+                value=true_list[j];
+                if (value==","){
+                    res.insert(val);
+                    val.clear();
+                }
+                else if (value!="\0" and value!="\""){
+                    val+=value;
+                    value.clear();
+                }}
                 res.insert(val);
                 val.clear();
-            }
-            else if (value!="\0" and value!="\""){
-                val+=value;
-                value.clear();
-            }}
-            res.insert(val);
-            val.clear();
 
 
-    }
+        }
 
-    //remove the " " at the beginning and at the end of the string
-    gene=upper_search.substr(1, upper_search.length() - 2);
+        //remove the " " at the beginning and at the end of the string if they are present
+        //gene=upper_search.substr(1, upper_search.length() - 2);
+        gene.reserve(upper_search.size());
+        std::remove_copy_if(
+            begin(upper_search), end(upper_search),
+            std::back_inserter(gene),
+            [m = std::locale{}](auto ch) { return std::isspace(ch, m); }
+        );
 
-    //insert the gene name in the set to be sure the original name given by the researcher is in the set
-    res.insert(gene);
 
-    for (const std::string& str : res) {
-        std::string lowercase_str = str;
-        transform(lowercase_str.begin(), lowercase_str.end(), lowercase_str.begin(), ::tolower);
-        res.insert(lowercase_str);
+        for (const std::string& str : res) {
+            std::string lowercase_str = str;
+            transform(lowercase_str.begin(), lowercase_str.end(), lowercase_str.begin(), ::tolower);
+            res.insert(lowercase_str);
 
-        if (str.size()>0){
-        std::string capitalized_str = str;
-                capitalized_str[0] = toupper(capitalized_str[0]);
-                transform(capitalized_str.begin() + 1, capitalized_str.end(), capitalized_str.begin() + 1, ::tolower);
-                res.insert(capitalized_str);}
+            if (str.size()>0){
+            std::string capitalized_str = str;
+                    capitalized_str[0] = toupper(capitalized_str[0]);
+                    transform(capitalized_str.begin() + 1, capitalized_str.end(), capitalized_str.begin() + 1, ::tolower);
+                    res.insert(capitalized_str);}
+        }
     }
 
     for (const std::string& str : res) {
-        std::cout << str << std::endl;
+//        std::cout << str << std::endl;
     }
     return res;}
 

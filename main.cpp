@@ -1,6 +1,9 @@
 
 #include "UploadWindow.h"
+#include "api_bio_pro_to_gene.h"
+#include "api_gene_name.h"
 #include "colocalisation.h"
+#include "api.h"
 #include "biologicalprocess.h"
 #include <QApplication>
 //#include "readgenetxt.h"
@@ -22,8 +25,8 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
-//    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
+    //std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/";
+    std::string path = "/Users/alanpicucci/Desktop/Projects/Transcriptomics/TranscriptomiC/InputData/test_data_single_cell/";
     // path to names file
     std::string geneNameFile = path+"MBASS_dd99_genes.tsv";
     //path to beams file
@@ -32,6 +35,8 @@ int main(int argc, char *argv[])
     std::string expressionFile = path+"MBASS_dd99_expression_matrix.mtx";
     // path to gene subset file
     std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_3.tsv";
+    // path to genes associated with biological process
+    std::string geneBioFile = path+"list_gene_bio_process_mitochondrion_inheritance.txt";
 
     QApplication a(argc, argv);
     UploadWindow w;
@@ -41,7 +46,8 @@ int main(int argc, char *argv[])
 //////     initialize parse file object
     parsefile files = parsefile();
 
-    files.readFiles(expressionFile, spatialFile, geneNameFile);
+
+//    files.readFiles(expressionFile, spatialFile, geneNameFile);
 
     colocalisation object = colocalisation(files,200,200);
     std::cout << "[Progress] Colocalisation object initialised ..." << std::endl;
@@ -81,6 +87,42 @@ int main(int argc, char *argv[])
 //    matrix.saveToFile(path+"colocalisation_object.csv");
 
 //    std::cout << "[Progress] Colocalisation done!" << std::endl;
+////     create colocalisation object
+//    colocalisation matrix = colocalisation(files,0,2000);
+////     filter contents of the gene subset file through the data base
+//    std::vector<std::string> geneSubsetList;
+//    api_gene_name api;
+////    int nb_study = 50;
+////    std::vector<std::string> geneSubsetList;
+//    geneSubsetList = api.api_gene_name_funtion(geneNameFile,geneSubsetFile);
+//    std::cout << "[Progress] geneSubsetList finished: " << std::endl;
+//    std::cout << "Printing Vector after conversion\n";
+//    for (std::string i : geneSubsetList){
+//        std::cout << i << " ";
+//    }
+//    std::cout << std::endl;
+
+//    //     add gene subset file
+//    matrix.addGeneList(geneSubsetList);
+////    matrix.addGeneList(listgene(geneSubsetFile));
+////     TODO set linkage parameters!!!
+////     filter
+//    matrix.filter_genes();
+//    matrix.filter_simple(true,0.001);
+
+
+//    // normalise data
+//    matrix.normalisation();
+//    // compute colocalisation matrix
+//    matrix.compute();
+//    matrix.saveToFile(path+"colocalisation_object.csv");
+
+//    std::cout << "[Progress] Colocalisation done!" << std::endl;
+
+
+//    parsefile bp_files = parsefile();
+//    bp_files.readFiles(expressionFile, spatialFile, geneNameFile);
+
 
 
 //    parsefile bp_files = parsefile();
@@ -94,7 +136,37 @@ int main(int argc, char *argv[])
 //    bp.compute_tot_expr();
 ////    bp.bioprocess_2(50);
 
+    std::vector<std::string> geneSubsetBioPro;
+    int nb_study = 50;
+    geneSubsetBioPro = api_bio_pro_to_gene::api_bio_pro_to_gene_function(geneNameFile,geneBioFile,nb_study);
 
+
+//    api_gene_name api;
+//    std::vector<std::string> geneSubsetList;
+//    geneSubsetList = api.api_gene_name_funtion(geneNameFile,geneSubsetFile);
+//    std::cout << "[Progress] geneSubsetList finished: " << std::endl;
+    std::cout << "Printing Vector after conversion\n";
+    for (std::string i : geneSubsetBioPro){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+
+//    biologicalprocess bp = biologicalprocess(bp_files,0,2000);
+
+//    bp.addGeneList(geneSubsetBioPro);
+//    bp.filter_simple(true,0.001);
+//    bp.filter_genes();
+//    bp.compute_tot_expr();
+//    std::vector<std::string> clusters_dict=bp.bioprocess_2(4);
+
+//    std::vector<std::string> bio_process = getOverrep(clusters_dict);
+
+//    std::cout << "Biological processes: \n";
+//    for (std::string i : bio_process){
+//        std::cout << i << ",";
+//    }
+//    std::cout << std::endl;
 
 
     std::cout << "[Progress] Everything done!" << std::endl;

@@ -1,4 +1,5 @@
 #include "colocalizationwindow.h"
+#include "api_gene_name.h"
 #include "colocalisation.h"
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
@@ -109,9 +110,16 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 
         //setLinkageParameters(pParameter, MParameter)
         qDebug() << "Instantiating colocalisation object ... ";
-        colocalisation* object = new colocalisation(files,200,200);
+        colocalisation* object = new colocalisation(files,0,2000);
         qDebug() << "[Progress] Colocalisation object initialised ..." ;
-        object->addGeneList(filename);
+
+        std::vector<std::string> geneSubsetList;
+        api_gene_name api;
+        qDebug() << "[Progress] Query for genes ..." ;
+        //    int nb_study = 50;
+        //    std::vector<std::string> geneSubsetList;
+        geneSubsetList = api.api_gene_name_funtion(files.getGenePath(),filename);
+        object->addGeneList(geneSubsetList);
         qDebug() << "[Progress] Gene list added ..." ;
 
         double MParameter = 5000;

@@ -4,6 +4,7 @@
 #include "computation.h"
 #include <QDialog>
 #include <Eigen/Dense>
+#include <Eigen/Eigen>
 
 namespace Ui {
 class HeatMapWindow;
@@ -40,7 +41,7 @@ private slots:
 signals:
     void PreviousWindow();
 
-private:
+protected:
     Ui::HeatMapWindow *ui;
 
     QVector<double> xCoordinates;

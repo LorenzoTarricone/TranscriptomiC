@@ -12,6 +12,7 @@ computation::computation(parsefile files,int rows, int cols){
     initialise(rows, cols);
 }
 
+
 void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
     // parsefile object
@@ -36,18 +37,19 @@ void computation::initialise(int rows, int cols){
         block_rows = expression_raw.getRows()-1;
         block_cols = cols;
         std::cout << "Considering all rows of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex(geneNames);
 
     }
     else if(cols <= 0){
         block_rows = rows;
         block_cols = expression_raw.getCols()-1;
         std::cout << "Considering all columns of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
     else{
         block_rows = rows;
         block_cols = cols;
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
@@ -63,10 +65,6 @@ void computation::initialise(int rows, int cols){
 
 
     std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
-
-    expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
-
-    std::cout << "[Progress] Construction succesful! ..." << std::endl;
 }
 
 void computation::filter_simple(bool zeroes, double min_expr_perc){
@@ -121,16 +119,22 @@ void computation::normalisation(std::string type_of_normal){
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
+void computation::addGeneList(std::vector<std::string> geneList){
+    std::cout << "[Progress] Adding gene subset ..." << std::endl;
+    geneSubset = geneList;
+    std::cout << "[Progress] Subset added ..." << std::endl;
 
+}
 
 void computation::addGeneList(std::string geneListPath){
-    geneSubset = listgene(geneListPath);
+    addGeneList(listgene(geneListPath));
+//    geneSubset = listgene(geneListPath);
 }
 
 
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*expression,expression_raw.getFinalGenes());
+    expression_raw.writeToFile(filename,*expression,expression_raw.getcurrentGenes());
 }
 
 std::vector<std::string> computation::getcurrentGenes(){

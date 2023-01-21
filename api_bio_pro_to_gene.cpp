@@ -36,27 +36,24 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
     readgenetxt vec;
     std::vector<std::string> res;
-    res=vec.listgene_bio_pro(geneNameFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
-    std::cout<<"[";
-    for (const std::string& i : res) {
-        std::cout << i<<" ";
-      }
-    std::cout<<"]";
+    res=vec.listgene_bio_pro(geneBioProFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
+//    std::cout<<"[";
+//    for (const std::string& i : res) {
+//        std::cout << i<<" ";
+//      }
+//    std::cout<<"]";
+
+    CURL *curl = curl_easy_init();
 
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
         std::string search=res[i];
-        qDebug() << QString::fromStdString(search);
-        std::string l;
+//        qDebug() << QString::fromStdString(search);
         //API call
 
-        QMap<QString, QString> params;
-        params["terms"]= QString::fromStdString(search);
-        qDebug() <<params;
-        QJsonDocument doc = searchHGNC(params);
-        QString strJson(doc.toJson(QJsonDocument::Compact));
-        l=strJson.toStdString();
-        std::cout<<"THIS IS" << search<<l;
+        std::string l = searchHGNC(search, curl);
+
+//        std::cout<<"THIS IS" << search<<l;
 
         only_gene_name test; //search other name of this specific gene in the string l
         std::set<std::string> small_set;
@@ -65,19 +62,19 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
         final_set.insert(small_set.begin(), small_set.end()); //add the set of the names of this gene in the set of all the genes
 
-        std::cout<<'\n'<<"Set is: { "; //print final set
-        for(auto& str: final_set)
-          {
-            std::cout << str << ' ';
-          }
-        std::cout<<"}";
+//        std::cout<<'\n'<<"Set is: { "; //print final set
+//        for(auto& str: final_set)
+//          {
+//            std::cout << str << ' ';
+//          }
+//        std::cout<<"}";
 
     }
-
+    curl_easy_cleanup(curl);
     //Now let us create the set of all the gene of the matrix file
     read_tsv_set test2;
     std::set<std::string> string_set_gene_matrix;
-    string_set_gene_matrix=test2.read_tsv(geneBioProFile);
+    string_set_gene_matrix=test2.read_tsv(geneNameFile);
 
     //Now we take the intersection of the 2 sets, to keep only the genes we are interrested in
     intersection_sets test3;
@@ -85,17 +82,23 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     intersection_set = test3.set_intersection(final_set, string_set_gene_matrix);
 
     //now we remove the sets and vectors we don't use anymore to free memory
-    res.~vector();
+    // res.~vector();
 //    small_set.~set();
-    final_set.~set();
-    string_set_gene_matrix.~set();
+    // final_set.~set();
+    // string_set_gene_matrix.~set(); (removed these lines since the program crashed, anyway these sets and vectors will be destroyed at the end of the function)
 
-    for (std::string x : intersection_set) {
-        std::cout << x << " ";
-    }
+//    for (std::string x : intersection_set) {
+//        std::cout << x << " ";
+//    }
+
+    std::cout << "Cross reference finished, kept "<<intersection_set.size()<<" genes." << std::endl;
 
     //return a vector instead of a set since the backend team was working with a set
     std::vector<string> v(intersection_set.begin(), intersection_set.end());
 
-    return v;}
+    std::cout << "Conversion finished" << std::endl;
+
+    return v;
+
+}
 

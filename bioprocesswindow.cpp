@@ -3,7 +3,7 @@
 #include "ui_bioprocesswindow.h"
 #include <QMessageBox>
 #include <QFileDialog>
-
+#include "api_bio_pro_to_gene.h"
 
 
 
@@ -29,19 +29,11 @@ void bioprocesswindow::on_MenuWindowButton_clicked()
 
 
 
-void bioprocesswindow::setProcessesToAnalyze(){
-    //this function will just create a vector with all the processes we can analyze
-    //TEMPORARY, in the end we will have something a lot more sophisticated
-
-    processesToAnalyze.push_back("hypoxia");
-
-}
-
 void bioprocesswindow::on_UploadGenesButton_clicked(){
 
     QString FileFilter = "Txt File (*.txt);;";
     QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
-    std::string filename;
+
     FileData geneNames;
 
     filename = userText.toStdString();
@@ -59,11 +51,14 @@ void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow = new HeatMapWindow(this);
     connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
+    biologicalprocess object = biologicalprocess(files,0,2000);
+    std::vector<std::string> geneSubsetBioPro;
+    int nb_study = 50;
+    geneSubsetBioPro = api_bio_pro_to_gene::api_bio_pro_to_gene_function(files.getGenePath(),filename,nb_study);
+    object.addGeneList(geneSubsetBioPro);
+    object.compute_tot_expr();
 
-    heatmapWindow->setX(this->getX());
-    heatmapWindow->setY(this->getY());
-    heatmapWindow->setP(this->getP());
-
+    heatmapWindow->makeHeatMap(object.getPerc_expression());
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow
     //heatmapWindow->makeHeatMap(); //generates the heatmap
@@ -71,11 +66,17 @@ void bioprocesswindow::openHeatMapWindow(){
 
 void bioprocesswindow::on_AnalyzeButton_clicked()
 {
+    if(uploadChecker){
+        QMessageBox::information(this, "Success", "File has been uploaded correctly. \n" , QMessageBox::Ok);
+        openHeatMapWindow();
+    }else{
+        QMessageBox::information(this, "Error", "Please upload a file. \n" , QMessageBox::Ok);
 
-        QString ErrorMesage = "Invalid Parameters.\n";
-        if(uploadChecker){ErrorMesage.append("File has been uploaded correctly. \n");}else{ErrorMesage.append("Please upload a file. \n");};
+    }
 
 
 }
+
+
 
 

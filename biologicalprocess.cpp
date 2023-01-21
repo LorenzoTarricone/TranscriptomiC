@@ -60,8 +60,13 @@ void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
     perc_expression = compute_total_expression(*expression,A_spatial,true);
 
+    std::cout << perc_expression << std::endl;
 
+}
 
+const Eigen::MatrixXd &biologicalprocess::getPerc_expression() const
+{
+    return perc_expression;
 }
 
 double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations){
@@ -200,12 +205,14 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
                             medoids[i] = oldMedoid;
                         } else {
                             changed = true;
-                            // clear the clusters
-                            for (int i = 0; i < k; i++) {
-                                clusters[i].clear();
-                            }
                         }
                     }
+                }
+            }
+            // clear the clusters
+            if(changed){
+                for (int i = 0; i < k; i++) {
+                    clusters[i].clear();
                 }
             }
 
@@ -256,7 +263,7 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
     return clusters_dict;
 }
 
-void biologicalprocess::bioprocess_2(int n, int num_runs){
+std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
     std::cout << "[Progress] Computing EMD Matrix ... "<<std::endl;
     Eigen::MatrixXd EMD_Mat = Wass_Matrix(A_spatial, *expression,3);
 
@@ -268,5 +275,7 @@ void biologicalprocess::bioprocess_2(int n, int num_runs){
     for(int i = 0; i < clusters_dict.size(); i++){
         std::cout<<"cluster "<<i<<" with genes: "<<clusters_dict[i]<<std::endl;
     }
+
+    return clusters_dict;
 
 }

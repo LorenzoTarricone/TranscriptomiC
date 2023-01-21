@@ -6,11 +6,11 @@
 
 
 colocalisation::~colocalisation(){
-    delete A_distance;
-    delete A_linkage;
-    delete A_combine;
-    delete A_compare;
-    delete A_colocalisation;
+    //delete A_distance;
+    //delete A_linkage;
+    //delete A_combine;
+    //delete A_compare;
+    //delete A_colocalisation;
     delete expression;
 }
 
@@ -35,7 +35,8 @@ void colocalisation::compute(){
 
 void colocalisation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*A_colocalisation,expression_raw.getFinalGenes());
+    expression_raw.writeToFile(filename,*A_colocalisation,expression_raw.getcurrentGenes());
+    delete A_colocalisation;
 }
 
 
@@ -43,7 +44,9 @@ void colocalisation::saveToFile(std::string filename){
 void colocalisation::step1(){
     std::cout << "[Progress] Running step 1 ..." << std::endl;
     A_distance = new Eigen::MatrixXd;
-    *A_distance = matrix_distance(A_spatial.block(block_rows_start,0,block_cols,2));
+    *A_distance = matrix_distance(A_spatial);
+    std::cout<<(*A_distance).block(0,0,10,10)<<std::endl;
+    std::cout<<"\nDistance matrix shape: (" << (*A_distance).rows() << ", " << (*A_distance).cols() << ")"<<std::endl;
 }
 
 void colocalisation::step2(){
@@ -90,6 +93,7 @@ void colocalisation::step5(){
     std::cout << "[Progress] Running step 5 ..." << std::endl;
     A_colocalisation = new Eigen::MatrixXd;
     *A_colocalisation = enrichment(*A_compare);
+
 
     std::cout<<A_colocalisation->block(0,0,10,10)<<std::endl;
     std::cout<<"\n Colocalisation matrix shape: (" << A_colocalisation->rows() << ", " << A_colocalisation->cols() << ")"<<std::endl;

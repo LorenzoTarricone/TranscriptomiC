@@ -4,7 +4,10 @@
 *~
 *.autosave
 *.a
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/MergeAPIBackend
 *.moc
 *.o
 *.obj

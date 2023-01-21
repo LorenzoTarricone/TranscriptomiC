@@ -1,6 +1,8 @@
 #ifndef WASSERSTEIN_H
 #define WASSERSTEIN_H
 
+//From https://github.com/gnardari/wasserstein
+
 #include <algorithm>
 #include <numeric> // std::iota
 #include <vector>

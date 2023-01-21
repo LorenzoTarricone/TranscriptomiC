@@ -31,6 +31,7 @@ int parsefile::readFiles(std::string expressionFile, std::string spatialFile, st
     // read gene name file
     try {
         std::cout << "[Progress] Reading gene names file ..." << std::endl;
+        geneNamePath = geneNameFile;
         geneNames = listgene(geneNameFile);
     } catch(...) {
         std::cerr << "[Error] Reading gene names file failed ..." << std::endl;
@@ -49,4 +50,8 @@ parsing parsefile::getSpatial(){
 }
 std::vector<std::string> parsefile::getGenes(){
     return geneNames;
+}
+
+std::string parsefile::getGenePath(){
+    return geneNamePath;
 }

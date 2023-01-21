@@ -10,7 +10,7 @@ class api_gene_name
 {
 public:
     api_gene_name();
-    std::vector<std::string> api_gene_name_funtion(std::string geneNameFile, std::string geneSubsetFile);
+     std::vector<std::string> api_gene_name_funtion(std::string geneNameFile, std::string geneSubsetFile);
 
 };
 
