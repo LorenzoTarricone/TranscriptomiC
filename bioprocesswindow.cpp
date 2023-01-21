@@ -12,7 +12,6 @@ bioprocesswindow::bioprocesswindow(QWidget *parent) :
     ui(new Ui::bioprocesswindow)
 {
     ui->setupUi(this);
-    ui->ChosenProcessText->setPlainText("Write here the chosen Process");
     uploadChecker=false;
 }
 
@@ -61,10 +60,6 @@ void bioprocesswindow::openHeatMapWindow(){
     connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
 
-    heatmapWindow->setX(this->getX());
-    heatmapWindow->setY(this->getY());
-    heatmapWindow->setP(this->getP());
-
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow
     //heatmapWindow->makeHeatMap(); //generates the heatmap
@@ -72,30 +67,17 @@ void bioprocesswindow::openHeatMapWindow(){
 
 void bioprocesswindow::on_AnalyzeButton_clicked()
 {
-    QString bio;
-    std::string process;
 
-    bio = ui->ChosenProcessText->toPlainText(); //gets the text the user wrote
-    ui->ChosenProcessText->setPlainText("Write here the chosen Process"); //resets the text box to be empty
+        if(uploadChecker){
+            QMessageBox::information(this, "Success", "File has been uploaded correctly. \n" , QMessageBox::Ok);
+            openHeatMapWindow();
+        }else{
+            QMessageBox::information(this, "Error", "Please upload a file. \n" , QMessageBox::Ok);
 
-    process = bio.toStdString();
-
-    std::transform(process.begin(), process.end(), process.begin(), ::tolower); //converts to lowercase
-
-    //if we can analyze that process assign it to inputProcess, if not send error message
-    if ( (std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end()) && uploadChecker){
-        inputProcess = process;
-        openHeatMapWindow();
-    }
-    else{
-
-        QString ErrorMesage = "Invalid Parameters.\n";
-        if(uploadChecker){ErrorMesage.append("File has been uploaded correctly. \n");}else{ErrorMesage.append("Please upload a file. \n");};
-        if((std::find(processesToAnalyze.begin(), processesToAnalyze.end(), process) != processesToAnalyze.end())){ErrorMesage.append("Valid Percentage of Expression. \n");}else{ErrorMesage.append( "We cannot analyze that process, please provide another one.");};
-
-        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok);
-    }
+        }
 
 }
+
+
 
 

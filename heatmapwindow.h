@@ -41,7 +41,7 @@ private slots:
 signals:
     void PreviousWindow();
 
-private:
+protected:
     Ui::HeatMapWindow *ui;
 
     QVector<double> xCoordinates;
