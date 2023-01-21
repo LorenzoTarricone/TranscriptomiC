@@ -36,7 +36,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
 
     readgenetxt vec;
     std::vector<std::string> res;
-    res=vec.listgene_bio_pro(geneNameFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
+    res=vec.listgene_bio_pro(geneBioProFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
 //    std::cout<<"[";
 //    for (const std::string& i : res) {
 //        std::cout << i<<" ";
@@ -74,7 +74,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     //Now let us create the set of all the gene of the matrix file
     read_tsv_set test2;
     std::set<std::string> string_set_gene_matrix;
-    string_set_gene_matrix=test2.read_tsv(geneBioProFile);
+    string_set_gene_matrix=test2.read_tsv(geneNameFile);
 
     //Now we take the intersection of the 2 sets, to keep only the genes we are interrested in
     intersection_sets test3;

@@ -103,7 +103,7 @@ std::string getGeneontology() {
 std::vector<std::string> getOverrep(std::vector<std::string> geneLists) {
     std::vector<std::string> labelList = {};
     for (std::vector<std::string>::iterator geneList = geneLists.begin(); geneList != geneLists.end(); ++geneList) {
-        if (labelList.empty()) {
+        if (*geneList == "empty") {
             labelList.push_back(std::string(""));
         } else {
         QJsonDocument doc = searchPanther(QString::fromStdString(*geneList));

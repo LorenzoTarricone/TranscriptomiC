@@ -419,6 +419,11 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
         }
     }
 
+    int nonzeros = 0;
+    for(int i = 0; i < expression.rows();i++){
+        nonzeros += ((double)count[i]/expression.cols() > min_expr_perc);
+    }
+
 //    std::cout << "[";
 //    for(int i = 0; i < s-1; i++){
 //        std::cout << count[i] << ",";
@@ -426,7 +431,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
 //    std::cout << count[s-1] << "]" << std::endl;
 
     //
-    Eigen::MatrixXd filtered_expression(s, c);
+    Eigen::MatrixXd filtered_expression(nonzeros, c);
     std::vector<std::string> temp;
     int index=0;
     std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
@@ -437,8 +442,8 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
             std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
             //resize matrix if we remove a row
             //filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
-            Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
-            filtered_expression=temp_matrix;
+//            Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
+//            filtered_expression=temp_matrix;
             this->geneIndex[currentGenes[i]]=-1;
             //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
             //removeRow(expression, i-removed);
@@ -454,7 +459,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
         }
     }
     currentGenes=temp;
-    printGeneIndex(s-removed);
+//    printGeneIndex(s-removed);
 
     return filtered_expression;
 }

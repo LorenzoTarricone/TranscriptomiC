@@ -60,7 +60,7 @@ void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
     perc_expression = compute_total_expression(*expression,A_spatial,true);
 
-
+    std::cout << perc_expression << std::endl;
 
 }
 
