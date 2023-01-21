@@ -64,7 +64,7 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                //95 PERCENT CONFIDENCE interval
                //calculate mean
                double mean = 0.0;
-               for(int i= 0; i<getP().size(); i++){
+               for(int i= 0; i<data_size; i++){
                       mean += m(2,i); };//only the third column
 
                          mean /= data_size;
