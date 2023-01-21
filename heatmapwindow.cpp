@@ -28,7 +28,7 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                int number_rows = m.rows(); // number beams x,y -coordinate
                int number_cols = m.cols(); // should be 3
                // data size
-               int data_size = number_cols; // just the third column
+               int data_size = number_rows; // just the third column
 
                // Maybe I have to change the size and find first max, min value
                double maxValx = m.col(0).maxCoeff(); // biggest x- value
@@ -36,49 +36,34 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                double maxValy = m.col(1).maxCoeff(); // biggest y- value
                double minValy = m.col(1).minCoeff(); // smallest y- value
 
-               colorMap->data()->setSize(number_cols, number_rows);
+               std::cout << "Datasize :"<< data_size << std::endl;
+               std::cout << "NumberCols :"<< number_cols << std::endl;
+               std::cout << "NumberRows :"<< number_rows << std::endl;
+
+               std::cout << "maxValx :"<< maxValx << std::endl;
+               std::cout << "minValx :"<< minValx << std::endl;
+               std::cout << "maxValy :"<< maxValy << std::endl;
+               std::cout << "minValy :"<< minValy << std::endl;
+
+               colorMap->data()->setSize(data_size,data_size);
 
                //Maybe use here min and max values
-               colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
-
-              /* //Quantile Matrix : I dont know if this is right.
-               double median = 0;
-               double q1 = 0;
-               double q3 = 0;
-               double eta = 0.005;
-
-               for(int i= 0; i<number_cols; i++){
-                   for (int j = 0; j<number_rows; j++){
-                      median += eta *std::copysign(1.0f,m(i,j) - median);
-                   }
-               }
-               for(int i= 0; i<number_cols; i++){
-                   for (int j = 0; j<number_rows; j++){
-                       if(m(i,j) < median)
-                           q1 += eta*std::copysign(1.0f,m(i,j) - q1);
-                       else
-                           q3 += eta*std::copysign(1.0f,m(i,j) - q3);
-                   }
-               }
-               //test
-               std::cout << median;
-               std::cout << q1;
-               std::cout << q3; */
+               colorMap->data()->setRange(QCPRange(minValx, maxValx), QCPRange(minValy, maxValy)); //set the range of the HeatMap;
 
 
 
-               //95 PERCENT CONFIDENCE interval
+               /*//95 PERCENT CONFIDENCE interval
                //calculate mean
                double mean = 0.0;
                for(int i= 0; i<data_size; i++){
-                      mean += m(2,i); };//only the third column
+                      mean += m(i,2); };//only the third column
 
                          mean /= data_size;
 
                //calculate standard deviation
                double sd = 0.0;
                for(int i= 0; i<data_size; i++){
-                      sd += pow(m(2,i) - mean,2);} // only third column
+                      sd += pow(m(i,2) - mean,2);} // only third column
                //standart error
                sd = sqrt(sd/(data_size));
 
@@ -88,22 +73,28 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                double q1 = mean-ci;
                double q3 = mean+ci;
                //output
-               std::cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << std::endl;
+               std::cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << std::endl;*/
 
 
 
 
-               // now we assign some data, by accessing the QCPColorMapData instance of the color map:
+               // now we assign some data, by accessing the QCPColorMapData instance of the color map
 
                for(int i = 0; i < number_rows; i++){
+                    colorMap->data()->setData(m(i,0),m(i,1),m(i,2));
+               }
+               //assign data with cell and with confidence level
+               /*for(int i = 0; i < number_rows; i++){
                        if(m(i,2)>q1 && m(i,2)<q3){ // if the third value of the row is in the confidence interval
-                           colorMap->data()->setCell(m(i,0),m(i,1), m(i,2));} // plot only data between q1 and q3 here we want quantile
+                           colorMap->data()->setCell(int(m(i,0)),int(m(i,1)), m(i,2)); // plot only data between q1 and q3 here we want quantile
+                             }
                        else{colorMap->data()->setCell(m(i,0),m(i,1), m(i,2));} //assign 0
+               }*/
 
-                   }
+
 
                // Do we have axis labels?
-              /*// Ticks and Labels
+              /* Ticks and Labels
               QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
 
               // tick strategy. readability is more important
@@ -176,7 +167,7 @@ void HeatMapWindow::makeHeatMap(const Eigen::MatrixXd m){
                gradient.setColorStopAt(0.65, QColor(255, 255, 0));
                gradient.setColorStopAt(0.85, QColor(255, 30, 0));
                gradient.setColorStopAt(1, QColor(100, 0, 0));
-               gradient.setNanHandling(QCPColorGradient::nhLowestColor); //NaN data points as the lowest color.
+               gradient.setNanHandling(QCPColorGradient::nhTransparent); //NaN data points as the transparent
                gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
                colorMap->setGradient(gradient);//assign it to the heatmap
 
