@@ -4,6 +4,8 @@
 #include <fstream>
 using namespace std;
 
+//Takes nothing as input and returns 0, although it creates a txt file with all the information in the website.
+
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
     ((std::string*)userp)->append((char*)contents, size * nmemb);
