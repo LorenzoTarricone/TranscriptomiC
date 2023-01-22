@@ -156,7 +156,9 @@ int main(int argc, char *argv[])
 
 
     biologicalprocess bp = biologicalprocess(files,0,1000);
-    std::string geneSubsetFile = path+"MBASS_dd99_genes_subset_4.tsv";
+
+    std::string geneSubsetFile = "MBASS_dd99_genes_subset_4.tsv";
+
 
     bp.addGeneList(geneSubsetFile);
     bp.filter_simple(true,0.001);

@@ -203,14 +203,11 @@ void MenuWindow::on_ColocalizationButton_clicked()
     connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
     coWindow->setFileObject(files);
-//    //sets the data
-//    coWindow->setX(this->getX());
-//    coWindow->setY(this->getY());
-//    coWindow->setP(this->getP());
+
 
     this->hide(); //hides menuwindow
     coWindow->show(); //shows colocalizationwindow
-    //coWindow->makeHeatMap(); //makes the heatmap
+
 
 }
 

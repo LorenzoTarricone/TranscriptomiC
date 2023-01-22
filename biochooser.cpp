@@ -54,8 +54,8 @@ void BioChooser::on_ClusterButton_clicked()
     // perform cluster analysis
 
     qDebug() << "Initialize BiologicalProcess object";
-    int rows = 0;
-    int cols = 2000;
+    int rows = 100;
+    int cols = 700;
     biologicalprocess object = biologicalprocess(files,rows,cols);
     object.filter_simple(true,0.001);
     qDebug() << "Start clustering";
@@ -75,15 +75,18 @@ void BioChooser::on_ClusterButton_clicked()
     HeatMapWindow* tmp;
     biologicalprocess clusterObject;
     for(int i = 0; i < 4; i++){
-        qDebug() << "Cluster : " << i ;
-        tmp = heatmaps[i];
-        clusterObject = biologicalprocess(files,rows,cols);
-        clusterObject.addGeneList(clusters[i]);
-        clusterObject.compute_tot_expr();
-        tmp->setLabel(bio_process[i]);
+        if(clusters_dict[i] != "empty"){
+            qDebug() << "Cluster : " << i ;
+            tmp = heatmaps[i];
+            clusterObject = biologicalprocess(files,rows,cols);
+            clusterObject.addGeneList(clusters[i]);
+            clusterObject.compute_tot_expr();
+            tmp->setLabel(bio_process[i]);
 
-        tmp->makeHeatMap(clusterObject.getPerc_expression());
-        tmp->show(); //shows biowindow
+            tmp->makeHeatMap(clusterObject.getPerc_expression());
+            tmp->show(); //shows biowindow
+        }
+
     }
 
     this->hide(); //hides menuwindow

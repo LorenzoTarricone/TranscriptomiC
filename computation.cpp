@@ -194,7 +194,12 @@ Eigen::MatrixXd computation::compute_tot_expr(){
     std::cout << "[Progress] Simple filter by genes done. "<<std::endl;
 
     std::cout << "[Progress] Computing total expression ... "<<std::endl;
-    return compute_total_expression(*expression,A_spatial);
+
+    Eigen::MatrixXd tot_exp = compute_total_expression(*expression,A_spatial);
+
+    std::cout << tot_exp << std::endl;
+
+    return tot_exp;
 
 //    std::cout << "[Progress] Filter by genes ... "<<std::endl;
 //    filter_genes();

@@ -51,7 +51,7 @@ void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow = new HeatMapWindow(this);
     connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    biologicalprocess object = biologicalprocess(files,0,2000);
+    biologicalprocess object = biologicalprocess(files,0,5000);
     std::vector<std::string> geneSubsetBioPro;
     int nb_study = 50;
     geneSubsetBioPro = api_bio_pro_to_gene::api_bio_pro_to_gene_function(files.getGenePath(),filename,nb_study);
