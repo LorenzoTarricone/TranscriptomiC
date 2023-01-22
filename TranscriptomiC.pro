@@ -15,6 +15,7 @@ SOURCES += \
     #API
     api.cpp \
     api_gene_name.cpp \
+    api_bio_pro_to_gene.cpp \
     intersection_sets.cpp \
     plotobject.cpp \
     readgenetxt.cpp \
@@ -38,15 +39,14 @@ SOURCES += \
     colocalizationwindow.cpp \
     colocalizationheatmapwindow.cpp \
     filedata.cpp \
-    api_bio_pro_to_gene.cpp \
     #Package
     qcustomplot.cpp \
 
 HEADERS += \
     #API
     api.h \
-    api.h \
     api_gene_name.h \
+    api_bio_pro_to_gene.h \
     biochooser.h \
     intersection_sets.h \
     plotobject.h \
@@ -61,6 +61,7 @@ HEADERS += \
 #    matrixeigen.h \
 #    SparseMatrix.h \
     colocalization_matrix.h\
+    colocalisation_steps.h \
     colocalisation.h \
     biologicalprocess.h \
     computation.h \
@@ -72,7 +73,6 @@ HEADERS += \
     colocalizationwindow.h \
     colocalizationheatmapwindow.h \
     filedata.h \
-    api_bio_pro_to_gene.h \
     #Package
     qcustomplot.h \
     SparseMatrix.h \
