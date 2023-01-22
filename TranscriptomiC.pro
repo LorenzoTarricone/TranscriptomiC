@@ -15,10 +15,10 @@ SOURCES += \
     #API
     api.cpp \
     api_gene_name.cpp \
-    genename.cpp \
+#    genename.cpp \
     intersection_sets.cpp \
-    main_API_bio_pro_to_gene.cpp \
-    main_API_gene_name.cpp \
+#    main_API_bio_pro_to_gene.cpp \
+#    main_API_gene_name.cpp \
     plotobject.cpp \
     readgenetxt.cpp \
     only_gene_name.cpp \
@@ -51,10 +51,10 @@ HEADERS += \
     api.h \
     api_gene_name.h \
     biochooser.h \
-    genename.h \
+#    genename.h \
     intersection_sets.h \
-    main_API_bio_pro_to_gene.h \
-    main_API_gene_name.h \
+#    main_API_bio_pro_to_gene.h \
+#    main_API_gene_name.h \
     plotobject.h \
     readgenetxt.h \
     only_gene_name.h \
