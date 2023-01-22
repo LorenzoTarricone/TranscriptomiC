@@ -16,7 +16,7 @@ class ColocalizationHeatmapWindow : public HeatMapWindow
 public:
     explicit ColocalizationHeatmapWindow(QWidget *parent = nullptr);
     ~ColocalizationHeatmapWindow();
-    void makeHeatMap(const Eigen::MatrixXd m);
+    void makeHeatMap(const Eigen::MatrixXd m, std::vector<std::string> genes);
 
 
  //   void on_SaveHeatmapButton_clicked();
