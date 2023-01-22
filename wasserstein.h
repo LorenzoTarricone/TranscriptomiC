@@ -3,6 +3,11 @@
 
 //From https://github.com/gnardari/wasserstein
 
+//This set of functions allow us to calculate the one dimensional Wasserstain Distance
+//(also called Earth Moving Distance) starting by specifying the for each distribution
+//two vector of the same lenght that are 1- the support of the distribution 2-the respective
+//values obtained on that support
+
 #include <algorithm>
 #include <numeric> // std::iota
 #include <vector>
