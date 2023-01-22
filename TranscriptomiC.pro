@@ -89,9 +89,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-
-# We should not need a different eigen folder for windows and mac,
-# try and see if it works with this include
 INCLUDEPATH += "Eigen"
 macx: LIBS += -lcurl
 
