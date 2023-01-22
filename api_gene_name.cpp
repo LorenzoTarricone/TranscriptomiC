@@ -55,7 +55,7 @@ std::vector<std::string> api_gene_name::api_gene_name_funtion(std::string geneNa
 
         final_set.insert(small_set.begin(), small_set.end()); //add the set of the names of this gene in the set of all the genes
 
-
+    }
     curl_easy_cleanup(curl);
     //Now let us create the set of all the gene of the matrix file
     read_tsv_set test2;
