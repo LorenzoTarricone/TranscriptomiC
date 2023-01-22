@@ -37,23 +37,15 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     readgenetxt vec;
     std::vector<std::string> res;
     res=vec.listgene_bio_pro(geneBioProFile, nb_study); //list of all the genes in the txt file, nb_study correspond to the first nb_study genes linked to the biological process we will study
-//    std::cout<<"[";
-//    for (const std::string& i : res) {
-//        std::cout << i<<" ";
-//      }
-//    std::cout<<"]";
 
     CURL *curl = curl_easy_init();
 
     std::set<std::string> final_set;
     for (unsigned int i=0; i<res.size();i++){
         std::string search=res[i];
-//        qDebug() << QString::fromStdString(search);
         //API call
 
         std::string l = searchHGNC(search, curl);
-
-//        std::cout<<"THIS IS" << search<<l;
 
         only_gene_name test; //search other name of this specific gene in the string l
         std::set<std::string> small_set;
@@ -61,13 +53,6 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
         test.printset(small_set);
 
         final_set.insert(small_set.begin(), small_set.end()); //add the set of the names of this gene in the set of all the genes
-
-//        std::cout<<'\n'<<"Set is: { "; //print final set
-//        for(auto& str: final_set)
-//          {
-//            std::cout << str << ' ';
-//          }
-//        std::cout<<"}";
 
     }
     curl_easy_cleanup(curl);
@@ -87,9 +72,10 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     // final_set.~set();
     // string_set_gene_matrix.~set(); (removed these lines since the program crashed, anyway these sets and vectors will be destroyed at the end of the function)
 
-//    for (std::string x : intersection_set) {
-//        std::cout << x << " ";
-//    }
+    std::cout<<"[Progress API bio pro to gene finished], Intersection set is: "<<std::endl;
+    for (std::string x : intersection_set) {
+        std::cout << x << " ";
+    }
 
     std::cout << "Cross reference finished, kept "<<intersection_set.size()<<" genes." << std::endl;
 
