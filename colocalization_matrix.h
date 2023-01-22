@@ -6,7 +6,6 @@
 #include <vector>
 
 using namespace Eigen;
-using namespace std;
 
 
 // auxilary functions
