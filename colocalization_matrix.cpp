@@ -18,10 +18,13 @@ double distance(double x1, double x2, double y1, double y2) {
 //given an eigen matrix, returns an eigen matrix with the distance between points
 Eigen::MatrixXd matrix_distance(Eigen::MatrixXd A){
     Eigen::MatrixXd A_distance(A.rows(),A.rows());
-    for (int i = 0; i < A.rows() ; i++){
-        for (int j = 0; j < A.rows(); j++){
-            A_distance(i,j) = distance(A(i,0), A(j,0), A(i, 1), A(j,1)); //distance between coordinate i and j
-        }
+    //for (int i = 0; i < A.rows() ; i++){
+    //    for (int j = 0; j < A.rows(); j++){
+    //        A_distance(i,j) = distance(A(i,0), A(j,0), A(i, 1), A(j,1)); //distance between coordinate i and j
+     //   }
+    //}
+    for(int i=0;i<A.rows();i++){
+        A_distance.col(i)=(A.rowwise() - A.row(i)).matrix().rowwise().norm();
     }
     return A_distance;
 };

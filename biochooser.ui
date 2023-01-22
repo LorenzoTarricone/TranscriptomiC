@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BioChooser</class>
+ <widget class="QDialog" name="BioChooser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>480</width>
+    <height>348</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+font: 700 10pt &quot;Segoe UI&quot;;
+
+</string>
+  </property>
+  <widget class="QPushButton" name="ProcessButton">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>140</y>
+     <width>151</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+font: 700 10pt &quot;Segoe UI&quot;;
+
+</string>
+   </property>
+   <property name="text">
+    <string>Analyze single process</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ClusterButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>140</y>
+     <width>151</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+font: 700 10pt &quot;Segoe UI&quot;;
+
+</string>
+   </property>
+   <property name="text">
+    <string>Cluster analysis</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="MenuButton">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>20</y>
+     <width>80</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230,230,230);
+color: rgb(0,0,0);
+border: 1px solid black ;
+border-radius: 5px;
+padding: 0 8px;
+font: 700 10pt &quot;Segoe UI&quot;;
+
+</string>
+   </property>
+   <property name="text">
+    <string>Menu</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

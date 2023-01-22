@@ -12,6 +12,7 @@ computation::computation(parsefile files,int rows, int cols){
     initialise(rows, cols);
 }
 
+
 void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
     // parsefile object
@@ -26,7 +27,7 @@ void computation::initialise(int rows, int cols){
 
     if(rows <= 0 && cols <= 0){
         std::cout << "Considering the entire expression matrix" << std::endl;
-        *expression =  expression_raw.getExpressionDense();
+        *expression =  expression_raw.getSparse();
         std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
         std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
         expression_raw.initiateGeneIndex(geneNames);
@@ -36,18 +37,19 @@ void computation::initialise(int rows, int cols){
         block_rows = expression_raw.getRows()-1;
         block_cols = cols;
         std::cout << "Considering all rows of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex(geneNames);
 
     }
     else if(cols <= 0){
         block_rows = rows;
         block_cols = expression_raw.getCols()-1;
         std::cout << "Considering all columns of the expression matrix" << std::endl;
-
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
     else{
         block_rows = rows;
         block_cols = cols;
+        expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
@@ -63,8 +65,6 @@ void computation::initialise(int rows, int cols){
 
 
     std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
-
-    expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
 }
 
 void computation::filter_simple(bool zeroes, double min_expr_perc){
@@ -119,18 +119,95 @@ void computation::normalisation(std::string type_of_normal){
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
+void computation::addGeneList(std::vector<std::string> geneList){
+    std::cout << "[Progress] Adding gene subset ..." << std::endl;
+    geneSubset = geneList;
+    std::cout << "[Progress] Subset added ..." << std::endl;
 
+}
 
 void computation::addGeneList(std::string geneListPath){
-    geneSubset = listgene(geneListPath);
+    addGeneList(listgene(geneListPath));
+//    geneSubset = listgene(geneListPath);
 }
 
 
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
-    expression_raw.writeToFile(filename,*expression);
+    expression_raw.writeToFile(filename,*expression,expression_raw.getcurrentGenes());
 }
 
 std::vector<std::string> computation::getcurrentGenes(){
     return expression_raw.getcurrentGenes();
+}
+
+
+Eigen::MatrixXd computation::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial, bool perc){
+    std::cout << "[Progress] Calling total expression function ... "<<std::endl;
+    int rows = expression.rows();
+    int cols = expression.cols();
+
+    std::cout << "Expression matrix of shape ("<<rows<<","<<cols<<") - spatial data of shape ("<<spatial.rows()<<","<<spatial.cols()<<")"<<std::endl;
+//    std::cout << spatial.block(0,0,cols,spatial.cols()) << std::endl;
+    Eigen::MatrixXd tot = Eigen::MatrixXd(cols,3);
+
+
+
+
+    // initialize last column to 0
+    for(int j = 0; j < tot.rows(); j++){
+        tot(j,2) = (double) 0;
+    }
+
+    std::cout << spatial.block(0,0,std::min(20,(int) spatial.rows()),spatial.cols()) << std::endl;
+
+    for(int j = 0; j < spatial.rows(); j++){
+        for(int i = 0; i < expression.rows(); i++){
+            tot(j,0) = spatial(j,0);
+            tot(j,1) = spatial(j,1);
+            if(perc && (total_expression(j,2) != 0)){
+                tot(j,2) += (double) (expression(i,j)/total_expression(j,2));
+            }
+            else{
+                tot(j,2) += (double) expression(i,j);
+            }
+
+        }
+    }
+
+    std::cout << "total expression data of shape ("<<tot.rows()<<","<<tot.cols()<<")"<<std::endl;
+
+
+//    std::cout << tot << std::endl;
+
+    return tot;
+}
+
+const parsemtx &computation::getExpression_raw() const
+{
+    return expression_raw;
+}
+
+Eigen::MatrixXd computation::compute_tot_expr(){
+    std::cout << "[Progress] Simple filter ... "<<std::endl;
+    filter_simple(true,0.001);
+    std::cout << "[Progress] Simple filter by genes done. "<<std::endl;
+
+    std::cout << "[Progress] Computing total expression ... "<<std::endl;
+
+    Eigen::MatrixXd tot_exp = compute_total_expression(*expression,A_spatial);
+
+    std::cout << tot_exp << std::endl;
+
+    return tot_exp;
+
+//    std::cout << "[Progress] Filter by genes ... "<<std::endl;
+//    filter_genes();
+//    std::cout << "[Progress] Filter by genes done. "<<std::endl;
+
+//    std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
+//    perc_expression = compute_total_expression(*expression,A_spatial,true);
+
+//    std::cout << perc_expression << std::endl;
+
 }

@@ -4,46 +4,7 @@
 #include <time.h>
 
 
-Eigen::MatrixXd biologicalprocess::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial, bool perc){
-    std::cout << "[Progress] Calling total expression function ... "<<std::endl;
-    int rows = expression.rows();
-    int cols = expression.cols();
 
-    std::cout << "Expression matrix of shape ("<<rows<<","<<cols<<") - spatial data of shape ("<<spatial.rows()<<","<<spatial.cols()<<")"<<std::endl;
-//    std::cout << spatial.block(0,0,cols,spatial.cols()) << std::endl;
-    Eigen::MatrixXd tot = Eigen::MatrixXd(cols,3);
-
-
-
-
-    // initialize last column to 0
-    for(int j = 0; j < tot.rows(); j++){
-        tot(j,2) = (double) 0;
-    }
-
-    std::cout << spatial.block(0,0,std::min(20,(int) spatial.rows()),spatial.cols()) << std::endl;
-
-    for(int j = 0; j < spatial.rows(); j++){
-        for(int i = 0; i < expression.rows(); i++){
-            tot(j,0) = spatial(j,0);
-            tot(j,1) = spatial(j,1);
-            if(perc && (total_expression(j,2) != 0)){
-                tot(j,2) += (double) (expression(i,j)/total_expression(j,2));
-            }
-            else{
-                tot(j,2) += (double) expression(i,j);
-            }
-
-        }
-    }
-
-    std::cout << "total expression data of shape ("<<tot.rows()<<","<<tot.cols()<<")"<<std::endl;
-
-
-//    std::cout << tot << std::endl;
-
-    return tot;
-}
 
 void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Simple filter ... "<<std::endl;
@@ -60,8 +21,13 @@ void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
     perc_expression = compute_total_expression(*expression,A_spatial,true);
 
+    std::cout << perc_expression << std::endl;
 
+}
 
+const Eigen::MatrixXd &biologicalprocess::getPerc_expression() const
+{
+    return perc_expression;
 }
 
 double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations){
@@ -263,7 +229,7 @@ std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
     Eigen::MatrixXd EMD_Mat = Wass_Matrix(A_spatial, *expression,3);
 
     std::cout << "[Progress] EMD Matrix computed with size ("<<EMD_Mat.rows()<<","<<EMD_Mat.cols()<<")"<<std::endl;
-    std::cout << "EMD Matrix:\n "<<EMD_Mat.block(0,0,10,10)<<std::endl;
+    std::cout << "EMD Matrix:\n "<<EMD_Mat.block(0,0,std::min((int) EMD_Mat.rows(),10),std::min((int) EMD_Mat.cols(),10))<<std::endl;
     std::vector<std::string> clusters_dict=kMedoidsClustering(EMD_Mat,n, num_runs);
 
     std::cout << "Finished bioprocess 2, got clusters: "<<std::endl;
@@ -273,4 +239,25 @@ std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
 
     return clusters_dict;
 
+}
+
+std::vector<std::string> split(std::string text, char delim) {
+    std::string line;
+    std::vector<std::string> vec;
+    std::stringstream ss(text);
+    while(std::getline(ss, line, delim)) {
+        vec.push_back(line);
+    }
+    return vec;
+}
+
+
+std::vector<std::vector<std::string>> biologicalprocess::plottable(std::vector<std::string> cluster_dict){
+    std::vector<std::vector<std::string>> clusters;
+
+    for(std::string i : cluster_dict){
+        clusters.push_back(split(i,','));
+    }
+
+    return clusters;
 }

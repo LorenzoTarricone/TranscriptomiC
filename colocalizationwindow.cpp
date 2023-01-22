@@ -1,4 +1,6 @@
 #include "colocalizationwindow.h"
+#include "api_gene_name.h"
+#include "colocalisation.h"
 #include "ui_colocalizationwindow.h"
 #include "filedata.h"
 #include <iostream>
@@ -19,9 +21,11 @@ colocalizationwindow::colocalizationwindow(QWidget *parent) :
     ui(new Ui::colocalizationwindow)
 {
     ui->setupUi(this);
-
+    ui->PercentParamText->setPlainText("5");
     ui->pParamText->setPlainText("2");
     ui->MParamText->setPlainText("5000");
+
+    uploadChecker=false;
 
 }
 
@@ -47,11 +51,10 @@ void colocalizationwindow::on_UploadGenesButton_clicked()
      * (can be accessed with getter)
      */
 
-    QString FileFilter = "CSV File (*.csv);;";
-    QString userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
-    std::string filename;
+    QString FileFilter = "TSV File (*.tsv);;";
+    userText = QFileDialog::getOpenFileName(this, "Open a File", "C:\\Users\\", FileFilter);
     FileData geneNames;
-    bool uploadChecker;
+
 
     filename = userText.toStdString();
     uploadChecker = geneNames.readGenes(filename); //checks for successful upload and reads the genes
@@ -73,45 +76,90 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
     heatmapWindow = new ColocalizationHeatmapWindow(this);
     connect(heatmapWindow, &ColocalizationHeatmapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
+
+    QString Percent = ui->PercentParamText->toPlainText();
+    PercentParameter = ui->PercentParamText->toPlainText().toDouble()*0.01;
     QString p = ui->pParamText->toPlainText();
     pParameter = ui->pParamText->toPlainText().toDouble();
     MParameter = ui->MParamText->toPlainText().toDouble();
 
-    bool checker = true;
-    qDebug() <<"this is p" << p;
 
-    if(p.length() == 1){
-        for(int i = 0; i <= 5; i++){
-            if(p == QString::number(i)){
-                checker = false;
+    bool PercentChecker = false;
+
+    if(Percent.length() <=3){
+        for(int i = 0; i <= 100; i++){
+            if(Percent == QString::number(i)){
+                PercentChecker = true;
                 break;
             }
         }
     }
 
+    bool pChecker = false;
 
-    if( (MParameter<10 || MParameter >10000) && (pParameter<0 || pParameter >5)){
-        QMessageBox::information(this, "Error", "Invalid value for p and M parameters", QMessageBox::Ok);
-
+    if(p.length() == 1){
+        for(int i = 0; i <= 5; i++){
+            if(p == QString::number(i)){
+                pChecker = true;
+                break;
+            }
+        }
     }
-    else if(MParameter<10 || MParameter >10000){
-        QMessageBox::information(this, "Error", "Invalid value for M parameter", QMessageBox::Ok);
 
-    }
-    else if(pParameter<0 || pParameter >5 || checker){
-        QMessageBox::information(this, "Error", "Invalid value for p parameter", QMessageBox::Ok);
+    if(uploadChecker && (PercentParameter>0 && PercentParameter<=1 && PercentChecker) && (pParameter>=0 && pParameter<=5 && pChecker) && (MParameter>=10 && MParameter<=10000)){
+
+        //setLinkageParameters(pParameter, MParameter)
+        qDebug() << "Instantiating colocalisation object ... ";
+        colocalisation* object = new colocalisation(files,0,2000);
+        qDebug() << "[Progress] Colocalisation object initialised ..." ;
+
+        std::vector<std::string> geneSubsetList;
+        api_gene_name api;
+        qDebug() << "[Progress] Query for genes ..." ;
+        //    int nb_study = 50;
+        //    std::vector<std::string> geneSubsetList;
+        geneSubsetList = api.api_gene_name_funtion(files.getGenePath(),filename);
+        object->addGeneList(geneSubsetList);
+        qDebug() << "[Progress] Gene list added ..." ;
+
+        double MParameter = 5000;
+        double pParameter = 2;
+
+        object->setM(MParameter);
+        object->setP(pParameter);
+        qDebug() << "[Progress] Parameter m and p set ...";
+        double perc = 0.001;
+
+        object->filter_simple(true,perc);
+        object->filter_genes();
+        // normalise data
+        object->normalisation();
+        // compute colocalisation matrix
+        object->compute();
+
+        qDebug() << "[Progress] Matrix computation done ..." ;
+
+        QMessageBox::information(this, "Success", "File has been uploaded and \n Parameters have been inputed.", QMessageBox::Ok); //sucess message
+
+        this->hide(); //hides menuwindow
+        qDebug() << "[Progress] Setting colocalisation object ..." ;
+        heatmapWindow->setColocalisationObject(object);
+        qDebug() << "[Progress] Setting colocalisation object done." ;
+        heatmapWindow->show(); //shows biowindow
+        heatmapWindow->makeHeatMap(object->getColocalisationMatrix(),object->getcurrentGenes()); //generates the heatmap
+
 
     }
     else{
 
-        //setLinkageParameters(pParameter, MParameter)
-        heatmapWindow->setX(this->getX());
-        heatmapWindow->setY(this->getY());
-        heatmapWindow->setP(this->getP());
+        QString ErrorMesage = "Invalid Parameters.\n";
+        if(uploadChecker){ErrorMesage.append("File has been uploaded correctly. \n");}else{ErrorMesage.append("Please upload a file. \n");};
+        if(PercentParameter>0 && PercentParameter<=1 && PercentChecker){ErrorMesage.append("Valid Percentage of Expression. \n");}else{ErrorMesage.append("Invalid value for Percentage of Expression. \n");};
+        if(pParameter>=0 && pParameter<=5 && pChecker){ErrorMesage.append("Valid p parameter.\n");}else{ErrorMesage.append("Invalid value for p parameter.\n");};
+        if(MParameter>=10 && MParameter<=10000){ErrorMesage.append("Valid M parameter.\n");}else{ErrorMesage.append("Invalid value for M parameter.");};
 
-        this->hide(); //hides menuwindow
-        heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(); //generates the heatmap
+        QMessageBox::information(this, "Error", ErrorMesage , QMessageBox::Ok); //error message
+
     }
 
 

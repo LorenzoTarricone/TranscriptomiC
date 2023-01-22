@@ -4,7 +4,10 @@
 *~
 *.autosave
 *.a
-*.core
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/MergeAPIBackend
 *.moc
 *.o
 *.obj
@@ -17,8 +20,6 @@
 *.qm
 .#*
 *.*#
-core
-!core/
 tags
 .DS_Store
 .directory

@@ -1,6 +1,7 @@
 #ifndef COLOCALIZATIONHEATMAPWINDOW_H
 #define COLOCALIZATIONHEATMAPWINDOW_H
 
+#include "colocalisation.h"
 #include "heatmapwindow.h"
 
 
@@ -15,14 +16,20 @@ class ColocalizationHeatmapWindow : public HeatMapWindow
 public:
     explicit ColocalizationHeatmapWindow(QWidget *parent = nullptr);
     ~ColocalizationHeatmapWindow();
+    void makeHeatMap(const Eigen::MatrixXd m, std::vector<std::string> genes);
+
 
  //   void on_SaveHeatmapButton_clicked();
 
+    void setColocalisationObject(colocalisation* givenObject){object = givenObject;};
+private slots:
     void on_SaveMatrixButton_clicked();
+
 
 
 private:
     Ui::ColocalizationHeatmapWindow *ui;
+    colocalisation* object;
 };
 
 #endif // COLOCALIZATIONHEATMAPWINDOW_H

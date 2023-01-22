@@ -40,7 +40,7 @@ std::vector<std::string> readgenetxt::listgene(std::string filename){
             list.push_back(value);
         }
     }
-
+    std::cout<<"Finished reading file, closing ..."<<std::endl;
     file.close();
     return list;
 }

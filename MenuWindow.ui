@@ -78,7 +78,7 @@ padding: 0 8px;
  Analyzer</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="MenuWindowButton">
+   <widget class="QPushButton" name="UploadWindowButton">
     <property name="geometry">
      <rect>
       <x>30</x>

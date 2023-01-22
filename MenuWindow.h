@@ -3,9 +3,13 @@
 
 #include "colocalizationwindow.h"
 #include "bioprocesswindow.h"
+#include "computation.h"
+#include "parsefile.h"
+#include "plotobject.h"
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
+#include "biochooser.h"
 
 
 namespace Ui {
@@ -20,17 +24,12 @@ public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
 
-    void makePlot();
+    void makePlot(Eigen::MatrixXd m);
 
 
-    void setX(const QVector<double>& givenX) {x = givenX;};
-    void setY(const QVector<double>& givenY) {y = givenY;};
-    void setP(const QVector<double>& givenP) {p = givenP;};
 
+    void setFileObject(const parsefile& givenFiles) {files = givenFiles;};
 
-    const QVector<double>& getX() {return x;};
-    const QVector<double>& getY() {return y;};
-    const QVector<double>& getP() {return p;};
 
 signals:
     void UploadWindow();
@@ -41,18 +40,18 @@ private slots:
 
     void on_BiologicalButton_clicked();
 
-    void on_MenuWindowButton_clicked();
+    void on_UploadWindowButton_clicked();
 
 private:
     Ui::MenuWindow *ui;
     colocalizationwindow *coWindow;
-    bioprocesswindow *bioWindow;
+    BioChooser *biochooseWindow;
 
 
-    QVector<double> x;
-    QVector<double> y;
-    QVector<double> p;
 
+    parsefile files;
+//    plotObject plot = plotObject{};
+    computation object = computation{};
 
 };
 

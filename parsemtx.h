@@ -23,13 +23,19 @@ public:
     void printGeneIndex(int rows);
     void normalisation(std::string type_of_normal = "col_mean");
     Eigen::MatrixXd normalisation_simple(Eigen::MatrixXd expression,std::string type_of_normal = "col_mean");
-    void writeToFile(std::string filename);
-    void writeToFile(std::string filename,Eigen::MatrixXd matrix);
+    void writeToFile(std::string filename, bool names = true);
+    void writeToFile(std::string filename,Eigen::MatrixXd matrix, std::vector<std::string> genes, bool names = true);
+//    std::vector<std::string> getFinalGenes();
+
     void createBeamFile(std::string file_out, std::string file_in = "");
     bool geneIndexEmpty();
     void initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop);
     Eigen::SparseMatrix<double> getSparse();
     std::vector<std::string> getcurrentGenes();
+
+
+
+
 
     int getRows();
     int getCols();
@@ -49,6 +55,7 @@ private:
     std::vector<std::string> geneSubset;
     void shiftGeneIndex(int row);
     int N,M,removed;
+
 };
 
 // declarations of functions to remove certain row or column from eigen dense matrix

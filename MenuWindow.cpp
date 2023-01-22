@@ -1,4 +1,6 @@
 #include "MenuWindow.h"
+#include "biologicalprocess.h"
+#include "colocalisation.h"
 #include "ui_MenuWindow.h"
 #include "qcustomplot.cpp"
 #include <iostream>
@@ -17,22 +19,175 @@ MenuWindow::~MenuWindow()
     delete ui;
 }
 
-void MenuWindow::makePlot() {
+void MenuWindow::makePlot(Eigen::MatrixXd m) {
 
-    //This fucntion makes the scatterplot
-
-    ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setData(this->getX(),this->getY());
-    ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsNone); //lsNone = no line
-    ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle::ssStar); //ssStar = star points
-
-    ui->customPlot->xAxis->setLabel("x"); //axis labels
+    ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom); // this will also allow rescaling the color scale by dragging/zooming
+    ui->customPlot->axisRect()->setupFullAxesBox(true);
+    ui->customPlot->xAxis->setLabel("x");
     ui->customPlot->yAxis->setLabel("y");
+    // set up the QCPColorMap:
+    QCPColorMap *colorMap = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
 
-    ui->customPlot->xAxis->setRange(0,10); //axis ranges
-    ui->customPlot->yAxis->setRange(0,10);
+    int number_rows = m.rows(); // number beams x,y -coordinate
+    int number_cols = m.cols(); // should be 3
+    // data size
+    int data_size = number_rows; // just the third column
 
-    ui->customPlot->replot();
+    // Maybe I have to change the size and find first max, min value
+    double maxValx = m.col(0).maxCoeff(); // biggest x- value
+    double minValx = m.col(0).minCoeff(); // smalles x- value
+    double maxValy = m.col(1).maxCoeff(); // biggest y- value
+    double minValy = m.col(1).minCoeff(); // smallest y- value
+
+    std::cout << "Datasize :"<< data_size << std::endl;
+    std::cout << "NumberCols :"<< number_cols << std::endl;
+    std::cout << "NumberRows :"<< number_rows << std::endl;
+
+    std::cout << "maxValx :"<< maxValx << std::endl;
+    std::cout << "minValx :"<< minValx << std::endl;
+    std::cout << "maxValy :"<< maxValy << std::endl;
+    std::cout << "minValy :"<< minValy << std::endl;
+
+    colorMap->data()->setSize(data_size,data_size);
+
+    //Maybe use here min and max values
+    colorMap->data()->setRange(QCPRange(minValx, maxValx), QCPRange(minValy, maxValy)); //set the range of the HeatMap;
+
+
+
+    /*//95 PERCENT CONFIDENCE interval
+    //calculate mean
+    double mean = 0.0;
+    for(int i= 0; i<data_size; i++){
+           mean += m(i,2); };//only the third column
+
+              mean /= data_size;
+
+    //calculate standard deviation
+    double sd = 0.0;
+    for(int i= 0; i<data_size; i++){
+           sd += pow(m(i,2) - mean,2);} // only third column
+    //standart error
+    sd = sqrt(sd/(data_size));
+
+    //margin of error
+    double ci = 2* sd;
+
+    double q1 = mean-ci;
+    double q3 = mean+ci;
+    //output
+    std::cout << "95% Confidence Interval: [" << q1 << ", " << q3 << "]" << std::endl;*/
+
+
+
+
+    // now we assign some data, by accessing the QCPColorMapData instance of the color map
+
+    for(int i = 0; i < number_rows; i++){
+         colorMap->data()->setData(m(i,0),m(i,1),m(i,2));
+    }
+    //assign data with cell and with confidence level
+    /*for(int i = 0; i < number_rows; i++){
+            if(m(i,2)>q1 && m(i,2)<q3){ // if the third value of the row is in the confidence interval
+                colorMap->data()->setCell(int(m(i,0)),int(m(i,1)), m(i,2)); // plot only data between q1 and q3 here we want quantile
+                  }
+            else{colorMap->data()->setCell(m(i,0),m(i,1), m(i,2));} //assign 0
+    }*/
+
+
+
+    // Do we have axis labels?
+   /* Ticks and Labels
+   QSharedPointer<QCPAxisTickerText> textTickerx(new QCPAxisTickerText);
+
+   // tick strategy. readability is more important
+   textTickerx->setTickStepStrategy(QCPAxisTicker::tssReadability);
+   textTickerx->setTickOrigin(0);// sets origin (not necessary)
+   textTickerx->setTickCount(3);
+
+   QSharedPointer<QCPAxisTickerText> textTickery(new QCPAxisTickerText);
+
+   // tick strategy. readability is more important
+   textTickery->setTickStepStrategy(QCPAxisTicker::tssReadability);
+   textTickery->setTickOrigin(0);// sets origin (not necessary)
+   textTickery->setTickCount(4);
+
+   //assign the labels using vectors
+   QVector<QString> xgenenames;
+   QVector<double> xpositions;
+   for(int i = 0; i < number_cols; i++){
+       xgenenames.append("Bacteria");
+       xpositions.append(i);
+   };
+
+   QVector<QString> ygenenames;
+   QVector<double> ypositions;
+   for(int i = 0; i < number_cols; i++){
+       ygenenames.append("Bacteria");
+       ypositions.append(i);
+   };
+
+
+   textTickerx->setTicks(xpositions, xgenenames);
+   textTickery->setTicks(ypositions, ygenenames);
+
+   ///assign each label individually
+   for(int i = 0; i < number_cols; i++){
+       textTickerx->addTick(i, "Bacteria");}; // Here we need the gene names
+
+   for(int j = 0; j< number_rows; j++){
+       textTickery->addTick(j, "Bacteria");}; // Here we need the gene names
+
+
+
+   //set x-axis ticker
+   ui->customPlot->xAxis->setTicker(textTickerx);
+   ui->customPlot->xAxis->setTickLabelPadding(8); //Sets the distance between the axis base line
+   ui->customPlot->xAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels.
+   ui->customPlot->xAxis->setTickLabelRotation(-90.0); //Sets the rotation of the tick labels.
+
+   //set y-axis ticker
+   ui->customPlot->yAxis->setTicker(textTickery);
+   ui->customPlot->yAxis->setTickLabelColor(QColorConstants::Red); //Sets the color of the tick labels. */
+
+   // color scale:
+    QCPColorScale *colorScale = new QCPColorScale(ui->customPlot);
+    ui->customPlot->plotLayout()->addElement(0, 1, colorScale); // add it to the right of the main axis rect
+    colorScale->setType(QCPAxis::atRight); // scale shall be vertical bar with tick/axis labels right
+    colorScale->setBarWidth(8); //width of scale
+    colorScale->setRangeDrag(&free); // drag the data range. we dont need that
+    colorMap->setColorScale(colorScale); // associate the color map with the color scale
+    colorScale->axis()->setLabel("Intensity");
+
+    //color gradient:
+    QCPColorGradient gradient; // empty gradient with no defined colour stops
+    //Hue variation similar to a spectrum, often used in numerical visualization (creates banding illusion but allows more precise magnitude estimates)
+    //In between these color stops, the color is interpolated according to setColorInterpolation.
+    gradient.setColorInterpolation(QCPColorGradient::ciRGB);//interpolated linearly in RGB color space
+    gradient.setColorStopAt(0, QColor(0, 0, 100));
+    gradient.setColorStopAt(0.15, QColor(0, 50, 255));
+    gradient.setColorStopAt(0.35, QColor(0, 255, 255));
+    gradient.setColorStopAt(0.65, QColor(255, 255, 0));
+    gradient.setColorStopAt(0.85, QColor(255, 30, 0));
+    gradient.setColorStopAt(1, QColor(100, 0, 0));
+    gradient.setNanHandling(QCPColorGradient::nhTransparent); //NaN data points as the transparent
+    gradient.setLevelCount(350); //sets the number of discretization levels of the color gradient to n (max. n = 350)
+    colorMap->setGradient(gradient);//assign it to the heatmap
+
+
+    //Uncomment for ColourMap without interpolation
+    colorMap->setInterpolate(false);
+
+    // make sure the axis rect and color scale synchronize their bottom and top margins (so they line up):
+    QCPMarginGroup *marginGroup = new QCPMarginGroup(ui->customPlot);
+    ui->customPlot->axisRect()->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
+    colorScale->setMarginGroup(QCP::msBottom|QCP::msTop, marginGroup);
+
+    // rescale the data dimension (color) such that all data points lie in the span visualized by the color gradient:
+    colorMap->rescaleDataRange();
+
+    // rescale the key (x) and value (y) axes so the whole color map is visible:
+    ui->customPlot->rescaleAxes();
 }
 
 void MenuWindow::on_ColocalizationButton_clicked()
@@ -43,17 +198,16 @@ void MenuWindow::on_ColocalizationButton_clicked()
      * calls makeHeatMap() to generate the heatmap.
      */
 
+
     coWindow = new colocalizationwindow(this); //creates the instance of colocalizationWindow
     connect(coWindow, &colocalizationwindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    coWindow->setX(this->getX());
-    coWindow->setY(this->getY());
-    coWindow->setP(this->getP());
+    coWindow->setFileObject(files);
+
 
     this->hide(); //hides menuwindow
     coWindow->show(); //shows colocalizationwindow
-    //coWindow->makeHeatMap(); //makes the heatmap
+
 
 }
 
@@ -67,25 +221,23 @@ void MenuWindow::on_BiologicalButton_clicked()
      * be deleted later on.
      */
 
-    bioWindow = new bioprocesswindow(this); //creates the instance of colocalizationWindow
-    connect(bioWindow, &bioprocesswindow::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
+    biochooseWindow = new BioChooser(this); //creates the instance of colocalizationWindow
+    connect(biochooseWindow, &BioChooser::MenuWindow, this, &MenuWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
-    //sets the data
-    bioWindow->setX(this->getX());
-    bioWindow->setY(this->getY());
-    bioWindow->setP(this->getP());
 
+    biochooseWindow->setFileObject(files);
     this->hide(); //hides menuwindow
-    bioWindow->show(); //shows biowindow
+    biochooseWindow->show(); //shows biowindow
     //bioWindow->makeHeatMap(); //generates the heatmap
-    bioWindow->setProcessesToAnalyze(); //instantiates the vector of processes
 
 }
 
 
-void MenuWindow::on_MenuWindowButton_clicked()
+void MenuWindow::on_UploadWindowButton_clicked()
 {
     this->close();
     emit UploadWindow(); //returns to uploadwindow
 }
+
+
 
