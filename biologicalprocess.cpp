@@ -30,6 +30,11 @@ const Eigen::MatrixXd &biologicalprocess::getPerc_expression() const
     return perc_expression;
 }
 
+//This function computes the "Sliced" Wasserstein distance between two genes: it runs
+//n_computations times and takes the average distance. Each iteration performs a
+//projection of the spatial data on some random plane, from which we can then
+//compute a 1-dimensional Wasserstein distance. Large n_computations would lead to better results
+//but also much longer runtimes.
 double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations){
 
 
@@ -48,8 +53,6 @@ double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::Matri
        //this will put all the elements in the first column of Eigen::Matrix into the column3 vector
         Second_expr.at(j) = Express_mat(gene_2, j);
     }
-
-    srand(42);
 
     //Calculte random direction Wass dist
 
@@ -80,6 +83,8 @@ double biologicalprocess::Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::Matri
 }
 
 
+
+//This function is responsible for computing the Wasserstein distance matrix
 Eigen::MatrixXd biologicalprocess::Wass_Matrix(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int n_compute){
 
     Eigen::MatrixXd EMD = Eigen::MatrixXd::Zero(Express_mat.rows(),Express_mat.rows());
@@ -99,6 +104,7 @@ Eigen::MatrixXd biologicalprocess::Wass_Matrix(Eigen::MatrixXd& Coord_mat, Eigen
 }
 
 
+//This function helps us when assigning the nearest medoid (cluster center) to each point.
 int biologicalprocess::findNearestMedoid(Eigen::MatrixXd distanceMatrix, std::vector<int> medoids, int point) {
     int nearestMedoid = -1;
     double minDistance = DBL_MAX;
@@ -114,12 +120,15 @@ int biologicalprocess::findNearestMedoid(Eigen::MatrixXd distanceMatrix, std::ve
     return nearestMedoid;
 }
 
+//This function, given a distance matrix (in our case it will be the Wasserstein distance matrix),
+//performs clustering through an implementation of the PAM algorithm for k Medoids clustering. This is
+//a variation of k-Means clustering which is better suited to cluster data points given their distances
+//rather than their positions in space.
 std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd distanceMatrix, int k, int num_runs) {
     std::vector<std::string> clusters_dict(k);
     double bestCost = DBL_MAX;
     std::vector<std::vector<int>> best_clusters(k);
     int n = distanceMatrix.rows();
-    std::srand(42);
 
 
     std::cout<<"started Clustering"<<std::endl;
@@ -207,6 +216,10 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
     std::cout << currentGenes[currentGenes.size()-1] << "]" << std::endl;
 
 
+    //We wish to return a vector of strings, where each entry of the vector represents
+    //the list of genes belonging to a cluster. Each string will be of the type "gene1,gene2,gene3,...,geneN"
+    //if there are N genes in the associated cluster. We chose this formatting in order to pass the output directly
+    //to the API, which can then find the biological processes most closely associated to each cluster of genes.
     for(int i=0;i<best_clusters.size();i++){
         std::vector<int> current_cluster=best_clusters[i];
         //clusters_dict[i]="";
@@ -224,7 +237,13 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
     return clusters_dict;
 }
 
+
+//This function executes the second biological process analysis, which involves the clustering of genes.
+//First, it computes an Earth Mover Distance matrix so that we have a measure of "distance" between genes,
+//which can then be clustered.
 std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
+    //set a random seed
+    std::srand(time(NULL));
     std::cout << "[Progress] Computing EMD Matrix ... "<<std::endl;
     Eigen::MatrixXd EMD_Mat = Wass_Matrix(A_spatial, *expression,3);
 
