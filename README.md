@@ -111,7 +111,7 @@ Our bioprocess2 algorithm is made of many steps, that are pointed out here:
 -**Step 4**: We plot the n different resuls each one following the procedure described in BIOLOGICAL PROCESS ANALYSIS (TYPE 2)
 
 ## LIBRARY REQUIREMENTS
-Transcriptomics uses the libcurl library, which is installed by default on macOS.
+TranscriptomiC++ requires an up-to-date version of Qt, as well as the libcurl library, which is installed by default on macOS.
 - On Linux, you might need to install it. On Debian/Ubuntu install the libcurl-dev package.
 - On Windows, you will need to download the latest binary from [curl's website](https://curl.se/windows/). On Qt Creator, right click on the project name and select Add library -> External library. Select only Windows and link the library file libcurl.a located within your curl folder/lib.
 
