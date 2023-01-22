@@ -21,10 +21,7 @@ public:
     const Eigen::MatrixXd &getPerc_expression() const;
 
 private:
-    Eigen::MatrixXd total_expression;
-    Eigen::MatrixXd perc_expression;
 
-    Eigen::MatrixXd compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial,bool perc=false);
     int findNearestMedoid(Eigen::MatrixXd distanceMatrix, std::vector<int> medoids, int point);
     std::vector<std::string> kMedoidsClustering(Eigen::MatrixXd distanceMatrix, int k=5, int num_runs=3);
     double Wass_distance(Eigen::MatrixXd& Coord_mat, Eigen::MatrixXd& Express_mat, int gene_1, int gene_2, int n_computations);

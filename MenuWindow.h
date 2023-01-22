@@ -24,7 +24,7 @@ public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
 
-    void makePlot();
+    void makePlot(Eigen::MatrixXd m);
 
 
 

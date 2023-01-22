@@ -54,7 +54,9 @@ void BioChooser::on_ClusterButton_clicked()
     // perform cluster analysis
 
     qDebug() << "Initialize BiologicalProcess object";
-    biologicalprocess object = biologicalprocess(files,100,100);
+    int rows = 0;
+    int cols = 2000;
+    biologicalprocess object = biologicalprocess(files,rows,cols);
     object.filter_simple(true,0.001);
     qDebug() << "Start clustering";
     std::vector<std::string> clusters_dict=object.bioprocess_2(4,3);
@@ -75,7 +77,7 @@ void BioChooser::on_ClusterButton_clicked()
     for(int i = 0; i < 4; i++){
         qDebug() << "Cluster : " << i ;
         tmp = heatmaps[i];
-        clusterObject = biologicalprocess(files,100,100);
+        clusterObject = biologicalprocess(files,rows,cols);
         clusterObject.addGeneList(clusters[i]);
         clusterObject.compute_tot_expr();
         tmp->setLabel(bio_process[i]);

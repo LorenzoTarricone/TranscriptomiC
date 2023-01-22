@@ -41,6 +41,9 @@ void UploadWindow::close(){
 //    PointerMenuWindow->setP(ExpressData.getP());
 
     PointerMenuWindow->setFileObject(this->files);
+    computation object = computation(files,0,2000);
+    Eigen::MatrixXd plot = object.compute_tot_expr();
+    PointerMenuWindow->makePlot(plot);
 
 //    PointerMenuWindow->makePlot(); //generates the plot
     PointerMenuWindow->show(); //shows menuwindow

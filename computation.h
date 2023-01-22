@@ -17,6 +17,11 @@ public:
     void saveToFile(std::string filename);
     std::vector<std::string> getcurrentGenes();
 
+    Eigen::MatrixXd compute_tot_expr();
+
+
+    const parsemtx &getExpression_raw() const;
+
 protected:
     parsemtx expression_raw;
     parsing spatial;
@@ -26,6 +31,8 @@ protected:
 
     Eigen::MatrixXd* expression;
 
+    Eigen::MatrixXd total_expression;
+    Eigen::MatrixXd perc_expression;
     // crop matrix
     void initialise(int rows, int cols);
     int block_rows_start,block_cols_start,block_rows,block_cols;
@@ -34,6 +41,7 @@ protected:
     // filter parameters
     bool filterGenes = false;
 
+    Eigen::MatrixXd compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial,bool perc=false);
 
 
 };
