@@ -146,7 +146,7 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
         heatmapWindow->setColocalisationObject(object);
         qDebug() << "[Progress] Setting colocalisation object done." ;
         heatmapWindow->show(); //shows biowindow
-        heatmapWindow->makeHeatMap(object->getColocalisationMatrix(),geneSubsetList); //generates the heatmap
+        heatmapWindow->makeHeatMap(object->getColocalisationMatrix(),object->getcurrentGenes()); //generates the heatmap
 
 
     }
