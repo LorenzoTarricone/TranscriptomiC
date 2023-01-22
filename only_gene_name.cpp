@@ -20,7 +20,7 @@ only_gene_name::only_gene_name()
 }
 
 //check if a string is a substring of another
-int only_gene_name::isSubstring(string s1, string s2)
+int only_gene_name::isSubstring(std::string s1, std::string s2)
 {
     int M = s1.length();
     int N = s2.length();
@@ -153,14 +153,14 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
 //parse the API answer for biological process 
 //takes the string of the answer of the API as input 3 "search parameter” (normally it will be number_in_list, id and label)
 //return these info for the first biological process in API answer
-set<Info> only_gene_name::list_bio_process(string json, string search1, string search2, string search3){
-    cout<<json<<'\n';
-    set<Info> infoSet;
-    stringstream ss(json);
-    string line;
+std::set<Info> only_gene_name::list_bio_process(std::string json, std::string search1, std::string search2, std::string search3){
+    std::cout<<json<<'\n';
+    std::set<Info> infoSet;
+    std::stringstream ss(json);
+    std::string line;
     int number_in_list;
-    string id;
-    string label;
+    std::string id;
+    std::string label;
 
     while(getline(ss, line)) {
         if (isSubstring(search1,line) != -1) {
@@ -178,9 +178,9 @@ set<Info> only_gene_name::list_bio_process(string json, string search1, string s
 
             // Print the Info set
             for (auto info : infoSet) {
-                cout << "number_in_list: " << info.number_in_list << endl;
-                cout << "id: " << info.id << endl;
-                cout << "label: " << info.label << endl;
+                std::cout << "number_in_list: " << info.number_in_list << std::endl;
+                std::cout << "id: " << info.id << std::endl;
+                std::cout << "label: " << info.label << std::endl;
             }
 
             return infoSet; //we want to stop the code as soon as a label is find

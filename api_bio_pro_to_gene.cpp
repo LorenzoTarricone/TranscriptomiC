@@ -80,7 +80,7 @@ std::vector<std::string> api_bio_pro_to_gene::api_bio_pro_to_gene_function(std::
     std::cout << "Cross reference finished, kept "<<intersection_set.size()<<" genes." << std::endl;
 
     //return a vector instead of a set since the backend team was working with a set
-    std::vector<string> v(intersection_set.begin(), intersection_set.end());
+    std::vector<std::string> v(intersection_set.begin(), intersection_set.end());
 
     std::cout << "Conversion finished" << std::endl;
 

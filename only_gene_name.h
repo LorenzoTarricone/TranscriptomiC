@@ -6,12 +6,11 @@
 #include <string.h>
 #include <set>
 
-using namespace std;
 
 struct Info {
     int number_in_list;
-    string id;
-    string label;
+    std::string id;
+    std::string label;
     bool operator<(const Info& other) const { return id < other.id; }
 };
 
@@ -25,10 +24,10 @@ public:
 
     
 
-    int isSubstring(string s1, string s2);
-    set<string> listgene(string l, string search);
-    set<Info> list_bio_process(string l, string search1, string search2, string search3);
-    void printset(set<string> result);
+    int isSubstring(std::string s1, std::string s2);
+    std::set<std::string> listgene(std::string l, std::string search);
+    std::set<Info> list_bio_process(std::string l, std::string search1, std::string search2, std::string search3);
+    void printset(std::set<std::string> result);
 
 };
 
