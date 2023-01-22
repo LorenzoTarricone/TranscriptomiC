@@ -31,8 +31,8 @@ If you want to perform the colocalization matrix analysis:
 
 If you want to perform the biological process (type 1) analysis:
 - GENE IN BIOPROCESS: One `.txt` file that needs to be created in the following way:
-    1- Go to https://www.genecards.org/ (genecards website), log in, enter the biological process name you want to study in "Explore a gene" (for example you can enter: "mitochondrion inheritence"). When you have the table, click on "export" and then "show symbols". 
-    2- Copy paste the content of the new windows in a txt file and upload it when required by the platform.
+  1. Go to https://www.genecards.org/ (genecards website), log in, enter the biological process name you want to study in "Explore a gene" (for example you can enter: "mitochondrion inheritence"). When you have the table, click on "export" and then "show symbols". 
+  2. Copy paste the content of the new windows in a txt file and upload it when required by the platform.
 <br/><br/>
 ## ANALYSIS
 
