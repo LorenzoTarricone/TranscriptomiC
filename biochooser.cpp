@@ -57,7 +57,10 @@ void BioChooser::on_ClusterButton_clicked()
     int rows = 100;
     int cols = 700;
     biologicalprocess object = biologicalprocess(files,rows,cols);
+    qDebug() << "Filter data";
     object.filter_simple(true,0.001);
+    qDebug() << "Normalise data";
+    object.normalisation();
     qDebug() << "Start clustering";
     std::vector<std::string> clusters_dict=object.bioprocess_2(4,3);
 

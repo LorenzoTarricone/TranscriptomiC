@@ -1,5 +1,5 @@
 #include "computation.h"
-
+// base class for biologicalprocess and colocalisation
 
 computation::computation(parsefile files,int rows, int cols){
     expression_raw = files.getExpression();
@@ -12,6 +12,7 @@ computation::computation(parsefile files,int rows, int cols){
     initialise(rows, cols);
 }
 
+// this method deals with extracting the actual matrices from their storage/computation objects
 
 void computation::initialise(int rows, int cols){
     // this method for now contains anything in the readFiles method that is not handled by the
@@ -25,11 +26,13 @@ void computation::initialise(int rows, int cols){
     std::cout << "[Progress] Initiating spatial matrix ..." << std::endl;
     A_spatial = spatial.convertToMatrix();
 
+    // 0 is the default value and signifies the inclusion of all rows or columns
     if(rows <= 0 && cols <= 0){
         std::cout << "Considering the entire expression matrix" << std::endl;
         *expression =  expression_raw.getSparse();
         std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),10)<<std::endl;
         std::cout<<"Expression matrix shape: (" << expression->rows() << ", " << expression->cols() << ")\n"<<std::endl;
+        // initiate gene index from gene name file
         expression_raw.initiateGeneIndex(geneNames);
         return;
     }
@@ -49,11 +52,12 @@ void computation::initialise(int rows, int cols){
     else{
         block_rows = rows;
         block_cols = cols;
+        // initiate gene index from gene name file in the case of not including all rows
+        // (not all genes from the gene name file have to be initiated)
         expression_raw.initiateGeneIndex_cropped(geneNames,block_rows);
     }
 
     std::cout << "crop matrix at block("<<block_rows_start<<","<<block_cols_start<<","<<block_rows<<","<<block_cols<<")"<<std::endl;
-    //*expression =  expression_raw.getExpressionDense().block(block_rows_start,block_cols_start,block_rows,block_cols);
     *expression =  expression_raw.getSparse().block(block_rows_start,block_cols_start,block_rows,block_cols);
     std::cout << "crop spatial at block("<<block_rows_start<<","<<block_cols_start<<","<<block_cols<<","<<2<<")"<<std::endl;
     A_spatial=A_spatial.block(block_rows_start,block_cols_start,block_cols,2);
@@ -67,6 +71,8 @@ void computation::initialise(int rows, int cols){
     std::cout << "[Progress] Initiating cropped gene name index ..." << std::endl;
 }
 
+// filter: remove genes that are never expressed (all-zero rows) or expressed in under min_expr_perc
+// of cases
 void computation::filter_simple(bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Filtering data (simple)..." << std::endl;
 
@@ -105,7 +111,7 @@ void computation::filter_genes(){
 }
 
 
-
+// perform library normalisation
 void computation::normalisation(std::string type_of_normal){
     std::cout << "[Progress] Normalising data according to " << type_of_normal << " ..." << std::endl;
 
@@ -119,6 +125,7 @@ void computation::normalisation(std::string type_of_normal){
     std::cout<<expression->block(0,0,std::min(10,(int) expression->rows()),std::min(10,(int) expression->cols()))<<std::endl;
 }
 
+// add gene subset to filter by
 void computation::addGeneList(std::vector<std::string> geneList){
     std::cout << "[Progress] Adding gene subset ..." << std::endl;
     geneSubset = geneList;
@@ -126,29 +133,30 @@ void computation::addGeneList(std::vector<std::string> geneList){
 
 }
 
+// add gene subset to filter by (overloaded)
 void computation::addGeneList(std::string geneListPath){
     addGeneList(listgene(geneListPath));
-//    geneSubset = listgene(geneListPath);
 }
 
-
+// save expression matrix to file (overloaded in colocalisation)
 void computation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
     expression_raw.writeToFile(filename,*expression,expression_raw.getcurrentGenes());
 }
 
+// get genes that currently remain in the matrix
 std::vector<std::string> computation::getcurrentGenes(){
     return expression_raw.getcurrentGenes();
 }
 
-
+// compute either column sum (how many genes are expressed where in the tissue)
+// or compute expression percentage of a subset
 Eigen::MatrixXd computation::compute_total_expression(const Eigen::MatrixXd& expression, const Eigen::MatrixXd& spatial, bool perc){
     std::cout << "[Progress] Calling total expression function ... "<<std::endl;
     int rows = expression.rows();
     int cols = expression.cols();
 
     std::cout << "Expression matrix of shape ("<<rows<<","<<cols<<") - spatial data of shape ("<<spatial.rows()<<","<<spatial.cols()<<")"<<std::endl;
-//    std::cout << spatial.block(0,0,cols,spatial.cols()) << std::endl;
     Eigen::MatrixXd tot = Eigen::MatrixXd(cols,3);
 
 
@@ -177,9 +185,6 @@ Eigen::MatrixXd computation::compute_total_expression(const Eigen::MatrixXd& exp
 
     std::cout << "total expression data of shape ("<<tot.rows()<<","<<tot.cols()<<")"<<std::endl;
 
-
-//    std::cout << tot << std::endl;
-
     return tot;
 }
 
@@ -187,6 +192,8 @@ const parsemtx &computation::getExpression_raw() const
 {
     return expression_raw;
 }
+
+
 
 Eigen::MatrixXd computation::compute_tot_expr(){
     std::cout << "[Progress] Simple filter ... "<<std::endl;
@@ -201,13 +208,5 @@ Eigen::MatrixXd computation::compute_tot_expr(){
 
     return tot_exp;
 
-//    std::cout << "[Progress] Filter by genes ... "<<std::endl;
-//    filter_genes();
-//    std::cout << "[Progress] Filter by genes done. "<<std::endl;
-
-//    std::cout << "[Progress] Computing expression percentage ... "<<std::endl;
-//    perc_expression = compute_total_expression(*expression,A_spatial,true);
-
-//    std::cout << perc_expression << std::endl;
 
 }

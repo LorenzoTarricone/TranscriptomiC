@@ -48,9 +48,6 @@ void parsing::readBeamFileCSV(std::string filename){
         this->x.push_back(stod(x));
         this->y.push_back(stod(y));
 
-//        // visualize data read
-//        std::cout << count << "\t" << "Beam: " << beam << "\t x-coordinate: " << x << "\t y-coordinate: " << y << std::endl;
-
 
         count++;
     }
@@ -77,21 +74,4 @@ Eigen::MatrixXd parsing::convertToMatrix(){
 }
 
 
-// this function is a dummy function, it can be replaced by listgene method
-std::vector<std::string> parsing::readNamesFileTSV(std::string filename){
-    std::vector<std::string> names = std::vector<std::string>();
-    std::ifstream fin(filename,std::ios::in);
-    std::string beam,x,y;
 
-
-    if(!fin){
-        std::cerr << "[ERROR] File " << filename << " could not be opened. Stopping program" << std::endl;
-        return names;
-    }
-    else{
-        std::cout << "[SUCCESS] File " << filename << " opened successfully" << std::endl;
-    }
-
-    return names;
-
-}

@@ -6,16 +6,11 @@
 
 
 colocalisation::~colocalisation(){
-    //delete A_distance;
-    //delete A_linkage;
-    //delete A_combine;
-    //delete A_compare;
-    //delete A_colocalisation;
     delete expression;
 }
 
 
-
+// run steps to compute colocalisation matrix
 void colocalisation::compute(){
 
     // compute colocalisation matrix
@@ -32,20 +27,21 @@ void colocalisation::compute(){
 
 }
 
-
+// save colocalisation matrix to file
 void colocalisation::saveToFile(std::string filename){
     std::cout << "[Progress] Saving File ..." << std::endl;
     expression_raw.writeToFile(filename,*A_colocalisation,expression_raw.getcurrentGenes());
     delete A_colocalisation;
 }
 
-
+// Individual steps to compute the colocalisation matrix
 
 void colocalisation::step1(){
+    // step 1 - create distance matrix
     std::cout << "[Progress] Running step 1 ..." << std::endl;
     A_distance = new Eigen::MatrixXd;
     *A_distance = matrix_distance(A_spatial);
-    std::cout<<(*A_distance).block(0,0,10,10)<<std::endl;
+    std::cout<<(*A_distance).block(0,0,std::min((int)A_distance->rows(),10),std::min((int)A_distance->cols(),10))<<std::endl;
     std::cout<<"\nDistance matrix shape: (" << (*A_distance).rows() << ", " << (*A_distance).cols() << ")"<<std::endl;
 }
 
@@ -57,7 +53,7 @@ void colocalisation::step2(){
 
     delete A_distance;
 
-    std::cout<<(*A_linkage).block(0,0,10,10)<<std::endl;
+    std::cout<<(*A_linkage).block(0,0,std::min((int)A_linkage->rows(),10),std::min((int)A_linkage->cols(),10))<<std::endl;
     std::cout<<"\nLinkage matrix shape: (" << (*A_linkage).rows() << ", " << (*A_linkage).cols() << ")"<<std::endl;
 
 }
@@ -72,7 +68,7 @@ void colocalisation::step3(){
 
     delete A_linkage;
 
-    std::cout<<A_combine->block(0,0,10,10)<<std::endl;
+    std::cout<<A_combine->block(0,0,std::min((int)A_combine->rows(),10),std::min((int)A_combine->cols(),10))<<std::endl;
     std::cout<<"\n Comparison matrix shape: (" << A_combine->rows() << ", " << A_combine->cols() << ")"<<std::endl;
 }
 
@@ -82,7 +78,7 @@ void colocalisation::step4(){
     A_compare = new Eigen::MatrixXd;
     *A_compare = comparison_old(*expression, *A_combine);
 
-    std::cout<<A_compare->block(0,0,10,10)<<std::endl;
+    std::cout<<A_compare->block(0,0,std::min((int)A_compare->rows(),10),std::min((int)A_compare->cols(),10))<<std::endl;
     std::cout<<"\n Comparison matrix shape: (" << A_compare->rows() << ", " << A_compare->cols() << ")"<<std::endl;
 
 
@@ -90,12 +86,13 @@ void colocalisation::step4(){
 }
 
 void colocalisation::step5(){
+    // step 5 - compute enrichement score
     std::cout << "[Progress] Running step 5 ..." << std::endl;
     A_colocalisation = new Eigen::MatrixXd;
     *A_colocalisation = enrichment(*A_compare);
 
 
-    std::cout<<A_colocalisation->block(0,0,10,10)<<std::endl;
+    std::cout<<A_colocalisation->block(0,0,std::min((int)A_colocalisation->rows(),10),std::min((int)A_colocalisation->cols(),10))<<std::endl;
     std::cout<<"\n Colocalisation matrix shape: (" << A_colocalisation->rows() << ", " << A_colocalisation->cols() << ")"<<std::endl;
 
 }

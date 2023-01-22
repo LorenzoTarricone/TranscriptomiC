@@ -51,13 +51,20 @@ void bioprocesswindow::openHeatMapWindow(){
     heatmapWindow = new HeatMapWindow(this);
     connect(heatmapWindow, &HeatMapWindow::PreviousWindow, this, &HeatMapWindow::show); //connects menuwindow and colocalizationwindow so that we can navigate between them
 
+    // perform biological process analysis
+    // crop data at 5000 columns due to computational constraints
     biologicalprocess object = biologicalprocess(files,0,5000);
+    // retrieve genes that appear both in the list containing genes correlated to the
+    // biological process of interest provided by the researcher and genes that are supported by the
+    // data base
     std::vector<std::string> geneSubsetBioPro;
     int nb_study = 50;
     geneSubsetBioPro = api_bio_pro_to_gene::api_bio_pro_to_gene_function(files.getGenePath(),filename,nb_study);
     object.addGeneList(geneSubsetBioPro);
+    // compute expression ratio
     object.compute_tot_expr();
 
+    // plot expression ratio
     heatmapWindow->makeHeatMap(object.getPerc_expression());
     this->hide(); //hides menuwindow
     heatmapWindow->show(); //shows biowindow

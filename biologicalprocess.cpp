@@ -5,7 +5,8 @@
 
 
 
-
+// this function computes the ratio of total expression before and after filtering
+// by a given list of genes
 void biologicalprocess::compute_tot_expr(){
     std::cout << "[Progress] Simple filter ... "<<std::endl;
     filter_simple(true,0.001);
@@ -260,6 +261,7 @@ std::vector<std::string> biologicalprocess::bioprocess_2(int n, int num_runs){
 
 }
 
+// helper function that splits a comma separated string into a vector
 std::vector<std::string> split(std::string text, char delim) {
     std::string line;
     std::vector<std::string> vec;
@@ -270,13 +272,13 @@ std::vector<std::string> split(std::string text, char delim) {
     return vec;
 }
 
-
+// helper function which is used to convert the output clusters into vectors of strings
+// these can then be used to filter the data and thus compute the expression of each gene
+// wrt to a biological process
 std::vector<std::vector<std::string>> biologicalprocess::plottable(std::vector<std::string> cluster_dict){
     std::vector<std::vector<std::string>> clusters;
-
     for(std::string i : cluster_dict){
         clusters.push_back(split(i,','));
     }
-
     return clusters;
 }

@@ -15,22 +15,17 @@ SOURCES += \
     #API
     api.cpp \
     api_gene_name.cpp \
-#    genename.cpp \
+    api_bio_pro_to_gene.cpp \
     intersection_sets.cpp \
-#    main_API_bio_pro_to_gene.cpp \
-#    main_API_gene_name.cpp \
-    plotobject.cpp \
     readgenetxt.cpp \
     only_gene_name.cpp \
     read_tsv_set.cpp \
     #Back-End
     parsefile.cpp \
     parsemtx.cpp \
-    parsetxtbeams.cpp \
     parsing.cpp \
     colocalization_matrix.cpp\
     colocalisation.cpp \
-    colocalisation_steps.cpp \
     biologicalprocess.cpp \
     computation.cpp \
     #Front-End
@@ -41,31 +36,23 @@ SOURCES += \
     colocalizationwindow.cpp \
     colocalizationheatmapwindow.cpp \
     filedata.cpp \
-    api_bio_pro_to_gene.cpp \
     #Package
     qcustomplot.cpp \
 
 HEADERS += \
     #API
     api.h \
-    api.h \
     api_gene_name.h \
+    api_bio_pro_to_gene.h \
     biochooser.h \
-#    genename.h \
     intersection_sets.h \
-#    main_API_bio_pro_to_gene.h \
-#    main_API_gene_name.h \
-    plotobject.h \
     readgenetxt.h \
     only_gene_name.h \
     read_tsv_set.h \
     #Back-End
     parsefile.h \
     parsemtx.h \
-    parsetxtbeams.h \
     parsing.h \
-#    matrixeigen.h \
-#    SparseMatrix.h \
     colocalization_matrix.h\
     colocalisation_steps.h \
     colocalisation.h \
@@ -79,11 +66,10 @@ HEADERS += \
     colocalizationwindow.h \
     colocalizationheatmapwindow.h \
     filedata.h \
-    api_bio_pro_to_gene.h \
     #Package
     qcustomplot.h \
     SparseMatrix.h \
-    wasserstein.h
+    wasserstein.h \
 
 
 FORMS += \
@@ -104,8 +90,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-#win32:INCLUDEPATH += "eigen-3.4.0/eigen-3.4.0"
-
 # We should not need a different eigen folder for windows and mac,
 # try and see if it works with this include
 INCLUDEPATH += "Eigen"
@@ -113,16 +97,5 @@ macx: LIBS += -lcurl
 
 SOURCES += $$files(/InputData/test_single_cell/*.tsv)
 
-INCLUDEPATH += ""
-
-#INCLUDEPATH += /Users/adrianduesselberg/CSE201Pro/eigen-3.4.0
-
-#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
-
-#LinkParameterWindow.cpp \
-
-#INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\eigen-3.4.0\eigen-3.4.0"
-#INCLUDEPATH += "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_test_matrix/eigen"
-#INCLUDEPATH += "/Users/alanpicucci/Desktop/Programming/Includes/eigen-3.4.0"
 
 

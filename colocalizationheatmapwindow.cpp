@@ -18,11 +18,6 @@ ColocalizationHeatmapWindow::~ColocalizationHeatmapWindow()
     delete ui;
 }
 
-//Might be usefull
-//#include "colocalizationwindow.h"
-//    double colocalizationwindow::pParameter;
-//    double colocalizationwindow::MParameter;
-
 
 void ColocalizationHeatmapWindow::on_SaveMatrixButton_clicked(){
 
@@ -35,28 +30,6 @@ void ColocalizationHeatmapWindow::on_SaveMatrixButton_clicked(){
 
 
      object->saveToFile(name);
-
-//    MatrixXd m(5,5); //needs to be changed to the colocalization matrix
-//    m(0,0) = 0.3; m(0,1) = 0.5; m(0,2) = -1; m(0,3) = 0.6; m(0,4) = 0;
-//    m(1,0) =  1, m(1,1) = 0.7; m(1,2) = 0.2; m(1,3) = 0.4; m(1,4) = -0.7;
-//    m(2,0) = -1; m(2,1) = 1; m(2,2) = 0.5; m(2,3) = 0.8; m(2,4) = -0.9;
-//    m(3,0) = -1; m(3,1) = 1; m(3,2) = 0.5; m(3,3) = 0.8; m(3,4) = -0.9;
-//    m(4,0) = -1; m(4,1) = 1; m(4,2) = 0.5; m(4,3) = 0.8; m(4,4) = -0.9;
-
-
-
-//    // Using std library to create and writes the file
-//    std::string stdfilemane;
-//    stdfilemane = filename.toStdString();
-//    ofstream fout;
-
-//    //opens file, parses the data and writes it as a .csv
-//    fout.open(stdfilemane, ios::out);
-//    const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
-//    fout <<m.format(CSVFormat);
-
-
-//    QMessageBox::information(this, "Success (COMENTED OUT)", "The colocalization matrix has been saved under" + filename , QMessageBox::Ok);
 
 }
 
@@ -82,32 +55,6 @@ void ColocalizationHeatmapWindow::makeHeatMap(const Eigen::MatrixXd m, std::vect
     colorMap->data()->setSize(number_cols, number_rows);
     // set the range of the HeatMap;
     colorMap->data()->setRange(QCPRange(0, number_cols-1), QCPRange(0, number_rows-1)); //set the range of the HeatMap;
-
-    /* //Quantile Matrix :
-    double median = 0;
-    double q1 = 0;
-    double q3 = 0;
-    double eta = 0.005;
-
-    for(int i= 0; i<number_cols; i++){
-          for (int j = 0; j<number_rows; j++){
-                 median += eta *std::copysign(1.0f,m(i,j) - median);
-              }
-     }
-    for(int i= 0; i<number_cols; i++){
-          for (int j = 0; j<number_rows; j++){
-                 if(m(i,j) < median)
-                        q1 += eta*std::copysign(1.0f,m(i,j) - q1);
-                 else
-                        q3 += eta*std::copysign(1.0f,m(i,j) - q3);
-              }
-      }
-      //test quantile
-      std::cout << median;
-      std::cout << q1;
-      std::cout << q3; */
-
-
 
 
       //95 PERCENT CONFIDENCE interval
