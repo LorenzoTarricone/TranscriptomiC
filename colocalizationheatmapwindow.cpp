@@ -64,7 +64,7 @@ void ColocalizationHeatmapWindow::makeHeatMap(const Eigen::MatrixXd m, std::vect
 
     // allow rescaling the color scale by dragging/zooming
     ui->customPlot->setInteractions(QCP::iRangeDrag|QCP::iRangeZoom);
-    // configure axis rect:
+    // configure axis rect
     ui->customPlot->axisRect()->setupFullAxesBox(true);
     // set the axis labels
     ui->customPlot->xAxis->setLabel("x");
