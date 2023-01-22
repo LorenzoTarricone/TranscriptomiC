@@ -116,39 +116,6 @@ void parsemtx::print(){
           }
 }
 
-//// returns all genes in order that are left in the gene index
-//std::vector<std::string> parsemtx::getFinalGenes(){
-//    std::cout << "[Progress] getFinalGenes() called" << std::endl;
-
-
-//    std::map<std::string,int> temp;
-
-
-//    for (typename std::map<std::string, int>::iterator i = geneIndex.begin(); i != geneIndex.end(); i++){
-////        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-//        if(i->second != -1){
-//            temp[i->first] = i->second;
-////            array[i->second] = i->first;
-//            std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-//        }
-//    }
-
-//    std::string array[temp.size()];
-
-//    for (typename std::map<std::string, int>::iterator i = temp.begin(); i != temp.end(); i++){
-////        std::cout << "geneIndex[" << i->first << "] = " << i->second << std::endl;
-//        array[i->second] = i->first;
-//        std::cout << "final[" << i->second << "] = " << i->first << std::endl;
-
-//    }
-
-//    int n = sizeof(array) / sizeof(array[0]);
-//    std::vector<std::string> final(array, array + n);
-
-
-
-//    return final;
-//}
 
 // overloaded version of writeToFile to write expression matrix to file
 void parsemtx::writeToFile(std::string filename, bool names){
@@ -227,33 +194,8 @@ void printVector(std::vector<std::string> vec){
 
 
 
-// this function updates the geneIndex map (dictonary) when a row is removed from the matrix
-void parsemtx::shiftGeneIndex(int row){
-    // TODO: decide how to deal with row deletion and mapping
-    // deal with element of the row to remove
-    //std::string toRemove = all_names[row+removed];
-    //geneIndex[toRemove] = -1;
-    std::cout<<"shiftGeneIndex called"<<std::endl;
-
-    std::string toRemove = currentGenes[row];
-    geneIndex[toRemove] = -1;
-
-    // TODO: add error handeling
-    // for each element after the removed row, decrement index by 1
-    for(int i = row+1; i < currentGenes.size(); i++){
-        geneIndex[currentGenes[i]] -= 1;
-    }
-
-
-    std::cout<<"shiftGeneIndex finished"<<std::endl;
-
-
-}
-
-
 // this method will read the genenames from a file and create a map that stores the indicies as values and
 // the genenames as key to a map
-// TODO: determine whether a map of the opposite key-value relation or a list would be more beneficial
 
 void parsemtx::getRowNamesFromFile(std::string filename){
     all_names = listgene(filename);
@@ -321,7 +263,6 @@ void parsemtx::printGeneIndex(int rows){
         // only print entries in geneIndex that are relevant
         if(geneIndex[*i]!=-1 && geneIndex[*i] < rows){
             // from https://stackoverflow.com/questions/12652997/retrieving-the-first-element-in-c-vector
-//            std::cout << "Index: " << this->geneIndex[*i] << "\t Gene: "<< *i << std::endl;
             std::cout << *i << std::endl;
 
             // incremeent index
@@ -335,69 +276,11 @@ void parsemtx::printGeneIndex(int rows){
     return;
 }
 
-// filter function for the expression matrix
-// runs after filterByGenes, removes rows with 0 or insufficient expression levels
 
-// TODO: clear up use of argument type_of_transcriptom
-// TODO: decide whether object should directly filter private member sparse
-
-
-//void parsemtx::filter_simple_old(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
-//    std::cout << "[Progress] Function filter_simple called ..." << std::endl;
-//    int s = expression.rows();
-//    int c = expression.cols();
-
-//    // to avoid double filtering in bp
-//    if(!zeroes){
-//        return;
-//    }
-
-
-//    int count[s];
-//    for(int i = 0;i<s;i++){
-//        count[i] = 0;
-//    }
-
-//    // dense matrix stored in column major
-//    for(int j = 0; j < expression.cols();j++){
-//        for(int i = 0; i<expression.rows();i++){
-//            count[i] += (expression(i,j)>0);
-//        }
-//    }
-
-////    std::cout << "[";
-////    for(int i = 0; i < s-1; i++){
-////        std::cout << count[i] << ",";
-////    }
-////    std::cout << count[s-1] << "]" << std::endl;
-
-//    //
-
-//    std::cout << "[Progress] Initialization in filter_simple finished ..." << std::endl;
-
-//    std::vector<std::string> temp;
-
-//    for(int i = 0;i<s;i++){
-//        if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
-//            std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
-//            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
-//            removeRow(expression, i-removed);
-//            //call function to adjust indices after removing row
-//            shiftGeneIndex(i);
-//            removed ++;
-//            std::cout<<"removed: "<< removed<<std::endl;
-//        }else{
-//            temp.push_back(currentGenes[i]);
-//        }
-//    }
-//    currentGenes=temp;
-//    printGeneIndex(s-removed);
-
-
-//}
 
 //faster implementation of simple filtering with respect to filter_simple_old.
-
+//filter_simple will filter out rows of the expression matrix whose expression percentage is below
+//the threshold min_expr_perc
 Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes, double min_expr_perc){
     std::cout << "[Progress] Function filter_simple_test called ..." << std::endl;
     int s = expression.rows();
@@ -409,6 +292,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
     }
 
 
+    //count the number of non-zero entries in each row
     int count[s];
     for(int i = 0;i<s;i++){
         count[i] = 0;
@@ -426,13 +310,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
         nonzeros += ((double)count[i]/expression.cols() > min_expr_perc);
     }
 
-//    std::cout << "[";
-//    for(int i = 0; i < s-1; i++){
-//        std::cout << count[i] << ",";
-//    }
-//    std::cout << count[s-1] << "]" << std::endl;
 
-    //
     Eigen::MatrixXd filtered_expression(nonzeros, c);
     std::vector<std::string> temp;
     int index=0;
@@ -442,15 +320,7 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
     for(int i = 0;i<s;i++){
         if((zeroes && (count[i] == 0)) || ((double) count[i]/c <= min_expr_perc)){
             std::cout << "Remove row " << i << " or index "<<geneIndex[currentGenes[i]] <<" corresponding to gene "<< currentGenes[i]<<" with number of non-zero entries " << count[i] << " and expression percentage " << (double) count[i]/c << std::endl;
-            //resize matrix if we remove a row
-            //filtered_expression=filtered_expression.topRows(filtered_expression.rows()-1);
-//            Eigen::MatrixXd temp_matrix =filtered_expression.topRows(filtered_expression.rows()-1);
-//            filtered_expression=temp_matrix;
             this->geneIndex[currentGenes[i]]=-1;
-            //removeRow is quite slow and is acting as a bottleneck, but it may not be possible to make it faster
-            //removeRow(expression, i-removed);
-            //call function to adjust indices after removing row
-            //shiftGeneIndex(i);
             removed ++;
             std::cout<<"removed: "<< removed<<std::endl;
         }else{
@@ -460,8 +330,9 @@ Eigen::MatrixXd parsemtx::filter_simple(Eigen::MatrixXd &expression,bool zeroes,
             index++;
         }
     }
+
+    //update currentGenes to keep track of what genes we're keeping
     currentGenes=temp;
-//    printGeneIndex(s-removed);
 
     return filtered_expression;
 }
@@ -502,10 +373,8 @@ Eigen::MatrixXd parsemtx::filterByGenes(const Eigen::MatrixXd &expression, std::
         std::cerr << "[Error] filterByGenes failed at index "<< index << " and row " << row << std::endl;
     }
 
-
+    //update currentGenes to keep track of the genes remaining in rows of the expression matrix
     currentGenes=temp;
-//    printGeneIndex(filtered_expression.rows());
-
     return filtered_expression;
 }
 
@@ -554,32 +423,6 @@ Eigen::MatrixXd parsemtx::normalisation_simple(Eigen::MatrixXd expression, std::
 // this function applies different types of normalisation to the dense expression matrix
 // the sparse representation of the same inital matrix remains the same
 
-
-// declarations of functions to remove certain row or column from eigen dense matrix
-//removeRow is very slow
-void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
-{
-    std::cout<<"removeRow called"<<std::endl;
-    unsigned int numRows = matrix.rows()-1;
-    unsigned int numCols = matrix.cols();
-
-    if( rowToRemove < numRows )
-        matrix.block(rowToRemove,0,numRows-rowToRemove,numCols) = matrix.block(rowToRemove+1,0,numRows-rowToRemove,numCols);
-
-    matrix.conservativeResize(numRows,numCols);
-    std::cout<<"removeRow finished"<<std::endl;
-}
-
-void removeColumn(Eigen::MatrixXd& matrix, unsigned int colToRemove)
-{
-    unsigned int numRows = matrix.rows();
-    unsigned int numCols = matrix.cols()-1;
-
-    if( colToRemove < numCols )
-        matrix.block(0,colToRemove,numRows,numCols-colToRemove) = matrix.block(0,colToRemove+1,numRows,numCols-colToRemove);
-
-    matrix.conservativeResize(numRows,numCols);
-}
 
 
 
