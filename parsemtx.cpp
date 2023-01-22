@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <Eigen/Sparse>
 #include <stdio.h>
-#include "parsetxtbeams.h"
+
 
 
 parsemtx::parsemtx()

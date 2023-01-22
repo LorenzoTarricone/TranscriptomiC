@@ -5,7 +5,6 @@
 #include "bioprocesswindow.h"
 #include "computation.h"
 #include "parsefile.h"
-#include "plotobject.h"
 #include "qdebug.h"
 #include <QMainWindow>
 #include <QVector>
