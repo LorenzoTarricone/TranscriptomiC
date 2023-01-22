@@ -223,7 +223,6 @@ std::vector<std::string> biologicalprocess::kMedoidsClustering(Eigen::MatrixXd d
     //to the API, which can then find the biological processes most closely associated to each cluster of genes.
     for(int i=0;i<best_clusters.size();i++){
         std::vector<int> current_cluster=best_clusters[i];
-        //clusters_dict[i]="";
         if(current_cluster.size()>0){
             for(int j=0;j<current_cluster.size()-1;j++){
                 std::string current_string=currentGenes[current_cluster[j]];

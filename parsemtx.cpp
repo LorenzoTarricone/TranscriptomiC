@@ -113,15 +113,15 @@ void parsemtx::print(){
 
 
 // overloaded version of writeToFile to write expression matrix to file
-void parsemtx::writeToFile(std::string filename, bool names){
+void parsemtx::writeToFile(std::string filename){
     // convert sparse representation to dense (check this!!)
     if (!matrix.rows()){
         matrix = Eigen::MatrixXd(sparse);
     }
-    parsemtx::writeToFile(filename,matrix, getcurrentGenes(), names);
+    parsemtx::writeToFile(filename,matrix, getcurrentGenes());
 }
 
-void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, std::vector<std::string> genes, bool names){
+void parsemtx::writeToFile(std::string filename, Eigen::MatrixXd matrix, std::vector<std::string> genes){
     // file stream
     std::ofstream fout(filename);
 

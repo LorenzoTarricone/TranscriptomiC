@@ -25,8 +25,8 @@ public:
 
     Eigen::MatrixXd normalisation_simple(Eigen::MatrixXd expression,std::string type_of_normal = "col_mean");
 
-    void writeToFile(std::string filename, bool names = true);
-    void writeToFile(std::string filename,Eigen::MatrixXd matrix, std::vector<std::string> genes, bool names = true);
+    void writeToFile(std::string filename);
+    void writeToFile(std::string filename,Eigen::MatrixXd matrix, std::vector<std::string> genes);
 
     bool geneIndexEmpty();
     void initiateGeneIndex_cropped(std::vector<std::string> geneList, int row_crop);
