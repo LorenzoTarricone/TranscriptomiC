@@ -3,6 +3,8 @@
 #include <string>
 #include <curl/curl.h> // requires installation of libcurl
 
+//Takes as input a string with the name of a gene and returns the gene id from such gene.
+
 std::string searchGene(const std::string& geneName) {
   CURL* curl = curl_easy_init(); //Initialize curl
   std::string response;
