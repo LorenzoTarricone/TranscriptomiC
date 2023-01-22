@@ -114,7 +114,5 @@ Our bioprocess2 algorithm is made of many steps, that are pointed out here:
 TranscriptomiC++ requires an up-to-date version of Qt, as well as the libcurl library, which is installed by default on macOS.
 - On Linux, you might need to install it. On Debian/Ubuntu install the libcurl-dev package.
 - On Windows, you will need to download the latest binary from [curl's website](https://curl.se/windows/). On Qt Creator, right click on the project name and select Add library -> External library. Select only Windows and link the library file libcurl.a located within your curl folder/lib.
-We are using some Qt classes that we have not managed to make work on Windows. It is more than likely that if you try to compile the project on Windows, you get a `reference to 'byte' is ambiguous` error. It seems like the easiest solution might be to install Linux.
 
-
-
+Unfortunately, we have not managed to make the project compile on Windows. We recommend using Linux or macOS instead.
