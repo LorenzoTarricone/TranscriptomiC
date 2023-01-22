@@ -54,7 +54,6 @@ HEADERS += \
     parsemtx.h \
     parsing.h \
     colocalization_matrix.h\
-    colocalisation_steps.h \
     colocalisation.h \
     biologicalprocess.h \
     computation.h \
@@ -68,7 +67,6 @@ HEADERS += \
     filedata.h \
     #Package
     qcustomplot.h \
-    SparseMatrix.h \
     wasserstein.h \
 
 
