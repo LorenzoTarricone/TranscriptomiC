@@ -86,12 +86,10 @@ void colocalizationwindow::on_GenerateHeatmapButton_clicked()
 
     bool PercentChecker = false;
 
-    if(Percent.length() <=3){
-        for(int i = 0; i <= 100; i++){
-            if(Percent == QString::number(i)){
-                PercentChecker = true;
-                break;
-            }
+    for(int i = 0; i <= 100; i++){
+        if(QString::number(i) <= Percent && Percent <= QString::number(i+1)){
+            PercentChecker = true;
+            break;
         }
     }
 

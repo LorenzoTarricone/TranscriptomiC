@@ -48,7 +48,6 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     //if the search parameter is not only in upper case
     std::string upper_search = search;
     transform(upper_search.begin(), upper_search.end(), upper_search.begin(), ::toupper);
-//    std::cout<<"UP"<<upper_search<<'\n';
 
     //insert the gene name in the set to be sure the original name given by the researcher is in the set
     res.insert(search);
@@ -60,7 +59,7 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
     std::string list;
     std::string name="[";
     std::string true_list;
-//    std::cout<<l<<'\n';
+
     if(l.empty()){
         return res;
     }else{
@@ -77,8 +76,6 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
                 name+=v;
             }}
 
-    //    std::cout<<'\n';
-    //    std::cout<<name<<'\n'<<'\n';
 
         //Then look for each list of this list and check if our "search" parameter is in it
         std::string value;
@@ -100,11 +97,8 @@ std::set<std::string> only_gene_name::listgene(std::string l, std::string search
             }
 
             else if (c==o) {
-    //            std::cout<<list<<'\n';
-    //            std::cout<<"search= "<<upper_search<<'\n';
                 int res = isSubstring(upper_search,list);
                 if (res !=-1){
-    //                std::cout<<"Found"<<'\n';
                     true_list=list;
                 }
                 list="";
@@ -171,15 +165,12 @@ set<Info> only_gene_name::list_bio_process(string json, string search1, string s
     while(getline(ss, line)) {
         if (isSubstring(search1,line) != -1) {
             // Extract the number_in_list value
-            std::cout<<line<<'\n';
             number_in_list = stoi(line.substr(line.find(":") + 1));}
         else if (isSubstring(search2,line) != -1) {
             // Extract the number_in_list value
-            std::cout<<line<<'\n';
             id = line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4);
         }
         else if (isSubstring(search3,line) != -1) {
-            std::cout<<line<<'\n';
             // Extract the number_in_list value
             label=line.substr(line.find(":") + 2, line.find("\"") - line.find(":")-4);
             // Add the extracted information to the set
@@ -210,32 +201,3 @@ void only_gene_name::printset(std::set<std::string> result){
     std::cout<<"}";
 }
 
-
-/* main to test listgene
- * #include "only_gene_name.h"
-
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <iterator>
-#include <vector>
-#include <algorithm>
-#include<set>
-using namespace std;
-
-using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::vector; using std::istringstream;
-using std::stringstream;
-
-
-int main(){
-    string l="[136,[\"HGNC:35077\",\"HGNC:35019\",\"HGNC:77\",\"HGNC:35013\",\"HGNC:35114\",\"HGNC:24098\",\"HGNC:16638\"],null,[[\"TRR-CCT8-1\",\"tRNA-Arg-CCT-8-1\",\"TRNAR32P\"],[\"TRR-CCT6-2\",\"tRNA-Arg-CCT-6-2\",\"TRNAR31P\"],[\"ABL2\",\"ARG\",\"ABLL\"],[\"TRR-CCT7-1\",\"tRNA-Arg-CCT-7-1\",\"TRNAR30P\"],[\"TRR-CCT9-1\",\"tRNA-Arg-CCT-9-1\",\"TRNAR34P\"],[\"SORBS2\",\"ARGBP2|KIAA0777\",\"\"],[\"SRRM1\",\"SRM160|POP101|MGC39488\",\"\"]]]";
-    string search="\"ARG\"";
-    only_gene_name test;
-    set<string> result;
-    result=test.listgene(l, search);
-    test.printset(result);
-    return 0;
-}
-*/
