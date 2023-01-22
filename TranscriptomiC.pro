@@ -81,18 +81,12 @@ FORMS += \
     colocalizationheatmapwindow.ui \
     colocalizationwindow.ui \
 
-
-INCLUDEPATH += "C:\Users\ritux\OneDrive - Danmarks Tekniske Universitet\Skrivebord\Rita's Stuff\l'X\1 2 CSE201\Project\eigen-3.4.0\eigen-3.4.0"
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 INCLUDEPATH += "Eigen"
-macx: LIBS += -lcurl
+unix: LIBS += -lcurl
 
 SOURCES += $$files(/InputData/test_single_cell/*.tsv)
-
-
-
