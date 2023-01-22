@@ -3,6 +3,8 @@
 #include <string>
 #include <curl/curl.h> // requires installation of libcurl
 
+//Takes as input a string with a list of genes and returns the biological processes that can be made from such genes.
+
 std::string searchBioProcess(const std::string& geneList, const std::string& geneOrganism) {
   CURL* curl = curl_easy_init(); //Initialize curl
   std::string response;
