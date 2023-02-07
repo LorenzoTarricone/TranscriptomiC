@@ -54,11 +54,14 @@ void BioChooser::on_ClusterButton_clicked()
     // perform cluster analysis
 
     qDebug() << "Initialize BiologicalProcess object";
-    int rows = 100;
+    int rows = 0;
     int cols = 700;
     biologicalprocess object = biologicalprocess(files,rows,cols);
+    std::string path = "/Users/ninapeuker/Desktop/General_Engineering/5th_semester_2022:23_Ecole/CSE201_Object_Oriented_Programming_in_C++/Transcriptomic++/transcriptomics_development/InputData/test_data_single_cell/MBASS_dd99_genes_subset_4.tsv";
+    object.addGeneList(path);
     qDebug() << "Filter data";
     object.filter_simple(true,0.001);
+    object.filter_genes();
     qDebug() << "Normalise data";
     object.normalisation();
     qDebug() << "Start clustering";
