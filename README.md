@@ -5,6 +5,13 @@ This is the repo for the project TranscriptomiC++ in the context of the course C
 
 The project aims to build a compeletely working open access platform that can be used by biologists to have new insights on their spatial transcriptomics (Slide-Seq) data. In particular, the user will be able to perform two different kind of analysis on these data: ***gene colocalization analysis*** and ***biological process analysis***. More details about the data required and some specific features are described below
 <br/><br/>
+## LIBRARY REQUIREMENTS
+TranscriptomiC++ requires an up-to-date version of Qt, as well as the libcurl library, which is installed by default on macOS.
+- On Linux, you might need to install it. On Debian/Ubuntu install the libcurl-dev package.
+- On Windows, you will need to download the latest binary from [curl's website](https://curl.se/windows/). On Qt Creator, right click on the project name and select Add library -> External library. Select only Windows and link the library file libcurl.a located within your curl folder/lib.
+
+Unfortunately, we have not managed to make the project compile on Windows. We recommend using Linux or macOS instead.
+<br/><br/>
 ## INPUT
 
 ### TECHNOLOGY
@@ -109,12 +116,5 @@ Our bioprocess2 algorithm is made of many steps, that are pointed out here:
 -**Step 3**: We now use an API to a database to find the most likely biological process linked to the list of genes present in each cluster
 
 -**Step 4**: We plot the n different resuls each one following the procedure described in BIOLOGICAL PROCESS ANALYSIS (TYPE 2)
-
-## LIBRARY REQUIREMENTS
-TranscriptomiC++ requires an up-to-date version of Qt, as well as the libcurl library, which is installed by default on macOS.
-- On Linux, you might need to install it. On Debian/Ubuntu install the libcurl-dev package.
-- On Windows, you will need to download the latest binary from [curl's website](https://curl.se/windows/). On Qt Creator, right click on the project name and select Add library -> External library. Select only Windows and link the library file libcurl.a located within your curl folder/lib.
-We are using some Qt classes that we have not managed to make work on Windows. It is more than likely that if you try to compile the project on Windows, you get a `reference to 'byte' is ambiguous` error. It seems like the easiest solution might be to install Linux.
-
 
 
