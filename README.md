@@ -117,4 +117,12 @@ Our bioprocess2 algorithm is made of many steps, that are pointed out here:
 
 -**Step 4**: We plot the n different resuls each one following the procedure described in BIOLOGICAL PROCESS ANALYSIS (TYPE 2)
 
+## LICENSE
+
+Click [here](LICENSE.txt) to see the license 
+
+## AKNOWLEDGEMENTS
+The supervision for this project and the idea of the adoption of Distances between distributions was provided by prof. Francesca Buffa (Bocconi University)
+
+The fact checking of the results obtained as well as some code for the calculation of the colocalization matrix (the version of [Resolve Biosciences](https://resolvebiosciences.com/)) and some papers were provided by Dr. Clara Pavillet (University of Oxford)
 
