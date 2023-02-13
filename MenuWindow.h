@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include "biochooser.h"
+#include <QtDataVisualization>
 
 
 namespace Ui {
@@ -45,6 +46,8 @@ private:
     Ui::MenuWindow *ui;
     colocalizationwindow *coWindow;
     BioChooser *biochooseWindow;
+
+    Q3DScatter* scatter;
 
 
 

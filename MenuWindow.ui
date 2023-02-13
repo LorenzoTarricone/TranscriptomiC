@@ -18,23 +18,6 @@
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCustomPlot" name="customPlot" native="true">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>320</width>
-      <height>190</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255,255,255);
-border: 1px solid black ;
-border-radius: 5px;
-padding: 0 8px;
-color: rgb(0,0,0);</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="ColocalizationButton">
     <property name="geometry">
      <rect>
@@ -151,16 +134,19 @@ color: rgb(0,0,0);
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>19</x>
+      <y>109</y>
+      <width>391</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout"/>
+   </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header location="global">qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
