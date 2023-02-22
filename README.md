@@ -4,6 +4,14 @@
 This is the repo for the project TranscriptomiC++ in the context of the course CSE201 at École Polytechnique.
 
 The project aims to build a compeletely working open access platform that can be used by biologists to have new insights on their spatial transcriptomics (Slide-Seq) data. In particular, the user will be able to perform two different kind of analysis on these data: ***gene colocalization analysis*** and ***biological process analysis***. More details about the data required and some specific features are described below
+
+**KEY ROLES**:
+
+Group Leader: Lorenzo Tarricone
+
+GIT Leader: Nina Peuker
+
+Trello Leader: Leonard Thessler
 <br/><br/>
 ## LIBRARY REQUIREMENTS
 TranscriptomiC++ requires an up-to-date version of Qt, as well as the libcurl library, which is installed by default on macOS.
